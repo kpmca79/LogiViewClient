@@ -1,0 +1,111 @@
+
+
+<form-topnav [formID]="formID" [isChecked]="false" link="publish" [type]="type"></form-topnav>
+<publish-left-nav [formID]="formID" [type]="type" (changePublishPage)="changePubPage($event)"></publish-left-nav>
+
+
+<div class="main-content">
+	<div class="container-fluid-topnav">
+	<div  *ngIf="type=='publish'">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="card">
+					
+					
+					<div class="card-body">
+						<div class="row">
+							<div class="publish-title-icon">
+								<i class="fa fa-link"></i>
+							</div>
+							<div class="publish-title">
+								<h5 class="card-title">DIRECT LINK OF YOUR FORM{{type}}</h5>
+								<p class="card-text">Your form is securely published and ready to use at this address.</p>
+							</div>
+							
+						</div>
+						<div class="row">
+						
+						<div class="copyLink-input-icon">
+								<i class="fa fa-lock"  ></i>
+							</div>
+						
+						<div class="copyLink-input js-copyInpt" style="line-height: 38px;background-color: rgb(236, 233, 230);">
+									{{pubURL}}</div>
+						<div class="copyLink-input-icon-right">
+<!-- 								<i class="fa fa-pencil" ></i> -->
+							<i class="fa fa-pencil-square" aria-hidden="true"></i>
+							</div>
+						</div>
+						<div class="row">
+						<div class="button-row">
+						 <button mat-raised-button color="primary" (click)="copyURL()">COPY LINK</button>
+  							<button mat-raised-button color="accent" (click)="openNT()">OPEN IN NEW TAB</button>		
+						</div>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<div class="card">
+						<div class="card-body">
+						<div class="row">
+							<div class="publish-title-icon">
+								<i class="fa fa-share-alt" ></i>
+							</div>
+							<div class="publish-title">
+								<h5 class="card-title">SHARE YOUR FORM</h5>
+								<p class="card-text">Share your form link in various social posts and through email.</p>
+								
+							</div>
+							<div style="margin-left: 45px;margin-top: 6px;">
+						 		<button mat-raised-button color="primary">SHARE OPTIONS</button>
+  									
+							</div>
+							
+						</div>
+								
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div  *ngIf="type=='embed'">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="card">
+					
+					
+					<div class="card-body">
+						<div class="row">
+							<div class="publish-title-icon">
+								<i class="fa fa-link"></i>
+							</div>
+							<div class="publish-title">
+								<h5 class="card-title">EMBEDED LINF OF YOUR FORM</h5>
+								<p class="card-text">You can include following IFrame in HTML page to display form on desire page.</p>
+							</div>
+							
+						</div>
+						<div class="row">
+							<div class="copyLink-input js-copyInpt" style="background-color: rgb(236, 233, 230);">{{iFramSrc}}</div>
+						</div>
+						<div class="row">
+						<div class="button-row">
+						 <button mat-raised-button color="primary" (click)="copyIFrame()">Copy IFrame</button>
+  									
+						</div>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+

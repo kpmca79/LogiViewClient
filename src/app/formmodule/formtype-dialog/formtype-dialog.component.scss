@@ -1,0 +1,31 @@
+td.frm-type-select {
+    background-color: #ffffff;
+    color: black;
+    text-align: center;
+}
+
+td.frm-type-select:hover {
+    background-color: #267aa6;
+    color: white;
+}
+.form-type-head
+{
+	font-size: larger;
+    font-weight: bold;
+}
+.main-content
+{
+	 z-index: 5;
+}
+::ng-deep .cdk-overlay-pane {
+   
+    pointer-events: auto;
+    box-sizing: border-box;
+    z-index: 5000;
+    display: -webkit-box;
+    display: flex;
+    max-width: 100%;
+    max-height: 100%;
+    
+
+}

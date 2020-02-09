@@ -1,0 +1,123 @@
+<script>
+.row {
+    display: flex;
+    align-items: top;
+    justify-content: center;
+}
+</script>
+<script>
+.row {
+    display: flex;
+    align-items: top;
+    justify-content: center;
+}
+
+</script>
+<div class="ngLoader"></div>
+
+											
+<div *ngIf="!bgURLDirect" class="col-md-12">
+         <div class="card">
+                 <mat-progress-bar mode = "indeterminate" ></mat-progress-bar>
+           </div>
+</div>
+<!-- <div [style.background-image]="safeBgURL"   -->
+<!-- [ngStyle]="{'background-image':'safeBgURL';background-repeat: 'repeat-xy';}" -->
+<!-- style="height: 100%;background-repeat: repeat-xy;"> -->
+<form-topnav [formID]="formID" [isChecked]="false" link="build"></form-topnav>
+<div [ngStyle]="{'background-image': 'url('+bgURLDirect+')'}">
+<div class="property-icon-right" *ngIf="!opened">
+<span class="fa-stack fa-lg">
+			   <i class="fa fa-plus  fa-1x circle-icon"  (click)="openleft()"></i>
+</span>
+<!-- <span class="fa-stack fa-lg"> -->
+<!-- 				  	    <i class="fa fa-plus-circle" aria-hidden="true" (click)="drawerleft.toggle()"></i> -->
+<!-- 					</span> -->
+</div>
+
+<mat-drawer-container  >
+	<!-- form left star here -->
+	<mat-drawer #drawerleft  mode="side"  [(opened)]="opened">
+	<div class="sidebar-right" data-color="danger" data-background-color="white"
+		data-image="./assets/img/sidebar-1.jpg">
+		
+<!-- 		<div class="logo"> -->
+<!-- 			<a [routerLink]="['/dashboard']" -->
+<!-- 				routerLinkActive="router-link-active" class="simple-text"> -->
+<!-- 				<div class="logo-img"> -->
+<!-- 					<img src="/assets/img/holodox-logo.jpg" /> -->
+<!-- 				</div> Home -->
+<!-- 			</a> -->
+<!-- 		</div> -->
+
+<div class="head">Form Elements	
+	<span class="left-nav-icon">
+				  	    <i class="fa fa-times" aria-hidden="true" (click)="drawerleft.toggle()"></i>
+					</span>
+</div>
+
+		<div class="sidebar-wrapper">
+			<ul cdkDropList #studentsList="cdkDropList"
+				[cdkDropListData]="students" (cdkDropListDropped)="drop($event)"
+				[cdkDropListConnectedTo]="[students2List]" class="nav">
+
+				<li *ngFor="let student of students" cdkDrag
+					class="toolbox-toolbar-row cdk-drag ng-star-inserted"><a
+					class="nav-link"> <i *ngIf="student.name==='TextBox'"
+						class="material-icons">text_fields</i> <i
+						*ngIf="student.name==='Slide Toggle'" class="material-icons">toggle_off</i>
+						<i *ngIf="student.name==='TextArea'" class="material-icons">short_text</i>
+						<i *ngIf="student.name==='DropDown'" class="material-icons">format_list_bulleted</i>
+						<i *ngIf="student.name==='Date Picker'" class="material-icons">calendar_today</i>
+						<i *ngIf="student.name==='Section'" class="material-icons">border_horizontal</i>
+						{{student.name}}
+				</a></li>
+
+			</ul>
+
+		</div>
+
+		
+
+	</div> <!-- left toolbar ends -->
+	</mat-drawer>
+	
+	<div class="ngLoader"></div>
+	<div class="main-content">
+		<div class="container-fluid">
+			<div class="main-div">
+					<div class="property-icon">
+<!-- 						<span class="fa-stack fa-lg"> -->
+<!-- 					  	    <i class="fa fa-home  fa-1x circle-icon"  routerLink="/formlist"></i> -->
+<!-- 						</span> -->
+<!-- 						<span class="fa-stack fa-lg"> -->
+<!-- 					  	    <i class="fa fa-eye  fa-1x circle-icon"  routerLink="/formPreview/{{formID}}"></i> -->
+<!-- 						</span> -->
+						<span class="fa-stack fa-lg">
+					  	    <i class="fa fa-paint-brush  fa-1x circle-icon" (click)="drawerright.toggle()"></i>
+						</span>
+						
+				
+<!-- 					<mat-icon class="tool-icon-white" svgIcon="Home" routerLink="/formList"></mat-icon> -->
+<!-- 					<mat-icon class="tool-icon-white" svgIcon="Preview"  routerLink="/formPreview/{{formID}}"></mat-icon> -->
+<!-- 						<mat-icon (click)="drawer2.toggle()" class="circle-icon">format_paint</mat-icon> -->
+					</div>
+<!-- 				<mat-icon (click)="drawer2.toggle()" class="property-icon">format_paint</mat-icon> -->
+			
+				<div cdkDropList #students2List="cdkDropList"
+					[cdkDropListData]="students2" (cdkDropListDropped)="drop($event)"
+					[cdkDropListConnectedTo]="[studentsList]" class="form-main"
+					id="form">
+					<app-form [formField]="students2" [frm]="frm" [formID]="formID"></app-form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<mat-drawer #drawerright position="end" mode="side"  class="right-nav">
+	<div class="left-col">
+	
+			<form-property [frm]="frm" [formID]="formID" [safeBgURL]="safeBgURL"  [type]="type"></form-property>
+	</div>
+	</mat-drawer>
+</mat-drawer-container>
+</div>

@@ -1,0 +1,54 @@
+<div class="main-content">
+  <div class="container-fluid">
+      
+      <div class="row">
+          <div class="col-md-8">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title">Login</h4>
+                      <p class="card-category">To LogiView Product</p>
+                  </div>
+                  <div class="card-body">
+                      <form (submit)="login()">
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="username" value="keyur" id="username" name="username" [(ngModel)]="credentials.username"/>
+                                  </mat-form-field>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-5">
+                                  <mat-form-field class="example-full-width">
+                                    <input  matInput placeholder="username" value="keyur" type="Password" id="password" name="password" [(ngModel)]="credentials.password"/>
+                                  </mat-form-field>
+                              </div>
+                          </div>
+                        
+                          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Login</button>
+                          <div class="clearfix"></div>
+
+                      </form>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="card card-profile">
+                  <div class="card-avatar">
+                      <a href="#pablo">
+                          <img class="img" src="./assets/img/faces/marc.jpg" />
+                      </a>
+                  </div>
+                  <div class="card-body">
+                      <h6 class="card-category text-gray">CEO / Founder</h6>
+                      <h4 class="card-title">Keyur Patel</h4>
+                      <p class="card-description">
+                          Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                      </p>
+                      <a href="#pablo" class="btn btn-danger btn-round">Follow</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

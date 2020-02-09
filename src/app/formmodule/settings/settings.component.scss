@@ -1,0 +1,293 @@
+.leftPanel, .rightPanel {
+    background-color: #3e4652;
+    bottom: 0;
+}
+.leftPanel {
+    transition-property: top,-webkit-transform;
+    transition-property: top,transform;
+    transition-property: top,transform,-webkit-transform;
+    transition-duration: .5s;
+    transition-timing-function: ease-in-out;
+    width: 310px;
+    left: -310px;
+    top: 0;
+    z-index: 201;
+}
+.togglePanel {
+    background: #3e4652;
+}
+.togglePanel {
+    position: absolute!important;
+    top: 48px;
+    right: -36px;
+    height: 54px;
+    width: 54px;
+    display: none;
+    cursor: pointer;
+    text-align: center;
+    transition-property: all;
+    transition-duration: .5s;
+    transition-timing-function: ease-in-out;
+}
+.settingsPanel {
+    width: 100%;
+    background-color: #3e4652;
+    top: 114px;
+    overflow: auto;
+    height: 100%;
+}
+.settingsPanel-list {
+    margin: 1.5rem 0 0;
+}
+li, ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.settingsPanel .card-content {
+    display: table-cell;
+    vertical-align: top;
+    width: 10000px;
+    color: #fff;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 300;
+    letter-spacing: .05rem;
+}
+.settingsPanel .card-leftSide {
+    float: left;
+    margin-right: 6px;
+}
+.settingsPanel-list li a {
+    cursor: pointer;
+    display: block;
+    margin: 0 0 0 5%;
+    padding: 14px 0 14px 12px;
+    padding: 1.5vh 0 1.5vh 12px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.settingsPanel .tablet-content {
+    text-align: center;
+    padding: 0;
+    margin-right: .375rem;
+    font-size: 13px;
+    color: #fff;
+}
+a.active .panelHeader {
+    color: #3e4652;
+    font-weight: 600;
+}
+.settingsPanel .panelHeader {
+    margin-top: .375rem;
+    text-transform: uppercase;
+}
+.settingsPanel .panelDesc {
+    font-size: .75rem;
+    line-height: 1.125rem;
+    letter-spacing: .025rem;
+    font-weight: 500;
+    margin-bottom: .375rem;
+}
+.settingsPanel-list li a.active .panelDesc, .settingsPanel-list li a.active .panelHeader {
+    color: #3e4652;
+    font-weight: 600;
+}
+body {
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+    min-width: 320px;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+.example-full-width{
+	width: 95%;
+}
+.example-small-width
+{
+	width: 40%;	
+}
+
+.time-picker
+{
+	width: 100px;
+	text-align: center;
+	margin-right: 10px;
+}
+.date-time-td
+{
+    padding-right: 20px;
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+input:disabled
+{
+    border: 0 !important;
+    background-color: white !important;
+    background: white;
+    font-weight: bold;
+}
+.date-time-td-two
+{
+    padding-right: 10px;
+  
+}
+.tr-time
+{
+	display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: flex-start;
+}
+
+.sub-row
+{
+	padding-top: 10px;
+	padding-left: 30px;
+	width: 90%
+}
+   
+
+element.style {
+ 
+}
+.container-fluid-topnav {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+       position: absolute;
+    top: 65px;
+    left: 359px;
+}
+
+.card-title {
+ 	font-size: 18px;
+    line-height: 1rem;
+    padding-left: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000000;
+    margin-top: 8px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+ 
+.card-sub-title {
+ 	font-size: 14px;
+    line-height: 1rem;
+    font-weight: 500;
+    color: #000000;
+    margin-top: 8px;
+    padding-bottom: 10px;
+    
+}
+ 
+
+.card-text {
+ 
+    padding-left: 20px;
+    line-height: 1rem;
+    font-size: 14px;
+    font-style: italic;
+    font-variant-caps: normal;
+    color: #a9a9a9;
+    padding-bottom: 5px;
+   
+}
+.publish-title-icon
+{
+	font-size: 44px;
+    margin-left: 20px;
+    margin-right: -13px;
+    background: green;
+    padding: 5px;
+    margin-top: 6px;
+    color: white;
+}
+.publish-title
+{
+	display: block;
+}
+.copyLink .copyLink-input {
+    max-width: .625rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.copyLink-input, .copyLink-input {
+    display: table-cell;
+    line-height: 38px;
+    background-color: rgb(236, 233, 230);
+    display: table-cell;
+    margin-top: 25px;
+    
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.copyLink-input-icon
+{
+
+    font-size: 31px;
+    width: 54px;
+    height: 38px;
+    padding: 0px;
+    width: 36px;
+    margin-top: 25px;
+    padding-left: 4px;
+    margin-left: 20px; 
+      background: green;
+       color: white;
+           padding-top: 3px;
+}
+
+.copyLink-input-icon-right
+{
+	
+
+    font-size: 31px;
+    width: 54px;
+    height: 38px;
+    padding: 0px;
+    width: 36px;
+    margin-top: 25px;
+    padding-left: 4px;
+     
+      background: rgb(236, 233, 230);
+       color: white;
+           padding-top: 3px;
+}
+.button-row {
+	margin-top: 12px;
+    margin-left: 241px;
+    
+}
+.button-row-left 
+{
+    margin-top: 15px;
+    margin-left: 361px;
+}
+.button-row button,
+.button-row a {
+  margin-right: 8px;
+}
+
+
+.col-md-8 {
+       -webkit-box-flex: 0;
+    flex: 0 0 66.6666666667%;
+    max-width: 51.666667%;
+}

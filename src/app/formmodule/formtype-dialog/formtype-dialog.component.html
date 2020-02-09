@@ -1,0 +1,42 @@
+
+<div class="main-content">
+	<div class="container-fluid">
+		<div class="row">
+
+			<div class="col-lg-12 col-md-12">
+				<form>
+				<div class="card">
+					<div class="card-header card-header-tabs card-header-danger" id="property-header">
+						<div class="nav-tabs-navigation">
+							<div class="nav-tabs-wrapper">
+								<span class="nav-tabs-title"><b>Create Form In Seconds !!!</b></span>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<mat-form-field class="col-md-12">
+						 <mat-label>Type Form Title</mat-label>
+    						<input 	matInput name="frm.title" [(ngModel)]="frm.title" value=""  required="true"> 
+    					</mat-form-field>
+    					<mat-form-field class="col-md-12">
+						 <mat-label>Choose Form Type</mat-label>
+    								<mat-select [(value)]="formTypeId" >
+    									<mat-option *ngFor="let formType of frmTypes" value="{{formType.id}}">{{formType.value}}</mat-option>
+			    				</mat-select>
+    					</mat-form-field>
+					</div>
+					
+				</div>
+				
+				<div class="sticky-bottom" id="bottom-buttons">
+				
+				     <button   [mat-dialog-close]=true  class="btn btn-danger pull-right">Create</button>
+                     <button  mat-raised-button mat-dialog-close=false type="button" [routerLink]="['/formlist']" class="btn mat-raised-button pull-right"><<Back</button>
+
+				
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,150 @@
+/* added or edited by keyur*/
+hr
+{
+/* 	 border:none; */
+/*   height: 20px; */
+/*  	width: 100%; */
+/* 	height: 50px; */
+/* 	margin-top: 0; */
+/* 	border-bottom: 1px solid #1f1209; */
+/* 	box-shadow: 0 5px 5px -5px #333; */
+/*   margin: -50px auto 10px;  */
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 5px;
+/*   background: linear-gradient(60deg, #ef5350, #e53935); */
+  
+}
+.label-between
+{
+	color: black;
+    font-weight: 900;
+    padding: 0px 20px;
+    vertical-align: middle;
+    padding-top: 7px;
+}
+.column {
+  display: flex;
+  flex-direction: row;
+  flex-basis: 100%;
+  flex: 1;
+  padding: 5px;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 13px;
+}
+
+
+/* end */
+
+.leftNavText
+{
+	margin: 0;
+    line-height: 30px;
+    font-size: 14px;
+    position: relative;
+    display: block;
+    height: auto;
+    white-space: nowrap;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.mat-toolbar {
+    background: #eee;
+/*      color: rgba(0,0,0,.87); */
+    color: #3C4858;
+    -webkit-tap-highlight-color: transparent;
+}
+.leftProperties
+{
+/* 	background-color: #00008b; */
+/* 	color: #ffffff; */
+}
+.card, section
+{
+		
+		
+		padding: 10px;
+}
+span
+{
+	padding-right:	10px;
+}
+button, input
+{
+	margin-right: 10px;
+}
+/deep/ mat-card {
+    transition: box-shadow 280ms cubic-bezier(.4,0,.2,1);
+    display: block;
+    position: relative;
+    padding: 16px !important;
+    border-radius: 1px;
+	
+    
+}
+.mat-slider-horizontal {
+  width: 180px;
+}
+.icon
+{
+	height: 35px;
+	width: 35px;
+	
+}
+.head
+{
+	    /* align-items: center; */
+    /* align-content: center; */
+    /* align-self: center; */
+    color: red;
+    line-height: 26px;
+    text-align: center;
+    background-color: #ef5350;
+    display: block;
+    /* margin: 50px auto 0; */
+    /* width: 100px; */
+    /* height: 60px; */
+    color: #FFF;
+    padding: 10px;
+    -webkit-box-shadow: 5px 5px 15px 5px #000000;
+    box-shadow: 1px 5px 10px px #000000;
+    margin-bottom: 30px;
+}
+.example-full-width {
+  width: 60%;
+  
+ 
+}
+.mat-expansion-panel-header-title
+{
+	
+	flex-grow: 7;
+	color: #ef5350;
+}
+.mat-icon {
+    background-repeat: no-repeat;
+    display: inline-block;
+    fill: currentColor;
+    color: #ef5350;
+}
+
+.example-headers-align,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+  
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+mat-form-field {
+  margin-right: 12px;
+}
+

@@ -1,0 +1,201 @@
+.tableDiv
+{
+/* 	overflow: scroll; */
+}
+.table-Row
+{
+	display: -webkit-box;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    width: fit-content;
+}
+.full-width
+{
+    width: 100% ;
+    
+	
+}
+.graphPanel
+{
+	display: flex;
+	flex-direction: row;
+	justify-content:  center;
+	align-items: center;
+	align-content: center;
+	overflow: auto;
+	
+}
+.carousel-caption {
+    position: absolute;
+    right: 2px;
+    bottom: 20px;
+    left: 2px;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #754b4b;
+    text-align: center;
+    align-content: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+        height: 100%;
+    width: 100%;
+   
+}
+
+th.mat-header-cell {
+    text-align: left;
+     /* font-weight: 80; */
+    /* font-size: small !important; */
+    background: #ef5350 !important;
+    color: #ffffff;
+    
+}
+.carousel {
+    position: relative;
+    width: 100%;
+    background: black;
+}
+::ng-deep   .mat-paginator-container
+{
+  justify-content: flex-start;
+}
+td, th {
+  width: auto;
+}
+.mat-expansion-panel-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 24px;
+    border-radius: inherit;
+    color: #ffffff !important;
+    background: linear-gradient(60deg, #ef5350, #e53935) !important;
+}
+.mat-expansion-panel-header-description, .mat-expansion-panel-header-title 
+
+{
+    color: #ffffff !important;
+}
+::ng-deep .mat-expansion-panel-content
+{
+    background: #ffffff;
+}
+
+::ng-deep .mat-sort-header-stem, ::ng-deep .mat-sort-header-indicator 
+{
+  
+    color: #ffffff !important;
+}
+
+
+tr.mat-header-row
+{
+	background-color: pink;
+	color: cornflowerblue !important;
+}
+.justify-content-center {
+    display: flex !important;
+    justify-content: center !important;
+}
+img {
+    vertical-align: middle;
+    border-style: none;
+	width: 100%;
+	max-height: 400px;
+	filter: blur(5px);
+}
+.card-contant
+{
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	
+}
+
+
+
+
+table {
+  width: 100%;
+ white-space:nowrap !important; 
+ background: inherit !important;
+ 
+}
+.myway
+{
+	background: black;
+}
+.chart-table{
+display: flex;
+align-content:space-between;
+flex-direction: column;
+overflow: auto;
+
+max-height: 260px; 	
+}
+
+.main-div
+{
+	margin: 10px 10px ;
+}
+.prop-row
+{
+	width:25%;
+	margin-bottom: 10px;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: auto;
+  padding: 0px 10px 0px 10px;
+}
+td.mat-cell
+{
+    padding: 0px 10px 0px 10px;
+   
+}
+.div-center
+{
+	display: flex;
+	justify-content: center;
+	background: cornflowerblue
+	
+	
+}
+th.mat-header-cell {
+   
+    font-size: initial !important;
+    font-weight: 550 !important;
+    padding: 0px 10px 0px 10px;
+}
+tr.mat-header-row {
+    height: 56px;
+    background: cornflowerblue;
+}
+.mat-paginator {
+    display: block;
+    background: linear-gradient(60deg, #ef5350, #e53935) !important;
+    color: #ffffff !important;
+  justify-content: right;
+     
+
+}
+
+.mat-paginator-sticky {
+ 
+  
+  bottom: 0px;
+  left: 0px;
+  position: sticky;
+  z-index: 10;
+}

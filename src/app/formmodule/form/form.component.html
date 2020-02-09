@@ -1,0 +1,322 @@
+<!-- <link  href="http://localhost:8085/api/1/file/form-customization.css" type="text/css" rel="stylesheet"> -->
+<!-- <link rel="stylesheet" [href]="passURL"> -->
+
+
+
+<!-- <link rel="stylesheet" href="./assets/css/form-customization.css"> -->
+<!-- [href]="sanitizer.bypassSecurityTrustResourceUrl(cssURL)">  -->
+<!-- [href]="sanitizer.bypassSecurityTrustResourceUrl(cssURL)"> -->
+<div *ngIf="frm"> 
+<div class="{{frm.theme}}">
+<div class="{{frm.theme}}-custom">
+<div  class="main-form-class" [style.background-color]=frm.bgColor [style.max-width.px]=frm.formwidth>
+
+
+<!-- <table > -->
+<!-- <tr> -->
+<!-- 	<td > -->
+	
+<!-- 	<strong>Choose background color</strong> -->
+	
+<!-- 	</td> -->
+<!-- 	<td class=bgChooseColor> -->
+<!-- 	 <input  cpPosition='bottom' cpOutputFormat="hex" value="{{frm.bgColor | uppercase}}" [(colorPicker)]="frm.bgColor"  [style.background]="frm.bgColor"/> -->
+<!-- 	</td> -->
+<!-- </tr>  -->
+<!-- </table> -->
+
+
+
+<!-- 	<div class="example-form"> -->
+<!-- 	<table width="100%" border="0"> -->
+<!-- 	<tr> -->
+<!-- 		<td class="example-full-width"> -->
+<!-- 	<div [froalaEditor] > -->
+<!-- <div id="froala-editor"  [froalaEditor] [(froalaModel)]="frm.title"> -->
+<!-- 			{{frm.title|titlecase}} -->
+<!-- 			</div> -->
+<!-- 			<div [froalaView]="frm.title"></div> -->
+<!-- 		<ckeditor [editor]="editor"  [(ngModel)]="frm.title"> -->
+<!-- 	</ckeditor> -->
+<!-- <ck-editor inline="true" name="editor1" [(ngModel)]="frm.title" skin="moono-lisa" language="en" ></ck-editor> -->
+			
+<!-- 		</td> -->
+<!-- 		<td> -->
+<!-- 			<mat-icon   class="setting-icon" svgIcon="Setting" (click)="showSetting(field)"></mat-icon> -->
+			
+<!-- 		</td> -->
+<!-- 		<div>{{frm.title}}</div> -->
+		
+		
+<!-- 	</tr> -->
+	
+<!--   	</table> -->
+<!-- 	</div> -->
+
+	<form class="{{theme}}" >
+	<div class="title">
+		<div [froalaView]="frm.title">
+		
+		</div>
+		<button mat-icon-button [matMenuTriggerFor]="menu">
+  					<mat-icon svgIcon="Morevert"></mat-icon>
+		</button>
+		<mat-menu #menu="matMenu">
+					<button mat-menu-item (click)="showSetting(frm)">
+			    		<mat-icon svgIcon="Setting" class="setting-icon"></mat-icon>
+		    			<span>Properties</span>
+		  			</button>
+  		</mat-menu>
+	</div>
+			<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+			<div cdkDrag *ngFor="let field of formField" [ngSwitch]="field.type">
+		<div *ngSwitchCase="'textbox'" >
+<!-- 				     [formControl]="field.frmControl" -->				
+				
+				<mat-form-field   class="example-full-width">
+				    <input matInput   
+				    name="{{field.title}}"
+					[formControl]="field.frmControl"
+					placeholder="{{field.title}}"
+				    value="" required="{{field.required}}">
+				    <button mat-icon-button matSuffix  [matMenuTriggerFor]="menu">
+  						<mat-icon svgIcon="Morevert"></mat-icon>
+					</button>
+		  		</mat-form-field>
+		  		
+		 		<mat-menu #menu="matMenu">
+					<button mat-menu-item (click)="showSetting(field)">
+			    		<mat-icon svgIcon="Setting" class="setting-icon" ></mat-icon>
+		    			<span>Properties</span>
+		  			</button>
+  					<button mat-menu-item (click)="remove(field)">
+    					<mat-icon svgIcon="Delete" class="delete-icon"></mat-icon>
+    					<span>Delete</span>
+  					</button>
+				</mat-menu>
+				
+		  		
+<!-- 		  		<mat-icon   class="setting-icon" svgIcon="Setting" (click)="showSetting(field)"></mat-icon> -->
+<!-- 			  	<mat-icon  class="delete-icon" svgIcon="Delete" (click)="remove(field)"></mat-icon> -->
+		  		
+<!-- 		  		<a  tabindex="-1" style="padding-left:30px;"(click)="showSetting(field)" class="glyphicon glyphicon-cog"></a>  -->
+<!--   				<a  tabindex="-1" style="padding-left:5px;"(click)="remove(field)" class="glyphicon glyphicon-remove"></a> -->
+  				
+  				
+  				
+  		</div>
+  		<div *ngSwitchCase="'textarea'">
+  				<mat-form-field class="example-full-width" >
+    				<textarea matInput  rows="4" cols="20" 
+    				[formControl]="field.frmControl"></textarea>
+    				 <mat-placeholder class="placeholder">{{field.title}}</mat-placeholder>
+<!--     				<mat-error *ngIf="field.frmControl.hasError('required')"> -->
+<!--       					{{field.title}} is <strong>required</strong> -->
+<!--     				</mat-error> -->
+<!--     				<mat-error *ngIf="field.frmControl.hasError('maxlength')"> -->
+<!--       					Maximum allower character for {{field.title}} is <strong>{{field.maxlen}}</strong> -->
+<!--     				</mat-error> -->
+<!--     				<mat-error *ngIf="field.frmControl.hasError('minlength')"> -->
+<!--       					Minimum <strong>{{field.minlen}}</strong> characters required for <strong>{{field.title}}</strong> -->
+<!--     				</mat-error> -->
+					<button mat-icon-button matSuffix [matMenuTriggerFor]="menu">
+  						<mat-icon svgIcon="Morevert"></mat-icon>
+					</button>
+  				</mat-form-field>
+  			
+		 		<mat-menu #menu="matMenu">
+			  		
+					<!-- 		  <button mat-menu-item disabled> -->
+					<button mat-menu-item (click)="showSetting(field)">
+			    		<mat-icon svgIcon="Setting" class="setting-icon" ></mat-icon>
+		    			<span>Properties</span>
+		  			</button>
+  					<button mat-menu-item (click)="remove(field)">
+    					<mat-icon svgIcon="Delete" class="delete-icon" ></mat-icon>
+    					<span>Delete</span>
+  					</button>
+				</mat-menu>
+<!--   				<mat-icon   class="setting-icon" svgIcon="Setting" (click)="showSetting(field)"></mat-icon> -->
+<!-- 		  		<mat-icon  class="delete-icon" svgIcon="Delete" (click)="remove(field)"></mat-icon> -->
+<!--   				<a  tabindex="-1" style="padding-left:30px;"(click)="showSetting(field)" class="glyphicon glyphicon-cog"></a>  -->
+<!--   				<a  tabindex="-1" style="padding-left:5px;"(click)="remove(field)" class="glyphicon glyphicon-remove"></a> -->
+  		</div>
+  		<!--  section start -->
+  		<div *ngSwitchCase="'section'" class="inline">
+  					<mat-list class="example-full-width" >
+  						<mat-list-item class="section-text">{{field.title}}</mat-list-item>
+  							<mat-divider></mat-divider>
+     				</mat-list>
+     				<button mat-icon-button matSuffix [matMenuTriggerFor]="menu">
+  						<mat-icon svgIcon="Morevert"></mat-icon>
+					</button>
+			 		<mat-menu #menu="matMenu">
+						<button mat-menu-item (click)="showSetting(field)">
+				    		<mat-icon svgIcon="Setting" class="setting-icon" ></mat-icon>
+			    			<span>Properties</span>
+			  			</button>
+	  					<button mat-menu-item (click)="remove(field)">
+	    					<mat-icon svgIcon="Delete" class="delete-icon" ></mat-icon>
+	    					<span>Delete</span>
+	  					</button>
+					</mat-menu>
+		</div>
+  		<!--  section end -->
+  		
+  		<div *ngSwitchCase="'slide-toggle'" class="inline">
+      	
+      			<mat-slide-toggle
+      					class="example-full-width"
+      					[color]="white"
+          				[checked]="field.checked"
+          				[disabled]="field.disabled">{{field.title}}
+      			</mat-slide-toggle>
+      			<button mat-icon-button matSuffix [matMenuTriggerFor]="menu">
+  						<mat-icon svgIcon="Morevert"></mat-icon>
+				</button>
+			
+      			
+		 		<mat-menu #menu="matMenu">
+			  		
+					<!-- 		  <button mat-menu-item disabled> -->
+					<button mat-menu-item (click)="showSetting(field)">
+			    		<mat-icon svgIcon="Setting" class="setting-icon" ></mat-icon>
+		    			<span >Properties</span>
+		  			</button>
+  					<button mat-menu-item (click)="remove(field)">
+    					<mat-icon svgIcon="Delete" class="delete-icon"></mat-icon>
+    					<span>Delete</span>
+  					</button>
+				</mat-menu>
+<!--       			<mat-icon   class="setting-icon" svgIcon="Setting" (click)="showSetting(field)"></mat-icon> -->
+<!-- 		  		<mat-icon  class="delete-icon" svgIcon="Delete" (click)="remove(field)"></mat-icon> -->
+<!--       			<a  tabindex="-1" style="padding-left:30px;"(click)="showSetting(field)" class="glyphicon glyphicon-cog"></a>  -->
+<!--   				<a  tabindex="-1" style="padding-left:5px;"(click)="remove(field)" class="glyphicon glyphicon-remove"></a>	 -->
+  		</div>
+		<div *ngSwitchCase="'date-picker'">
+		      <mat-form-field class="example-small-width">
+		      		<input  matInput  [min]="field.mindate"  
+		      		required="{{field.required}}"
+  					[max]="field.mindate" 
+  					[matDatepicker]="picker" 
+  					 (dateInput)="addEvent('input', $event)"
+  					 (dateChange)="addEvent('change', $event)"		>
+  					  <mat-placeholder class="placeholder">{{field.title}}</mat-placeholder>
+  					<mat-datepicker-toggle  matSuffix [for]="picker"></mat-datepicker-toggle>
+  					<mat-datepicker touchUi  #picker></mat-datepicker>
+  						<button mat-icon-button matSuffix [matMenuTriggerFor]="menu">
+  						<mat-icon svgIcon="Morevert"></mat-icon>
+					</button>
+  					
+		      </mat-form-field>
+		      
+		 		<mat-menu #menu="matMenu">
+			  		
+					<!-- 		  <button mat-menu-item disabled> -->
+					<button mat-menu-item (click)="showSetting(field)">
+			    		<mat-icon svgIcon="Setting" class="setting-icon"></mat-icon>
+		    			<span>Properties</span>
+		  			</button>
+  					<button mat-menu-item (click)="remove(field)">
+    					<mat-icon svgIcon="Delete" class="delete-icon"></mat-icon>
+    					<span>Delete</span>
+  					</button>
+				</mat-menu>
+<!-- 		      	<mat-icon   class="setting-icon" svgIcon="Setting" (click)="showSetting(field)"></mat-icon> -->
+<!-- 		  		<mat-icon  class="delete-icon" svgIcon="Delete" (click)="remove(field)"></mat-icon> -->
+<!-- 		      <a  tabindex="-1" style="padding-left:30px;"(click)="showSetting(field)" class="glyphicon glyphicon-cog"></a>  -->
+<!--   			  <a  tabindex="-1" style="padding-left:5px;"(click)="remove(field)" class="glyphicon glyphicon-remove"></a>	 -->
+		</div> 		  		
+  		
+  		<div *ngSwitchCase="'dropdown'" >
+  				<mat-form-field class="example-half-width">
+    				<mat-placeholder class="placeholder">{{field.title}}</mat-placeholder>
+    				<mat-select  class="placeholder" [(value)]="field.selectedOption" 
+    				[formControl]="field.frmControl">
+    				
+    					<mat-option *ngFor="let option of field.options" value="option">{{option}}</mat-option>
+    				</mat-select>
+    				<mat-error *ngIf="field.frmControl.hasError('required')">
+      					Selection for {{field.title}} is <strong>required</strong>
+    				</mat-error>
+    				<button mat-icon-button matSuffix [matMenuTriggerFor]="menu">
+  						<mat-icon svgIcon="Morevert"></mat-icon>
+					</button>
+    			</mat-form-field>
+    			<mat-menu #menu="matMenu">
+			  		
+					<!-- 		  <button mat-menu-item disabled> -->
+					<button mat-menu-item (click)="showSetting(field)">
+			    		<mat-icon svgIcon="Setting" class="setting-icon"></mat-icon>
+		    			<span>Properties</span>
+		  			</button>
+  					<button mat-menu-item (click)="remove(field)">
+    					<mat-icon svgIcon="Delete" class="delete-icon"></mat-icon>
+    					<span>Delete</span>
+  					</button>
+				</mat-menu>
+<!--   				<mat-icon   class="setting-icon" svgIcon="Setting" (click)="showSetting(field)"></mat-icon> -->
+<!-- 		  		<mat-icon  class="delete-icon" svgIcon="Delete" (click)="remove(field)"></mat-icon>	 -->
+<!--   				<a tabindex="-1"  style="padding-left:30px;"(click)="showSetting(field)" class="glyphicon glyphicon-cog"></a>  -->
+<!--   				<a tabindex="-1"  style="padding-left:5px;"(click)="remove(field)" class="glyphicon glyphicon-remove"></a> -->
+  		</div>
+  		
+			
+<!-- 			<div *ngSwitchCase="'textbox'" class="col-md-9" -->
+<!-- 				style="padding-top: 12px; padding-bottom: 12px;"> -->
+<!-- 				<div class="form-group"> -->
+<!-- 					<label>{{field.title}}</label> <input type="text" -->
+<!-- 						class="form-control"> -->
+
+<!-- 				</div> -->
+
+<!-- 			</div> -->
+
+	<!-- 		<div *ngSwitchCase="'textarea'" class="form-group" class="col-md-9"
+				style="padding-top: 12px;; padding-bottom: 12px;">
+				<label>{{field.title}}</label>
+				<textarea rows="4" cols="50" class="form-control"></textarea>
+			</div>
+			<div *ngSwitchCase="'dropdown'" class="form-group" class="col-md-9"
+				style="padding-top: 12px;; padding-bottom: 12px;">
+				<label>{{field.title}}</label> ` <select class="custom-select">
+					<option *ngFor="let option of field.options">{{option}}</option>
+
+				</select>
+			</div>
+			<div class="col-md-3"
+				style="padding-top: 12px;; padding-bottom: 12px;">
+				<a href="#" (click)="showSetting(field)"
+					class="glyphicon glyphicon-cog"></a> <a href="#"
+					(click)="remove(field)" class="glyphicon glyphicon-remove"></a>
+			</div>
+		</div>
+ -->
+ 	
+
+</div>
+</div>
+
+<!-- <div style="padding-top:30px;"> -->
+
+<!-- </div> -->
+
+	</form>
+
+
+
+
+
+</div>
+</div>
+<p class="example-full-width">
+<table>
+<tr><td>
+<button type="submit" (click)="saveForm()"  class="btn btn-success mat-raised-button" >Save</button></td>
+
+
+</tr>
+</table>
+<p></p>
+</div>
+

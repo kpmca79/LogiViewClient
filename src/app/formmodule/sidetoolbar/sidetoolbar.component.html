@@ -1,0 +1,40 @@
+<div class="logo">
+    <a href="https://www.creative-tim.com" class="simple-text">
+        <div class="logo-img">
+            <img src="/assets/img/holodox-logo.jpg"/>
+        </div>
+       HOLODOX
+    </a>
+</div>
+<div class="sidebar-wrapper">
+
+           <ul cdkDropList 
+        			 #studentsList="cdkDropList"
+					 [cdkDropListData]="formFields" 
+					 (cdkDropListDropped)="drop($event)" class="nav">        
+
+				<li *ngFor="let student of formFields" cdkDrag> 
+			
+					<a class="nav-link">
+					 <i *ngIf="student.name==='TextBox'" class="material-icons">text_fields</i>
+				 	 <i *ngIf="student.name==='Slide Toggle'" class="material-icons">toggle_off</i>
+				 	 <i *ngIf="student.name==='TextArea'" class="material-icons">short_text</i>
+				 	 <i *ngIf="student.name==='DropDown'" class="material-icons">format_list_bulleted</i>
+				 	 <i *ngIf="student.name==='Date Picker'" class="material-icons">calendar_today</i>
+						<p>{{student.name}}</p> 
+					</a>
+			
+					 
+                </li> 
+            
+            </ul>
+				
+            </div>
+            <div cdkDropList #students2List="cdkDropList"
+				[cdkDropListData]="formFields2" (cdkDropListDropped)="drop($event)"
+				[cdkDropListConnectedTo]="[studentsList]" class="form-main" id="form">
+			   	
+            </div>
+           
+           
+

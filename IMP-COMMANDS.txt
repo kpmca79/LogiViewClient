@@ -1,0 +1,240 @@
+GENERATE NEW COMPOMENT UNDER FORM MODULE
+==============================================
+D:\Angular\holodox\LogiViewClient>ng g c formmodule/thankspage
+Two or more projects are using identical roots. Unable to determine project using current working directory. Using default workspace project instead.
+Two or more projects are using identical roots. Unable to determine project using current working directory. Using default workspace project instead.
+CREATE src/app/formmodule/thankspage/thankspage.component.html (25 bytes)
+CREATE src/app/formmodule/thankspage/thankspage.component.spec.ts (656 bytes)
+CREATE src/app/formmodule/thankspage/thankspage.component.ts (286 bytes)
+CREATE src/app/formmodule/thankspage/thankspage.component.scss (0 bytes)
+UPDATE src/app/formmodule/Formcomponents.module.ts (860 bytes)
+========================================================================
+
+
+MATERIAL PROJECT
+==========================================================
+ng new angmaterial : CREATE PROJECT
+npm i --save @angular/cdk : INSTALL CDK, COMPONENET DEVELOPMENT KIT (THIS IS DEPENDANCE FOR MATERIAL)
+INCLUDE ALL PACKAGES AS FOLLOWING COMMAND
+==============
+npm i --save @angular/cdk @angular/material @angular/animations hammerjs
+npm i --save  @angular/material @angular/animations hammerjs
+YOU CAN FIND THEMES AT 
+==============
+D:\Angular\angmaterial\node_modules\@angular\material\prebuilt-themes
+you can import these themes in project by importing in style.css as below
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+NOW IMPORT ANIMATION MODULE IN app-module.ts
+===============
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
+also add it into imports
+===============
+IMPORT MATERIAL COMPONENTS
+import {MatCheckboxModule,
+		MatRadioModule} from '@angular/material';
+
+============================
+
+instal floara text editor (https://www.froala.com/wysiwyg-editor/docs/framework-plugins/angularjs-2-4)
+npm install angular-froala-wysiwyg --save
+npm update froala-editor --save
+
+
+<!-- index.html -->
+<link href="node_modules/froala-editor/css/froala_editor.pkgd.min.css" rel="stylesheet">
+<link href="node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+app.module.ts
+
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+
+@NgModule({
+   ...
+   imports: [FroalaEditorModule.forRoot(), FroalaViewModule.forRoot() ... ],
+   ...
+})
+
+angular.json
+
+stylesheet
+"styles": [
+  "styles.css",
+  "./node_modules/froala-editor/css/froala_editor.pkgd.min.css",
+  "./node_modules/froala-editor/css/froala_style.min.css",
+  "./node_modules/font-awesome/css/font-awesome.css"
+]
+
+script
+"scripts": [
+  "./node_modules/jquery/jquery.min.js",
+  "./node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+]
+actually jquery.min.js
+is under  ./node_modules/jquery/dist/jquery.min.js",
+
+======================================
+INTEGRATING CKEDITOR 5 WITH ANGULAR APP
+========================================
+
+================================
+ERROR WITH CK
+================================
+CK GIVES DUPLICATE CKMODULE ERROR WITH LATEST VERSION SO I USED FOLLOWING VERSIONS
+npm install @ckeditor/ckeditor5-angular@1.0.1 --save
+npm install @ckeditor/ckeditor5-build-classic@12.0.0 --save
+npm install @ckeditor/ckeditor5-build-inline@12.0.0 --save
+================================
+
+https://ckeditor.com/docs/ckeditor5/latest/builds/guides/integration/frameworks/angular.html
+
+npm install --save @ckeditor/ckeditor5-angular
+npm install --save @ckeditor/ckeditor5-build-classic
+
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
+@NgModule( {
+    imports: [
+        ...
+        CKEditorModule,
+        ...
+    ],
+    ...
+} )
+
+<script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/inline/ckeditor.js"></script>
+
+=========================
+ckeditor inline
+======================
+https://ckeditor.com/docs/ckeditor5/latest/api/editor-inline.html
+
+npm install --save @ckeditor/ckeditor5-build-inline
+import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
+add in index.html <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/inline/ckeditor.js"></script>
+public Editor = InlineEditor;
+
+=============================
+npm-ckeditor
+=============================
+https://www.npmjs.com/package/ngx-ckeditor
+npm i -S ngx-ckeditor
+import { CKEditorModule } from 'ngx-ckeditor';
+
+@NgModule({
+  imports: [
+    // ...
+    CKEditorModule
+  ],
+  // ...
+<ck-editor name="editor1" [(ngModel)]="editorValue" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+
+========================================================
+AG-GRID COMMUNITY
+=======================================================
+https://www.ag-grid.com/angular-getting-started/
+ng new my-app --style scss --routing false
+npm install --save ag-grid-community ag-grid-angular 
+or
+npm install --save ag-grid-angular ag-grid
+
+====================================
+CREATING APP WITH SCSS
+================================
+ng new my-app --style scss --routing false
+
+=============================================
+npm ui carasual
+npm install angular-ui-carousel --save
+
+https://www.npmjs.com/package/angular-ui-carousel
+========================
+for carousel install bootstrap
+npm install bootstrap --save
+npm install --save @ng-bootstrap/ng-bootstrap
+https://www.npmjs.com/package/@ng-bootstrap/ng-bootstrap
+https://ng-bootstrap.github.io/#/components/carousel/api
+https://stackblitz.com/run?file=app/carousel-config.ts
+
+npm install --save @ng-bootstrap/ng-bootstrap
+=================================================================\
+INSTALL GOOGLE CHART 
+npm install angular-google-charts
+
+=================================================================\
+
+==============================================
+COLOR PICKER
+============================================
+"ngx-color-picker": "^7.3.1",
+npm install ngx-color-picker --save
+============================================
+
+
+$ ng update @angular/cli @angular/core
+
+
+=============================================
+TIME PICKER
+====================================
+npm install amazing-time-picker --save
+https://www.npmjs.com/package/amazing-time-picker
+
+app-module.tx
+import { AmazingTimePickerModule } from 'amazing-time-picker';
+and add it in imports
+
+usage
+Whenver you want to use add in component.ts following
+import { AmazingTimePickerService } from 'amazing-time-picker';
+
+constructor(
+    private atp: AmazingTimePickerService
+  )
+selectedTime = "00:00";
+
+setTime(ev: any) {
+    const amazingTimePicker = this.atp.open();
+    amazingTimePicker.afterClose().subscribe(time => {
+      this.selectedTime=time;
+      console.log(time);
+    });
+  }
+  
+in html
+<input  [(ngModel)]="selectedTime" (click)="setTime($event)"/>
+
+====================================
+Hichart charting:
+
+npm install highcharts-angular --save
+npm install highcharts --save
+====================================
+
+Machine Installation
+=========================================================================
+Install node.js
+https://nodejs.org/dist/v10.5.0/node-v10.5.0-x64.msi
+
+Angular CLI: 8.1.2
+Node: 10.15.0
+OS: win32 x64
+Angular: 2.4.10
+... common, compiler, compiler-cli, core, forms, http
+... platform-browser, platform-browser-dynamic
+
+Package                      Version
+------------------------------------------------------
+@angular-devkit/architect    0.801.2 (cli-only)
+@angular-devkit/core         8.1.2 (cli-only)
+@angular-devkit/schematics   8.1.2 (cli-only)
+@angular/router              3.4.10
+@angular/tsc-wrapped         0.5.2
+@ngtools/json-schema         1.1.0
+@ngtools/webpack             1.10.2
+@schematics/angular          8.1.2 (cli-only)
+@schematics/update           0.801.2 (cli-only)
+rxjs                         5.5.12
+typescript                   2.0.10
+webpack                      2.2.0
+
+

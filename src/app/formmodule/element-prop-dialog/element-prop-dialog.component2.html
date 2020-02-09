@@ -1,0 +1,87 @@
+ <div class="container-fluid">
+ <h2 mat-dialog-title >Edit Property</h2>
+ <mat-dialog-content >
+
+	<table width="100%" border="0" style="padding-bottom: 5px;">
+		<tr>
+		<mat-form-field   class="example-full-width">
+				    <input matInput placeholder="Title"  [(ngModel)]="data1.title" >
+		</mat-form-field>
+<!-- 			<td>Title</td> -->
+<!-- 			<td style="padding-left: 20px"><input [(ngModel)]="data1.title"></td> -->
+		</tr>
+		<tr>
+		<td colspan="2"><mat-slide-toggle [(ngModel)]="data1.required">Required</mat-slide-toggle></td>
+		</tr>
+		<tr>
+		<td>{{data1.required}}</td>
+		</tr>
+
+		<tr>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+
+		<tr *ngIf="data1.options.length>0">
+
+			<td><b>Options</b></td>
+			<td align="right">
+
+				<button type="button" class="btn btn-success mat-raised-button"
+					rounded="true" size="sm" (click)="add()">ADD</button>
+
+			</td>
+
+		</tr>
+
+		<tr>
+			<td colspan="2">
+				<table width="100%" border="0">
+					<tr *ngFor="let option of data1.options; let id = index"
+						height="45px">
+
+						<td><span (keyup)="changeValue(id, 'option', $event)"
+							(blur)="updateList(id, 'name', $event)" contenteditable="true">{{option}}</span>
+
+						</td>
+						<td><span class="table-remove">
+								<button type="button" class="btn btn-danger mat-raised-button"
+									rounded="true" size="sm" (click)="remove(id)">Remove</button>
+						</span></td>
+
+					</tr>
+
+				</table>
+			</td>
+
+
+		</tr>
+<!-- 		<tr *ngIf="data1.validation.length>0" style="overflow: hidden"> -->
+<!-- 			<td colspan="2"><angular2-multiselect [data]="valData" -->
+<!-- 					[(ngModel)]="selectedValidations" [settings]="dropdownSettings" -->
+<!-- 					(onSelect)="onItemSelect($event)" -->
+<!-- 					(onDeSelect)="OnItemDeSelect($event)" -->
+<!-- 					(onSelectAll)="onSelectAll($event)" -->
+<!-- 					(onDeSelectAll)="onDeSelectAll($event)"> </angular2-multiselect></td> -->
+<!-- 		</tr> -->
+		 
+		
+		<tr *ngIf="data1.validation.length>0" style="overflow: hidden"> 
+				<td colspan="2">
+						<mat-select placeholder="Validation" [(ngModel)]="selectedValue" multiple>
+						<mat-option *ngFor="let val of valData" [value]="val.viewValue">{{val.viewValue}}</mat-option>
+						</mat-select>
+				</td>
+			</tr>
+			
+		
+		
+
+	</table>
+
+	</mat-dialog-content>
+ <mat-dialog-actions>
+            <button class="btn btn-danger mat-raised-button" mat-button mat-dialog-close>Cancel</button>
+            
+            <button class="btn btn-success mat-raised-button" mat-button mat-dialog-close=”true”>Save</button>
+ </mat-dialog-actions>
+ </div>

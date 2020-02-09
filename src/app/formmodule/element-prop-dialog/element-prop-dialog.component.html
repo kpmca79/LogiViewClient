@@ -1,0 +1,180 @@
+
+<div class="main-content">
+	<div class="container-fluid">
+		<div class="row">
+
+			<div class="col-lg-12 col-md-12">
+
+				<div class="card">
+					<div class="card-header card-header-tabs card-header-danger" id="property-header">
+						<div class="nav-tabs-navigation">
+							<div class="nav-tabs-wrapper">
+								<span class="nav-tabs-title"><b>{{data1.type |
+										uppercase }}</b></span>
+								<ul class="nav nav-tabs" data-tabs="tabs">
+									<li class="nav-item"><a mat-button class="nav-link active"
+										href="#profile" data-toggle="tab"> <i
+											class="material-icons">settings_applications</i> Properties
+											<div class="ripple-container"></div>
+									</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="tab-content">
+							<div class="tab-pane active" id="properties">
+								<table class="table">
+									<tbody>
+										<ng-container *ngIf="data1.type=='form'">
+											<tr>
+												<td colspan="3">
+												
+												
+													<div id="froala-editor" [froalaEditor] [(froalaModel)]="data1.title"></div>
+											
+											
+												</td>
+											</tr>
+											<tr>
+												<td colspan="3"><mat-form-field
+														class="example-full-width"> <mat-select
+														placeholder="Status" [(value)]="data1.frmstatus">
+													<mat-option value="Active">Active</mat-option> <mat-option
+														value="Pending">Pending</mat-option> </mat-select> </mat-form-field></td>
+											</tr>
+										</ng-container>
+										<ng-container *ngIf="data1.type!='form'">
+										
+											<tr >
+												<td colspan="3">
+													<mat-form-field   >
+				 									   <input  matInput placeholder="Name" name="fname" [(ngModel)]="data1.fname" >
+													</mat-form-field>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="3">
+													<mat-form-field   class="example-full-width">
+				 									    <input  matInput placeholder="Place holder" name="title" [(ngModel)]="data1.title" >
+													</mat-form-field>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="3">
+													<mat-form-field   class="example-full-width">
+				 									        <input  matInput placeholder="Error message" name="message" [(ngModel)]="data1.message" >
+													</mat-form-field>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="3"><mat-slide-toggle
+														[(ngModel)]="data1.required">Is
+													Mandatory?</mat-slide-toggle></td>
+											</tr>
+										</ng-container>
+										<ng-container *ngIf="data1.type=='slide-toggle'">
+											<tr>
+												<td colspan="3">
+													<mat-slide-toggle class="example-full-width" [(ngModel)]="data1.checked" name="checked">Checked ?</mat-slide-toggle>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="3">
+													<mat-slide-toggle class="example-full-width" [(ngModel)]="data1.disabled" name="disabled">Disabled ?</mat-slide-toggle>
+												</td>
+											</tr>
+											<tr>
+												<td colspan="3">
+													<mat-form-field   class="example-full-width">
+				 											<mat-select placeholder="Chose Color"  [(value)]="data1.selectedColor">
+    															<mat-option *ngFor="let clr of data1.color" value="{{clr}}">{{clr}}</mat-option>
+    														</mat-select>
+													</mat-form-field>
+												</td>
+											</tr>
+										</ng-container>
+										<ng-container  *ngIf="data1.type=='date-picker'"></ng-container>
+										<ng-container *ngIf="data1.type==='textbox' || data1.type==='textarea'" >
+												<tr>
+													<td colspan="3">	
+														<mat-form-field class="example-full-width">
+															<input  matInput placeholder="Minimum character required" name="minlen" [(ngModel)]="data1.minlen" >
+														</mat-form-field>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="3">	
+														<mat-form-field>
+															<input  matInput placeholder="Maximum character allowed" name="maxlen" [(ngModel)]="data1.maxlen" >
+														</mat-form-field>
+													</td>
+												</tr>
+										</ng-container>
+										<ng-container *ngIf="data1.type==='textbox'" >
+											<tr>
+												<td colspan="3">	
+													<mat-form-field>
+													  <mat-select placeholder="Special Field" [(value)]="data1.selectedValidations">
+										    			  <mat-option *ngFor="let validation of valData" [value]="validation.viewValue">
+									    	  				{{validation.viewValue}}
+									    				  </mat-option>
+								  						</mat-select>
+													</mat-form-field>
+												</td>
+											</tr>
+		    							</ng-container>
+										<ng-container *ngIf="data1.type=='dropdown'" >
+											<tr>
+												<td colspan="3">
+														<mat-slide-toggle  name="multiSelect">Allow multiple selection ?</mat-slide-toggle>
+		 										</td>
+											</tr>
+											<tr >
+												<th colspan="2"><b>Selection Options</b></th>
+												<td align="right"><a mat-button (click)="add()"
+													data-toggle="tab"> <i class="material-icons">add_box</i>Add
+														<div class="ripple-container"></div>
+												</a> <!-- 												<button type="button" class="btn btn-primary mat-raised-button" -->
+													<!-- 								    	   				rounded="true" size="sm" (click)="add()">ADD</button> -->
+												</td>
+	
+											</tr>
+											<tr>
+												<td colspan="3">
+													<table width="100%">
+														<tr *ngFor="let option of data1.options; let id = index">
+	
+															<td width="70%"><span
+																(keyup)="changeValue(id, 'option', $event)"
+																(blur)="updateList(id, 'name', $event)"
+																contenteditable="true">{{option}}</span></td>
+															<td><span class="table-remove"> <a mat-button
+																	(click)="remove(id)" data-toggle="tab"> <i
+																		class="material-icons">close</i>Remove
+																		<div class="ripple-container"></div>
+																</a> <!-- 																	<button type="button" class="btn btn-primary mat-raised-button" -->
+																	<!-- 																			rounded="true" size="sm" (click)="remove(id)">Remove</button> -->
+															</span></td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</ng-container>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="sticky-bottom" id="bottom-buttons">
+
+					<button class="btn btn-danger mat-raised-button" mat-button
+						mat-dialog-close>Cancel</button>
+					<button class="btn btn-success mat-raised-button" mat-button
+						mat-dialog-close=”true”>Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

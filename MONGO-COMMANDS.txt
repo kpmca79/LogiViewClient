@@ -1,0 +1,10 @@
+CONNECT TO ATLAS:
+mongo "mongodb://cluster0-shard-00-00-jxeqq.mongodb.net:27017,cluster0-shard-00-01-jxeqq.mongodb.net:27017,cluster0-shard-00-02-jxeqq.mongodb.net:27017/aggregations?replicaSet=Cluster0-shard-0" --authenticationDatabase admin --ssl -u m121 -p aggregations --norc
+
+
+AGGREGATION:
+SYNTAX: db.col.aggregate([{stage1},{stage2},...],{options})
+options: {allowDiskUse:true}
+stages: [$match:{price:{$gt:100,$lt:100}},$project:{ _id:0,name:1,price:1}]
+
+Here: $match and $project is aggregation operator where as $gt and $lt is query operator

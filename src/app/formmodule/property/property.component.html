@@ -1,0 +1,144 @@
+<div class="head">FORM PROPERTIES</div>
+<div class="sidebar-wrapper">
+<div *ngIf="type=='form' && frm">
+<mat-accordion class="example-headers-align">	
+  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+  		<mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'" >
+      		<mat-panel-title>
+        		Page Background
+      		</mat-panel-title>
+      		<mat-panel-description>
+      	
+        		<mat-icon>pages</mat-icon>
+      		</mat-panel-description>
+    	</mat-expansion-panel-header>
+		<div class="row">
+			<div class="column">
+				<input style="display: none" (change)="onFileSelected()"
+					   #fileInput	type="file" id="file">
+			
+				<button type="button" mat-raised-button color="primary"
+				(click)="fileInput.click()">Choose Local File</button>
+				<label class="label-between">OR</label>
+			</div>
+		</div>
+		<div class="row">	
+			<div class="column">	
+			<mat-form-field  class="example-full-width">
+				<input matInput  placeholder="From Public URL" 
+					[(ngModel)]="imageURL" value="">
+				
+<!-- 			 <button mat-icon-button matSuffix  [matMenuTriggerFor]="uploadFromURL"> -->
+<!--   						<mat-icon matSuffix svgIcon="cloud_upload"></mat-icon> -->
+<!-- 					</button>		 -->
+
+			
+<!-- 						<button  matSuffix type="button" mat-raised-button color="primary"  -->
+<!-- 					(click)="uploadFromURL()">Upload</button>			 -->
+			</mat-form-field>
+			<button  mat-fab color="primary">
+    				<mat-icon (click)="uploadFromURL()">cloud_upload</mat-icon>
+  			</button>
+			</div>
+			<div class="column">
+				
+			</div>
+			
+		</div>
+		<div class="row">
+			<div class="column">
+			
+			</div>
+		</div>	
+		<mat-action-row>
+      		<button mat-button color="primary" (click)="nextStep()">Next</button>
+    	</mat-action-row>
+		</mat-expansion-panel>
+		<mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+  		<mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'">
+      		<mat-panel-title>
+        		Form Background
+      		</mat-panel-title>
+      		<mat-panel-description>
+      		
+        		 <mat-icon>description</mat-icon>
+      		</mat-panel-description>
+    	</mat-expansion-panel-header>
+		
+		
+		<div class="row">
+			<div class="column">
+					Opacity:{{frm.opacity}}%
+			</div>
+	
+			
+				<mat-slider max=100 min=0 step=5 thumbLabel=true tickInterval=5
+					[(ngModel)]="frm.opacity" (change)="opacityChange($event)" class="column">
+				</mat-slider>
+				
+		</div>
+		<div class="row">
+			<div class="column">
+				<mat-slide-toggle [(ngModel)]="isDarkTheme" (click)="themeChange()">Enable
+				Dark Theme</mat-slide-toggle>
+			</div>
+		</div>
+		<mat-action-row>
+      		<button mat-button color="warn" (click)="prevStep()">Previous</button>
+      		<button mat-button color="primary" (click)="nextStep()">Next</button>
+    	</mat-action-row>
+		
+		</mat-expansion-panel>
+		<mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+  		<mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'">
+      		<mat-panel-title>
+        		Form Theme
+      		</mat-panel-title>
+      		<mat-panel-description>
+      		
+        		 <mat-icon>group_work</mat-icon>
+      		</mat-panel-description>
+      	
+    	</mat-expansion-panel-header>
+		
+	
+	<div class="row">
+			<div class="column">
+				<span class="property-label">Background Color</span>
+			</div> 
+			<div class="column">
+				<input
+					cpPosition='top' cpOutputFormat="hex" value="" cpWidth="180"
+					cpHeight="200" [(colorPicker)]="frm.bgColor"
+					[style.background]="frm.bgColor" />
+			</div>		
+		</div>
+		<div class="row">
+			<div class="column">
+					Form width:{{frm.formwidth}}
+			</div>
+	
+			
+				<mat-slider max=900 min=400 step=10 thumbLabel=true tickInterval=10
+					[(ngModel)]="frm.formwidth" (change)="widthChange($event)" class="column">
+				</mat-slider>
+				
+		</div>
+			 <mat-action-row>
+      				<button mat-button color="warn" (click)="prevStep()">Previous</button>
+      				 <button mat-button color="primary" (click)="nextStep()">End</button>
+      		</mat-action-row>
+
+	</mat-expansion-panel>
+	
+
+</mat-accordion>
+</div>
+
+<div *ngIf="type!='form'">
+		<h2>this is not form properties</h2>
+		{{formID}}
+</div>
+
+
+</div>

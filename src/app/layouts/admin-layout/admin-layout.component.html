@@ -1,0 +1,31 @@
+<div class="wrapper">
+
+
+    <div *ngIf="!isMaps('login') && !isMaps('formBuilder') && !isMaps('formPreview') && !isMaps('form/')" class="sidebar" data-color="danger" 
+         data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
+        <app-sidebar></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-4.jpg)"></div>
+    </div>
+<!--     <div *ngIf="isMaps('formBuilder')" class="sidebar" data-color="danger"  -->
+<!--          data-background-color="white" data-image="./assets/img/sidebar-1.jpg"> -->
+<!--     	<sidetoolbar></sidetoolbar> -->
+<!--         <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-4.jpg)"></div> -->
+<!--     </div> -->
+    
+    
+    
+   <div class="singlePage" *ngIf= "isMaps('formPreview') || isMaps('formBuilder') || isMaps('form/') else elseBlock">
+   		<router-outlet></router-outlet>
+   </div>
+   <ng-template #elseBlock>
+    	<div  class="main-panel">
+        	<div>
+        		<app-navbar></app-navbar>
+        	</div>
+        	<router-outlet></router-outlet>
+        	<div *ngIf="isMaps('maps')">
+            	<app-footer></app-footer>
+        	</div>
+    	</div>
+    </ng-template>
+</div>

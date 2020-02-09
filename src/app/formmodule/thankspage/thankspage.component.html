@@ -1,0 +1,30 @@
+<div [style.background-image]="safeBgURL" style="min-height: 110vh; height:100%;">
+	<div class="main-div">
+	   
+		<div class="{{frm.theme}}">
+			<div class="{{frm.theme}}-custom">
+			
+				<div class="main-form-class" id="form" [style.max-width.px]=frm.formwidth [style.background-color]=frm.bgColor  >
+				
+						<div >						
+							<div [froalaView]="frm.thanksdata"></div>
+						</div>
+					
+						<p></p>
+						<div >
+							<table>
+							<tr>
+							<td><button  onclick="self.close()" mat-raised-button color="primary">Close</button></td>
+							
+							</tr>
+							</table>
+						</div>
+				
+				
+				</div>
+			
+				
+			</div>
+		</div>
+	</div>
+</div>

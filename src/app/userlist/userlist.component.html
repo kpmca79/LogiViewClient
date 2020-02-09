@@ -1,0 +1,78 @@
+<div class="ngLoader"></div>
+<div class="main-content">
+   
+  <div class="container-fluid" >
+    <div class = "row">
+        <div class="col-md-12">
+         <a [routerLink]="['/createuser']" routerLinkActive="router-link-active"  class="btn btn-danger btn-round">Create</a>
+         </div>
+    </div>
+    <div class="row">
+        <div *ngIf="users.length<2" class="col-md-12"><div class="card"><mat-progress-bar mode = "indeterminate" ></mat-progress-bar></div></div> 
+        
+        <div *ngIf="users.length>=2" class="col-md-12">
+
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title mt-0">User Admin Panel</h4>
+                      <p class="card-category">List of Users</p>
+                  </div>
+                        
+
+                                
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table class="table table-hover">
+                              <thead class="thead">
+                                  <th>
+                                      ID
+                                  </th>
+                                  <th>
+                                      First Name
+                                  </th>
+                                  <th>
+                                      Last Name
+                                  </th>
+                                  <th>
+                                      Email
+                                  </th>
+                                  <th>
+                                      Organisation
+                                  </th>
+                              </thead>
+                              <tbody>
+                                  <tr *ngFor="let user of users; let i=index;">
+                                      <td>
+                                          {{user.id}}
+                                      </td>
+                                      <td>
+                                         {{user.firstname}}
+                                      </td>
+                                      <td>
+                                          {{user.lastname}}
+                                      </td>
+                                      <td>
+                                          {{user.email}}
+                                      </td>
+                                      <td>
+                                          {{user.organisation}}
+                                      </td>
+                                      <td>
+                                         
+                                     <a  [routerLink]="['/user-profile',user.id]"  class='fas fa-pencil-alt' style='font-size:20px;color:#43de40' ></a>
+                                      </td>
+                                       <td>
+                                          <a (click)="openModal(user.id)" class='fas fa-trash' style='font-size:20px;color:#ef5450'></a>
+                                    
+                                      </td>
+                                         
+ 
+
+                                  </tr>
+                                 
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+  </div>
+</div>

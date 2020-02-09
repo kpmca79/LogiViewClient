@@ -1,0 +1,14 @@
+<div class="ngLoader"></div>
+<div class="main-content">
+      <div class="container-fluid" >
+<data-grid *ngIf = "isLoaded"
+		[Data]="responseData" 
+		[columnProperties]="colProperty"		 
+		[pageSize]="100"
+		[requireSelection]=false
+		[chartData]=chartData
+		(loadChartData)="loadChartData($event)"
+		[hideColumn]="hidencols">
+</data-grid>
+</div>
+</div>

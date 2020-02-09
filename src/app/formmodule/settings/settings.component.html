@@ -1,0 +1,155 @@
+
+
+<form-topnav [formID]="formID" [isChecked]="false" link="settings"></form-topnav>
+
+<div class="main-content">
+	<div class="container-fluid-topnav">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="card">
+					
+					
+					<div class="card-body">
+					<div class="row">
+							<div class="card-title">Publish options</div>
+						</div>
+						<div class="row">
+							<div class="sub-row">
+								<mat-slide-toggle (change)="publishedNow()"
+										class="example-full-width" [(ngModel)]="frm.publishnow" [color]="white" labelPosition='before' [checked]="frm.publishnow">{{pubNowMsg}}
+								</mat-slide-toggle>
+							</div>
+						</div>
+						<div class="row">
+							<div class="sub-row">
+								{{publishmsg}}
+							</div>
+						</div>
+						<div *ngIf="showUptoMsg" class="row">
+							<div class="sub-row">
+								{{publishuptomsg}}
+							</div>
+						</div>
+						<div class="row" *ngIf="!frm.publishnow">
+							<div class="sub-row">
+								<table class="example-small-width">
+									<tr class="tr-time">
+										<td class="date-time-td">
+										<mat-form-field > 
+										<input mdInput disabled [ngModel]="dtPubDate | date:'d-MMM-y'" >
+										
+										<input matInput  
+										[(ngModel)]="dtPubDate" [min]="publishMinDate" [max]="dtPubMaxDate"
+										   	   [matDatepicker]="picker"
+											(dateInput)="setPublishDate('input', $event)"
+										(dateChange)="setPublishDate('change', $event)" hidden="true"> 
+										<mat-placeholder class="placeholder">Schedule publish</mat-placeholder>
+									    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> 
+									    <mat-datepicker touchUi #picker></mat-datepicker> 
+									   </mat-form-field>
+									   </td>
+									   <td class="date-time-td-two">Time:</td>
+									    <td>
+									   		<input class="time-picker" [(ngModel)]="selectedTime" (click)="setPublishTime($event)"/>
+									  
+									   	</td>
+									   	   <td class="date-time-td-two">TimeZome:</td>
+									    <td>
+									   		
+											<mat-form-field class="time-picker"> 
+												<mat-placeholder class="placeholder">GMT+5:30</mat-placeholder> 
+												<mat-select class="placeholder" [(value)]="timezon"  [(ngModel)]="frm.publishtimezone"
+															> 
+													<mat-option
+														*ngFor="let option of timezones" 
+														value="{{option}}">{{option}}
+													</mat-option>
+												</mat-select>  
+											</mat-form-field>
+							
+									  
+									   	</td>
+								   </tr>
+								   </table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="sub-row">
+							<table class="example-small-width">
+								<tr class="tr-time">
+								<td class="date-time-td">
+									<mat-form-field > 
+									<input mdInput disabled [ngModel]="dtPubUptoDate | date:'d-MMM-y'" >
+									<input matInput  
+									   	   [matDatepicker]="picker" [min]="unpublishMinDate" hidden="true"
+										(dateInput)="setPublishUotoDate('input', $event)" [(ngModel)]="dtPubUptoDate"
+									(dateChange)="setPublishUotoDate('change', $event)"> 
+									<mat-placeholder class="placeholder">Published upto</mat-placeholder>
+								    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> 
+								    <mat-datepicker touchUi #picker></mat-datepicker> 
+								   </mat-form-field>
+								   </td>
+								    <td class="date-time-td-two">Time:</td>
+									    <td>
+									   		<input class="time-picker" [(ngModel)]="uptoTime" (click)="setUnpublishTime($event)"/>
+									  
+									   	</td>
+									     
+									   	
+									  
+									  
+								   </tr>
+								   </table>
+							</div>
+						</div>
+						<div class="row">
+							<div class="card-title">Redirect Options</div>
+						</div>
+						
+						<div class="row">
+							<div class="sub-row">
+								<div class="card-sub-title">Thanks Message Page</div>
+							
+							<div class="example-full-width"> 
+									<div class="title">
+										<div id="froala-editor" [froalaEditor] 
+														[(froalaModel)]="frm.thanksdata"></div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="sub-row">
+								<mat-form-field class="example-full-width"> 
+								<input
+									matInput name="redirectURL"
+									[(ngModel)]="redirectURL" placeholder="Redirect to specific URL"
+									value=""> 
+								</mat-form-field>
+							</div>
+						</div>
+						
+						
+						
+						<div class="row">
+						
+					
+						</div>
+						
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="button-row">
+						 <button mat-raised-button color="primary" (click)="saveForm()">Save</button>
+  							<button mat-raised-button color="accent" (click)="openNT()">Cancel</button>		
+			</div>
+		</div>
+	
+	</div>
+</div>
+

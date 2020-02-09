@@ -1,0 +1,59 @@
+/* css for top navigation */
+.toolNav {
+    display: inline-block;
+       background: linear-gradient(-60deg, #EFBD50, #EDB439);
+   /* background: linear-gradient(-60deg,#50ECEF,#14DADE); */
+    /* background: linear-gradient(-60deg,#ff7513,#f09819); */
+    /* background: linear-gradient(60deg, #ef5350, #e53935); */
+
+    width: 100%;
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 4;
+
+    
+}
+
+
+.toolNav-link.isActive, .toolNav-link:hover {
+    color: #fff;
+    background: hsla(0,0%,100%,.25);
+
+}
+
+.toolNav-link {
+    display: inline-block; 
+    cursor: pointer; 
+    line-height: 18px; 
+    font-size: 18px; 
+    color: hsla(0,0%,100%,.75); 
+    padding: 13px 27px;
+    text-transform: uppercase;
+    transition-property: color,background;
+    transition-duration: .15s;
+    transition-timing-function: ease-in-out;
+    color: #000;
+}
+.togglePreview-wrapper {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.nav-toggle
+{
+    position: fixed;
+    top: 10px;
+    right: 5px;
+
+}
+.nav-toggle-text
+{
+    
+    margin-right: 5px;
+}
+
+/* end css for top navigation */

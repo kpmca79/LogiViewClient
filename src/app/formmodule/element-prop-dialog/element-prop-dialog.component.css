@@ -1,0 +1,54 @@
+/* cellpadding */
+th, td { padding: 5px; }
+
+/* cellspacing */
+table { border-collapse: separate; border-spacing: 5px; } /* cellspacing="5" */
+/* table { border-collapse: collapse; border-spacing: 0; }   cellspacing="0" */
+
+/* valign */
+th, td { vertical-align: center; }
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+.table > tbody > tr, .table > tbody > div > tr {
+    position: relative;
+}
+
+.example-full-width {
+  width: 80%;
+  padding-bottom: 10px;
+  padding-top: 10px;
+ 
+}
+.table-remove
+{
+	color: black;
+}
+.sticky-bottom
+{
+	display: flex;
+	position: sticky;
+	bottom: 0px;
+	z-index: 10;
+	opacity: 0.95;
+/* 	background: linear-gradient(60deg, #ef5350, #e53935); */
+	
+	
+}
+.table th, .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 0px solid rgba(0, 0, 0, 0.06) !important; 
+}
+
+
+.example-full-width {
+  width: 100%;
+}
+
+
+/* align (center) */
+/* table { margin: 0 auto; } */
