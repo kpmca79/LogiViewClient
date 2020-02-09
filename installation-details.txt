@@ -1,0 +1,31 @@
+npm --version:6.4.1
+===========================================================================
+ng --version
+Angular CLI: 8.1.2
+Node: 10.15.0
+OS: win32 x64
+Angular: 2.4.10
+... common, compiler, compiler-cli, core, forms, http
+... platform-browser, platform-browser-dynamic
+
+Package                      Version
+------------------------------------------------------
+@angular-devkit/architect    0.801.2 (cli-only)
+@angular-devkit/core         8.1.2 (cli-only)
+@angular-devkit/schematics   8.1.2 (cli-only)
+@angular/router              3.4.10
+@angular/tsc-wrapped         0.5.2
+@ngtools/json-schema         1.1.0
+@ngtools/webpack             1.10.2
+@schematics/angular          8.1.2 (cli-only)
+@schematics/update           0.801.2 (cli-only)
+rxjs                         5.5.12
+typescript                   2.0.10
+webpack                      2.2.0
+===========================================================================
+to start all
+checkout app
+run npm install (to application folder)
+run npm start (to app follder)
+===========================================================================
+
