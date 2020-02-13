@@ -26,6 +26,7 @@ export class LiveformComponent implements OnInit {
     formField: FormField[];
     resourceURL="/api/file/";
     bgURL;
+    theme="theme";
     safeBgURL;
     publicIPAddr:string;
     respJson:any = {};
@@ -97,13 +98,16 @@ export class LiveformComponent implements OnInit {
           console.log("Today new==>",this.formField)
           this.formField.forEach(field=>
           {  
-             let value=field.frmControl.value
+             if(field.type!="section")
+             {   
+              let value=field.frmControl.value
              if(field.type=="date-picker")
                  value=this.datePipe.transform(value,'dd-MM-yyyy HH:mm:ss zzzz') ;
              if(field.fname)
                  this.respJson[field.fname]=value;
              else if(field.name)
                  this.respJson[field.name]=value;
+             }
           })
           
           console.log("todaynew1111",this.respJson);

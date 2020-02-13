@@ -14,7 +14,7 @@ export class TopnavComponent implements OnInit {
   @Input() link;
   @Input() type:String="publish";
    isPreview = new FormControl();
-   
+   white="white";
   
   constructor(private router: Router) { }
  

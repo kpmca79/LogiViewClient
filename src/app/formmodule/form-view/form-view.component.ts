@@ -22,6 +22,7 @@ export class FormViewComponent implements OnInit {
   resourceURL="/api/file/";
   bgURL;
   safeBgURL;
+  preview="preview";
   
   constructor(private route: ActivatedRoute,
               private frmSrv: FormService,

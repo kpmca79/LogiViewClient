@@ -14,6 +14,7 @@ export class SettingsComponent implements OnInit {
     public publishNow = true;
     public formID: String;
     public redirectURL = "";
+    white="white";
     public pubURL = "http://localhost:4200/form/";
     public thanks_msg = "Thanks";
     selectedTime = "00:00";
