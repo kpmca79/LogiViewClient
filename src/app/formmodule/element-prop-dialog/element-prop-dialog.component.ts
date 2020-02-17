@@ -20,7 +20,13 @@ export class ElementPropDialogComponent implements OnInit {
     reqvalidation:string[];
     editField: string;
     selectedValidations: string[];
-     dropdownSettings = {};
+    
+    show_placeHolder=true;
+    show_error=true;
+    show_subfields=false;
+    show_name=true;
+    show_mandatory=true;
+    dropdownSettings = {};
     data1: any = {fname: '',title:'', message: '', options:'',validation:'',required:'',type:'',
             minlen:0,maxlen:64,selectedValidations:'None',reqvalidation:'',frmtitle:'',selectedColor:'',
             color:'',checked:false,disabled:false,frmstatus:'',selectedDate:'',subfield:''
@@ -49,6 +55,7 @@ export class ElementPropDialogComponent implements OnInit {
                                   ,
                                 //   classes:"myclass custom-class"
                                 };*/
+      
                                this.dropdownSettings = { 
                                   singleSelection: false, 
                                   text:"Select Countries",
@@ -59,6 +66,26 @@ export class ElementPropDialogComponent implements OnInit {
                                 };  
                                 let i=0;
                                 this.valData.push({"value":0,"viewValue":'None'})
+                                if(this.data1.type=='fullname'){
+                                    this.show_placeHolder=false;
+                                    this.show_error=false;
+                                    this.show_subfields=true;
+                                }
+                                else if(this.data1.type=='address'){
+                                    this.show_placeHolder=false;
+                                    this.show_error=false;
+                                    this.show_subfields=true;
+                                }
+                                else if(this.data1.type=='section'){
+                                    this.show_name=false;
+                                    this.show_error=false;
+                                    this.show_mandatory=false;
+                                }
+                                else if(this.data1.type=='submit'){
+                                    this.show_name=false;
+                                    this.show_error=false;
+                                    this.show_mandatory=false;
+                                }
                                 if(this.data1.validation)
                                 {
                                     this.data1.validation.forEach(element => {

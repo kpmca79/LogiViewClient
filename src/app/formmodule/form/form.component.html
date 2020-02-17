@@ -147,8 +147,8 @@
   		</div>
   		<!--  section start -->
   		<div *ngSwitchCase="'section'" class="inline">
-  					<mat-list class="example-full-width" >
-  						<mat-list-item class="section-text">{{field.title}}</mat-list-item>
+  					<mat-list class="example-full-width"  >
+  						<mat-list-item class="section-text" [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-list-item>
   							<mat-divider class="devider"></mat-divider>
      				</mat-list>
      				<button mat-icon-button matSuffix [matMenuTriggerFor]="menu">
@@ -221,7 +221,7 @@
 			</div>
 			<div *ngSwitchCase="'time'">
 				<mat-list class="example-full-width" >
-  						<mat-list-item class="section-text">{{field.title}}</mat-list-item>
+  						<mat-list-item class="section-text" [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-list-item>
   							<mat-divider class="devider"></mat-divider>
      			</mat-list>
 				<div class="multifield-fixed" >
@@ -420,7 +420,7 @@
     				<mat-select  [style]="sanitizeHTML(frm.style)" [(value)]="field.selectedOption" 
     				[formControl]="field.frmControl">
     				
-    					<mat-option *ngFor="let option of field.options" value="option"><div [style]="sanitizeHTML(frm.style)">{{option}}</div></mat-option>
+    					<mat-option *ngFor="let option of field.options" value="{{option}}"><div [style]="sanitizeHTML(frm.style)">{{option}}</div></mat-option>
     				</mat-select>
     				<mat-error *ngIf="field.frmControl.hasError('required')">
       					Selection for {{field.title}} is <strong>required</strong>

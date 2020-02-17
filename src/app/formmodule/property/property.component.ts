@@ -24,6 +24,11 @@ export class PropertyComponent implements OnInit {
   fontSizeList=[8,9,10,11,12,14,116,18,20,22,24,26,28]
   fontSize=15;
   fontColor="#000000";
+  supportedFonts=['cursive','sans-serif','sarif','monospace','Courier New','Arial',
+                  'Times New Roman','Georgia','impact','Comic Sans MS',
+                  'Trebuchet MS','Helvetica','Garamond','Verdana','Bookman Old Style','Palatino','Courier'];
+  selectedFont='Roboto,"Helvetica Neue",sans-serif';                
+
   bgFile;
   fileID;
   srcResult;
@@ -159,6 +164,22 @@ export class PropertyComponent implements OnInit {
 //      this.chgEvent.fileID=null;
       this.mService.produce(this.chgEvent);
     }
+  fontFamilyChange(event:any)
+  {
+      let regExp=/font-family:.*?(?=;)/gi;
+   
+      if(!this.frm.style)
+          this.frm.style="font-fimily:"+this.selectedFont+";";
+      else
+      {
+          let newStyle=this.frm.style.replace(regExp,"font-family:"+this.selectedFont);
+          this.frm.style=newStyle;
+      }
+      this.chgEvent.frmStyle=this.frm.style;
+      this.mService.produce(this.chgEvent);
+    }
+  
+  
   themeChange()
   {
       console.log("theme changed ", this.isDarkTheme);

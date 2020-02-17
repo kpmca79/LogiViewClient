@@ -237,4 +237,17 @@ rxjs                         5.5.12
 typescript                   2.0.10
 webpack                      2.2.0
 
+========================================
+ANGULAR NOT WORKING IN IE 11 INTERNET EXPLORER
+========================================
+https://stackoverflow.com/questions/46657410/angular-app-empty-page-in-ie-but-works-in-chrome
 
+1. tsconfig.json
+
+"target": "es2015"
+changed to
+
+"target": "es5"
+RESTART YOUR APP
+SOLUTION NOT WORKING!!!!!!!!
+=============================================

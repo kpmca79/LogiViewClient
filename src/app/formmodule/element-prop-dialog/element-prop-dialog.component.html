@@ -46,34 +46,34 @@
 										</ng-container>
 										<ng-container *ngIf="data1.type!='form'">
 										
-											<tr >
+											<tr *ngIf="show_name" >
 												<td colspan="3">
 													<mat-form-field   >
 				 									   <input  matInput placeholder="Name" name="fname" [(ngModel)]="data1.fname" >
 													</mat-form-field>
 												</td>
 											</tr>
-											<tr>
+											<tr *ngIf="show_placeHolder">
 												<td colspan="3">
 													<mat-form-field   class="example-full-width">
 				 									    <input  matInput placeholder="Place holder" name="title" [(ngModel)]="data1.title" >
 													</mat-form-field>
 												</td>
 											</tr>
-											<tr>
+											<tr *ngIf="show_error">
 												<td colspan="3">
 													<mat-form-field   class="example-full-width">
 				 									        <input  matInput placeholder="Error message" name="message" [(ngModel)]="data1.message" >
 													</mat-form-field>
 												</td>
 											</tr>
-											<tr>
+											<tr *ngIf="show_mandatory">
 												<td colspan="3"><mat-slide-toggle
 														[(ngModel)]="data1.required">Is
 													Mandatory?</mat-slide-toggle></td>
 											</tr>
 										</ng-container>
-										<ng-container *ngIf="data1.type=='fullname' || data1.type=='address'">
+										<ng-container *ngIf="show_subfields">
 											<div *ngFor="let subfield of subfields " >
 												<tr>
 													<td colspan="3">

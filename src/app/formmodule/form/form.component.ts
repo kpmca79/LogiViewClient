@@ -44,7 +44,7 @@ export class FormComponent implements OnInit {
   durationInSeconds=3;
   hours=['',1,2,3,4,5,6,7,8,9,10,11,12];
   minutes=[''];
-  meridiem=['AM','PM'];
+  meridiem=['','AM','PM'];
   cssURL="/api/file/form-customization.css";
 //  cssURL="./assets/css/form-customization.css";
   passURL:any;
@@ -120,7 +120,7 @@ export class FormComponent implements OnInit {
       let url:any
       console.log('ck editor toolbar test',this.editor.config);
      
-      for(var i=1;i<61;i++){this.minutes.push(i+'');}
+      for(var i=0;i<60;i=i+10){this.minutes.push(i+'');}
       
       if(this.frm && this.formID)
       {
