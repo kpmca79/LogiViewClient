@@ -216,7 +216,7 @@ drop(event: CdkDragDrop<string[]>) {
       const random: string = Math.random().toString(36).substring(7);
       const tempVal2:any = event.previousContainer.data[event.previousIndex]; 
       const std : FormField = new FormField();
-//      console.log('------>',tempVal2);
+      console.log('--XXXXXXXXXXSSSS---->',tempVal2);
       std.name = tempVal2.name;
       std.type = tempVal2.type;
       std.title = tempVal2.title;
@@ -237,7 +237,9 @@ drop(event: CdkDragDrop<string[]>) {
       std.mindate=tempVal2.mindate;
       std.maxdate=tempVal2.maxdate;
       std.selectedDate=tempVal2.selectedDate;
+      std.subfields=tempVal2.subfields;
 //      std.innerHtml=std.innerHtml.replace('id="form1"','id="'+random+'"');
+      console.log("TTTTTTTOOOOOOOOOOOT ",std);
       this.students2.push(std);
       
       //event.container.data.push(std);

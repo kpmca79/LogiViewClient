@@ -21,7 +21,9 @@ export class PropertyComponent implements OnInit {
   @Input() safeBgURL:any;
  
   step = -1;
-
+  fontSizeList=[8,9,10,11,12,14,116,18,20,22,24,26,28]
+  fontSize=15;
+  fontColor="#000000";
   bgFile;
   fileID;
   srcResult;
@@ -29,7 +31,7 @@ export class PropertyComponent implements OnInit {
   
   imageURL: String="";
   isDarkTheme:boolean=false;
-  chgEvent:any = {"safeBgURL":"","opacity":"", "bgImage":"","theme":false,width:600};
+  chgEvent:any = {"safeBgURL":"","opacity":"", "bgImage":"","theme":false,width:600,"frmStyle":""};
   
   constructor(private stdSrv: FormService, 
               private sanitizer: DomSanitizer,
@@ -118,6 +120,43 @@ export class PropertyComponent implements OnInit {
       if(this.fileID)
           this.chgEvent.fileID= this.fileID;
       this.chgEvent.fileID=null;
+      this.mService.produce(this.chgEvent);
+   }
+  fontColorChange(event:any)
+  {
+      let regExp=/color:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3});/gi
+//      console.log(event);
+//      console.log(this.fontColor);
+      if(!this.frm.style)
+          this.frm.style="color:"+this.fontColor+";";
+      else
+      {
+          let newStyle=this.frm.style.replace(regExp,"color:"+this.fontColor+";");
+          this.frm.style=newStyle;
+      }
+//      console.log(this.frm.style);
+      this.chgEvent.frmStyle=this.frm.style;
+      this.mService.produce(this.chgEvent);
+      
+  }
+  fontSizeChange(event:any)
+  {
+      let regExp=/font-size:[0-9][0-9]px;/gi;
+      if(!this.frm.style)
+          this.frm.style="font-size:"+this.fontSize+"px;";
+      else
+      {
+          let newStyle=this.frm.style.replace(regExp,"font-size:"+this.fontSize+"px;");
+          this.frm.style=newStyle;
+      }
+      this.chgEvent.frmStyle=this.frm.style;
+//      if(this.safeBgURL)
+//          this.chgEvent.safeBgURL= this.safeBgURL;
+//      this.chgEvent.width=this.frm.formwidth;
+//      this.chgEvent.opacity=this.frm.opacity
+//      if(this.fileID)
+//          this.chgEvent.fileID= this.fileID;
+//      this.chgEvent.fileID=null;
       this.mService.produce(this.chgEvent);
     }
   themeChange()

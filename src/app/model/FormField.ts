@@ -1,4 +1,5 @@
 import { FormControl } from "@angular/forms";
+import { SubField } from "app/model/SubField";
 
 export class FormField {
     id: string;
@@ -25,5 +26,6 @@ export class FormField {
     selectedDate: Date;
     frmControl: FormControl;
     submitValue: String;
+    subfields: SubField[];
     
 }

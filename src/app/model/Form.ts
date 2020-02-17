@@ -29,6 +29,7 @@ export class Form {
     publishuptodate: Date;
     publishuptotime: string;
     _links: any;
+    style: string;
 
 }
 

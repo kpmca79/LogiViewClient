@@ -73,6 +73,18 @@
 													Mandatory?</mat-slide-toggle></td>
 											</tr>
 										</ng-container>
+										<ng-container *ngIf="data1.type=='fullname' || data1.type=='address'">
+											<div *ngFor="let subfield of subfields " >
+												<tr>
+													<td colspan="3">
+													<mat-slide-toggle class="example-full-width" [color]="white"
+														 [(ngModel)]="subfield.visible">Show {{subfield.name}}
+													</mat-slide-toggle>
+													</td>
+												</tr>
+											</div>
+											
+										</ng-container>
 										<ng-container *ngIf="data1.type=='slide-toggle'">
 											<tr>
 												<td colspan="3">

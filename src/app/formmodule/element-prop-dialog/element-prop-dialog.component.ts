@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {  Inject } from '@angular/core';
 // tslint:disable-next-line:import-spacing
 import { MAT_DIALOG_DATA } from  '@angular/material';
+import { SubField } from "app/model/SubField"; 
 
 @Component({
   selector: 'app-element-prop-dialog',
@@ -15,19 +16,21 @@ export class ElementPropDialogComponent implements OnInit {
     selectedValue: String;
     options:String[];
     valData = [];
+    subfields:SubField[];
     reqvalidation:string[];
     editField: string;
     selectedValidations: string[];
      dropdownSettings = {};
     data1: any = {fname: '',title:'', message: '', options:'',validation:'',required:'',type:'',
             minlen:0,maxlen:64,selectedValidations:'None',reqvalidation:'',frmtitle:'',selectedColor:'',
-            color:'',checked:false,disabled:false,frmstatus:'',selectedDate:''
+            color:'',checked:false,disabled:false,frmstatus:'',selectedDate:'',subfield:''
     };
     constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.modalTitle = data.title;
     this.reqvalidation=data.reqvalidation;
     this.modalMessage = data.message;
     this.data1 = data;
+    this.subfields=data.subfield;
     console.log('data1------>',this.data1);
      this.options=data.options;
         

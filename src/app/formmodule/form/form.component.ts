@@ -10,12 +10,13 @@ import { ElementPropDialogComponent } from '../element-prop-dialog/element-prop-
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import { Form } from "../../model/Form";
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, SafeUrl, SafeStyle } from '@angular/platform-browser';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as InlineEditor from '@ckeditor/ckeditor5-build-inline';
 import { MessagingService } from "../../services/messaging.service";
 import {ViewEncapsulation} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { SubField } from "app/model/SubField";
 declare var $: any;
 //declare var $: JQueryStatic;
 
@@ -41,6 +42,9 @@ export class FormComponent implements OnInit {
   public editor= InlineEditor;
   theme:String ="light-theme";
   durationInSeconds=3;
+  hours=['',1,2,3,4,5,6,7,8,9,10,11,12];
+  minutes=[''];
+  meridiem=['AM','PM'];
   cssURL="/api/file/form-customization.css";
 //  cssURL="./assets/css/form-customization.css";
   passURL:any;
@@ -83,29 +87,40 @@ export class FormComponent implements OnInit {
       let log="Inside Form.component->reactOnMessage() "
       console.log("form method triggered : "+msg);
       console.log("Change required: ",msg.opacity);
-      if(msg.opacity || msg.opacity==0)
+      if(this.frm)
       {
-          this.frm.opacity=msg.opacity;
+          if(msg.opacity || msg.opacity==0)
+          {
+              this.frm.opacity=msg.opacity;
+          }
+          if(msg.width || msg.width==0)
+          {
+              this.frm.formwidth=msg.width;
+          }
+          if(msg.fileID)
+          {
+              console.log(log,"InsImage change fileid=",msg.fileID)
+              this.frm.bgImage=msg.fileID;
+          }
+          if(msg.frmStyle)
+          {
+              this.frm.style=msg.frmStyle;
+          }
+          if(msg.theme)
+              this.frm.theme="light-theme";
+          else
+              this.frm.theme="dark-theme";
       }
-      if(msg.width || msg.width==0)
-      {
-          this.frm.formwidth=msg.width;
-      }
-      if(msg.fileID)
-      {
-          console.log(log,"InsImage change fileid=",msg.fileID)
-          this.frm.bgImage=msg.fileID;
-      }
-      if(msg.theme)
-          this.frm.theme="light-theme";
       else
-          this.frm.theme="dark-theme";
+          console.log("ERROR FORM NOT FOUND!!!!!!!!!");
       
   }
 
   ngOnInit() {
       let url:any
       console.log('ck editor toolbar test',this.editor.config);
+     
+      for(var i=1;i<61;i++){this.minutes.push(i+'');}
       
       if(this.frm && this.formID)
       {
@@ -113,6 +128,8 @@ export class FormComponent implements OnInit {
 //          const formObsrv= this.frmSrv.viewForm(this.formID).subscribe(
 //                  response=>this.frm=response.data);
 //          console.log("formid got=",this.formID)
+          console.log("HHHHHHHHHHEY RAJIIIIIIIIIII",this.formField);
+          
                       
       }
       else
@@ -134,6 +151,7 @@ export class FormComponent implements OnInit {
           visibility: "Public",
           publishnow: false,
           createdDate: null,
+          style:"",
           };
       }
   
@@ -180,6 +198,7 @@ export class FormComponent implements OnInit {
                                     selectedDate:field.selectedDate,
                                     height: '1000px',
                                     width: '600px',
+                                    subfield:field.subfields
                                  };
         
 
@@ -196,7 +215,7 @@ export class FormComponent implements OnInit {
                                                 });
      }
      
-     saveLocalData(data,field)
+     saveLocalData(data,field:FormField)
      {
          field.title=data.title;
          field.fname=data.fname;
@@ -213,8 +232,9 @@ export class FormComponent implements OnInit {
          field.disabled=data.disabled;
          field.mindate=data.mindate;
          field.maxdate=data.maxdate;
-         
-         console.log('888888888---->',field.maxlen,field.minlen);
+         field.subfields=data.subfield
+         console.log("$$$$$$$$3#######--->",field);
+//         console.log('888888888---->',field.maxlen,field.minlen);
          let vl=[];
          if(field.required)
              vl.push(Validators.required);
@@ -230,6 +250,9 @@ export class FormComponent implements OnInit {
      }
      sanitize(image) {
          return this._sanitizer.bypassSecurityTrustStyle(`linear-gradient(rgba(29, 29, 29, 0), rgba(16, 16, 23, 0.5)), url(${image})`);
+     }
+     sanitizeHTML(style:string): SafeStyle {
+         return this._sanitizer.bypassSecurityTrustStyle(style);
      }
      
      saveForm()
@@ -262,6 +285,7 @@ export class FormComponent implements OnInit {
              fld.type=val.type;
              fld.frmControl=null;
              fld.id=null;
+             fld.subfields=val.subfields;
              strFields.push(fld);
          }
          

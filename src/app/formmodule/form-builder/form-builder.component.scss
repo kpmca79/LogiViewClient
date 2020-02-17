@@ -20,6 +20,7 @@
     margin: 10px 10px;
  	margin-top: 16px;
  	z-index: 5;
+ 	
 }
 .property-icon-right
 {
@@ -207,6 +208,7 @@
 /* margin-left: auto; */
 	max-width: 610px;
  	opacity: 1.0; 
+ 	    width: -webkit-fill-available;
 	
 }
 
@@ -258,6 +260,8 @@
 .mat-drawer {
 	background-color: inherit;
 	color: rgba(0, 0, 0, .87);
+	top: 44px;
+    position: fixed;
 }
 .sidebar-right .nav li a, .sidebar-right .nav li .dropdown-menu a {
     
@@ -276,7 +280,7 @@
     left: 0;
     z-index: 2;
     width: 260px;
-    height: 100%;
+  
     background: #fff;
     box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
@@ -309,6 +313,9 @@
     font-family: inherit;
     font-size: 20px;
     font-variant-caps: small-caps;
+  /*  position: fixed; */
+    width: inherit;
+    /* top: 44px; */
 }
 /* end css for side navigation */
 
