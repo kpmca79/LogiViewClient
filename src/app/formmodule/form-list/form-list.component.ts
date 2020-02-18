@@ -50,7 +50,7 @@ export class FormListComponent implements OnInit {
       dialogConfig.height = '400px';
       this.frm ={ id: '',name: '',type:'form',title: '',path: 'sample',
               status: 'Active',bgColor: '#cacaca',bgImage: '5d7411844c05a60408df1d49',header: '',
-              footer: '',theme:'dark-theme',formFields:[], _links:'',style:'',opacity:0,
+              footer: '',theme:'dark-theme',formFields:[], _links:'',style:'',btnStyle:'',opacity:0,
               response:0,
               thanksdata: 'Thanks You, you have successfully submitted your response, you might get email confirmation for the same.',
               thankstype: 'message',

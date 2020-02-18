@@ -26,6 +26,11 @@
 .example-full-width {
 	width: 100%;
 }
+.submit-row {
+	width: 100%;
+	display: flex;
+	margin-top: 50px;
+}
 .example-small-width {
 	width: 45%;
 }

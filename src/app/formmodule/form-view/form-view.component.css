@@ -4,6 +4,73 @@
     margin-bottom: -10px;
     margin-left: -14px;
 }
+/*ADDED NEW FIELDS CSS 18-FEB-20*/
+.submit-row {
+	width: 100%;
+	display: flex;
+	margin-top:50px;
+}
+.example-small-width {
+	width: 45%;
+}
+.example-half-width {
+	width: 45%;
+}
+.width-30
+{
+	
+	max-width: 30% !important;
+    margin-right: 10px;
+    flex-grow: 1;
+}
+.width-70
+{
+	max-width:70% !important;
+	
+    margin-right: 10px;
+    flex-grow: 1;
+}
+.devider
+{
+	margin-bottom: 15px;
+}
+.multifield-fixed
+{
+	display: -webkit-inline-box;
+    width:100%;
+}
+.multifield
+{
+/*     display: -webkit-inline-box; */
+    display: inline-flex;
+/*     flex-wrap: wrap; */
+/*     width: inherit; */
+/*     flex-wrap: wrap; */
+    flex-wrap: wrap;
+        
+    width:100%;
+}
+    
+.subfield {
+   margin-right: 10px;
+    flex-grow: 1;
+    width: 28% !important;
+/*     margin-left: -36px; */
+}
+
+.subfield-full-width {
+   margin-right: 10px;
+   flex-grow: 1;
+   width: 85% !important;
+/*     margin-left: -36px; */
+}
+    
+
+.inline {
+	width: 100%;
+	display: inline-flex;
+}
+/* END NEW FIELDS CSS 18-FEB-20*/
 .main-div
 {
 	width:100%;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlatformLocation } from "@angular/common";
-import { DomSanitizer } from "@angular/platform-browser";
+import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { FormService } from "../../services/form.service";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -30,15 +30,20 @@ export class LiveformComponent implements OnInit {
     safeBgURL;
     publicIPAddr:string;
     respJson:any = {};
+    hours=['',1,2,3,4,5,6,7,8,9,10,11,12];
+    minutes=[''];
+    meridiem=['','AM','PM'];
     
   constructor(private route: ActivatedRoute,
           private frmSrv: FormService,
           private sanitizer: DomSanitizer,
           private datePipe: DatePipe,
           private router: Router) { }
-
+  sanitizeHTML(style:string): SafeStyle {
+      return this.sanitizer.bypassSecurityTrustStyle(style);
+  }
   ngOnInit() {
-
+      for(var i=0;i<60;i=i+10){this.minutes.push(i+'');}
       this.formID = this.route.snapshot.paramMap.get("id");
       console.log("formid is =", this.formID);
       const formObsrv= this.frmSrv.viewForm(this.formID).subscribe(
@@ -71,6 +76,14 @@ export class LiveformComponent implements OnInit {
                       if(field.minlen!=0)
                           vl.push(Validators.minLength(field.minlen));
                       field.frmControl = new FormControl('', vl);
+                      if(field.subfields)
+                      {
+                          field.subfields.forEach(subField=>{
+                              let vlsub=[];
+                              subField.frmControl = new FormControl('', vlsub);
+                          })
+                      }
+                      
                   });
                   if(this.frm.opacity)
                   {
@@ -88,25 +101,70 @@ export class LiveformComponent implements OnInit {
   onSubmit()
   {   console.log("inside submit")  
       let isError:boolean=false;
-      this.formField.forEach(field=>{if(field.frmControl.invalid) {isError=true;return;}})
+      console.log("Today new==>",this.formField)
+      this.formField.forEach(field=>{if(field.frmControl.invalid) {
+          isError=true;
+          console.log(field.frmControl.invalid);
+          return;}})
       
       if(!isError)
       {
           this.respJson.formID=this.formID;
           this.respJson.IpAddress=this.publicIPAddr;
           this.respJson.resTime=this.datePipe.transform(new Date(),'dd-MM-yyyy HH:mm:ss zzzz') ;
-          console.log("Today new==>",this.formField)
           this.formField.forEach(field=>
           {  
-             if(field.type!="section")
+             if(field.type!="section" && field.type!="submit")
              {   
-              let value=field.frmControl.value
-             if(field.type=="date-picker")
-                 value=this.datePipe.transform(value,'dd-MM-yyyy HH:mm:ss zzzz') ;
-             if(field.fname)
-                 this.respJson[field.fname]=value;
-             else if(field.name)
-                 this.respJson[field.name]=value;
+                 
+                 let value=field.frmControl.value
+                 if(field.type=="date-picker")
+                     value=this.datePipe.transform(value,'dd-MM-yyyy HH:mm:ss zzzz') ;
+//                 if(field.fname)
+//                     this.respJson[field.fname]=value;
+                 
+                 else if(field.type=="fullname")
+                 {
+                     if(field.subfields){
+                         field.subfields.forEach(subfield=>{
+                            if(subfield.visible){
+                                this.respJson[subfield.name]=subfield.frmControl.value;
+                            }
+                         });
+                     }
+                 }
+                 else if(field.type=="address"){
+                     if(field.subfields){
+                         field.subfields.forEach(subfield=>{
+                            if(subfield.visible){
+                                this.respJson[subfield.name]=subfield.frmControl.value;
+                            }
+                         });
+                  }
+                     
+                     }
+                 else if(field.type=="time")
+                 {
+                     if(field.subfields){
+                         let selTime='';
+                         selTime=field.subfields[0].frmControl.value; //hour
+                         selTime=selTime+":"+field.subfields[1].frmControl.value //min
+                         selTime=selTime+" "+field.subfields[2].frmControl.value //am/pm
+                         this.respJson[field.name]=selTime;
+                     }
+                 }
+                 else if(field.type=="phone")
+                 {
+                     if(field.subfields){
+                         let phone='';
+                         phone=field.subfields[0].frmControl.value; //hour
+                         phone=phone+"-"+field.subfields[1].frmControl.value //prefix
+                         this.respJson[field.name]=phone;
+                     }
+                 }
+                 else if(field.name)
+                     this.respJson[field.name]=value;
+                 
              }
           })
           

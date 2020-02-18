@@ -30,6 +30,7 @@ export class Form {
     publishuptotime: string;
     _links: any;
     style: string;
+    btnStyle: string;
 
 }
 

@@ -155,7 +155,45 @@
     			</mat-select>
     			</mat-form-field>
 		</div>	
+		<div class="row">
+			<div class="column">
+				<span class="property-label">Button font color</span>
+			</div> 
+			<div class="column">
+				<input
+					cpPosition='top' cpOutputFormat="hex" value="" cpWidth="180"
+					cpHeight="200" [(colorPicker)]="btnFC" (colorPickerChange)="btnStyleChange($event,'fc')"
+					[style.background]="btnFC" />
+			</div>		
+		</div>	
+		<div class="row">
+			<div class="column">
+				<span class="property-label">Button background color</span>
+			</div> 
+			<div class="column">
+				<input
+					cpPosition='top' cpOutputFormat="hex" value="" cpWidth="180"
+					cpHeight="200" [(colorPicker)]="btnBGC" (colorPickerChange)="btnStyleChange($event,'bgc')"
+					[style.background]="btnBGC" />
+			</div>		
+		</div>	
+		<div class="row">
 			
+			 
+			<div class="column">
+				<span class="property-label">Button size:</span>
+			</div> 
+			 <section style="width: min-content;">
+      			
+      			<mat-radio-group [(ngModel)]="btnWidth" (change)="btnStyleChange($event,'size')">
+        			<mat-radio-button class="example-margin" value="0.0">Normal</mat-radio-button>
+        			<mat-radio-button class="example-margin" value="1.0">Full</mat-radio-button>
+        			<mat-radio-button class="example-margin" value="0.5">Half</mat-radio-button>
+      			</mat-radio-group>
+    		</section>
+					
+			
+		</div>	
 		</div>
 			 <mat-action-row>
       				<button mat-button color="warn" (click)="prevStep()">Previous</button>

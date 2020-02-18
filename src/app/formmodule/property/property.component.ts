@@ -33,10 +33,14 @@ export class PropertyComponent implements OnInit {
   fileID;
   srcResult;
   opacity;
+  btnFC="#000000";
+  btnBGC="#00ff00";
+  btnWidth='0.0';
+ 
   
   imageURL: String="";
   isDarkTheme:boolean=false;
-  chgEvent:any = {"safeBgURL":"","opacity":"", "bgImage":"","theme":false,width:600,"frmStyle":""};
+  chgEvent:any = {"safeBgURL":"","opacity":"", "bgImage":"","theme":false,width:600,"frmStyle":"","frmbtnStyle":""};
   
   constructor(private stdSrv: FormService, 
               private sanitizer: DomSanitizer,
@@ -127,54 +131,104 @@ export class PropertyComponent implements OnInit {
       this.chgEvent.fileID=null;
       this.mService.produce(this.chgEvent);
    }
+  btnStyleChange(event:any,element:string)
+  {
+    
+      if(element=='fc'){
+          this.frm.btnStyle=this.styleParse(this.frm.btnStyle, 'fntColor', this.btnFC);
+          this.chgEvent.frmbtnStyle=this.frm.btnStyle;
+          this.mService.produce(this.chgEvent);
+      }
+      else if(element=='bgc'){
+          this.frm.btnStyle=this.styleParse(this.frm.btnStyle, 'bgColor', this.btnBGC);
+          this.chgEvent.frmbtnStyle=this.frm.btnStyle;
+          this.mService.produce(this.chgEvent);
+      }
+      else if(element=='size'){
+          this.frm.btnStyle=this.styleParse(this.frm.btnStyle, 'flexgrow', this.btnWidth);
+          this.chgEvent.frmbtnStyle=this.frm.btnStyle;
+          this.mService.produce(this.chgEvent);
+      }
+      console.log("button size ",this.btnWidth)
+      
+          
+  }
+  styleParse(src:string,element:string,value:string):string
+  {
+      let dest="";
+      let colorRegExp=/color:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3});/gi;
+      let bgcRegExp=/background:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3});/gi;
+      let flxGrwRegExp=/flex-grow:([015.]{3});/gi;
+      
+      let fntSizeRegExp=/font-size:[0-9][0-9]px;/gi;
+      let fntFamilyRegExp=/font-family:.*?(?=;)/gi;
+      
+
+      
+      if(!src)
+          src="";
+      console.log("Before parsing style=", src);
+      switch(element)
+      {
+          case 'flexgrow':{
+              if(!src.match(flxGrwRegExp))
+                  dest=src+"flex-grow:"+value+";";
+              else
+                  dest=src.replace(flxGrwRegExp,"flex-grow:"+value+";");
+              break;
+          }
+          case 'fntColor':{
+              if(!src.match(colorRegExp))
+                  dest=src+"color:"+value+";";
+              else
+                  dest=src.replace(colorRegExp,"color:"+value+";");
+              break;
+          }
+          case 'fntSize':{
+              if(!src.match(fntSizeRegExp))
+                  dest=src+"font-size:"+value+"px;";
+              else
+                  dest=src.replace(fntSizeRegExp,"font-size:"+value+"px;");
+              break;
+          }
+          case 'fntFamily':{
+              if(!src.match(fntFamilyRegExp))
+                  dest=src+"font-family:"+value+";";
+              else
+                  dest=src.replace(fntFamilyRegExp,"font-family:"+value);
+              break;
+          }
+          case 'bgColor':{
+              if(!src.match(bgcRegExp))
+                  dest=src+"background:"+value+";";
+              else
+                  dest=src.replace(bgcRegExp,"background:"+value+";");
+              break;
+          }
+              
+      }
+      
+      
+      console.log("After parsing style=", dest);
+      return dest;
+  }
   fontColorChange(event:any)
   {
-      let regExp=/color:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3});/gi
-//      console.log(event);
-//      console.log(this.fontColor);
-      if(!this.frm.style)
-          this.frm.style="color:"+this.fontColor+";";
-      else
-      {
-          let newStyle=this.frm.style.replace(regExp,"color:"+this.fontColor+";");
-          this.frm.style=newStyle;
-      }
-//      console.log(this.frm.style);
+      this.frm.style=this.styleParse(this.frm.style, 'fntColor', this.fontColor);
       this.chgEvent.frmStyle=this.frm.style;
       this.mService.produce(this.chgEvent);
       
   }
   fontSizeChange(event:any)
   {
-      let regExp=/font-size:[0-9][0-9]px;/gi;
-      if(!this.frm.style)
-          this.frm.style="font-size:"+this.fontSize+"px;";
-      else
-      {
-          let newStyle=this.frm.style.replace(regExp,"font-size:"+this.fontSize+"px;");
-          this.frm.style=newStyle;
-      }
+      this.frm.style=this.styleParse(this.frm.style, 'fntSize', this.fontSize+'');
       this.chgEvent.frmStyle=this.frm.style;
-//      if(this.safeBgURL)
-//          this.chgEvent.safeBgURL= this.safeBgURL;
-//      this.chgEvent.width=this.frm.formwidth;
-//      this.chgEvent.opacity=this.frm.opacity
-//      if(this.fileID)
-//          this.chgEvent.fileID= this.fileID;
-//      this.chgEvent.fileID=null;
       this.mService.produce(this.chgEvent);
     }
   fontFamilyChange(event:any)
   {
-      let regExp=/font-family:.*?(?=;)/gi;
-   
-      if(!this.frm.style)
-          this.frm.style="font-fimily:"+this.selectedFont+";";
-      else
-      {
-          let newStyle=this.frm.style.replace(regExp,"font-family:"+this.selectedFont);
-          this.frm.style=newStyle;
-      }
+
+      this.frm.style=this.styleParse(this.frm.style, 'fntFamily', this.selectedFont);
       this.chgEvent.frmStyle=this.frm.style;
       this.mService.produce(this.chgEvent);
     }

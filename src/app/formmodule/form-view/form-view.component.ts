@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlatformLocation } from "@angular/common";
-import { DomSanitizer } from "@angular/platform-browser";
+import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { FormService } from "../../services/form.service";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
@@ -23,16 +23,23 @@ export class FormViewComponent implements OnInit {
   bgURL;
   safeBgURL;
   preview="preview";
+  hours=['',1,2,3,4,5,6,7,8,9,10,11,12];
+  minutes=[''];
+  meridiem=['','AM','PM'];
   
   constructor(private route: ActivatedRoute,
               private frmSrv: FormService,
-              private sanitizer: DomSanitizer
+              private sanitizer: DomSanitizer,
+              
           ) 
   { 
       
   }
-
+  sanitizeHTML(style:string): SafeStyle {
+      return this.sanitizer.bypassSecurityTrustStyle(style);
+  }
   ngOnInit() {
+      for(var i=0;i<60;i=i+10){this.minutes.push(i+'');}
       this.formID = this.route.snapshot.paramMap.get("id");
       console.log("formid is =", this.formID);
       const formObsrv= this.frmSrv.viewForm(this.formID).subscribe(

@@ -106,6 +106,10 @@ export class FormComponent implements OnInit {
           {
               this.frm.style=msg.frmStyle;
           }
+          if(msg.frmbtnStyle)
+          {
+              this.frm.btnStyle=msg.frmbtnStyle;
+          }
           if(msg.theme)
               this.frm.theme="light-theme";
           else
@@ -152,6 +156,7 @@ export class FormComponent implements OnInit {
           publishnow: false,
           createdDate: null,
           style:"",
+          btnStyle:"",
           };
       }
   
@@ -177,7 +182,7 @@ export class FormComponent implements OnInit {
           
           dialogConfig.data = {
                                     id: 1,
-                                    fname: field.fname,
+                                    fname: field.name,
                                     message:field.message,
                                     title: field.title,
                                     options: field.options,

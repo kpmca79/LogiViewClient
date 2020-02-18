@@ -73,7 +73,7 @@
 			<div cdkDrag *ngFor="let field of formField" [ngSwitch]="field.type">
 		<div *ngSwitchCase="'textbox'" >
 <!-- 				     [formControl]="field.frmControl" -->				
-				<div>{{frm.style}}</div>				
+				
 				<mat-form-field   class="example-full-width"  [style]="sanitizeHTML(frm.style)">
 				    <input matInput   
 				    name="{{field.title}}"
@@ -328,8 +328,8 @@
   		</div>
   		<div *ngSwitchCase="'submit'" >
 				
-				<div   class="example-full-width">
-				    <button _ngcontent-oht-c21="" class="btn btn-success mat-raised-button" type="submit">{{field.title}}</button>
+				<div   class="submit-row">
+				    <button _ngcontent-oht-c21="" class="btn btn-success mat-raised-button" type="submit" [style]="sanitizeHTML(frm.btnStyle)">{{field.title}}</button>
 				    <button mat-icon-button matSuffix  [matMenuTriggerFor]="menu">
   						<mat-icon svgIcon="Morevert"></mat-icon>
 					</button>
