@@ -26,7 +26,7 @@ export class ResponseListComponent implements OnInit {
        this.srv.getResonse(this.formID).subscribe(data => {
             let result = data;
             this.responseData = result.data;
-            console.log(this.responseData);
+            console.log("Form response data-->",this.responseData);
             this.dispColumns = result.columnNames;
             this.dispColumns.forEach(val => {
                 if (val != 'null' && val!="_id" && val!="formID")

@@ -251,3 +251,8 @@ changed to
 RESTART YOUR APP
 SOLUTION NOT WORKING!!!!!!!!
 =============================================
+UPGRADE FROM 8 TO 9
+
+npm update 
+ng add @angular/localize
+ng update --force --all

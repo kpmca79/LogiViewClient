@@ -2,6 +2,7 @@
 {
 /* 	overflow: scroll; */
 }
+
 .table-Row
 {
 	display: -webkit-box;
@@ -10,6 +11,8 @@
     margin-right: -15px;
     margin-left: -15px;
     width: fit-content;
+    overflow-x: scroll;
+    min-width: 100%;
 }
 .full-width
 {
@@ -63,8 +66,13 @@ th.mat-header-cell {
 {
   justify-content: flex-start;
 }
-td, th {
+td {
   width: auto;
+      white-space: pre-wrap;
+}
+th {
+  width: auto;
+
 }
 .mat-expansion-panel-header {
     display: flex;

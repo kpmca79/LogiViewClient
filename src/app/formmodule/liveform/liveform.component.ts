@@ -43,6 +43,7 @@ export class LiveformComponent implements OnInit {
       return this.sanitizer.bypassSecurityTrustStyle(style);
   }
   ngOnInit() {
+      console.log("Enter into liveform component-->init()")
       for(var i=0;i<60;i=i+10){this.minutes.push(i+'');}
       this.formID = this.route.snapshot.paramMap.get("id");
       console.log("formid is =", this.formID);
@@ -64,24 +65,33 @@ export class LiveformComponent implements OnInit {
                       this.bgURL = "url(" + this.resourceURL + this.frm.bgImage + ")";
                       this.safeBgURL = this.sanitizer.bypassSecurityTrustStyle( this.bgURL );
                   }
+                  console.log("Form fileds")
                   this.formField.forEach(field=>
                   {
                       let vl=[];
+                      console.log("field==>",field)
                       if(field.required)
                           vl.push(Validators.required);
                       if(field.selectedValidation=='Email')
                           vl.push(Validators.email);
-                      if(field.maxlen!=0)
+                      if(field.maxlen && field.maxlen!=0)
                           vl.push(Validators.maxLength(field.maxlen));
-                      if(field.minlen!=0)
+                      if(field.minlen && field.minlen!=0)
                           vl.push(Validators.minLength(field.minlen));
                       field.frmControl = new FormControl('', vl);
                       if(field.subfields)
                       {
+                          
                           field.subfields.forEach(subField=>{
                               let vlsub=[];
-                              subField.frmControl = new FormControl('', vlsub);
+                              if(field.required){
+                                  if(subField.visible)  
+                                       vlsub.push(Validators.required);
+                              }
+                              subField.frmControl = new FormControl('',vlsub);
                           })
+                          let v3=[];
+                          field.frmControl=new FormControl('', v3);
                       }
                       
                   });
@@ -102,10 +112,24 @@ export class LiveformComponent implements OnInit {
   {   console.log("inside submit")  
       let isError:boolean=false;
       console.log("Today new==>",this.formField)
-      this.formField.forEach(field=>{if(field.frmControl.invalid) {
-          isError=true;
-          console.log(field.frmControl.invalid);
-          return;}})
+      
+      this.formField.forEach(field=>{
+          if(field.frmControl.invalid) {
+              isError=true;
+              console.log(field.frmControl.invalid);
+              return;}
+          if(field.subfields)
+          {
+              field.subfields.forEach(subfield=>{
+                  
+                  if(subfield.frmControl && subfield.frmControl.invalid) {
+                      isError=true;
+                      console.log(subfield.frmControl.invalid);
+                      return;}
+              })
+          }
+          })
+                  
       
       if(!isError)
       {
@@ -150,7 +174,7 @@ export class LiveformComponent implements OnInit {
                          selTime=field.subfields[0].frmControl.value; //hour
                          selTime=selTime+":"+field.subfields[1].frmControl.value //min
                          selTime=selTime+" "+field.subfields[2].frmControl.value //am/pm
-                         this.respJson[field.name]=selTime;
+                         this.respJson[field.fname]=selTime;
                      }
                  }
                  else if(field.type=="phone")
@@ -159,11 +183,11 @@ export class LiveformComponent implements OnInit {
                          let phone='';
                          phone=field.subfields[0].frmControl.value; //hour
                          phone=phone+"-"+field.subfields[1].frmControl.value //prefix
-                         this.respJson[field.name]=phone;
+                         this.respJson[field.fname]=phone;
                      }
                  }
-                 else if(field.name)
-                     this.respJson[field.name]=value;
+                 else if(field.fname)
+                     this.respJson[field.fname]=value;
                  
              }
           })

@@ -179,10 +179,11 @@ export class FormComponent implements OnInit {
           dialogConfig.width='760px';
           dialogConfig.height='800px';
           console.log('121212--->',field.color);
-          
+          if(!field.fname || field.fname=='')
+              field.fname=field.name;
           dialogConfig.data = {
                                     id: 1,
-                                    fname: field.name,
+                                    fname: field.fname,
                                     message:field.message,
                                     title: field.title,
                                     options: field.options,
@@ -239,7 +240,7 @@ export class FormComponent implements OnInit {
          field.maxdate=data.maxdate;
          field.subfields=data.subfield
          console.log("$$$$$$$$3#######--->",field);
-//         console.log('888888888---->',field.maxlen,field.minlen);
+         console.log('888888888---->',field.maxlen,field.minlen);
          let vl=[];
          if(field.required)
              vl.push(Validators.required);

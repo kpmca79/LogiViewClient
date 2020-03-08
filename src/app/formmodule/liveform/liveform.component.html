@@ -20,6 +20,15 @@
 								</mat-form-field>
 							</div>
 							
+						<div *ngSwitchCase="'email'">
+							<mat-form-field class="example-full-width"  [style]="sanitizeHTML(frm.style)"> 
+								<input matInput name="{{field.title}}"  
+								[formControl]="field.frmControl" [style]="sanitizeHTML(frm.style)" value="" 
+								required="{{field.required}}"> 
+								<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
+							</mat-form-field>
+						</div>
+							
 							<div *ngSwitchCase="'textarea'">
 								<mat-form-field class="example-full-width"> 
 								<textarea [style]="sanitizeHTML(frm.style)" matInput rows="4"  required="{{field.required}}" cols="20" [formControl]="field.frmControl"></textarea>
@@ -101,30 +110,34 @@
 							<div class="multifield-fixed">
 								<div class="width-30">
 									<mat-form-field [style]="sanitizeHTML(frm.style)">
-									<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.subfields[0].name}}</mat-placeholder>
-									<mat-select [style]="sanitizeHTML(frm.style)" [formControl]="field.subfields[0].frmControl"
-										[(value)]="field.subfields[0].name"> <mat-option
-										*ngFor="let option of hours" value="Hour">{{option}}</mat-option>
-									</mat-select> <mat-error *ngIf="field.frmControl.hasError('required')">
-									Selection for {{field.title}} is <strong>required</strong> </mat-error> </mat-form-field>
+										<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.subfields[0].name}}</mat-placeholder>
+										<mat-select [style]="sanitizeHTML(frm.style)" [formControl]="field.subfields[0].frmControl"
+											> 
+											<mat-option *ngFor="let option of hours" [value]="option">{{option}}</mat-option>
+										</mat-select> 
+										<mat-error *ngIf="field.subfields[0].frmControl.hasError('required')">
+											{{field.subfields[0].name}} is <strong>required</strong> 
+										</mat-error> 
+								   </mat-form-field>
 								</div>
 								<div class="width-30">
 									<mat-form-field [style]="sanitizeHTML(frm.style)">
 									<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.subfields[1].name}}</mat-placeholder>
 									<mat-select [style]="sanitizeHTML(frm.style)" [formControl]="field.subfields[1].frmControl"
-										[(value)]="field.subfields[1].name"> 
-										<mat-option *ngFor="let option of minutes" value="Minutes">{{option}}</mat-option>
-									</mat-select> <mat-error *ngIf="field.frmControl.hasError('required')">
-									Selection for {{field.title}} is <strong>required</strong> </mat-error> </mat-form-field>
+										> 
+										<mat-option *ngFor="let option of minutes" [value]="option">{{option}}</mat-option>
+									</mat-select> <mat-error *ngIf="field.subfields[1].frmControl.hasError('required')">
+									{{field.subfields[1].name}} is <strong>required</strong> </mat-error> </mat-form-field>
 								</div>
 								<div class="width-30">
 									<mat-form-field [style]="sanitizeHTML(frm.style)">
 									<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.subfields[2].name}}</mat-placeholder>
 									<mat-select [style]="sanitizeHTML(frm.style)" [formControl]="field.subfields[2].frmControl"
 										[(value)]="field.subfields[2].name"> <mat-option
-										*ngFor="let option of meridiem" value="meridiem">{{option}}</mat-option>
-									</mat-select> <mat-error *ngIf="field.frmControl.hasError('required')">
-									Selection for {{field.title}} is <strong>required</strong> </mat-error> </mat-form-field>
+										*ngFor="let option of meridiem" [value]="option">{{option}}</mat-option>
+									</mat-select> 
+									<mat-error *ngIf="field.subfields[2].frmControl.hasError('required')">
+									{{field.subfields[2].name}} is <strong>required</strong> </mat-error> </mat-form-field>
 								</div>
 							</div>
 						</div>
@@ -151,13 +164,7 @@
 							</ng-container> </ng-container>
 						</div>
 
-						<div *ngSwitchCase="'email'">
-							<mat-form-field class="example-full-width"  [style]="sanitizeHTML(frm.style)"> 
-								<input matInput name="{{field.title}}"  
-								[formControl]="field.frmControl" [style]="sanitizeHTML(frm.style)" value="" required="{{field.required}}"> 
-								<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
-							</mat-form-field>
-						</div>
+					
 							
 						<div *ngSwitchCase="'submit'">
 							
