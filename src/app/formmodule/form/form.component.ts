@@ -17,6 +17,7 @@ import { MessagingService } from "../../services/messaging.service";
 import {ViewEncapsulation} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { SubField } from "app/model/SubField";
+
 declare var $: any;
 //declare var $: JQueryStatic;
 
@@ -82,6 +83,12 @@ export class FormComponent implements OnInit {
               
       
   }
+//  onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent}) {
+//      alert(`Old Value:${$event.oldValue}, 
+//        New Value: ${$event.newValue}, 
+//        Checked Color: ${$event.starRating.checkedcolor}, 
+//        Unchecked Color: ${$event.starRating.uncheckedcolor}`);
+//    }
   reactOnMessage(msg:any)
   {
       let log="Inside Form.component->reactOnMessage() "
@@ -270,7 +277,7 @@ export class FormComponent implements OnInit {
          {
              
              let fld= new FormField(); 
-            
+             console.log("######2@@@@@@@15-Mar type ",val.type," innerhtml=",val.innerHtml);
              fld.title=val.title;
              fld.status=val.status 
              fld.name=val.name;
@@ -292,6 +299,7 @@ export class FormComponent implements OnInit {
              fld.frmControl=null;
              fld.id=null;
              fld.subfields=val.subfields;
+             
              strFields.push(fld);
          }
          
@@ -358,6 +366,10 @@ export class FormComponent implements OnInit {
      drop(event: CdkDragDrop<FormField[]>) {
          moveItemInArray(this.formField, event.previousIndex, event.currentIndex);
        }
+     
+     onFileComplete(data: any) {
+         console.log("File uploaded successfully got data=",data); // We just print out data bubbled up from event emitter.
+   }
 
 }
 

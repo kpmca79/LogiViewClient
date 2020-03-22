@@ -31,7 +31,7 @@
 												<td colspan="3">
 												
 												
-													<div id="froala-editor" [froalaEditor] [(froalaModel)]="data1.title"></div>
+													<div id="froala-editor" [froalaEditor]="flr_options" [(froalaModel)]="data1.title"></div>
 											
 											
 												</td>
@@ -107,7 +107,7 @@
 											</tr>
 										</ng-container>
 										<ng-container  *ngIf="data1.type=='date-picker'"></ng-container>
-										<ng-container *ngIf="data1.type==='textbox' || data1.type==='textarea'" >
+										<ng-container *ngIf="data1.type==='textbox' || data1.type==='textarea' || data1.type=='number'" >
 												<tr>
 													<td colspan="3">	
 														<mat-form-field class="example-full-width">

@@ -61,6 +61,9 @@ import { ThankspageComponent } from '../../formmodule/thankspage/thankspage.comp
 import { FormtypeDialogComponent } from '../../formmodule/formtype-dialog/formtype-dialog.component';
 import { FormhomeComponent } from '../../formmodule/formhome/formhome.component';
 
+import { FileUploadComponent }  from '../../file-upload/file-upload.component'
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -110,6 +113,7 @@ import { FormhomeComponent } from '../../formmodule/formhome/formhome.component'
     ConfirmDialogComponent,
     FormListComponent,
     DataGridComponent,
+    FileUploadComponent,
     ResponseListComponent,
     FormBuilderComponent,
     FormComponent,

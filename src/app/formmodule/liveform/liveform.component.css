@@ -1,4 +1,7 @@
-html, body {
+.width-inherit
+{
+	width: inherit;
+}html, body {
   height: 100% !important;
 }html, body {
   height: 100% !important;

@@ -1,188 +1,224 @@
 
-<div [style.background-image]="safeBgURL" style="min-height: 110vh; height:100%;">
+<div [style.background-image]="safeBgURL"
+	style="min-height: 110vh; height: 100%;">
 	<div class="main-div">
-		
-			
-			
-				<div class="main-form-class" id="form" [style.max-width.px]=frm.formwidth [style.background-color]=frm.bgColor  >
-					<form class="{{theme}}" (ngSubmit)="onSubmit()">
-						<div >
-							<div [froalaView]="frm.title"></div>
-						</div>
-						<div *ngFor="let field of formField" [ngSwitch]="field.type">
-							
-							<div *ngSwitchCase="'textbox'">
-								<mat-form-field class="example-full-width" [style]="sanitizeHTML(frm.style)"> 
-								<input matInput name="{{field.title}}"
-									[formControl]="field.frmControl" [style]="sanitizeHTML(frm.style)"
-									value=""  required="{{field.required}}"/> 
-									<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
-								</mat-form-field>
+
+
+
+		<div class="main-form-class" id="form"
+			[style.max-width.px]=frm.formwidth
+			[style.background-color]=frm.bgColor>
+			<!-- 					<form class="{{theme}}" (ngSubmit)="onSubmit()"> -->
+			<form class="{{theme}}">
+				<div>
+					<div [froalaView]="frm.title"></div>
+				</div>
+				<div *ngFor="let field of formField" [ngSwitch]="field.type">
+
+					<div *ngSwitchCase="'textbox'">
+						<mat-form-field class="example-full-width"
+							[style]="sanitizeHTML(frm.style)"> <input
+							matInput name="{{field.title}}" [formControl]="field.frmControl"
+							[style]="sanitizeHTML(frm.style)" value=""
+							required="{{field.required}}" /> <mat-placeholder
+							[style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
+						</mat-form-field>
+					</div>
+					<div *ngSwitchCase="'number'">
+						<mat-form-field class="example-full-width"
+							[style]="sanitizeHTML(frm.style)"> <input
+							matInput name="{{field.title}}" [formControl]="field.frmControl"
+							[style]="sanitizeHTML(frm.style)" value=""
+							required="{{field.required}}" /> <mat-placeholder
+							[style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
+						<mat-error *ngIf="field.frmControl.invalid">{{field.message}}</mat-error>
+						</mat-form-field>
+					</div>
+
+					<div *ngSwitchCase="'upload'">
+						<div class="example-full-width" [style]="sanitizeHTML(frm.style)">
+							<div class="inline">
+								<app-file-upload fieldName={{field.name}} target="/api/file" class="width-inherit"
+									(complete)="onFileComplete($event)" styleparam={{frm.style}}
+									text={{field.title}}></app-file-upload>
 							</div>
-							
-						<div *ngSwitchCase="'email'">
-							<mat-form-field class="example-full-width"  [style]="sanitizeHTML(frm.style)"> 
-								<input matInput name="{{field.title}}"  
-								[formControl]="field.frmControl" [style]="sanitizeHTML(frm.style)" value="" 
-								required="{{field.required}}"> 
-								<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
+						</div>
+						`
+					</div>
+
+					<div *ngSwitchCase="'email'">
+						<mat-form-field class="example-full-width"
+							[style]="sanitizeHTML(frm.style)"> <input
+							matInput name="{{field.title}}" [formControl]="field.frmControl"
+							[style]="sanitizeHTML(frm.style)" value=""
+							required="{{field.required}}"> <mat-placeholder
+							[style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
+						</mat-form-field>
+					</div>
+
+					<div *ngSwitchCase="'textarea'">
+						<mat-form-field class="example-full-width"> <textarea
+							[style]="sanitizeHTML(frm.style)" matInput rows="4"
+							required="{{field.required}}" cols="20"
+							[formControl]="field.frmControl"></textarea> <mat-placeholder
+							[style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
+						</mat-form-field>
+					</div>
+					<div *ngSwitchCase="'section'">
+						<mat-list class="example-full-width"> <mat-list-item
+							class="section-text" class="section-text"
+							[style]="sanitizeHTML(frm.style)">{{field.title}}</mat-list-item>
+						<mat-divider></mat-divider> </mat-list>
+					</div>
+					<div *ngSwitchCase="'slide-toggle'">
+						<mat-slide-toggle class="example-full-width" [color]="white"
+							[style]="sanitizeHTML(frm.style)" [checked]="field.checked"
+							[formControl]="field.frmControl" [disabled]="field.disabled">
+						<div [style]="sanitizeHTML(frm.style)">{{field.title}}</div>
+						</mat-slide-toggle>
+					</div>
+					<div *ngSwitchCase="'date-picker'">
+						<mat-form-field class="example-small-width"
+							[style]="sanitizeHTML(frm.style)"> <input
+							matInput [min]="field.mindate" required="{{field.required}}"
+							[formControl]="field.frmControl" [max]="field.mindate"
+							[matDatepicker]="picker" (dateInput)="addEvent('input', $event)"
+							(dateChange)="addEvent('change', $event)"> <mat-placeholder
+							[style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
+						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+						<mat-datepicker touchUi #picker></mat-datepicker> </mat-form-field>
+					</div>
+
+					<div *ngSwitchCase="'dropdown'">
+						<mat-form-field class="example-half-width"> <mat-placeholder
+							[style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
+						<mat-select class="placeholder" [(value)]="field.selectedOption"
+							[style]="sanitizeHTML(frm.style)"
+							[formControl]="field.frmControl"> <mat-option
+							*ngFor="let option of field.options" value="{{option}}">
+						<div>{{option}}</div>
+						</mat-option> </mat-select> <mat-error *ngIf="field.frmControl.hasError('required')">
+						Selection for {{field.title}} is <strong>required</strong> </mat-error> </mat-form-field>
+					</div>
+
+					<!-- other options start -->
+					<div *ngSwitchCase="'fullname'" class="multifield">
+						<ng-container *ngFor="let subfield of field.subfields">
+						<ng-container *ngIf="subfield.visible==true">
+						<div class="subfield">
+							<mat-form-field [style]="sanitizeHTML(frm.style)">
+							<input matInput name="{{subfield.name}}"
+								[style]="sanitizeHTML(frm.style)"
+								[formControl]="subfield.frmControl" value="" required="false">
+							<mat-placeholder [style]="sanitizeHTML(frm.style)">{{subfield.name}}</mat-placeholder>
 							</mat-form-field>
 						</div>
-							
-							<div *ngSwitchCase="'textarea'">
-								<mat-form-field class="example-full-width"> 
-								<textarea [style]="sanitizeHTML(frm.style)" matInput rows="4"  required="{{field.required}}" cols="20" [formControl]="field.frmControl"></textarea>
-								<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
-								</mat-form-field>
-							</div>
-							<div *ngSwitchCase="'section'">
-  								<mat-list class="example-full-width" >
-  									<mat-list-item class="section-text" class="section-text" [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-list-item>
-  									<mat-divider></mat-divider>
-     							</mat-list>
-     						</div>
-							<div *ngSwitchCase="'slide-toggle'">
-								<mat-slide-toggle class="example-full-width" [color]="white" [style]="sanitizeHTML(frm.style)"
-									[checked]="field.checked" [formControl]="field.frmControl"  
-									[disabled]="field.disabled">
-									<div [style]="sanitizeHTML(frm.style)">{{field.title}}</div>
-								</mat-slide-toggle>
-							</div>
-							<div *ngSwitchCase="'date-picker'">
-								<mat-form-field class="example-small-width" [style]="sanitizeHTML(frm.style)"> 
-								<input
-									matInput [min]="field.mindate" required="{{field.required}}"
-									 [formControl]="field.frmControl"
-									[max]="field.mindate" [matDatepicker]="picker"
-									(dateInput)="addEvent('input', $event)"
-									(dateChange)="addEvent('change', $event)"> 
-									<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder> 
-									<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> 
-									<mat-datepicker touchUi #picker></mat-datepicker> 
-									</mat-form-field>
-							</div>
-
-							<div *ngSwitchCase="'dropdown'">
-								<mat-form-field class="example-half-width">
-								 <mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder> 
-									<mat-select class="placeholder" [(value)]="field.selectedOption" [style]="sanitizeHTML(frm.style)"
-									[formControl]="field.frmControl"> 
-									<mat-option *ngFor="let option of field.options" value="{{option}}">
-										<div >{{option}}</div>
-									</mat-option>
-								</mat-select> <mat-error *ngIf="field.frmControl.hasError('required')">
-								Selection for {{field.title}} is <strong>required</strong> </mat-error> </mat-form-field>
-							</div>
-						
-						<!-- other options start -->
-								<div *ngSwitchCase="'fullname'" class="multifield">
-							<ng-container *ngFor="let subfield of field.subfields">
-							<ng-container *ngIf="subfield.visible==true">
-							<div class="subfield">
-								<mat-form-field [style]="sanitizeHTML(frm.style)">
-								<input matInput name="{{subfield.name}}" [style]="sanitizeHTML(frm.style)"
-									[formControl]="subfield.frmControl" value="" required="false">
-								<mat-placeholder [style]="sanitizeHTML(frm.style)">{{subfield.name}}</mat-placeholder>
-								</mat-form-field>
-							</div>
-							</ng-container> </ng-container>
+						</ng-container> </ng-container>
+					</div>
+					<div *ngSwitchCase="'phone'" class="multifield">
+						<div class="width-30">
+							<mat-form-field [style]="sanitizeHTML(frm.style)">
+							<input matInput name="{{field.subfields[0].name}}"
+								[style]="sanitizeHTML(frm.style)"
+								[formControl]="field.subfields[0].frmControl" value=""
+								required="false"> <mat-placeholder
+								[style]="sanitizeHTML(frm.style)">{{field.subfields[0].placeholder}}</mat-placeholder>
+							</mat-form-field>
 						</div>
-						<div *ngSwitchCase="'phone'" class="multifield">
+						<div class="width-70">
+							<mat-form-field [style]="sanitizeHTML(frm.style)">
+							<input matInput name="{{field.subfields[1].name}}"
+								[style]="sanitizeHTML(frm.style)"
+								[formControl]="field.subfields[1].frmControl" value=""
+								required="false"> <mat-placeholder
+								[style]="sanitizeHTML(frm.style)">{{field.subfields[1].placeholder}}</mat-placeholder>
+							</mat-form-field>
+						</div>
+					</div>
+					<div *ngSwitchCase="'time'">
+						<mat-list class="example-full-width"> <mat-list-item
+							class="section-text" [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-list-item>
+						<mat-divider class="devider"></mat-divider> </mat-list>
+						<div class="multifield-fixed">
 							<div class="width-30">
 								<mat-form-field [style]="sanitizeHTML(frm.style)">
-								<input matInput name="{{field.subfields[0].name}}" [style]="sanitizeHTML(frm.style)"
-									[formControl]="field.subfields[0].frmControl" value="" required="false">
-								<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.subfields[0].placeholder}}</mat-placeholder>
-								</mat-form-field>
+								<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.subfields[0].name}}</mat-placeholder>
+								<mat-select [style]="sanitizeHTML(frm.style)"
+									[formControl]="field.subfields[0].frmControl"> <mat-option
+									*ngFor="let option of hours" [value]="option">{{option}}</mat-option>
+								</mat-select> <mat-error
+									*ngIf="field.subfields[0].frmControl.hasError('required')">
+								{{field.subfields[0].name}} is <strong>required</strong> </mat-error> </mat-form-field>
 							</div>
-							<div class="width-70">
+							<div class="width-30">
 								<mat-form-field [style]="sanitizeHTML(frm.style)">
-								<input matInput name="{{field.subfields[1].name}}" [style]="sanitizeHTML(frm.style)"
-									[formControl]="field.subfields[1].frmControl" value="" required="false">
-								<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.subfields[1].placeholder}}</mat-placeholder>
-								</mat-form-field>
+								<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.subfields[1].name}}</mat-placeholder>
+								<mat-select [style]="sanitizeHTML(frm.style)"
+									[formControl]="field.subfields[1].frmControl"> <mat-option
+									*ngFor="let option of minutes" [value]="option">{{option}}</mat-option>
+								</mat-select> <mat-error
+									*ngIf="field.subfields[1].frmControl.hasError('required')">
+								{{field.subfields[1].name}} is <strong>required</strong> </mat-error> </mat-form-field>
+							</div>
+							<div class="width-30">
+								<mat-form-field [style]="sanitizeHTML(frm.style)">
+								<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.subfields[2].name}}</mat-placeholder>
+								<mat-select [style]="sanitizeHTML(frm.style)"
+									[formControl]="field.subfields[2].frmControl"
+									[(value)]="field.subfields[2].name"> <mat-option
+									*ngFor="let option of meridiem" [value]="option">{{option}}</mat-option>
+								</mat-select> <mat-error
+									*ngIf="field.subfields[2].frmControl.hasError('required')">
+								{{field.subfields[2].name}} is <strong>required</strong> </mat-error> </mat-form-field>
 							</div>
 						</div>
-						<div *ngSwitchCase="'time'">
-							<mat-list class="example-full-width"> <mat-list-item
-								class="section-text" [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-list-item>
-							<mat-divider class="devider"></mat-divider> </mat-list>
-							<div class="multifield-fixed">
-								<div class="width-30">
-									<mat-form-field [style]="sanitizeHTML(frm.style)">
-										<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.subfields[0].name}}</mat-placeholder>
-										<mat-select [style]="sanitizeHTML(frm.style)" [formControl]="field.subfields[0].frmControl"
-											> 
-											<mat-option *ngFor="let option of hours" [value]="option">{{option}}</mat-option>
-										</mat-select> 
-										<mat-error *ngIf="field.subfields[0].frmControl.hasError('required')">
-											{{field.subfields[0].name}} is <strong>required</strong> 
-										</mat-error> 
-								   </mat-form-field>
-								</div>
-								<div class="width-30">
-									<mat-form-field [style]="sanitizeHTML(frm.style)">
-									<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.subfields[1].name}}</mat-placeholder>
-									<mat-select [style]="sanitizeHTML(frm.style)" [formControl]="field.subfields[1].frmControl"
-										> 
-										<mat-option *ngFor="let option of minutes" [value]="option">{{option}}</mat-option>
-									</mat-select> <mat-error *ngIf="field.subfields[1].frmControl.hasError('required')">
-									{{field.subfields[1].name}} is <strong>required</strong> </mat-error> </mat-form-field>
-								</div>
-								<div class="width-30">
-									<mat-form-field [style]="sanitizeHTML(frm.style)">
-									<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.subfields[2].name}}</mat-placeholder>
-									<mat-select [style]="sanitizeHTML(frm.style)" [formControl]="field.subfields[2].frmControl"
-										[(value)]="field.subfields[2].name"> <mat-option
-										*ngFor="let option of meridiem" [value]="option">{{option}}</mat-option>
-									</mat-select> 
-									<mat-error *ngIf="field.subfields[2].frmControl.hasError('required')">
-									{{field.subfields[2].name}} is <strong>required</strong> </mat-error> </mat-form-field>
-								</div>
-							</div>
+					</div>
+					<div *ngSwitchCase="'address'" class="multifield">
+						<ng-container *ngFor="let subfield of field.subfields">
+						<ng-container
+							*ngIf="subfield.visible==true && subfield.name.includes('address')">
+						<div class="subfield-full-width">
+							<mat-form-field [style]="sanitizeHTML(frm.style)">
+							<input matInput name="{{subfield.name}}"
+								[formControl]="subfield.frmControl"
+								[style]="sanitizeHTML(frm.style)" value="" required="false">
+							<mat-placeholder [style]="sanitizeHTML(frm.style)">{{subfield.placeholder}}</mat-placeholder>
+							</mat-form-field>
 						</div>
-						<div *ngSwitchCase="'address'" class="multifield">
-							<ng-container *ngFor="let subfield of field.subfields">
-							<ng-container
-								*ngIf="subfield.visible==true && subfield.name.includes('address')">
-							<div class="subfield-full-width">
-								<mat-form-field [style]="sanitizeHTML(frm.style)">
-								<input matInput name="{{subfield.name}}"
-									[formControl]="subfield.frmControl" [style]="sanitizeHTML(frm.style)" value="" required="false">
-								<mat-placeholder [style]="sanitizeHTML(frm.style)">{{subfield.placeholder}}</mat-placeholder>
-								</mat-form-field>
-							</div>
-							</ng-container> <ng-container
-								*ngIf="subfield.visible==true && !subfield.name.includes('address')">
-							<div class="subfield">
-								<mat-form-field [style]="sanitizeHTML(frm.style)">
-								<input matInput name="{{subfield.name}}"
-									[formControl]="subfield.frmControl" value="" [style]="sanitizeHTML(frm.style)" required="false">
-								<mat-placeholder [style]="sanitizeHTML(frm.style)">{{subfield.placeholder}}</mat-placeholder>
-								</mat-form-field>
-							</div>
-							</ng-container> </ng-container>
+						</ng-container> <ng-container
+							*ngIf="subfield.visible==true && !subfield.name.includes('address')">
+						<div class="subfield">
+							<mat-form-field [style]="sanitizeHTML(frm.style)">
+							<input matInput name="{{subfield.name}}"
+								[formControl]="subfield.frmControl" value=""
+								[style]="sanitizeHTML(frm.style)" required="false"> <mat-placeholder
+								[style]="sanitizeHTML(frm.style)">{{subfield.placeholder}}</mat-placeholder>
+							</mat-form-field>
+						</div>
+						</ng-container> </ng-container>
+					</div>
+
+
+
+					<div *ngSwitchCase="'submit'">
+
+						<div class="submit-row">
+							<button ngcontent-oht-c21="" (click)="onSubmit()"
+								class="btn btn-success mat-raised-button"
+								[style]="sanitizeHTML(frm.btnStyle)">{{field.title}}</button>
 						</div>
 
-					
-							
-						<div *ngSwitchCase="'submit'">
-							
-							<div class="submit-row">
-									<button ngcontent-oht-c21="" class="btn btn-success mat-raised-button" type="submit" [style]="sanitizeHTML(frm.btnStyle)">{{field.title}}</button>
-							</div>
-						
 						<!-- other options end -->
-						
-						
-						</div>
-						</div>
-					</form>
-				
+
+
+					</div>
 				</div>
-			
-				
-			
-		
+			</form>
+
+		</div>
+
+
+
+
 	</div>
 </div>

@@ -33,6 +33,7 @@ export class LiveformComponent implements OnInit {
     hours=['',1,2,3,4,5,6,7,8,9,10,11,12];
     minutes=[''];
     meridiem=['','AM','PM'];
+    files=[];
     
   constructor(private route: ActivatedRoute,
           private frmSrv: FormService,
@@ -41,6 +42,28 @@ export class LiveformComponent implements OnInit {
           private router: Router) { }
   sanitizeHTML(style:string): SafeStyle {
       return this.sanitizer.bypassSecurityTrustStyle(style);
+  }
+  onFileComplete(data: any) {
+   var fileJson=JSON.parse(data);
+      console.log(data)
+      console.log(fileJson.id);
+      console.log(fileJson.name);
+      console.log(fileJson.type);
+      console.log(fileJson.fieldName);
+      this.frm.formFields.forEach(field=>{
+          if(field.type=='upload')
+          {
+              if(field.name==fileJson.fieldName){
+                  if(!field.submitValue)
+                      field.submitValue="";
+                  field.submitValue=field.submitValue+"<a href='"+"http://localhost:8080/api/file/"+fileJson.id+"'>"+fileJson.name+"</a><br/>";
+              }
+               
+          }
+      })
+      console.log("After changes fields are ",this.frm.formFields);
+      
+      
   }
   ngOnInit() {
       console.log("Enter into liveform component-->init()")
@@ -78,6 +101,13 @@ export class LiveformComponent implements OnInit {
                           vl.push(Validators.maxLength(field.maxlen));
                       if(field.minlen && field.minlen!=0)
                           vl.push(Validators.minLength(field.minlen));
+                      if(field.type=='number')
+                      {
+                          vl.push(Validators.pattern("^[0-9]*$"));
+                          vl.push(Validators.max(field.maxlen));
+                          vl.push(Validators.min(field.minlen));
+                          
+                      }
                       field.frmControl = new FormControl('', vl);
                       if(field.subfields)
                       {
@@ -184,6 +214,13 @@ export class LiveformComponent implements OnInit {
                          phone=field.subfields[0].frmControl.value; //hour
                          phone=phone+"-"+field.subfields[1].frmControl.value //prefix
                          this.respJson[field.fname]=phone;
+                     }
+                 }
+                 else if(field.type=="upload")
+                 {
+                     if(field.submitValue){
+                         
+                         this.respJson[field.name]=field.submitValue;
                      }
                  }
                  else if(field.fname)

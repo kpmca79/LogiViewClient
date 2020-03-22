@@ -22,7 +22,9 @@ export class LoginComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+//  onFileComplete(data: any) {
+//      console.log(data); // We just print out data bubbled up from event emitter.
+//}
 
 
 }

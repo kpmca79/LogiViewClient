@@ -20,6 +20,41 @@ export class ElementPropDialogComponent implements OnInit {
     reqvalidation:string[];
     editField: string;
     selectedValidations: string[];
+     flr_options: Object = 
+     {
+            charCounterCount: true,
+            imageUploadParam: 'image_param',
+//            imageUploadURL: '/editorImages',
+            imageUploadParams: {id: 'my_editor'},
+            imageUploadMethod: 'POST',
+            imageMaxSize: 5 * 1024 * 1024,
+            imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+            events:  {
+                'froalaEditor.initialized':  function () 
+                {
+                    console.log('flr initialized');
+                },
+                'froalaEditor.image.beforeUpload':  function  (e,  editor,  images) 
+                {
+            
+                    if  (images.length) {
+                        // Create a File Reader.
+                        const  reader  =  new  FileReader();
+                        // Set the reader to insert images when they are loaded.
+                        reader.onload  =  (ev)  =>  {
+                                const  result  =  ev.target['result'];
+                                editor.image.insert(result,  null,  null,  editor.image.get());
+                                console.log(ev,  editor.image,  ev.target['result'])
+                        };
+                        // Read image as base64.
+                        reader.readAsDataURL(images[0]);
+                    }
+            // Stop default upload chain.
+                    return  false;
+                }
+
+            }
+     }
     
     show_placeHolder=true;
     show_error=true;

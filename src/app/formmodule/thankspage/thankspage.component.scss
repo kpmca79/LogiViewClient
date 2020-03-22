@@ -1,9 +1,8 @@
 .main-div
 {
 	width:100%;
-	height: -webkit-fill-available;
-	
-	 display: flex;
+	height: -webkit-fill-available; 
+	display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -87,8 +86,8 @@ outline: none;
 
 
 
-th, td { padding: 5px; }
-table { border-collapse: separate; border-spacing: 5px; } 
+th, td { padding: 0px; }
+
 th, td { vertical-align: center; }
 tr { vertical-align: center; }
 

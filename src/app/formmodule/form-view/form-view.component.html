@@ -19,12 +19,30 @@
 							<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
 							</mat-form-field>
 						</div>
+						<div *ngSwitchCase="'upload'" >
+							<div   class="example-full-width"  [style]="sanitizeHTML(frm.style)">
+								<div class="inline">
+									<app-file-upload target="/api/file" class="width-inherit" (complete)="onFileComplete($event)" styleparam={{frm.style}} text={{field.title}}></app-file-upload>
+								</div>
+							</div>
+						</div>
+						<div *ngSwitchCase="'number'">
+							<mat-form-field class="example-half-width" [style]="sanitizeHTML(frm.style)"> 
+							<input matInput name="{{field.title}}" [formControl]="field.frmControl" 
+								   value="" required="{{field.required}}"> 
+							<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
+							<mat-error *ngIf="field.frmControl.invalid">{{field.message}}</mat-error>
+							</mat-form-field>
+						</div>
+						
+						
 						<div *ngSwitchCase="'textarea'">
 							<mat-form-field class="example-full-width"> 
 							<textarea [style]="sanitizeHTML(frm.style)" matInput rows="4" cols="20" [formControl]="field.frmControl"></textarea>
 							<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
 							</mat-form-field>
 						</div>
+						
 						<div *ngSwitchCase="'section'">
 							<mat-list class="example-full-width"> <mat-list-item
 								class="section-text" [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-list-item>

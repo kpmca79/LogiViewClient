@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PlatformLocation } from "@angular/common";
-import { DomSanitizer } from "@angular/platform-browser";
+import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
 import { FormService } from "../../services/form.service";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
@@ -31,6 +31,9 @@ export class ThankspageComponent implements OnInit {
           private frmSrv: FormService,
           private sanitizer: DomSanitizer,
           private datePipe: DatePipe) { }
+  sanitizeHTML(style:string): SafeStyle {
+      return this.sanitizer.bypassSecurityTrustStyle(style);
+  }
 
   ngOnInit() {
       this.formID = this.route.snapshot.paramMap.get("id");

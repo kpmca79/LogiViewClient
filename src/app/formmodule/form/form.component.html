@@ -109,6 +109,50 @@
   				
   				
   		</div>
+  		
+  			<div *ngSwitchCase="'number'" >
+				<mat-form-field   class="example-half-width"  [style]="sanitizeHTML(frm.style)">
+				    <input matInput   
+				    name="{{field.title}}"
+					[formControl]="field.frmControl"
+				    value="" required="{{field.required}}">
+				     <mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
+				    <button mat-icon-button matSuffix  [matMenuTriggerFor]="menu">
+  						<mat-icon svgIcon="Morevert"></mat-icon>
+					</button>
+		  		</mat-form-field>
+		 		<mat-menu #menu="matMenu">
+					<button mat-menu-item (click)="showSetting(field)">
+			    		<mat-icon svgIcon="Setting" class="setting-icon" ></mat-icon>
+		    			<span>Properties</span>
+		  			</button>
+  					<button mat-menu-item (click)="remove(field)">
+    					<mat-icon svgIcon="Delete" class="delete-icon"></mat-icon>
+    					<span>Delete</span>
+  					</button>
+				</mat-menu>
+  		</div>
+  		<div *ngSwitchCase="'upload'" >
+				<div   class="example-full-width"  [style]="sanitizeHTML(frm.style)">
+					<div class="inline">
+						<app-file-upload target="/api/file2" class="width-inherit" (complete)="onFileComplete($event)" styleparam={{frm.style}} text={{field.title}}></app-file-upload>
+						 <button mat-icon-button matSuffix  [matMenuTriggerFor]="menu">
+  							<mat-icon svgIcon="Morevert"></mat-icon>
+						</button> 
+					</div>
+				</div>
+		 		<mat-menu #menu="matMenu">
+					<button mat-menu-item (click)="showSetting(field)">
+			    		<mat-icon svgIcon="Setting" class="setting-icon" ></mat-icon>
+		    			<span>Properties</span>
+		  			</button>
+  					<button mat-menu-item (click)="remove(field)">
+    					<mat-icon svgIcon="Delete" class="delete-icon"></mat-icon>
+    					<span>Delete</span>
+  					</button>
+				</mat-menu>
+  		</div>
+  	
   		<div *ngSwitchCase="'textarea'">
   				<mat-form-field class="example-full-width" [style]="sanitizeHTML(frm.style)">
     				<textarea matInput  rows="4" cols="20" 
@@ -446,6 +490,10 @@
 <!--   				<a tabindex="-1"  style="padding-left:30px;"(click)="showSetting(field)" class="glyphicon glyphicon-cog"></a>  -->
 <!--   				<a tabindex="-1"  style="padding-left:5px;"(click)="remove(field)" class="glyphicon glyphicon-remove"></a> -->
   		</div>
+<!--   		<div style="text-align:center"> -->
+<!--   			<h1>ng-starrating demo</h1> -->
+<!--   			<star-rating value="5" totalstars="5" checkedcolor="red" uncheckedcolor="black" size="24px" readonly="false" (rate)="onRate($event)"></star-rating> -->
+<!-- 		</div> -->
   		
 			
 <!-- 			<div *ngSwitchCase="'textbox'" class="col-md-9" -->

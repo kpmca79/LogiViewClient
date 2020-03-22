@@ -9,6 +9,10 @@ CREATE src/app/formmodule/thankspage/thankspage.component.ts (286 bytes)
 CREATE src/app/formmodule/thankspage/thankspage.component.scss (0 bytes)
 UPDATE src/app/formmodule/Formcomponents.module.ts (860 bytes)
 ========================================================================
+GENERATE NEW COMPONENT UNDER APP FOLDER
+====================================================================
+ng g c  FileUpload --skip-import
+=========================================================================
 
 
 MATERIAL PROJECT
@@ -256,3 +260,10 @@ UPGRADE FROM 8 TO 9
 npm update 
 ng add @angular/localize
 ng update --force --all
+==============================================
+ratting component
+===========================================
+install by : npm i ng-starrating --save
+link: https://www.npmjs.com/package/ng-starrating
+add in app-module.ts imports
+import it in your component where you want to use this

@@ -140,10 +140,12 @@
 						</mat-menu>
 					</th>
 				</div>
-					<td  *matCellDef="let row">{{ capi(row[property.name]) }}</td>
+					<td  *matCellDef="let row"><span [innerHTML]="sanitizeHTML(capi(row[property.name]))"></span></td>
 			</ng-container>
 			<thead><tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr></thead>
-			<tbody><tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr></tbody>
+			<tbody>
+			<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+			</tbody>
 		</table>
 	 <div>
         <mat-paginator class="mat-paginator-sticky"  [pageSizeOptions]="pageSizeOption" showFirstLastButtons></mat-paginator>

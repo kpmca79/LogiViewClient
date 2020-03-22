@@ -288,3 +288,7 @@ tr { vertical-align: center; }
 /*     color: #fff !important; */
 /* } */
 
+.width-inherit
+{
+	width: inherit;
+}

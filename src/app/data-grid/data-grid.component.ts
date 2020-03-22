@@ -9,6 +9,8 @@ import { EventEmitter, ElementRef, QueryList, ViewChildren } from "@angular/core
 import { DatePipe } from '@angular/common';
 import { HighchartsService } from '../services/highcharts.service'
 import { Chart } from '../model/Chart'
+import { DomSanitizer, SafeStyle } from "@angular/platform-browser";
+
 
 
 export interface columnProperty {
@@ -64,7 +66,8 @@ export class DataGridComponent implements OnInit {
 
     //END VARIABLE DECLARATION
 
-    constructor(private config: NgbCarouselConfig, private dateP:DatePipe, private highcharts:HighchartsService) {
+    constructor(private config: NgbCarouselConfig, private dateP:DatePipe, 
+            private highcharts:HighchartsService,  private sanitizer: DomSanitizer) {
         config.interval = 1000;
         config.wrap = true;
         config.keyboard = false;
@@ -77,7 +80,9 @@ export class DataGridComponent implements OnInit {
   
        this.charts.push(null);
         this.pageSizeOption = [this.pageSize];
-        console.log("!!!!! " + this.data);
+        
+        console.log("!!!!! " + JSON.stringify(this.data));
+        this.data
         
         this.dataSource = new MatTableDataSource(this.data);
         this.dataSource.paginator = this.paginator;
@@ -284,7 +289,9 @@ export class DataGridComponent implements OnInit {
             }
         }
     }
-   
+    sanitizeHTML(style:string): SafeStyle {
+        return this.sanitizer.bypassSecurityTrustHtml(style);
+    }
     setDisplayColumns() {
         this.displayedColumns = [];
         if (this.reqSelection)

@@ -35,9 +35,13 @@ export class FormViewComponent implements OnInit {
   { 
       
   }
+  
   sanitizeHTML(style:string): SafeStyle {
-      return this.sanitizer.bypassSecurityTrustStyle(style);
+    return this.sanitizer.bypassSecurityTrustStyle(style);
   }
+  onFileComplete(data: any) {
+      console.log(data); // We just print out data bubbled up from event emitter.
+}
   ngOnInit() {
       for(var i=0;i<60;i=i+10){this.minutes.push(i+'');}
       this.formID = this.route.snapshot.paramMap.get("id");
@@ -63,6 +67,13 @@ export class FormViewComponent implements OnInit {
                           vl.push(Validators.maxLength(field.maxlen));
                       if(field.minlen!=0)
                           vl.push(Validators.minLength(field.minlen));
+                      if(field.type=='number')
+                      {
+                          vl.push(Validators.pattern("^[0-9]*$"));
+                          vl.push(Validators.max(field.maxlen));
+                          vl.push(Validators.min(field.minlen));
+                          
+                      }
                       field.frmControl = new FormControl('', vl);
                   });
                   if(this.frm.opacity)
