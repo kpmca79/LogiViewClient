@@ -256,7 +256,8 @@ RESTART YOUR APP
 SOLUTION NOT WORKING!!!!!!!!
 =============================================
 UPGRADE FROM 8 TO 9
-
+download latest nodejs msi for win64 https://nodejs.org/en/download/ and install
+check node version
 npm update 
 ng add @angular/localize
 ng update --force --all
