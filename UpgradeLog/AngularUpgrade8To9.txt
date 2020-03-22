@@ -1,0 +1,271 @@
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+D:\Angular\holodox\LogiViewClient>node --version
+v12.16.1
+
+D:\Angular\holodox\LogiViewClient>npm update
+
+> @angular/cli@8.3.25 postinstall D:\Angular\holodox\LogiViewClient\node_modules\@angular\cli
+> node ./bin/postinstall/script.js
+
+npm WARN @angular-devkit/build-angular@0.803.25 requires a peer of typescript@>=3.1 < 3.6 but none is installed. You must install peer dependencies yo
+urself.
+npm WARN @angular/http@7.2.15 requires a peer of @angular/core@7.2.15 but none is installed. You must install peer dependencies yourself.
+npm WARN @angular/http@7.2.15 requires a peer of @angular/platform-browser@7.2.15 but none is installed. You must install peer dependencies yourself.
+npm WARN @angular/platform-browser-dynamic@8.1.2 requires a peer of @angular/compiler@8.1.2 but none is installed. You must install peer dependencies
+yourself.
+npm WARN @angular/platform-server@8.1.2 requires a peer of @angular/compiler@8.1.2 but none is installed. You must install peer dependencies yourself.
+
+npm WARN @ngtools/webpack@8.3.25 requires a peer of typescript@>=3.4 < 3.6 but none is installed. You must install peer dependencies yourself.
+npm WARN bootstrap@4.4.1 requires a peer of popper.js@^1.16.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @angular/compiler-cli@8.2.14 requires a peer of typescript@>=3.4 <3.6 but none is installed. You must install peer dependencies yourself.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.1.2 (node_modules\angular-ide\node_modules\fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","ar
+ch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.0.7 (node_modules\chokidar\node_modules\fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.0.7: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","ar
+ch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.7 (node_modules\fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.7: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","ar
+ch":"x64"})
+
++ acorn@6.4.1
++ @ckeditor/ckeditor5-angular@1.2.2
++ angular-froala-wysiwyg@3.1.0
++ @angular/cli@8.3.25
++ codelyzer@5.2.1
++ tslib@1.11.1
++ @ckeditor/ckeditor5-build-classic@12.4.0
++ @ckeditor/ckeditor5-build-inline@12.4.0
++ bootstrap@4.4.1
++ ngx-color-picker@8.2.0
++ @angular/compiler-cli@8.2.14
++ @angular/cdk@8.2.3
++ @ng-bootstrap/ng-bootstrap@5.3.0
++ @angular/material@8.2.3
++ @angular/compiler@8.2.14
++ typescript@3.8.3
+added 15 packages from 16 contributors, removed 53 packages, updated 69 packages, moved 2 packages and audited 17784 packages in 74.875s
+
+26 packages are looking for funding
+  run `npm fund` for details
+
+found 460 low severity vulnerabilities
+  run `npm audit fix` to fix them, or `npm audit` for details
+
+D:\Angular\holodox\LogiViewClient>ng add @angular/localize
+Installing packages for tooling via npm.
+Installed packages for tooling via npm.
+UPDATE src/polyfills.ts (2116 bytes)
+
+D:\Angular\holodox\LogiViewClient>ng update --force --all
+The installed Angular CLI version is older than the latest stable version.
+Installing a temporary version to perform the update.
+Installing packages for tooling via npm.
+Installed packages for tooling via npm.
+Repository is not clean. Please commit or stash any changes before updating.
+
+D:\Angular\holodox\LogiViewClient>ng update --force --all
+The installed Angular CLI version is older than the latest stable version.
+Installing a temporary version to perform the update.
+Installing packages for tooling via npm.
+Installed packages for tooling via npm.
+Repository is not clean. Please commit or stash any changes before updating.
+
+D:\Angular\holodox\LogiViewClient>ng update --force --all --allow-dirty
+The installed Angular CLI version is older than the latest stable version.
+Installing a temporary version to perform the update.
+Installing packages for tooling via npm.
+Installed packages for tooling via npm.
+Repository is not clean. Update changes will be mixed with pre-existing changes.
+Using package manager: 'npm'
+Collecting installed dependencies...
+Found 70 dependencies.
+Fetching dependency metadata from registry...
+Package '@angular/localize' is already up to date.
+Package '@ckeditor/ckeditor5-angular' is already up to date.
+Package '@ncstate/sat-popover' is already up to date.
+Package 'amazing-time-picker' is already up to date.
+Package 'angular-froala-wysiwyg' is already up to date.
+Package 'angular-google-charts' is already up to date.
+Package 'arrive' is already up to date.
+Package 'bootstrap' is already up to date.
+Package 'bootstrap-material-design' is already up to date.
+Package 'bootstrap-notify' is already up to date.
+Package 'classlist.js' is already up to date.
+Package 'express' is already up to date.
+Package 'font-awesome' is already up to date.
+Package 'hammerjs' is already up to date.
+Package 'highcharts-angular' is already up to date.
+Package 'jquery' is already up to date.
+Package 'moment' is already up to date.
+Package 'tslib' is already up to date.
+Package 'web-animations-js' is already up to date.
+Package '@types/bootstrap' is already up to date.
+Package 'angular-ide' is already up to date.
+Package 'codelyzer' is already up to date.
+Package 'karma-cli' is already up to date.
+Package 'typescript' is already up to date.
+                  Package "@angular-devkit/build-angular" has an incompatible peer dependency to "typescript" (requires ">=3.6 < 3.8", would install "
+3.8.3")
+                  Package "@angular/compiler-cli" has an incompatible peer dependency to "typescript" (requires ">=3.6 <3.8", would install "3.8.3")
+                  Package "codelyzer" has an incompatible peer dependency to "tslint" (requires "^5.0.0", would install "6.1.0").
+                  Package "@agm/core" has an incompatible peer dependency to "@angular/common" (requires "^6.0.0 || ^7.0.0 || ^8.0.0", would install "
+9.0.7")
+                  Package "@agm/core" has an incompatible peer dependency to "@angular/core" (requires "^6.0.0 || ^7.0.0 || ^8.0.0", would install "9.
+0.7")
+                  Package "@ncstate/sat-popover" has an incompatible peer dependency to "@angular/cdk" (requires "^8.0.0", would install "9.1.3").
+    Updating package.json with dependency @angular-devkit/build-angular @ "0.900.7" (was "0.803.25")...
+    Updating package.json with dependency @angular/cli @ "9.0.7" (was "8.3.25")...
+    Updating package.json with dependency @angular/compiler @ "9.0.7" (was "8.2.14")...
+    Updating package.json with dependency @angular/compiler-cli @ "9.0.7" (was "8.2.14")...
+    Updating package.json with dependency @angular/language-service @ "9.0.7" (was "8.1.2")...
+    Updating package.json with dependency @types/chartist @ "0.9.47" (was "0.9.46")...
+    Updating package.json with dependency @types/googlemaps @ "3.39.3" (was "3.37.0")...
+    Updating package.json with dependency @types/jasmine @ "3.5.9" (was "3.3.15")...
+    Updating package.json with dependency @types/jquery @ "3.3.33" (was "3.3.30")...
+    Updating package.json with dependency @types/node @ "13.9.3" (was "12.6.8")...
+    Updating package.json with dependency jasmine-core @ "3.5.0" (was "3.4.0")...
+    Updating package.json with dependency jasmine-spec-reporter @ "5.0.0" (was "4.2.1")...
+    Updating package.json with dependency karma @ "4.4.1" (was "4.2.0")...
+    Updating package.json with dependency karma-chrome-launcher @ "3.1.0" (was "3.0.0")...
+    Updating package.json with dependency karma-coverage-istanbul-reporter @ "2.1.1" (was "2.1.0")...
+    Updating package.json with dependency karma-jasmine @ "3.1.1" (was "2.0.1")...
+    Updating package.json with dependency protractor @ "5.4.3" (was "5.4.2")...
+    Updating package.json with dependency ts-node @ "8.8.1" (was "8.3.0")...
+    Updating package.json with dependency tslint @ "6.1.0" (was "5.18.0")...
+    Updating package.json with dependency chartist @ "0.11.4" (was "0.11.3")...
+    Updating package.json with dependency core-js @ "3.6.4" (was "3.1.4")...
+    Updating package.json with dependency googleapis @ "48.0.0" (was "41.0.1")...
+    Updating package.json with dependency highcharts @ "8.0.4" (was "7.2.1")...
+    Updating package.json with dependency ng-http-loader @ "7.0.0" (was "6.0.1")...
+    Updating package.json with dependency ngx-color-picker @ "9.0.0" (was "8.2.0")...
+    Updating package.json with dependency perfect-scrollbar @ "1.5.0" (was "1.4.0")...
+    Updating package.json with dependency popper.js @ "1.16.1" (was "1.15.0")...
+    Updating package.json with dependency rxjs @ "6.5.4" (was "6.5.2")...
+    Updating package.json with dependency rxjs-compat @ "6.5.4" (was "6.5.2")...
+    Updating package.json with dependency zone.js @ "0.10.3" (was "0.9.1")...
+    Updating package.json with dependency @agm/core @ "1.1.0" (was "1.0.0-beta.7")...
+    Updating package.json with dependency @ckeditor/ckeditor5-build-classic @ "18.0.0" (was "12.4.0")...
+    Updating package.json with dependency @ckeditor/ckeditor5-build-inline @ "18.0.0" (was "12.4.0")...
+    Updating package.json with dependency @angular/material @ "9.1.3" (was "8.2.3")...
+    Updating package.json with dependency @angular/cdk @ "9.1.3" (was "8.2.3")...
+    Updating package.json with dependency @angular/forms @ "9.0.7" (was "8.1.2")...
+    Updating package.json with dependency @angular/platform-browser-dynamic @ "9.0.7" (was "8.1.2")...
+    Updating package.json with dependency @angular/common @ "9.0.7" (was "8.1.2")...
+    Updating package.json with dependency @angular/platform-browser @ "9.0.7" (was "8.1.2")...
+    Updating package.json with dependency @ng-bootstrap/ng-bootstrap @ "6.0.1" (was "5.3.0")...
+    Updating package.json with dependency @angular/animations @ "9.0.7" (was "8.1.2")...
+    Updating package.json with dependency acorn @ "7.1.1" (was "6.4.1")...
+    Updating package.json with dependency @angular/platform-server @ "9.0.7" (was "8.1.2")...
+    Updating package.json with dependency @angular/core @ "9.0.7" (was "8.1.2")...
+    Updating package.json with dependency @angular/router @ "9.0.7" (was "8.1.2")...
+    Updating package.json with dependency ajv @ "6.12.0" (was "6.10.2")...
+UPDATE package.json (2834 bytes)
+√ Packages installed successfully.
+** Executing migrations of package '@angular/cli' **
+
+> Angular Workspace migration.
+  Update an Angular CLI workspace to version 9.
+UPDATE angular.json (5712 bytes)
+UPDATE src/tsconfig.app.json (223 bytes)
+UPDATE package.json (2837 bytes)
+√ Packages installed successfully.
+  Migration completed.
+
+> Lazy loading syntax migration.
+  Update lazy loading syntax to use dynamic imports.
+UPDATE src/app/app.routing.ts (1465 bytes)
+  Migration completed.
+
+> Replace deprecated 'styleext' and 'spec' Angular schematic options.
+UPDATE angular.json (5709 bytes)
+  Migration completed.
+
+** Executing migrations of package '@angular/material' **
+
+> Updates Angular Material to v9
+    Could not find TypeScript project for project: material-dashboard-angular-e2e
+
+    ?  General notice: The HammerJS v9 migration for Angular Components is not able to migrate tests. Please manually clean up tests in your project i
+f they rely on HammerJS.
+    Read more about migrating tests: https://git.io/ng-material-v9-hammer-migrate-tests
+
+      √  Updated Angular Material to version 9
+
+UPDATE src/app/formmodule/formtype-dialog/formtype-dialog.component.ts (1654 bytes)
+UPDATE src/app/formmodule/form-list/form-list.component.ts (3914 bytes)
+UPDATE src/app/formmodule/form-builder/form-builder.component.ts (10241 bytes)
+UPDATE src/app/data-grid/data-grid.component.ts (11541 bytes)
+UPDATE src/app/formmodule/Formcomponents.module.ts (1099 bytes)
+UPDATE src/app/formmodule/element-prop-dialog/element-prop-dialog.component.ts (6895 bytes)
+UPDATE src/app/formmodule/form/form.component.ts (14509 bytes)
+UPDATE src/app/app.module.ts (3381 bytes)
+UPDATE src/main.ts (336 bytes)
+UPDATE package.json (2811 bytes)
+√ Packages installed successfully.
+  Migration completed.
+
+** Executing migrations of package '@angular/cdk' **
+
+> Updates the Angular CDK to v9
+    Could not find TypeScript project for project: material-dashboard-angular-e2e
+
+      √  Updated Angular CDK to version 9
+
+  Migration completed.
+
+** Executing migrations of package '@angular/core' **
+
+> Static flag migration.
+  Removes the `static` flag from dynamic queries.
+  As of Angular 9, the "static" flag defaults to false and is no longer required for your view and content queries.
+  Read more about this here: https://v9.angular.io/guide/migration-dynamic-flag
+  Migration completed.
+
+> Missing @Injectable and incomplete provider definition migration.
+  In Angular 9, enforcement of @Injectable decorators for DI is a bit stricter and incomplete provider definitions behave differently.
+  Read more about this here: https://v9.angular.io/guide/migration-injectable
+  Migration completed.
+
+> ModuleWithProviders migration.
+  In Angular 9, the ModuleWithProviders type without a generic has been deprecated.
+  This migration adds the generic where it is missing.
+  Read more about this here: https://v9.angular.io/guide/migration-module-with-providers
+  Migration completed.
+
+> Renderer to Renderer2 migration.
+  As of Angular 9, the Renderer class is no longer available.
+  Renderer2 should be used instead.
+  Read more about this here: https://v9.angular.io/guide/migration-renderer
+  Migration completed.
+
+> Undecorated classes with decorated fields migration.
+  As of Angular 9, it is no longer supported to have Angular field decorators on a class that does not have an Angular decorator.
+  Read more about this here: https://v9.angular.io/guide/migration-undecorated-classes
+  Migration completed.
+
+> Undecorated classes with DI migration.
+  As of Angular 9, it is no longer supported to use Angular DI on a class that does not have an Angular decorator.
+  Read more about this here: https://v9.angular.io/guide/migration-undecorated-classes
+
+    This migration uses the Angular compiler internally and therefore projects that no longer build successfully after the update cannot run the migra
+tion. Please ensure there are no AOT compilation errors and rerun the migration. The following project failed: src/tsconfig.app.json
+
+    Error: The Angular Compiler requires TypeScript >=3.6.4 and <3.8.0 but 3.8.3 was found instead.
+
+    Could not migrate all undecorated classes that use dependency
+    injection. Some project targets could not be analyzed due to
+    TypeScript program failures.
+
+    Migration can be rerun with: "ng update @angular/core --migrate-only migration-v9-undecorated-classes-with-di"
+
+  Migration completed.
+
+
+Your project has been updated to Angular version 9!
+For more info, please see: https://v9.angular.io/guide/updating-to-version-9
+
+D:\Angular\holodox\LogiViewClient>
+D:\Angular\holodox\LogiViewClient>

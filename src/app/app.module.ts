@@ -30,7 +30,8 @@ import { UserService } from './services/user.service';
 import { MessagingService } from './services/messaging.service';
 import { DatePipe } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatInputModule, MatSelectModule} from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { HighchartsService } from './services/highcharts.service';
 import { HighchartsChartModule } from 'highcharts-angular';
 //time picker

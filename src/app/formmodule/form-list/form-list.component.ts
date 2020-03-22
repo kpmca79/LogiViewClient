@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormService } from "../../services/form.service";
 import { Form } from "../../model/Form";
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 
 import { FormtypeDialogComponent } from '../../formmodule/formtype-dialog/formtype-dialog.component';
-import { MatDialogConfig, MatDialog, MatDatepickerInputEvent, MatIconRegistry } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { MatIconRegistry } from '@angular/material/icon';
 import { Route, Router } from "@angular/router";
 
 @Component({

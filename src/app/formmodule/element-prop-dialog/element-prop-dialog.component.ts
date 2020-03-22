@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  Inject } from '@angular/core';
 // tslint:disable-next-line:import-spacing
-import { MAT_DIALOG_DATA } from  '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SubField } from "app/model/SubField"; 
 
 @Component({

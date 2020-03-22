@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {  Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from  '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Form } from "app/model/Form";
 import { FormService } from "app/services/form.service";
 

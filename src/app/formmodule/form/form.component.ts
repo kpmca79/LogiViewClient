@@ -4,7 +4,9 @@ import {PlatformLocation } from '@angular/common';
 
 import { FormField } from '../../model/FormField';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem  } from '@angular/cdk/drag-drop';
-import { MatDialogConfig, MatDialog, MatDatepickerInputEvent, MatIconRegistry } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { MatIconRegistry } from '@angular/material/icon';
 import { FormService } from '../../services/form.service';
 import { ElementPropDialogComponent } from '../element-prop-dialog/element-prop-dialog.component';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';

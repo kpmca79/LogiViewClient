@@ -261,6 +261,21 @@ check node version
 npm update 
 ng add @angular/localize
 ng update --force --all
+
+if you get error as 
+D:\Angular\holodox\LogiViewClient>ng update --force --all
+The installed Angular CLI version is older than the latest stable version.
+Installing a temporary version to perform the update.
+Installing packages for tooling via npm.
+Installed packages for tooling via npm.
+Repository is not clean. Please commit or stash any changes before updating.
+
+add --allow-dirty
+D:\Angular\holodox\LogiViewClient>ng update --force --all --allow-dirty
+
+GOT ERROR : ERROR in The Angular Compiler requires TypeScript >=3.6.4 and <3.8.0 but 3.8.3 was found instead.
+STEP: npm install typescript@3.7.5
+
 ==============================================
 ratting component
 ===========================================
