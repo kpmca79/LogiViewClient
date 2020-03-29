@@ -20,6 +20,7 @@ import {ViewEncapsulation} from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { SubField } from "app/model/SubField";
 
+
 declare var $: any;
 //declare var $: JQueryStatic;
 
@@ -34,8 +35,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 @Component({
   selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.css']
+  templateUrl: 'form.component.html',
+  styleUrls: ['form.component.css']
 })
 export class FormComponent implements OnInit {
   @Input() formField: FormField[];
@@ -44,6 +45,7 @@ export class FormComponent implements OnInit {
   formTitle="sample form";
   public editor= InlineEditor;
   theme:String ="light-theme";
+  currentRate=3;
   durationInSeconds=3;
   hours=['',1,2,3,4,5,6,7,8,9,10,11,12];
   minutes=[''];
@@ -126,6 +128,8 @@ export class FormComponent implements OnInit {
       }
       else
           console.log("ERROR FORM NOT FOUND!!!!!!!!!");
+//      if(msg.elementadd)
+//          this.saveForm(false);
       
   }
 
@@ -177,7 +181,8 @@ export class FormComponent implements OnInit {
     {
         
          var index =  this.formField.indexOf(field);
-            this.formField.splice(index, 1);     
+            this.formField.splice(index, 1);  
+//            this.saveForm(false);
     }
    
 
@@ -187,69 +192,29 @@ export class FormComponent implements OnInit {
           dialogConfig.autoFocus = true;
           dialogConfig.width='760px';
           dialogConfig.height='800px';
-          console.log('121212--->',field.color);
+          console.log("Inside show setting field is ",field)
+//          console.log('121212--->',field.color);
           if(!field.fname || field.fname=='')
               field.fname=field.name;
-          dialogConfig.data = {
-                                    id: 1,
-                                    fname: field.fname,
-                                    message:field.message,
-                                    title: field.title,
-                                    options: field.options,
-                                    validation: field.validation,
-                                    required: field.required,
-                                    type: field.type,
-                                    minlen:field.minlen,
-                                    maxlen:field.maxlen,
-                                    frmtitle:field.title,
-                                    frmstatus:field.status,
-                                    selectedValidations:field.selectedValidation,
-                                    color: field.color,
-                                    selectedColor: field.selectedColor,
-                                    disabled:field.disabled,
-                                    checked: field.checked,
-                                    mindate: field.mindate,
-                                    maxdate: field.maxdate,
-                                    selectedDate:field.selectedDate,
-                                    height: '1000px',
-                                    width: '600px',
-                                    subfield:field.subfields
-                                 };
-        
-
-            const dialogRef = this.dialog.open(ElementPropDialogComponent, dialogConfig);
-            dialogRef.afterClosed().subscribe(result => {
-                                                             if (result) {
-                                                                            
-                                                                       field.title=dialogConfig.data.title;
-                                                                       this.saveLocalData(dialogConfig.data,field);
-                                                                       console.log("777777777777--->",dialogConfig.data);
-
-
-                                                                    }
-                                                });
+              dialogConfig.data =field;
+              dialogConfig.data.id=1;
+              dialogConfig.data.height='1000px';
+              dialogConfig.data.width='600px';
+              console.log("opening dialog with config data------>",dialogConfig.data);
+              const dialogRef = this.dialog.open(ElementPropDialogComponent, dialogConfig);
+              dialogRef.afterClosed().
+              subscribe(result => {
+                                     if (result) {
+                                         field=dialogConfig.data;
+                                         this.updateFrmControl(field);
+                                         console.log("after cloe dialog with config data------>",dialogConfig.data);
+                                   }});
      }
      
-     saveLocalData(data,field:FormField)
+     updateFrmControl(field:FormField)
      {
-         field.title=data.title;
-         field.fname=data.fname;
-         field.message=data.message;
-         field.options=data.options;
-         field.required=data.required;
-         field.maxlen=data.maxlen;
-         field.minlen=data.minlen;
-         field.status=data.frmstatus;
-         field.selectedValidation=data.selectedValidations;
-         field.selectedColor=data.selectedColor;
-         field.color=data.color;
-         field.checked=data.checked;
-         field.disabled=data.disabled;
-         field.mindate=data.mindate;
-         field.maxdate=data.maxdate;
-         field.subfields=data.subfield
-         console.log("$$$$$$$$3#######--->",field);
-         console.log('888888888---->',field.maxlen,field.minlen);
+       
+         console.log("Enter updateFrmControl field--->",field);
          let vl=[];
          if(field.required)
              vl.push(Validators.required);
@@ -260,8 +225,9 @@ export class FormComponent implements OnInit {
          if(field.minlen!=0)
              vl.push(Validators.minLength(field.minlen));
          field.frmControl = new FormControl('', vl);
-      
-         console.log('title=',field.title,'options=',field.options,'required=',field.required,'validation=',data.selectedValidations);
+         console.log("Exit updateFrmControl field--->",field);
+//         this.saveForm(false);
+         
      }
      sanitize(image) {
          return this._sanitizer.bypassSecurityTrustStyle(`linear-gradient(rgba(29, 29, 29, 0), rgba(16, 16, 23, 0.5)), url(${image})`);
@@ -270,53 +236,20 @@ export class FormComponent implements OnInit {
          return this._sanitizer.bypassSecurityTrustStyle(style);
      }
      
-     saveForm()
+     saveForm(showNotification:boolean)
      {
           let strFields: FormField[] =[];
-//         this.frm.formFields.forEach(field=>strFields.push[JSON.stringify(field)])
-    
-     this.formField.forEach(val=>
-         {
-             
-             let fld= new FormField(); 
-             console.log("######2@@@@@@@15-Mar type ",val.type," innerhtml=",val.innerHtml);
-             fld.title=val.title;
-             fld.status=val.status 
-             fld.name=val.name;
-             fld.fname=val.fname;
-             fld.message=val.message;
-             fld.required=val.required;
-             fld.validation=val.validation;
-             fld.options=val.options;
-             fld.maxlen=val.maxlen;
-             fld.minlen=val.minlen;
-             fld.selectedOption=val.selectedOption;
-             fld.selectedValidation=val.selectedValidation;
-             fld.innerHtml=val.innerHtml;
-             fld.selectedColor=val.selectedColor;
-             fld.color=val.color;
-             fld.checked=val.checked;
-             fld.disabled=val.disabled;
-             fld.type=val.type;
-             fld.frmControl=null;
-             fld.id=null;
-             fld.subfields=val.subfields;
-             
-             strFields.push(fld);
-         }
-         
-     ); 
-     this.frm.formFields=strFields;
-//     this.frm.formFields.forEach(field=>console.log(JSON.stringify(field)));
-//     console.log('you are in save form',this.frm);
-         
-  
-     const saveFormObj =  this.frmSrv.saveForm(this.frm,this.formID)
-     .subscribe(response=>{
-         this.formID=response.data;
-       this.showNotification('top','center','Form saved successfully','s');
-         console.log("In form componenet form link0 is ",this.formID);
-     });
+        if(this.formField){
+                this.formField.forEach(val=>{
+                if(val.id) val.id=null;
+                if(val.frmControl)val.frmControl=null;
+            }); }
+          const saveFormObj =  this.frmSrv.saveForm(this.frm,this.formID)
+          .subscribe(response=>{
+              this.formID=response.data;
+              if(showNotification)
+                  this.showNotification('top','center','Form saved successfully','s');
+              console.log("Form saved successfully---> ",this.formID);});
        
      }
      showNotification(from, align,msg,msgType){

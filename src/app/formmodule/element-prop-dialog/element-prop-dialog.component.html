@@ -144,30 +144,29 @@
 											</tr>
 											<tr >
 												<th colspan="2"><b>Selection Options</b></th>
-												<td align="right"><a mat-button (click)="add()"
-													data-toggle="tab"> <i class="material-icons">add_box</i>Add
-														<div class="ripple-container"></div>
-												</a> <!-- 												<button type="button" class="btn btn-primary mat-raised-button" -->
-													<!-- 								    	   				rounded="true" size="sm" (click)="add()">ADD</button> -->
+												<td align="right">
+													<a mat-button (click)="add()" data-toggle="tab"> 
+														<i class="material-icons">add_box</i>Add<div class="ripple-container"></div>
+													</a> 
 												</td>
-	
 											</tr>
 											<tr>
 												<td colspan="3">
 													<table width="100%">
 														<tr *ngFor="let option of data1.options; let id = index">
-	
-															<td width="70%"><span
-																(keyup)="changeValue(id, 'option', $event)"
+															<td width="70%">
+																<span (keyup)="changeValue(id, 'option', $event)"
 																(blur)="updateList(id, 'name', $event)"
-																contenteditable="true">{{option}}</span></td>
-															<td><span class="table-remove"> <a mat-button
-																	(click)="remove(id)" data-toggle="tab"> <i
-																		class="material-icons">close</i>Remove
-																		<div class="ripple-container"></div>
-																</a> <!-- 																	<button type="button" class="btn btn-primary mat-raised-button" -->
-																	<!-- 																			rounded="true" size="sm" (click)="remove(id)">Remove</button> -->
-															</span></td>
+																contenteditable="true">{{option}}
+																</span>
+															</td>
+															<td>
+																<span class="table-remove"> 
+																	<a mat-button (click)="remove(id)" data-toggle="tab"> 
+																		<i class="material-icons">close</i>Remove<div class="ripple-container"></div>
+																	</a>
+																</span>
+															</td>
 														</tr>
 													</table>
 												</td>

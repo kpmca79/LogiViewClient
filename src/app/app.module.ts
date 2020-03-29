@@ -29,18 +29,22 @@ import { AppMaterialModules } from './material.module'; // for editable table
 import { UserService } from './services/user.service';
 import { MessagingService } from './services/messaging.service';
 import { DatePipe } from '@angular/common';
-import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+//getting error after upgrade to 9
+//import { DragDropModule } from '@angular/cdk/drag-drop';
+//import { MatInputModule } from '@angular/material/input';
+//import { MatSelectModule } from '@angular/material/select';
+//getting error after upgrade to 9
 import { HighchartsService } from './services/highcharts.service';
 import { HighchartsChartModule } from 'highcharts-angular';
+
 //time picker
 import { AmazingTimePickerModule } from 'amazing-time-picker'; 
+
 
 import 'froala-editor/js/plugins.pkgd.min.js';
 import 'froala-editor/js/plugins/link.min.js';
 import 'froala-editor/js/plugins/image.min.js';
-
 
 
 
@@ -57,13 +61,15 @@ import 'froala-editor/js/plugins/image.min.js';
     RouterModule,
     AppRoutingModule,
     HttpClientModule,
-    DragDropModule,
-    MatInputModule, 
-    MatSelectModule,
+//    DragDropModule,
+//    MatInputModule, 
+//    MatSelectModule,
     FormcomponentsModule,
     AmazingTimePickerModule,
     HighchartsChartModule,
+    NgbModule,
     NgHttpLoaderModule.forRoot(),
+ 
     
     
     AgmCoreModule.forRoot({
@@ -73,6 +79,7 @@ import 'froala-editor/js/plugins/image.min.js';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    
   
     
    

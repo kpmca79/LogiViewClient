@@ -309,3 +309,22 @@ tr { vertical-align: center; }
 /*     color: #fff !important; */
 /* } */
 
+/*for rating component*/
+ .gift {
+      position: relative;
+      display: inline-flex;
+      font-size: 4rem;
+      color: #d3d3d3;
+      width: inherit;
+    }
+    .full {
+      color: #ffa600;
+    }
+    .half {
+      position: absolute;
+      display: inline-flex;
+      overflow: hidden;
+      color: #ffa600;
+      width: inherit;
+    }
+/* end for rating component */

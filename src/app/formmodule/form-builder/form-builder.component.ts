@@ -24,8 +24,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 @Component({
   selector: 'builder',
-  templateUrl: './form-builder.component.html',
-  styleUrls: ['./form-builder.component.scss']
+  templateUrl: 'form-builder.component.html',
+  styleUrls: ['form-builder.component.scss']
 })
 
 export class FormBuilderComponent implements OnInit {
@@ -45,7 +45,7 @@ titlemsg = 'form builder demo';
 opened: boolean =true;
 notopened: boolean = true;
 showformProper=false;
-
+chgEvent:any = {"elementadd":false};
 bgImageID="5ccd9b901fd9be0ae8f74ead";
 resourceURL="/api/file/";
 //bgURL="url(http://localhost:8085/api/1/file/5ccd9b901fd9be0ae8f74ead)";
@@ -213,49 +213,33 @@ drop(event: CdkDragDrop<string[]>) {
 //     console.log(event.previousIndex + '   ' + event.currentIndex);
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 //      console.log(event.container.data);
+      
   } else {
-
-      const random: string = Math.random().toString(36).substring(7);
       const tempVal2:any = event.previousContainer.data[event.previousIndex]; 
-      const std : FormField = new FormField();
-      console.log('--XXXXXXXXXXSSSS---->',tempVal2);
-      std.name = tempVal2.name;
-      std.type = tempVal2.type;
-      std.title = tempVal2.title;
-      std.maxlen =tempVal2.maxlen;
-      std.minlen =tempVal2.minlen;
-      std.minlen =tempVal2.minlen;
-      std.required =tempVal2.required;
+      let std : FormField = new FormField();
+      std=JSON.parse(JSON.stringify(tempVal2)) as FormField; 
       std.selectedOption ='option1';
       std.frmControl=new FormControl('', []); ;
-      std.validation = JSON.parse(JSON.stringify(tempVal2.validation));
-      std.options = JSON.parse(JSON.stringify(tempVal2.options)); 
-     
-      std.innerHtml=tempVal2.innerHtml;
-      std.color=tempVal2.color;
-      std.selectedColor=tempVal2.selectedColor;
-      std.checked=tempVal2.checked;
-      std.disabled=tempVal2.disabled;
-      std.mindate=tempVal2.mindate;
-      std.maxdate=tempVal2.maxdate;
-      std.selectedDate=tempVal2.selectedDate;
-      std.subfields=tempVal2.subfields;
-//      std.innerHtml=std.innerHtml.replace('id="form1"','id="'+random+'"');
       console.log("TTTTTTTOOOOOOOOOOOT ",std);
       this.students2.push(std);
       
-      //event.container.data.push(std);
-//      console.log('------>',this.students2[0].title)
-//      console.log(std);
-//      console.log("232323",tempVal2.options);
-      
-       
-      /*copyArrayItem(event.previousContainer.data,
-                  event.container.data,
-                  event.previousIndex,
-                  event.currentIndex);*/
-
+      this.chgEvent.elementadd=false;
+      this.chgEvent.elementadd=true;
+//      this.mService.produce(this.chgEvent);
+      this.chgEvent.elementadd=false;
+      this.changeorder();
   }
+}
+changeorder()
+{
+    let submitIndex=this.students2.findIndex(fld=>fld.type==="submit");
+    console.log("submit index is ",submitIndex);
+    console.log("mew element index is  ",this.students2.length-1);
+    let tmp = this.students2[submitIndex];
+    this.students2[submitIndex]=this.students2[this.students2.length-1];
+    this.students2[this.students2.length-1]=tmp;
+    
+    
 }
 
 showleftpane()

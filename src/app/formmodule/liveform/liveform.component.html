@@ -34,6 +34,22 @@
 						<mat-error *ngIf="field.frmControl.invalid">{{field.message}}</mat-error>
 						</mat-form-field>
 					</div>
+					<div *ngSwitchCase="'rating'">
+							<ng-template #t let-fill="fill">
+			    				<span class="gift" [class.full]="fill === 100">
+			      					<span class="half" [style.width.%]="fill"><i class="material-icons">{{field.types}}</i></span><i class="material-icons">{{field.types}}</i>
+			    				</span>
+			  				</ng-template>
+			  				<div   class="example-full-width"  [style]="sanitizeHTML(frm.style)">
+								<div class="inline" >
+									<span style="padding-right: 16px;padding-bottom: 20px;white-space: nowrap;">
+										{{field.title}}</span>
+									<div style="width:inherit;"> 
+										<ngb-rating  [(rate)]="currentRate" [starTemplate]="t"  max="{{field.maxlen}}"></ngb-rating>
+									</div>
+								</div>	
+		  					</div>
+						</div>
 
 					<div *ngSwitchCase="'upload'">
 						<div class="example-full-width" [style]="sanitizeHTML(frm.style)">

@@ -60,7 +60,6 @@ import { PublishLeftNavComponent } from '../../formmodule/publish-left-nav/publi
 import { ThankspageComponent } from '../../formmodule/thankspage/thankspage.component'
 import { FormtypeDialogComponent } from '../../formmodule/formtype-dialog/formtype-dialog.component';
 import { FormhomeComponent } from '../../formmodule/formhome/formhome.component';
-
 import { FileUploadComponent }  from '../../file-upload/file-upload.component'
 
 

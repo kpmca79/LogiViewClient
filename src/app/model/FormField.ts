@@ -24,6 +24,7 @@ export class FormField {
     mindate: Date;
     maxdate: Date;
     selectedDate: Date;
+    types: string;
     frmControl: FormControl;
     submitValue: String;
     subfields: SubField[];

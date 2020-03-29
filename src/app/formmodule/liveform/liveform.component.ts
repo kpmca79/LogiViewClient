@@ -34,6 +34,7 @@ export class LiveformComponent implements OnInit {
     minutes=[''];
     meridiem=['','AM','PM'];
     files=[];
+    currentRate=3;
     
   constructor(private route: ActivatedRoute,
           private frmSrv: FormService,
@@ -168,6 +169,7 @@ export class LiveformComponent implements OnInit {
           this.respJson.resTime=this.datePipe.transform(new Date(),'dd-MM-yyyy HH:mm:ss zzzz') ;
           this.formField.forEach(field=>
           {  
+          
              if(field.type!="section" && field.type!="submit")
              {   
                  
@@ -222,6 +224,10 @@ export class LiveformComponent implements OnInit {
                          
                          this.respJson[field.name]=field.submitValue;
                      }
+                 }
+                 if(field.type=="rating")
+                 {
+                     this.respJson[field.name]=this.currentRate;
                  }
                  else if(field.fname)
                      this.respJson[field.fname]=value;

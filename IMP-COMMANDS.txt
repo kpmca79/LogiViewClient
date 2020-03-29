@@ -279,7 +279,5 @@ STEP: npm install typescript@3.7.5
 ==============================================
 ratting component
 ===========================================
-install by : npm i ng-starrating --save
-link: https://www.npmjs.com/package/ng-starrating
-add in app-module.ts imports
-import it in your component where you want to use this
+use ngbratting which is directly available with ng-bootstrap
+https://www.freakyjolly.com/angular-7-bootstrap-4-add-star-rating-widget-in-angular-application-using-ng-bootstrap-web-component/
