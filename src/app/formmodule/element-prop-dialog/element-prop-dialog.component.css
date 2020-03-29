@@ -48,7 +48,13 @@ th, td { vertical-align: center; }
 .example-full-width {
   width: 100%;
 }
-
+.newrow{
+	display: inline-block;
+}
+.newrow2{
+	display: flex;
+	padding-top: 35px;
+}
 
 /* align (center) */
 /* table { margin: 0 auto; } */

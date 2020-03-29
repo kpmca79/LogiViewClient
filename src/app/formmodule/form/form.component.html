@@ -15,12 +15,20 @@
 	</div>
 	<div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
 	<div cdkDrag *ngFor="let field of formField" [ngSwitch]="field.type">
+	
 		<div *ngSwitchCase="'textbox'" >
 				<mat-form-field   class="example-full-width"  [style]="sanitizeHTML(frm.style)">
 				    <input matInput name="{{field.title}}" [formControl]="field.frmControl" value="" required="{{field.required}}">
 				    <mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
 				    <button mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert"></mat-icon></button>
 				</mat-form-field>
+  		</div>
+  		<div *ngSwitchCase="'email'" >
+			<mat-form-field   class="example-full-width" [style]="sanitizeHTML(frm.style)">
+			    <input matInput name="{{field.title}}" [formControl]="field.frmControl"  value="" required="{{field.required}}">
+		  	    <mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
+			    <button mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert"></mat-icon></button>
+		  	</mat-form-field>
   		</div>
   		<div *ngSwitchCase="'rating'">
 			<ng-template #ratingtemplate let-fill="fill">
@@ -160,13 +168,7 @@
 			<button mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert"></mat-icon></button>
   	  </div>
 			
-		<div *ngSwitchCase="'email'" >
-			<mat-form-field   class="example-full-width" [style]="sanitizeHTML(frm.style)">
-			    <input matInput name="{{field.title}}" [formControl]="field.frmControl"  value="" required="{{field.required}}">
-		  	    <mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder>
-			    <button mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert"></mat-icon></button>
-		  	</mat-form-field>
-  		</div>
+		
   		<div *ngSwitchCase="'submit'" >
 			<div   class="submit-row">
 				    <button _ngcontent-oht-c21="" class="btn btn-success mat-raised-button" type="submit" [style]="sanitizeHTML(frm.btnStyle)">{{field.title}}</button>

@@ -60,6 +60,20 @@
 													</mat-form-field>
 												</td>
 											</tr>
+											<tr *ngIf="show_icon">
+												<div class="newrow">
+												<td colspan="1">
+													<mat-form-field   class="example-full-width">
+				 											<mat-select placeholder="Chose Icon"  [(value)]="data1.selectedIcon">
+    															<mat-option *ngFor="let icon of icons" value="{{icon}}"><i class="material-icons">{{icon}}</i></mat-option>
+    														</mat-select>
+													</mat-form-field>
+												</td>
+												<td colspan="2" class="example-full-width">
+													<div class="newrow2"><i class="material-icons">{{data1.selectedIcon}}</i>&nbsp;&nbsp;{{data1.selectedIcon}}</div>
+    											</td>
+    											</div>
+											</tr>
 											<tr *ngIf="show_error">
 												<td colspan="3">
 													<mat-form-field   class="example-full-width">

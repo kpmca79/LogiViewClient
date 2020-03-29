@@ -21,6 +21,7 @@ export class ElementPropDialogComponent implements OnInit {
     reqvalidation: string[];
     editField: string;
     selectedValidations: string[];
+    icons:String[]=[];
     flr_options: Object =
     {
         charCounterCount: true,
@@ -60,6 +61,7 @@ export class ElementPropDialogComponent implements OnInit {
     show_subfields = false;
     show_name = true;
     show_mandatory = true;
+    show_icon=true;
     dropdownSettings = {};
 //    data1: any = {
 //        fname: '', title: '', message: '', options: '', validation: '', required: '', type: '',
@@ -81,7 +83,7 @@ export class ElementPropDialogComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        this.setMatIcons();
         this.dropdownSettings = {
             singleSelection: false,
             text: "Select Countries",
@@ -171,6 +173,131 @@ export class ElementPropDialogComponent implements OnInit {
     }
     onDeSelectAll( items: any ) {
         console.log( items );
+    }
+    
+    setMatIcons()
+    {
+       
+        //people
+        this.icons.push("account_circle");
+        this.icons.push("account_box");
+        this.icons.push("face");
+        this.icons.push("perm_identity");
+        this.icons.push("record_voice_over");
+        this.icons.push("rowing");
+        this.icons.push("contacts");
+        this.icons.push("sentiment_satisfied_alt");
+        this.icons.push("how_to_reg");
+        this.icons.push("insert_emoticon");
+        this.icons.push("wc");
+        this.icons.push("sentiment_very_dissatisfied");
+        this.icons.push("sentiment_very_satisfied");
+        this.icons.push("sentiment_satisfied");
+        this.icons.push("sports_handball");
+        
+        //hand symbol
+        this.icons.push("thumb_up_alt");
+        this.icons.push("thumb_down_alt");
+        this.icons.push("touch_app");
+        this.icons.push("pan_tool");
+        
+        //communications & devices
+        this.icons.push("feedback");
+        this.icons.push("calendar_today");
+        this.icons.push("perm_phone_msg");
+        this.icons.push("open_in_browser");
+        this.icons.push("important_devices");
+        this.icons.push("settings_cell");
+        this.icons.push("settings_voice");
+        this.icons.push("contact_mail");
+        this.icons.push("contact_phone");
+        this.icons.push("contacts");
+        this.icons.push("dialer_sip");
+        this.icons.push("phone");
+        this.icons.push("email");
+        this.icons.push("forum");
+        this.icons.push("location_on");
+        this.icons.push("sd_storage");
+        this.icons.push("signal_cellular_alt");
+        this.icons.push("laptop");
+        this.icons.push("mouse");
+        this.icons.push("keyboard_hide");
+        this.icons.push("router");
+        this.icons.push("speaker");
+        this.icons.push("headset");
+        this.icons.push("edit");
+        this.icons.push("local_see");
+        this.icons.push("local_printshop");
+        this.icons.push("share");
+        this.icons.push("language");
+        this.icons.push("public");
+        
+        
+        
+     
+        
+        //shopping & travel
+        this.icons.push("airline_seat_flat");
+        this.icons.push("airline_seat_recline_extra");
+        this.icons.push("account_balance");
+        this.icons.push("airplanemode_active");
+        this.icons.push("departure_board");
+        this.icons.push("directions_bus");
+        this.icons.push("directions_car");
+        this.icons.push("directions_transit");
+        this.icons.push("local_gas_station");
+        this.icons.push("restaurant");
+        this.icons.push("two_wheeler");
+        this.icons.push("local_bar");
+        this.icons.push("local_cafe");
+        this.icons.push("local_hospital");
+        this.icons.push("local_mall");
+        this.icons.push("menu_book");
+        this.icons.push("fastfood");
+        this.icons.push("local_grocery_store");
+        this.icons.push("business_center");
+        this.icons.push("apartment");
+        this.icons.push("airport_shuttle");
+        this.icons.push("meeting_room");
+    
+        
+        //other objects
+        this.icons.push("account_circle");
+        this.icons.push("account_circle");
+        this.icons.push("account_circle");
+        this.icons.push("account_circle");
+        this.icons.push("account_circle");
+        this.icons.push("account_circle");
+        this.icons.push("account_circle");
+        
+        
+        this.icons.push("school");
+        this.icons.push("local_library");
+        this.icons.push("emoji_objects");
+        this.icons.push("cake");
+        this.icons.push("emoji_events");
+        this.icons.push("beach_access");
+        this.icons.push("house");
+        this.icons.push("local_parking");
+        this.icons.push("brush");
+        this.icons.push("colorize");
+        this.icons.push("color_lens");
+        this.icons.push("star");
+        this.icons.push("card_giftcard");
+        
+        
+        //time objects
+        this.icons.push("timer");
+        this.icons.push("alarm");
+        this.icons.push("account_circle");
+        this.icons.push("account_circle");
+        this.icons.push("account_circle");
+        this.icons.push("account_circle");
+        this.icons.push("account_circle");
+        this.icons.push("account_circle");
+        
+        
+        this.icons.push("3d_rotation");
     }
 
 }

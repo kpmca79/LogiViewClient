@@ -28,5 +28,6 @@ export class FormField {
     frmControl: FormControl;
     submitValue: String;
     subfields: SubField[];
+    selectedIcon: String;
     
 }
