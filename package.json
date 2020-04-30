@@ -53,7 +53,7 @@
     "googleapis": "48.0.0",
     "highcharts": "^8.0.4",
     "highcharts-angular": "^2.4.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "2.24.0",
     "ng-http-loader": "^7.0.0",
     "ngx-color-picker": "^9.0.0",
