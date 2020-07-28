@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit {
       mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    showcreate=false;
 
     constructor(location: Location,  private element: ElementRef, private router: Router) {
       this.location = location;
@@ -29,8 +30,10 @@ export class NavbarComponent implements OnInit {
           return true;
       }
   }
+  
     ngOnInit(){
-      this.listTitles = ROUTES.filter(listTitle => listTitle);
+     
+        this.listTitles = ROUTES.filter(listTitle => listTitle);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
       this.router.events.subscribe((event) => {

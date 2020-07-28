@@ -1,0 +1,55 @@
+canvas {
+      background: #fff;
+    border-radius: 5px;
+    
+/*     max-height:200px; */
+  }
+.signature{
+	display: flex;
+    flex-flow: column;
+    justify-content: center;
+    border-radius: 8px;
+    border: 2px solid var(--input-border-color);
+    width:454px;
+   
+	
+}
+
+.sign-pad{
+    margin-bottom: -9px;
+    z-index: 5;
+   
+}
+.sign-discrition{
+    display: inline-flex;
+    background: var(--thumb-color);
+    border: 0px solid;
+    /* border-radius: 8px; */
+    height: 42px;
+    z-index: 3;
+   border-radius: 5px;
+}
+.sign-note{
+    color: var(--input-border-color);
+    flex-grow: 1;
+    padding: 12px;
+    font-size: 14px;
+    padding-left: 17px;
+    font-style: italic;
+}
+
+
+
+.sign-button{
+/* 	    margin: 4px; */
+/*     padding-top: 6px; */
+    padding-right: 1px;
+}
+.sign-tb{
+  border: none;
+    background: var(--comp-bg-color);
+    font-size: 15px;
+    font-variant: all-petite-caps;
+    color: var(--comp-color);
+    height: 41px;
+}

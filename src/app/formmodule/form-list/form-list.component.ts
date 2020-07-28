@@ -27,7 +27,7 @@ export class FormListComponent implements OnInit {
   constructor(private frmSrv: FormService,public dialog: MatDialog,private router: Router) { }
 
   ngOnInit() {
-      const formObj = this.frmSrv.getForms().subscribe(data=>{
+      const formObj = this.frmSrv.getForms(null).subscribe(data=>{
       let x= data
       this.forms=x.data;
       console.log("form size =", this.forms.length);
@@ -55,6 +55,9 @@ export class FormListComponent implements OnInit {
               status: 'Active',bgColor: '#cacaca',bgImage: '5d7411844c05a60408df1d49',header: '',
               footer: '',theme:'dark-theme',formFields:[], _links:'',style:'',btnStyle:'',opacity:0,
               response:0,
+              pageBGColor:'',
+              formBgImage:'',
+              formImages:[],
               thanksdata: 'Thanks You, you have successfully submitted your response, you might get email confirmation for the same.',
               thankstype: 'message',
               formwidth:  600,      
@@ -65,7 +68,7 @@ export class FormListComponent implements OnInit {
               publishuptodate: null,
               publishuptotime: "",
               visibility: "Public",
-              publishnow: false,
+              publishnow: false,inputStyle:null,
               createdDate: new Date()};
       
        dialogConfig.data =this.frm;  

@@ -1,0 +1,144 @@
+.tab-sub-row{
+	display: flex;
+	width: 100%;
+	flex-flow: column;
+	
+}
+.tooltip{
+	font-size: 16px;
+	color:var(--nav-darker);
+	background:var(--nav-light);
+	
+}
+
+.tab-col{
+	display:inline-flex;
+	margin-right: 10px;
+	width: 96%;
+	
+}
+.tab-col-content{
+	margin-right: 15px !important;
+	width: 50%;	
+}
+.tab-label-text
+{
+	color: var(--nav-light);
+}
+.tab-col-content-tree{
+	width: 33% ;
+	margin-right: 15px ;
+}
+.ripple-button {
+ 	border: none;
+    border-radius: 2px;
+    padding: 12px 18px;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--nav-light);
+    background-color: var(--nav-darker);
+    box-shadow: 0 0 4px #999;
+    outline: none;
+}
+.ripple {
+  background-position: center;
+  transition: background 0.8s;
+  
+}
+
+/* PRODUCT LISTING CSS */
+.pl-row
+{
+    display: inline-flex;
+    margin: 10px 0px;
+    border: 1px dashed;
+    height: 70px;
+    padding: 5px;
+    width: 100%;
+}
+.pl-img{
+	height: 70px;
+    width: 70px;
+    margin-top: -6px;
+    margin-left: -6px;
+}
+.pl-desc{
+	flex-flow: column;
+    flex-grow: 1;
+    display: flex;
+    padding-left: 5px;
+    justify-content: center;
+    max-width: 340px;
+}
+.pl-title{
+	font-size: 15px;
+    font-weight: 600;
+        white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    
+}
+.pl-other{
+	 font-size: 14px;
+	 display:flex;
+	 width:100%;
+	
+}
+.mat-nav ::ng-deep .mat-tab-body-wrapper {
+    background: var(--nav-dark);
+}
+.mat-nav ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: var(--nav-light) !important;
+}
+.mat-nav ::ng-deep .mat-input-element {
+    caret-color: var(--nav-light) !important;
+}
+.mat-nav ::ng-deep .mat-form-field-underline {
+    background-color: var(--nav-light) !important;
+}
+
+/deep/ .mat-tab-label-container {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+    z-index: 1;
+    height: 40px;
+    min-height: 50px;
+    /* align-content: center; */
+    align-items: flex-end;
+}
+
+
+/deep/ mat-tab-label.mat-tab-label-active {
+opacity: 1;
+ background-color:var(--nav-darker) !important;
+ 
+}
+/deep/ .mat-tab-label {
+    height: inherit !important;
+    min-height: inherit !important; 
+/* 	padding: 0 24px; */
+	padding: 0 0px !important;
+/* 	margin-top: 10px !important; added by me */
+    cursor: pointer;
+    box-sizing: border-box;
+/*     opacity: .6; */
+  	opacity: 1.0 !important;
+    width: -webkit-fill-available !important;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    position: relative;
+    color: white;
+    min-width: max-content !important;
+     margin-bottom: 5px;
+}
+/deep/ mat-ink-bar {
+    background-color: var(--nav-selected) !important;
+    height: 1px !important;
+}
+/deep/ .mat-slider {
+    padding: 22px !important;
+}

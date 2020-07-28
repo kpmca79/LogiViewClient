@@ -4,13 +4,16 @@ import 'rxjs/add/operator/filter';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
-import PerfectScrollbar from 'perfect-scrollbar';
+//import PerfectScrollbar from 'perfect-scrollbar';
 import {AppService} from '../../app.service';
+
+
+
 
 @Component({
   selector: 'app-admin-layout',
   templateUrl: './admin-layout.component.html',
-  styleUrls: ['./admin-layout.component.scss']
+  styleUrls: ['./admin-layout.component.css']
 })
 export class AdminLayoutComponent implements OnInit {
   private _router: Subscription;
@@ -27,13 +30,14 @@ export class AdminLayoutComponent implements OnInit {
       if (!this.app.isAuthenticated(this.router)) { 
           console.log('Inside admin layout compoment ts--> redirecting to login');
           console.log('Inside admin layout compoment ts--> redirecting to login');
-          this.router.navigateByUrl('/login'); }
+           this.router.navigateByUrl('/login');
+          }
       if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {
           // if we are on windows OS we activate the perfectScrollbar function
 
-          document.getElementsByTagName('body')[0].classList.add('perfect-scrollbar-on');
+//          document.getElementsByTagName('body')[0].classList.add('perfect-scrollbar-on');
       } else {
-          document.getElementsByTagName('body')[0].classList.remove('perfect-scrollbar-off');
+//          document.getElementsByTagName('body')[0].classList.remove('perfect-scrollbar-off');
       }
       const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
       const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
@@ -56,12 +60,18 @@ export class AdminLayoutComponent implements OnInit {
          }
       });
       this._router = this.router.events.filter(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-           elemMainPanel.scrollTop = 0;
-           elemSidebar.scrollTop = 0;
+          if(elemMainPanel && elemSidebar){
+              elemMainPanel.scrollTop = 0;
+              elemSidebar.scrollTop = 0;    
+          }
+          
+          
       });
       if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
-          let ps = new PerfectScrollbar(elemMainPanel);
-          ps = new PerfectScrollbar(elemSidebar);
+          if(elemMainPanel){
+//          let ps = new PerfectScrollbar(elemMainPanel);
+//          ps = new PerfectScrollbar(elemSidebar);
+          }
       }
   }
   // tslint:disable-next-line:use-life-cycle-interface
@@ -87,8 +97,8 @@ export class AdminLayoutComponent implements OnInit {
   runOnRouteChange(): void {
     if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
       const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
-      const ps = new PerfectScrollbar(elemMainPanel);
-      ps.update();
+//      const ps = new PerfectScrollbar(elemMainPanel);
+//      ps.update();
     }
   }
   isMac(): boolean {

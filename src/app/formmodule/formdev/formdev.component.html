@@ -1,0 +1,66 @@
+<!--  <script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-color="e34524" bolt-logo="http://boltiswatching.com/wp-content/uploads/2015/09/Bolt-Logo-e14421724859591.png"></script> -->
+<!--  <script id="a" src="../node_modules/payujs/a.js" ></script> -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
+<div class="main">
+<div>
+   	<img src="./assets/img/payumoney.png" />
+    </div>
+    <div>
+    	<h3>NODE.JS BOLT Kit</h3>
+    </div>
+	<form action="#" id="payment_form">
+<!--     <input type="hidden" id="udf5" name="udf5" value="BOLT_KIT_NODE_JS" /> -->
+    <input type="hidden" id="surl" name="surl" [value]="paymentDetail.surl" />
+    <div class="dv">
+    <span class="text"><label>Merchant Key:</label></span>
+    <span><input type="text" id="key"  name="key" placeholder="Merchant Key" [value]="paymentDetail.key" /></span>
+    </div>
+    
+<!--     <div class="dv"> -->
+<!--     <span class="text"><label>Merchant Salt:</label></span> -->
+<!--     <span><input type="text" id="salt" name="salt" placeholder="Merchant Salt" [value]="paymentDetail.salt" /></span> -->
+<!--     </div> -->
+    
+    <div class="dv">
+    <span class="text"><label>Transaction/Order ID:</label></span>
+    <span><input type="text" id="txnid" name="txnid" placeholder="Transaction ID" [value]="paymentDetail.txnid" /></span>
+    </div>
+    
+    <div class="dv">
+    <span class="text"><label>Amount:</label></span>
+    <span><input type="text" id="amount" name="amount" placeholder="Amount" [value]="paymentDetail.amount" /></span>    
+    </div>
+    
+    <div class="dv">
+    <span class="text"><label>Product Info:</label></span>
+    <span><input type="text" id="pinfo" name="pinfo" placeholder="Product Info" [value]="paymentDetail.productinfo" /></span>
+    </div>
+    
+    <div class="dv">
+    <span class="text"><label>First Name:</label></span>
+    <span><input type="text" id="fname" name="fname" placeholder="First Name" [value]="paymentDetail.firstname"  /></span>
+    </div>
+    
+    <div class="dv">
+    <span class="text"><label>Email ID:</label></span>
+    <span><input type="text" id="email" name="email" placeholder="Email ID" [value]="paymentDetail.email" /></span>
+    </div>
+    
+    <div class="dv">
+    <span class="text"><label>Mobile/Cell Number:</label></span>
+    <span><input type="text" id="mobile" name="mobile" placeholder="Mobile/Cell Number" [value]="paymentDetail.phone" /></span>
+    </div>
+    
+    <div class="dv">
+    <span class="text"><label>Hash:</label></span>
+    <span><input type="text" id="hash" name="hash" placeholder="Hash" [value]="paymentDetail.hash" /></span>
+    </div>
+    <div id="alertinfo" class="dv"></div>
+    
+    <div><input type="submit" value="Pay" (click)="launchBOLT()" /></div>
+    <div><input type="button" value="GenerateHash" (click)="generateHash()" /></div>
+	</form>
+
+
+
+</div>

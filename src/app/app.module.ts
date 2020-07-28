@@ -46,8 +46,11 @@ import 'froala-editor/js/plugins.pkgd.min.js';
 import 'froala-editor/js/plugins/link.min.js';
 import 'froala-editor/js/plugins/image.min.js';
 
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
-
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppressScrollX: true};
 
 
 @NgModule({
@@ -68,6 +71,8 @@ import 'froala-editor/js/plugins/image.min.js';
     AmazingTimePickerModule,
     HighchartsChartModule,
     NgbModule,
+    PerfectScrollbarModule,
+    
     NgHttpLoaderModule.forRoot(),
  
     
@@ -90,6 +95,7 @@ import 'froala-editor/js/plugins/image.min.js';
               MessagingService,
               HighchartsService,
               CanActivateSecurity, 
+              {provide: PERFECT_SCROLLBAR_CONFIG,useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
               { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,30 @@
+<div class="main-div">
+	<div class="row">
+		
+		<div>
+			<mat-form-field   class="example-full-width">
+				<mat-select placeholder="Chose Icon"  [(value)]="selectedIcon">
+   					<mat-option *ngFor="let icon of icons" value="{{icon}}"><i class="material-icons">{{icon}}</i></mat-option>
+   				</mat-select>
+			</mat-form-field>
+		</div>
+		
+		<div style="color:{{color}};">
+			<span class="icon_name"><i class="material-icons" style="font-size:{{iconwidth}}px;">{{selectedIcon}}</i></span>
+		</div>
+	</div>
+	<div class="row">
+		<input class="colorPicker" cpPosition='top' cpOutputFormat="hex" value="" cpWidth="180"
+       		   cpHeight="200" [(colorPicker)]="color" [style.background]="color" />
+      
+	</div>
+	<div class="row">
+        <mat-form-field   class="example-full-width">
+	        <input  matInput placeholder="Width" [(ngModel)]="iconwidth" >
+		</mat-form-field>
+	</div>
+	<div class="row">
+		<button (click)="saveForm()"  class="btn btn-success mat-raised-button" >Save</button>
+	</div>
+</div>
+	

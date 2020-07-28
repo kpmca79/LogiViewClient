@@ -1,21 +1,18 @@
 .main-div
 {
-	width:100%;
-	height: -webkit-fill-available; 
-	display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 100%;
+    display: flex;
+    flex-flow:column;
+    align-items: center;
+
+
+
 }
 .main-form-class{
-/*         max-width:650px; */
+
         padding:30px 50px 30px 50px;
-        border-radius: 20px;
-        margin: 20px 20px 20px 20px;
         font-size: 16px;
-        
-       
-        
-        
+        margin-top: 15vh;
 }
 .dark-theme-custom
 {

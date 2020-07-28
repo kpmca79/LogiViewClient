@@ -1,0 +1,13 @@
+
+  <div class="signature nav-color">
+ 	<div class="sign-pad">
+		   <canvas #sigPad width="450" height="200"  (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" ></canvas>
+ 	 </div>
+  	<div class="sign-discrition">
+  		<div class="sign-note"> {{actvieFormField.note}}</div>
+  		<div class="sign-button"><button class="sign-tb" (click)="clear()">Clear {{actvieFormField.name}}</button></div>
+  		
+  	</div>
+ </div>
+
+  

@@ -1,0 +1,84 @@
+.tab-sub-row{
+	display: flex;
+	width: 100%;
+	flex-flow: column;
+	
+}
+
+.tab-col{
+	display:inline-flex;
+	margin-right: 10px;
+	width: 96%;
+	
+}
+.tab-col-content{
+	margin-right: 15px !important;
+	width: 50%;	
+}
+.tab-label-text
+{
+	color: var(--nav-light);
+}
+.tab-col-content-tree{
+	width: 33% ;
+	margin-right: 15px ;
+}
+.mat-nav ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: var(--nav-light) !important;
+}
+.mat-nav ::ng-deep .mat-input-element {
+    caret-color: var(--nav-light) !important;
+}
+.mat-nav ::ng-deep .mat-form-field-underline {
+    background-color: var(--nav-light) !important;
+}
+.mat-nav ::ng-deep .mat-tab-body-wrapper {
+    
+    background: var(--nav-dark);
+}
+/deep/ .mat-tab-label-container {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+    z-index: 1;
+    height: 40px;
+    min-height: 50px;
+    /* align-content: center; */
+    align-items: flex-end;
+    background: var(--nav-darker);
+}
+
+
+/deep/ mat-tab-label.mat-tab-label-active {
+opacity: 1;
+ background-color:var(--nav-darker) !important;
+ 
+}
+/deep/ .mat-tab-label {
+    height: inherit !important;
+    min-height: inherit !important; 
+/* 	padding: 0 24px; */
+	padding: 0 0px !important;
+/* 	margin-top: 10px !important; added by me */
+    cursor: pointer;
+    box-sizing: border-box;
+/*     opacity: .6; */
+  	opacity: 1.0 !important;
+    width: -webkit-fill-available !important;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    position: relative;
+    color: white;
+    min-width: max-content !important;
+     margin-bottom: 5px;
+}
+/deep/ mat-ink-bar {
+    background-color: var(--nav-selected) !important;
+    height: 1px !important;
+}
+/deep/ .mat-slider {
+    padding: 22px !important;
+}

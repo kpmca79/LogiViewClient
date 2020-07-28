@@ -1,5 +1,5 @@
 import { Injectable, QueryList, ElementRef } from '@angular/core';
-import * as Highcharts from 'highcharts';
+import * as Highcharts from  'highcharts/highcharts.src';
 import highcharts3D from 'highcharts/highcharts-3d.src';
 highcharts3D(Highcharts);
 

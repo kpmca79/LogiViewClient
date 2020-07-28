@@ -1,0 +1,330 @@
+.width-inherit
+{
+	width: inherit;
+}html, body {
+  height: 100% !important;
+}html, body {
+  height: 100% !important;
+}
+
+/*ADDED NEW FIELDS CSS 18-FEB-20*/
+.submit-row {
+	width: 100%;
+	display: flex;
+	margin-top:50px;
+}
+.example-small-width {
+	width: 45%;
+}
+.example-half-width {
+	width: 45%;
+}
+.width-30
+{
+	
+	max-width: 30% !important;
+    margin-right: 10px;
+    flex-grow: 1;
+}
+.width-70
+{
+	max-width:70% !important;
+	
+    margin-right: 10px;
+    flex-grow: 1;
+}
+.devider
+{
+	margin-bottom: 15px;
+}
+.multifield-fixed
+{
+	display: -webkit-inline-box;
+    width:100%;
+}
+.multifield
+{
+/*     display: -webkit-inline-box; */
+    display: inline-flex;
+/*     flex-wrap: wrap; */
+/*     width: inherit; */
+/*     flex-wrap: wrap; */
+    flex-wrap: wrap;
+        
+    width:100%;
+}
+    
+.subfield {
+   margin-right: 10px;
+    flex-grow: 1;
+    width: 28% !important;
+/*     margin-left: -36px; */
+}
+
+.subfield-full-width {
+   margin-right: 10px;
+   flex-grow: 1;
+   width: 85% !important;
+/*     margin-left: -36px; */
+}
+    
+
+.inline {
+	width: 100%;
+	display: inline-flex;
+}
+/* END NEW FIELDS CSS 18-FEB-20*/
+.section-text
+{
+	font-weight: 600;
+    margin-bottom: -10px;
+    margin-left: -14px;
+}
+.main-div {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-items: inherit;
+	height: 100%;
+	min-height: 100% !important;
+/* 	height: 200vh; */
+}
+
+.main-form-class{
+/*         max-width:650px; */
+        padding:30px 50px 30px 50px;
+        border-radius: 20px;
+        margin: 20px 20px 20px 20px;
+        font-size: 16px;
+        width: inherit;
+        
+       
+        
+        
+}
+.dark-theme-custom
+{
+	color:#ffffff;
+}
+::ng-deep .mat-select-value {
+/*     color: rgba(255, 255, 255, 0.87); */
+}
+.mat-input-element
+{
+	color:black;
+}
+::ng-deep .mat-slide-toggle-content {
+    color: black;
+}
+.example-form {
+ 
+ 
+  
+}
+.title
+{   width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	padding-top: 20px;
+	width: 550px;
+}
+.FieldToolBox
+{
+	padding: 0 0 0 10px;
+	
+}
+
+.example-full-width {
+  width:100%;
+  
+ 
+}
+
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell
+{
+	padding: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    color: white;
+    font-size: 14px;
+}
+
+.example-half-width {
+  width: 45%;
+
+}
+.example-small-width {
+  width: 45%;
+
+}
+
+
+
+a { 
+padding: 0;
+border: none;
+background: none;
+outline: none; 
+}
+
+
+
+
+th, td { padding: 5px; }
+table { border-collapse: separate; border-spacing: 5px; } 
+th, td { vertical-align: center; }
+tr { vertical-align: center; }
+
+.example-list {
+/*   width: 500px; */
+  max-width: 100%;
+/*   border: solid 1px #ccc; */
+  min-height: 60px;
+  display: block;
+/*   background: white; */
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.example-box {
+  padding: 20px 10px;
+  border-bottom: solid 0px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  font-size : 12px;
+  border-radius: 10px;
+  background: #313030;
+ 
+  
+  opacity: 0.7;
+  border-bottom: solid 0px;
+  padding: 10px 10px 20px 10px;
+ 
+  
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-box:last-child {
+  border: none;
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.setting-icon {
+ 
+  height: 25px;
+  width: 25px;
+  color: blue;
+    
+}
+.delete-icon {
+ 
+  height: 25px;
+  width: 25px;
+  color: red;
+}
+.icon-row
+{
+	margin: 0px 0px 0px 30px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+/* form field classes */
+
+
+
+
+
+
+
+
+/* .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon, .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon */
+/* { */
+/* 	color: white; */
+/* } */
+.example-events {
+  width: 400px;
+  height: 200px;
+  border: 1px solid #555;
+  overflow: auto;
+}
+.mat-icon-button
+{
+	padding: 0;
+    min-width: 0;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    line-height: 40px;
+    border-radius: 50%;
+    color: white;
+}
+/* /deep/ .mat-menu-panel  */
+/* { */
+/* 	background-color: #313030 !important; */
+/* 	opacity: 0.7 !important; */
+/* 	border-radius: 10px !important;  */
+	
+/* } */
+/* /deep/ .mat-menu-item { */
+/*  color: #fff !important; */
+/* } */
+
+/* /deep/ .mat-menu-item:hover{ */
+/*  background-color: #000 !important; */
+/* } */
+/* button.mat-menu-item{ */
+/*     background-color: white; */
+/* } */
+
+/* button.mat-menu-item:hover { */
+/*     background-color: blue; */
+/*     color: #fff !important; */
+/* } */
+
+/*for rating component*/
+ .gift {
+      position: relative;
+      display: inline-flex;
+      font-size: 4rem;
+      color: #d3d3d3;
+      width: inherit;
+    }
+    .full {
+      color: #ffa600;
+    }
+    .half {
+      position: absolute;
+      display: inline-flex;
+      overflow: hidden;
+      color: #ffa600;
+      width: inherit;
+    }
+/* end for rating component */

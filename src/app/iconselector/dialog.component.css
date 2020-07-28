@@ -1,0 +1,35 @@
+.newrow{
+	display: inline-block;
+}
+.newrow2{
+	display: flex;
+	padding-top: 35px;
+}
+.icon_name
+{
+	padding-top: 18px;
+    padding-left: 5px;
+    padding-right: 5px;
+    display: inline-flex;
+    
+}
+.colorPicker
+{
+	height: 30px;
+    width: 184px;
+}
+.main-div
+
+{
+	margin:20px;
+}
+
+::ng-deep .material-icons {
+	font-size: 28px;
+}
+::ng-deep .row {
+	flex-wrap: nowrap;
+	margin-bottom: 20px;
+	
+
+	}

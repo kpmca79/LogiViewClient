@@ -13,6 +13,8 @@ import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { UserlistComponent } from '../../userlist/userlist.component';
 import { CreateuserComponent } from '../../createuser/createuser.component';
 import { FormListComponent } from 'app/formmodule/form-list/form-list.component';
+import { FormInboxComponent } from 'app/formmodule/form-inbox/form-inbox.component';
+import { MyformsListComponent } from 'app/formmodule/myforms/myforms.component';
 import { ResponseListComponent } from '../../formmodule/response-list/response-list.component'
 import { FormBuilderComponent } from "../../formmodule/form-builder/form-builder.component";
 import { FormViewComponent } from '../../formmodule/form-view/form-view.component';
@@ -20,7 +22,7 @@ import { LiveformComponent } from '../../formmodule/liveform/liveform.component'
 import { SettingsComponent } from '../../formmodule/settings/settings.component'
 import { PublishComponent } from '../../formmodule/publish/publish.component';
 import { ThankspageComponent } from '../../formmodule/thankspage/thankspage.component'
-
+import { FormdevComponent } from '../../formmodule/formdev/formdev.component';
 import { FormhomeComponent } from '../../formmodule/formhome/formhome.component'
 
 export const AdminLayoutRoutes: Routes = [
@@ -88,7 +90,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'upgrade',        component: UpgradeComponent },
     { path: 'createuser',        component: CreateuserComponent},
     { path: 'formlist',        component: FormListComponent},
+    { path: 'myforms',        component: MyformsListComponent},
     { path: 'responseList/:id',   component: ResponseListComponent },
+    { path: 'inbox/:id',   component: FormInboxComponent },
     { path: 'formPreview/:id', component: FormViewComponent },
     { path: 'formBuilder' ,   component: FormBuilderComponent },
     { path: 'formBuilder/:id' ,   component: FormBuilderComponent },
@@ -96,6 +100,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'formBuilder/:id/publish/:type' ,   component: PublishComponent },
     { path: 'formBuilder/:id/settings' ,  component: SettingsComponent },
     { path: 'form/:id' ,   component:  LiveformComponent},
+    { path: 'formdev' ,   component:  FormdevComponent},
+    
     { path: 'formhome/:id' ,   component:  FormhomeComponent},
     
     { path: 'form/:id/thanks' ,   component:  ThankspageComponent},

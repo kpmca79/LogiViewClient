@@ -13,7 +13,16 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
+
+
+
+
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppressScrollX: true};
 
 
 
@@ -30,21 +39,21 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     DragDropModule,
     MatIconModule,
     MatToolbarModule,
+    PerfectScrollbarModule,
     
 
+  
+
   ],
+  providers:[  {provide: PERFECT_SCROLLBAR_CONFIG,
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG}],
   declarations: [
     SidetoolbarComponent,
     
    
+
   
-    
-    
-    
-   
-    
-   
-  ],
+   ],
   exports: [
             
     SidetoolbarComponent    

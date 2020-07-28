@@ -1,0 +1,39 @@
+<div class="nav-content nav-color">
+	<div class="head">Title Properties
+		<span class="right-nav-icon"><i class="fa fa-times" aria-hidden="true" (click)="openCloseRightPanel()"></i></span>
+	</div>
+	<div class="mat-nav">
+		<div *ngIf=" frm && actvieFormField">
+			<mat-tab-group mat-align-tabs="center" class="nav-content tab-header" disablePagination="false"> 
+				<mat-tab label="GENERAL" class="tab-menu"> 
+				<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			
+					<div class="tab-content">
+						<div class="tab-row">
+								<div><span class="tab-property-label">Form Header</span></div>
+								<div id="froala-editor" [froalaEditor]="flr_options"   [(froalaModel)]="frm.title" ></div>
+						</div>
+					</div>
+				</perfect-scrollbar>
+				</div>
+				</mat-tab>
+				<mat-tab label="HTML" class="tab-menu"> 
+					<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			
+					<div class="tab-content">
+						<div class="tab-row">
+								<div><span class="tab-property-label">Header HTML</span></div>
+								<div id="froala-editor" [froalaEditor]="flr_options"  heightMin="400" style="min-height:400px;" [(froalaModel)]="frm.title" class="editor"></div>
+						</div>
+					</div>
+				</perfect-scrollbar>
+				</div>
+				</mat-tab> 
+				 
+			</mat-tab-group>
+		</div>
+	</div>
+</div>
+

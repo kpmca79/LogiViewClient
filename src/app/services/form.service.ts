@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Form } from '../model/Form';
+import { PaymentDetail } from '../model/PaymentDetail';
 import { User } from '../model/User';
+import { Validators, FormControl } from "@angular/forms/forms";
+
 declare var $: any;
 @Injectable({
   providedIn: 'root'
@@ -23,8 +26,18 @@ export class FormService {
 //    ipDetailURL="https://api.hackertarget.com/geoip/?q=";
     ipDetailURL="https://ipapi.co/";
 //    https://ipapi.co/157.32.224.228/json
-
-
+    icons:string[];
+     colorRegExp=/color:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3});/gi;
+     bgcRegExp=/background:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3});/gi;
+     flxGrwRegExp=/flex-grow:([015.]{3});/gi;
+     fntSizeRegExp=/font-size:[0-9][0-9]px;/gi;
+     fntFamilyRegExp=/font-family:.*?(?=;)/gi;
+     attValRegExp=/#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3});/gi;
+     attSizeRegExp=/[0-9]{1,2}px;/gi;
+     borderwidthRedExp=/border-width:[0-9]{1,2}px;/gi;
+     borderColorRegExp=/border-color:#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3});/gi;
+     
+     
   constructor(private http: HttpClient) { }
 
 
@@ -33,8 +46,12 @@ export class FormService {
         return this.http.get<any>('/api/formfield');
 
     }
-    getForms(): Observable<any> {
-        return this.http.get<any>('/api/forms');
+    getForms(searchStr): Observable<any> {
+        let qryParam="";
+        if(searchStr)
+            qryParam="?formName="+searchStr;
+        console.log("INSIDE form service getForms calling api "+'/api/forms'+qryParam);
+        return this.http.get<any>('/api/forms'+qryParam);
 
     }
     getForm(): Observable<any> {
@@ -69,6 +86,13 @@ export class FormService {
            return this.http.post(saveURL, JSON.parse(JSON.stringify(form)));
        }
     }
+     public  getPaymentHash(paymentDetail:PaymentDetail): Observable<any> {
+         let url='/api/payment/hash';
+         console.log('get Hash for PaymentDetails=', paymentDetail);
+         return this.http.post(url, JSON.parse(JSON.stringify(paymentDetail)));
+         
+      } 
+     
     public viewForm(formID: String) : Observable<any> {
         return this.http.get('/api/forms/' + formID);
     }
@@ -113,7 +137,10 @@ export class FormService {
         return this.http.get(this.getProxyURL(url), {headers});
     }
     
-   
+   public getRandom():string
+   {
+       return Math.random().toString(36).substr(2, 9);
+   }
     getProxyURL(url: string): string {
         return this.proxyURL + url;
     }
@@ -126,12 +153,22 @@ export class FormService {
        return this.corsPubURL(newIPDetailURL);
    }
 
-    public  saveResponse(formID: any, response: String): Observable<any> {
+   public  saveResponse(formID: any, response: String): Observable<any> {
        let saveURL = '/api/response';
        console.log('saving form response formid=', formID);
        console.log('saving form response response=', response);
        console.log('saving form saveURL=', saveURL);
        return this.http.post(saveURL, JSON.parse(JSON.stringify(response)));
+    }
+  public  updateResponse(responseID: any, response: any): Observable<any> {
+       let saveURL = '/api/response/'+responseID;
+       delete response['_id'];
+       
+       delete response['resp'];
+       console.log('updating  response responseid=', responseID);
+       console.log('updating response response=', response);
+       console.log('updating response saveURL=', saveURL);
+       return this.http.put(saveURL, JSON.parse(JSON.stringify(response)));
     }
   getResonse(formID: String): Observable<any> {
            let saveURL = "/api/"  + formID + '/response';
@@ -252,5 +289,287 @@ export class FormService {
           '</div>'
       });
   }
+  styleParse(src:string,element:string,value:string):string{
+    let dest="";
+    
+    if(!src)
+        src="";
+    switch(element)
+    {
+        case 'flexgrow':{
+            if(!src.match(this.flxGrwRegExp))
+                dest=src+"flex-grow:"+value+";";
+            else
+                dest=src.replace(this.flxGrwRegExp,"flex-grow:"+value+";");
+            break;
+        }
+        case 'fntColor':{
+            if(!src.match(this.colorRegExp))
+                dest=src+"color:"+value+";";
+            else
+                dest=src.replace(this.colorRegExp,"color:"+value+";");
+            break;
+        }
+        case 'fntSize':{
+            if(!src.match(this.fntSizeRegExp))
+                dest=src+"font-size:"+value+"px;";
+            else
+                dest=src.replace(this.fntSizeRegExp,"font-size:"+value+"px;");
+            break;
+        }
+        case 'fntFamily':{
+            if(!src.match(this.fntFamilyRegExp))
+                dest=src+"font-family:"+value+";";
+            else
+                dest=src.replace(this.fntFamilyRegExp,"font-family:"+value);
+            break;
+        }
+        case 'bgColor':{
+            console.log("####1####src######@@@@@@===",src);
+            if(!src.match(this.bgcRegExp))
+                dest=src+"background:"+value+";";
+            else
+                dest=src.replace(this.bgcRegExp,"background:"+value+";");
+            break;
+        }
+            
+    }
+    return dest;
+  }
+  
+  getStyleValue( src: string, element: string ): string {
+      let dest = "";
+      let src2 = ""
+      if ( !src )
+          src = "";
+      switch ( element ) {
+          case 'fntColor': {
+              if ( src.match( this.colorRegExp ) ) {
+                  src2 = src.match( this.colorRegExp )[0];
+                  if ( src2.match( this.attValRegExp ) )
+                      return src2.match( this.attValRegExp )[0].replace( ";", "" );
+                  else
+                      return null;
+              }
+              break;
+          }
+          case 'borderColor': {
+              if ( src.match( this.borderColorRegExp) ) {
+                  src2 = src.match( this.borderColorRegExp )[0];
+                  if ( src2.match( this.attValRegExp ) )
+                      return src2.match( this.attValRegExp )[0].replace( ";", "" );
+                  else
+                      return null;
+              }
+              break;
+          }
+          case 'bgColor': {
+              if ( src.match( this.bgcRegExp ) ) {
+                  src2 = src.match( this.bgcRegExp )[0];
+                  if ( src2.match( this.attValRegExp ) )
+                      return src2.match( this.attValRegExp )[0].replace( ";", "" );
+                  else
+                      return null;
+              }
+              break;
+          }
+          
+          
+          case 'fntSize': {
+              console.log('fntSize src=',src)
+              if ( src.match( this.fntSizeRegExp ) ) {
+                  
+                  src2 = src.match( this.fntSizeRegExp )[0];
+                  console.log('fntSize src=',src2)
+                  if ( src2.match( this.fntSizeRegExp ) ){
+                      console.log('fntSize src.match=',src2.match( this.attSizeRegExp )[0]);
+                      return src2.match( this.attSizeRegExp )[0].replace( ";", "" );}
+                  else
+                      return null;
+              }
+              break;
+
+          }
+          case 'borderwidth': {
+              console.log('borderwidth src=',src)
+              
+              if ( src.match( this.borderwidthRedExp ) ) {
+                  
+                  src2 = src.match( this.borderwidthRedExp )[0];
+                  console.log('borderwidth src=',src2)
+                  if ( src2.match( this.attSizeRegExp ) ){
+                      console.log('borderwidth src.match=',src2.match( this.attSizeRegExp )[0]);
+                      return src2.match( this.attSizeRegExp )[0].replace( ";", "" );}
+                  else
+                      return null;
+              }
+              
+          }
+          break;
+
+      }
+      return null;
+    }
+  getMatIcons():String[]
+  {
+     
+      if(this.icons&&this.icons.length>1)
+          return this.icons;
+      this.icons=[];
+      this.icons.push("account_circle");
+      this.icons.push("account_box");
+      this.icons.push("face");
+      this.icons.push("perm_identity");
+      this.icons.push("record_voice_over");
+      this.icons.push("rowing");
+      this.icons.push("contacts");
+      this.icons.push("sentiment_satisfied_alt");
+      this.icons.push("how_to_reg");
+      this.icons.push("insert_emoticon");
+      this.icons.push("wc");
+      this.icons.push("sentiment_very_dissatisfied");
+      this.icons.push("sentiment_very_satisfied");
+      this.icons.push("sentiment_satisfied");
+      this.icons.push("sports_handball");
+      
+      //hand symbol
+      this.icons.push("thumb_up_alt");
+      this.icons.push("thumb_down_alt");
+      this.icons.push("touch_app");
+      this.icons.push("pan_tool");
+      
+      //communications & devices
+      this.icons.push("feedback");
+      this.icons.push("calendar_today");
+      this.icons.push("perm_phone_msg");
+      this.icons.push("open_in_browser");
+      this.icons.push("important_devices");
+      this.icons.push("settings_cell");
+      this.icons.push("settings_voice");
+      this.icons.push("contact_mail");
+      this.icons.push("contact_phone");
+      this.icons.push("contacts");
+      this.icons.push("dialer_sip");
+      this.icons.push("phone");
+      this.icons.push("email");
+      this.icons.push("forum");
+      this.icons.push("location_on");
+      this.icons.push("sd_storage");
+      this.icons.push("signal_cellular_alt");
+      this.icons.push("laptop");
+      this.icons.push("mouse");
+      this.icons.push("keyboard_hide");
+      this.icons.push("router");
+      this.icons.push("speaker");
+      this.icons.push("headset");
+      this.icons.push("edit");
+      this.icons.push("local_see");
+      this.icons.push("local_printshop");
+      this.icons.push("share");
+      this.icons.push("language");
+      this.icons.push("public");
+      
+      
+      
+   
+      
+      //shopping & travel
+      this.icons.push("airline_seat_flat");
+      this.icons.push("airline_seat_recline_extra");
+      this.icons.push("account_balance");
+      this.icons.push("airplanemode_active");
+      this.icons.push("departure_board");
+      this.icons.push("directions_bus");
+      this.icons.push("directions_car");
+      this.icons.push("directions_transit");
+      this.icons.push("local_gas_station");
+      this.icons.push("restaurant");
+      this.icons.push("two_wheeler");
+      this.icons.push("local_bar");
+      this.icons.push("local_cafe");
+      this.icons.push("local_hospital");
+      this.icons.push("local_mall");
+      this.icons.push("menu_book");
+      this.icons.push("fastfood");
+      this.icons.push("local_grocery_store");
+      this.icons.push("business_center");
+      this.icons.push("apartment");
+      this.icons.push("airport_shuttle");
+      this.icons.push("meeting_room");
+  
+      
+      //other objects
+      this.icons.push("account_circle");
+      this.icons.push("account_circle");
+      this.icons.push("account_circle");
+      this.icons.push("account_circle");
+      this.icons.push("account_circle");
+      this.icons.push("account_circle");
+      this.icons.push("account_circle");
+      
+      
+      this.icons.push("school");
+      this.icons.push("local_library");
+      this.icons.push("emoji_objects");
+      this.icons.push("cake");
+      this.icons.push("emoji_events");
+      this.icons.push("beach_access");
+      this.icons.push("house");
+      this.icons.push("local_parking");
+      this.icons.push("brush");
+      this.icons.push("colorize");
+      this.icons.push("color_lens");
+      this.icons.push("star");
+      this.icons.push("card_giftcard");
+      
+      
+      //time objects
+      this.icons.push("timer");
+      this.icons.push("alarm");
+      this.icons.push("account_circle");
+      this.icons.push("account_circle");
+      this.icons.push("account_circle");
+      this.icons.push("account_circle");
+      this.icons.push("account_circle");
+      this.icons.push("account_circle");
+      
+      
+      this.icons.push("3d_rotation");
+      return this.icons;
+  } 
+  getCurrencya():Map<string,string>
+  {
+//      Ref: http://cactus.io/resources/toolbox/html-currency-symbol-codes
+      
+      let currencyMap=new Map<string,string>();
+      currencyMap.set("dollar","&#36;");
+      currencyMap.set("cent","&#162;");
+      currencyMap.set("pound","&#163;");
+      currencyMap.set("Yen","&#165;");
+      currencyMap.set("euro"," &#128;");
+      currencyMap.set("rupee","&#x20B9;");
+      currencyMap.set("won","&#8361");
+      currencyMap.set("lira","&#8356;");
+      return currencyMap;
+      
+      
+      
+  }
+  getCurrency():any[]
+  {
+          let currency=[];
+          currency.push({name:"United States dollar",value:"USD"});
+          currency.push({name:"Japanese yen",value:"JPY"});
+          currency.push({name:"Pound sterling",value:"GBP"});
+          currency.push({name:"Australian dollar",value:"AUD"});
+          currency.push({name:"Indian rupee",value:"INR"});
+          currency.push({name:"Canadian dollar",value:"CAD"});
+          currency.push({name:"Swiss franc",value:"CHF"});
+         
+          
+          return currency;
+  }
+   
   // END COMMON METHODS
+
 }

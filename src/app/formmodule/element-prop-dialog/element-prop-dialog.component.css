@@ -48,6 +48,11 @@ th, td { vertical-align: center; }
 .example-full-width {
   width: 100%;
 }
+.row2
+{
+	display: inline-flex;
+	
+}
 .newrow{
 	display: inline-block;
 }

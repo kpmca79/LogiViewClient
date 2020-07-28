@@ -12,6 +12,7 @@ export class TopnavComponent implements OnInit {
   @Input() formID ;
   @Input() isChecked;
   @Input() link;
+  @Input() page:string;
   @Input() type:String="publish";
    isPreview = new FormControl();
    white="white";

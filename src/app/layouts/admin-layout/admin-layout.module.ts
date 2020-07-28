@@ -23,6 +23,8 @@ import { InlineEditComponent } from '../../inline-edit/inline-edit.component';
 
 
 
+
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -32,10 +34,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 import { CreateuserComponent } from '../../createuser/createuser.component';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 import { FormListComponent } from "../../formmodule/form-list/form-list.component"
+import { MyformsListComponent } from "../../formmodule/myforms/myforms.component"
 import { ResponseListComponent } from "../../formmodule/response-list/response-list.component";
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -60,7 +64,46 @@ import { PublishLeftNavComponent } from '../../formmodule/publish-left-nav/publi
 import { ThankspageComponent } from '../../formmodule/thankspage/thankspage.component'
 import { FormtypeDialogComponent } from '../../formmodule/formtype-dialog/formtype-dialog.component';
 import { FormhomeComponent } from '../../formmodule/formhome/formhome.component';
-import { FileUploadComponent }  from '../../file-upload/file-upload.component'
+import { FileUploadComponent }  from '../../file-upload/file-upload.component';
+import {  IconselectorComponent }  from '../../iconselector/iconselector.component';
+import {  MyDialogComponent }  from '../../iconselector/iconselector.component';
+import { ImageSelectionDialogComponent } from '../../formmodule/image-selection-dialog/image-selection-dialog.component';
+
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { FormpropertyComponent } from '../../formmodule/properties/form/formproperty/formproperty.component';
+
+import { FormtitleComponent } from '../../formmodule/properties/form/formtitle/formtitle.component';
+import { TextboxComponent } from '../../formmodule/properties/form/textbox/textbox.component';
+import { FullnameComponent } from '../../formmodule/properties/form/fullname/fullname.component';
+import { EmailComponent } from '../../formmodule/properties/form/email/email.component';
+import { AddressComponent } from '../../formmodule/properties/form/address/address.component';
+import { PhonenumberComponent } from '../../formmodule/properties/form/phonenumber/phonenumber.component';
+import { YesNoToggle } from '../../formmodule/properties/form/yes-no-toggle/yes-no-toggle.component';
+import {DatepickerComponent } from '../../formmodule/properties/form/datepicker/datepicker.component';
+import {UploadComponent } from '../../formmodule/properties/form/upload/upload.component';
+import {SectionComponent } from '../../formmodule/properties/form/section/section.component';
+import {RattingComponent } from '../../formmodule/properties/form/ratting/ratting.component';
+import {DropdownComponent } from '../../formmodule/properties/form/dropdown/dropdown.component';
+import {ButtonComponent } from '../../formmodule/properties/form/button/button.component';
+import {SignatureComponent } from '../../formmodule/properties/form/signature/signature.component';
+import {SignaturepadComponent } from '../../formmodule/signaturepad/signaturepad.component';
+import {SurveytableComponent } from '../../formmodule/surveytable/surveytable.component';
+import {SurveyComponent } from '../../formmodule/properties/form/survey/survey.component';
+import { NgxNumberSpinnerModule } from 'ngx-number-spinner';
+import {NumberspinnerComponent} from '../../formmodule/properties/form/numberspinner/numberspinner.component';
+import {CaptchaComponent} from '../../formmodule/properties/form/captcha/captcha.component';
+import {FormdevComponent} from '../../formmodule/formdev/formdev.component';
+import {ProductlistComponent} from '../../formmodule/productlist/productlist.component';
+import {ProductlistpropertiesComponent} from '../../formmodule/properties/form/productlistproperties/productlistproperties.component';
+import { FormInboxComponent } from "../../formmodule/form-inbox/form-inbox.component"
+
+
+
+
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppressScrollX: true};
 
 
 @NgModule({
@@ -86,6 +129,10 @@ import { FileUploadComponent }  from '../../file-upload/file-upload.component'
     FormcomponentsModule,
     MatSnackBarModule,
     ColorPickerModule,
+    PerfectScrollbarModule,
+    NgxNumberSpinnerModule,
+    RecaptchaModule,
+    
     FroalaEditorModule.forRoot(), 
     FroalaViewModule.forRoot(),
 
@@ -103,6 +150,7 @@ import { FileUploadComponent }  from '../../file-upload/file-upload.component'
     TableListComponent,
     TypographyComponent,
     IconsComponent,
+    MyDialogComponent,
     MapsComponent,
     NotificationsComponent,
     UpgradeComponent,
@@ -111,7 +159,9 @@ import { FileUploadComponent }  from '../../file-upload/file-upload.component'
     CreateuserComponent,
     ConfirmDialogComponent,
     FormListComponent,
+    MyformsListComponent,
     DataGridComponent,
+    IconselectorComponent,
     FileUploadComponent,
     ResponseListComponent,
     FormBuilderComponent,
@@ -127,14 +177,36 @@ import { FileUploadComponent }  from '../../file-upload/file-upload.component'
     ThankspageComponent,
     FormtypeDialogComponent,
     FormhomeComponent,
-    
-  
-   
-
-
+    ImageSelectionDialogComponent,
+    FormpropertyComponent,
+    FormtitleComponent,
+    TextboxComponent,
+    FullnameComponent,
+    EmailComponent,
+    AddressComponent,
+    PhonenumberComponent,
+    YesNoToggle,
+    DatepickerComponent,
+    UploadComponent,
+    SectionComponent,
+    RattingComponent,
+    DropdownComponent,
+    ButtonComponent,
+    SignaturepadComponent,
+    SignatureComponent,
+    SurveytableComponent,
+    SurveyComponent,
+    NumberspinnerComponent,
+    FormdevComponent,
+    CaptchaComponent,
+    ProductlistComponent,
+    ProductlistpropertiesComponent,
+    FormInboxComponent,
     // tslint:disable-next-line:no-trailing-whitespace
     
-  ]
+  ],
+  providers:[  {provide: PERFECT_SCROLLBAR_CONFIG,useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
+             ]
 })
 
 export class AdminLayoutModule {}

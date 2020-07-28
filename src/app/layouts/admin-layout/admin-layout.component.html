@@ -1,10 +1,13 @@
-<div class="wrapper">
 
+<div class="wrapper" style="background:#fff !important;">
 
-    <div *ngIf="!isMaps('login') && !isMaps('formBuilder') && !isMaps('formPreview') && !isMaps('form/')" class="sidebar" data-color="danger" 
-         data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
+<!--          		data-background-color="white" data-image="./assets/img/sidebar-1.jpg"> -->
+    <div *ngIf="!isMaps('formdev') && !isMaps('login') && !isMaps('inbox') 
+    			&& !isMaps('formBuilder') && !isMaps('formPreview') 
+    			&& !isMaps('form/')" class="sidebar" data-color="danger" data-background-color="white" >
         <app-sidebar></app-sidebar>
-        <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-4.jpg)"></div>
+<!--         <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-4.jpg)"></div> -->
+         <div class="sidebar-background" ></div>
     </div>
 <!--     <div *ngIf="isMaps('formBuilder')" class="sidebar" data-color="danger"  -->
 <!--          data-background-color="white" data-image="./assets/img/sidebar-1.jpg"> -->
@@ -14,12 +17,14 @@
     
     
     
-   <div class="singlePage" *ngIf= "isMaps('formPreview') || isMaps('formBuilder') || isMaps('form/') else elseBlock">
+   <div class="singlePage" *ngIf= "isMaps('formdev') || isMaps('inbox') || isMaps('formPreview') || isMaps('formBuilder') || isMaps('form/') else elseBlock">
+<!--    		<app-inbox-navbar></app-inbox-navbar> -->
    		<router-outlet></router-outlet>
+   		
    </div>
    <ng-template #elseBlock>
     	<div  class="main-panel">
-        	<div>
+        	<div *ngIf="!isMaps('login')">
         		<app-navbar></app-navbar>
         	</div>
         	<router-outlet></router-outlet>

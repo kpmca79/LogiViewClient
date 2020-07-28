@@ -1,0 +1,152 @@
+<div class="nav-content nav-color">
+	<div class="head">
+		Section Properties <span class="right-nav-icon"><i
+			class="fa fa-times" aria-hidden="true"
+			(click)="openCloseRightPanel()"></i></span>
+	</div>
+	<div class="mat-nav">
+			
+				
+	
+		<div *ngIf=" frm && actvieFormField">
+			<mat-tab-group mat-align-tabs="center" class="nav-content tab-header"
+				disablePagination="false"> 
+		<mat-tab label="GENERAL" class="tab-menu">
+			<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			<div class="tab-content">
+			<div class="tab-row">
+						<span class="tab-property-label">Field Name</span>
+						<div class="mat-nav">
+							<mat-form-field appearance="outline"> 
+								<input matInput name="fname" [(ngModel)]="actvieFormField.name"> 
+<!-- 								<mat-label class="tab-label-text">Field Name</mat-label>  -->
+								 
+							</mat-form-field>
+						</div>
+
+				
+				</div>
+				<div class="property-row">
+				<div class="property-row-column">
+					<div><span class="tab-property-label">Font Color</span></div>
+					<div class="tab-property-row">
+						<div class="input-container">
+							<div class="row-flex">
+								<input class="color-input-field dark-bg" type="text" [(ngModel)]="color" >
+								<input cpPosition='bottom' class="color-icon" cpOutputFormat="hex" value="" cpWidth="180" cpHeight="200" 
+								[(colorPicker)]="fontColor" (colorPickerChange)="fontColorChange($event)" [style.color]="color" [style.background]="color" />
+							</div>
+							<div class="note">Select Font Color</div>
+						</div>
+					</div>
+				</div>
+				<div class="property-row-column">
+					<div><span class="tab-property-label">Font Size</span></div>
+					<div class="tab-property-row">
+						<div class="input-container">
+							<div class="row-flex">
+							<input  class="color-input-field normal dark-bg" type="number" min="8" max="35" (change)="fontSizeChange($event)" value="{{fsize}}" >
+							<label class="input color-icon border" style="background:#2f333a;padding:6px;margin-left: 0px;" >PX</label>
+							</div>
+							<div class="note" style="margin-top: -10px;">Select Font Size</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="property-row">
+				<div class="property-row-column">
+					<div><span class="tab-property-label">Border Color</span></div>
+					<div class="tab-property-row">
+						<div class="input-container">
+							<div class="row-flex">
+								
+							
+								<input class="color-input-field dark-bg" type="text" [(ngModel)]="bordercolor" >
+								<input cpPosition='top' class="color-icon" cpOutputFormat="hex" value="" cpWidth="180" cpHeight="200" 
+								[(colorPicker)]="fontColor" (colorPickerChange)="borderColorChange($event)" [style.color]="bordercolor" [style.background]="bordercolor" />
+							</div>
+							<div class="note">Select Border Color</div>
+						</div>
+					</div>
+				</div>
+				<div class="property-row-column">
+					<div><span class="tab-property-label">Border Thickness</span></div>
+					<div class="tab-property-row">
+						<div class="input-container">
+							<div class="row-flex">
+							<input  class="color-input-field normal dark-bg" type="number" min="1" max="25" (change)="borderSizeChange($event)" value="{{bsize}}">
+							<label class="input color-icon border" style="background:#2f333a;padding:6px;margin-left: 0px;" >PX</label>
+							</div>
+							<div class="note" style="margin-top: -10px;">Select Border Thickness</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			 </div>
+			 </perfect-scrollbar>
+			 </div>
+			</mat-tab> 
+			<mat-tab mat-tab label="VISIBILITY" class="tab-menu">
+			<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			<div class="tab-content">
+				<div class="tab-row">
+					<div>
+						<span class="tab-property-label">Visibility</span>
+					</div>
+					<div>
+							<mat-slide-toggle class="example-full-width" [(ngModel)]="actvieFormField.visible" >
+          						<div *ngIf="actvieFormField.visible">Field is visible</div>
+          						<div *ngIf="!actvieFormField.visible">Field is hidden</div>
+		      				</mat-slide-toggle>
+					</div>
+				</div>
+				<div class="tab-row">
+					<div>
+						<span *ngIf="!actvieFormField.visible" class="tab-property-label">Set Condition To Show Field</span>
+						<span *ngIf="actvieFormField.visible" class="tab-property-label">Set Condition To Hide Field</span>
+					</div>
+					<div class="tab-sub-row">
+							<div class="tab-col">
+								<div class="tab-col-content mat-nav" >
+									<mat-form-field appearance="outline"> 
+										<mat-select class="tab-label-text" > 
+											<mat-option *ngFor="let field of frm.formFields" value="{{field.id}}">
+												<div class="tab-label-text">{{field.name}}</div>
+											</mat-option> 
+										</mat-select> 
+									</mat-form-field>
+								</div>
+								<div class="tab-col-content mat-nav" >
+								<mat-form-field appearance="outline"> 
+										<mat-select class="tab-label-text" > 
+											<mat-option *ngFor="let op of operator" value="{{op}}">
+												<div class="tab-label-text">{{op}}</div>
+											</mat-option> 
+										</mat-select> 
+								</mat-form-field>
+								</div>
+							</div>
+							<div class="mat-nav" >
+									<mat-form-field appearance="outline"> 
+										<input matInput/> 
+										<mat-placeholder>Value</mat-placeholder>
+										<mat-hint align="end" class="tab-label-text">Provide comma seperated values</mat-hint> 
+									</mat-form-field>
+							</div>
+					 </div>
+				</div>
+				
+			</div>
+			</perfect-scrollbar>
+			</div>
+			</mat-tab>
+			
+			</mat-tab-group>
+		</div>
+	</div>
+</div>
+
+
+

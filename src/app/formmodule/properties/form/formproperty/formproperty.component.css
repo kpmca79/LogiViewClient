@@ -1,0 +1,50 @@
+.mat-nav ::ng-deep .mat-tab-body-wrapper {
+    background: var(--nav-dark);
+}
+
+
+/deep/ .mat-tab-label-container {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+    z-index: 1;
+    height: 40px;
+    min-height: 50px;
+    /* align-content: center; */
+    align-items: flex-end;
+}
+
+
+/deep/ mat-tab-label.mat-tab-label-active {
+opacity: 1;
+ background-color:var(--nav-darker) !important;
+ 
+}
+/deep/ .mat-tab-label {
+    height: inherit !important;
+    min-height: inherit !important; 
+/* 	padding: 0 24px; */
+	padding: 0 0px !important;
+/* 	margin-top: 10px !important; added by me */
+    cursor: pointer;
+    box-sizing: border-box;
+/*     opacity: .6; */
+  	opacity: 1.0 !important;
+    width: -webkit-fill-available !important;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    position: relative;
+    color: white;
+    min-width: max-content !important;
+     margin-bottom: 5px;
+}
+/deep/ mat-ink-bar {
+    background-color: var(--nav-selected) !important;
+    height: 1px !important;
+}
+/deep/ .mat-slider {
+    padding: 22px !important;
+}

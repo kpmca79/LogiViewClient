@@ -1,19 +1,186 @@
-.main-form-class {
-	border-radius: 10px;
-	padding: 10px 30px 10px 30px;
+.field-row{
+/* 	padding-right:10px; */
+	margin: 0px 0px 20px 0px;
+}
+.flex-col{
+	display:flex;
+	flex-flow: column;
 	
 }
+.num-spinner{
+	
+	flex-grow: 1;
+	display: inline-flex;
+	
+}
+/deep/ .num-spinner .wrapper{
+	height:40px;
+}
+/deep/ .num-spinner .wrapper button{
+	background:var(--thumb-color);
+}
+/deep/ .num-spinner .wrapper .ripple:hover{
+	cursor: pointer;
+    opacity:0.6;
+    background:var(--thumb-color)!important;
+/*     background:var(--comp-color) !important; */
+}
+.main-form-class {
+/* 	border-radius: 10px; */
+/* 	padding: 10px 30px 10px 30px; */
+	padding: 30px 30px 15px 30px;
+/* 	 border: 2px dashed #c5c6c8; */
+	    margin: 0px 20px;
+}
+.frm-mat{
+	margin-bottom: 10px;
+	
+	
+}
+
+.signature
+{
+	margin-bottom: 15px;
+	
+}
+
+.frm-mat ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: var(--input-border-color);
+}
+.frm-mat ::ng-deep .mat-form-field-outline-thick, 
+.frm-mat ::ng-deep .mat-input-element::placeholder, 
+::ng-deep .mat-datepicker-toggle-default-icon{
+	color: var(--input-border-color-focus) !important;
+	
+}
+.frm-mat ::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: var(--input-border-color-focus) !important;
+}
+.frm-mat ::ng-deep  .mat-slide-toggle .mat-slide-toggle-bar {
+    background-color: var(--input-border-color-focus);
+}
+.frm-mat ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: var(--thumb-color);
+} 
+.frm-mat ::ng-deep .mat-slide-toggle-thumb {
+    background-color: #aaa;
+} 
+.frm-mat ::ng-deep .mat-form-field-underline {
+    background-color: var(--input-border-color) !important;
+}
+.frm-mat ::ng-deep .mat-form-field-ripple {
+    background-color: var(--ripple-color) !important;
+}
+
+.frm-mat ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex
+{
+	background-color: var(--thumb-color) !important;
+/* 	opacity: 0.3; */
+}
+.frm-mat ::ng-deep .mat-input-element {
+    caret-color: var(--input-border-color-focus) !important;
+}
+/* .frm-mat ::ng-deep .mat-input-underline { */
+/*     background-color: var(--input-border-color) !important; */
+/* } */
+::ng-deep .mat-option {
+	color: var(--comp-color) !important;
+	background-color: var(--comp-bg-color) !important;
+}
+
+.select-group-label-frm ::ng-deep .mat-optgroup-label
+{
+	
+	background: var(--comp-bg-color) !important;
+    color: var(--comp-color) !important;
+    border-top: 3px solid var(--comp-color);
+    border-bottom: 3px solid var(--comp-color);
+    padding-left: 5px;
+    margin-bottom: 0px;
+	
+	
+/*     text-align: center; */
+}
+
+::ng-deep .mat-option-pseudo-checkbox
+{
+	color: var(--comp-color) !important;
+	background: var(--comp-color) !important;
+	opacity:0.5
+	
+}
+::ng-deep .mat-pseudo-checkbox::after
+{
+	color: var(--comp-bg-color) !important;
+}
+
+.tab-label-text
+{
+	color: var(--comp-color);
+}
+
+::ng-deep .mat-datepicker-content {
+    background-color: var(--comp-bg-color);
+    color: var(--comp-color);
+}
+::ng-deep .mat-calendar-body-cell-content,
+::ng-deep .mat-calendar-table-header th,
+::ng-deep .mat-calendar-body-label,
+::ng-deep .mat-calendar-previous-button::after, 
+::ng-deep .mat-calendar-next-button::after, 
+::ng-deep .mat-select-arrow {
+	color: var(--comp-color);
+}
+
+
+::ng-deep .mat-calendar-arrow {
+    border-top-color: var(--comp-color);
+}
+
+
+
+.icon-color{
+	color: var(--icon-color);
+}
+.devider
+{
+	margin-bottom: 15px;
+	border-top-color: var(--input-border-color);
+}
+
+/deep/ .mat-select-value {
+    color: inherit;
+}
+
 
 .dark-theme-custom {
 /* 	color: #ffffff; */
 }
+.head-div{
+	padding-left:20px;
+	padding-right:20px;
+}
 .title {
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	padding-top: 20px;
-/* 	width: 550px; */
+   
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-top: 70px;
+    background: var(--thumb-color) !important;
+    text-align: center;
+    font-size: 30px;
+    
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 24px;
+    padding-bottom:10px;
+/*     border: 2px dashed rgb(197, 198, 200); */
+    border-bottom: 0px !important;
+    
+    color: var(--comp-color);
+	
+
 }
 .example-list {
 	
@@ -23,6 +190,70 @@
 	border-radius: 4px;
 	overflow: hidden;
 }
+
+
+
+
+/* Ripple effect button
+Reference https://codepen.io/finnhvman/pen/jLXKJw
+Usage:
+<button class="ripple-button ripple">Button</button>
+ */
+ 
+ .ripple-line-hover-old{
+    background: linear-gradient(to right, var(--thumb-color)  50%, var(--comp-color) 50%) !important;
+    background-size: 200% 100% !important;
+  	background-position: right bottom !important;
+  	transition: all .5s ease-out;
+  	display: block;
+ 
+
+}
+.ripple:hoverline-hover-old  
+{
+
+	background-position: left bottom !important;
+	color:var(--comp-color) !important;
+/* 	background:var(--thumb-color) !important;  */
+}
+ 
+.ripple {
+  background-position: center;
+  transition: background 0.8s;
+  
+}
+.ripple:hover {
+/*   background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000% !important; */
+/* 	opacity:80% !important; */
+/* 	 box-shadow: 0px 10px 20px blur inset ; */
+/* 	 box-shadow: 0px 0px 11px inset; */
+	background: var(--thumb-color) !important;
+	color: var(--comp-color) !important;
+}
+.ripple:active {
+  background-color: #6eb9f7;
+  background-size: 100%;
+  transition: background 0s;
+}
+
+/* Button style */
+.ripple-button {
+  border: none;
+  border-radius: 2px;
+  padding: 12px 18px;
+  font-size: 16px;
+/*   text-transform: uppercase; */
+  cursor: pointer;
+  color: white;
+  background-color: #2196f3;
+  box-shadow: 0 0 4px #999;
+  outline: none;
+}
+
+
+
+
+
 .width-inherit
 {
 	width: inherit;
@@ -30,10 +261,14 @@
 .example-full-width {
 	width: 100%;
 }
+.example-full-width1 {
+	width: 100%;
+}
 .submit-row {
 	width: 100%;
 	display: flex;
-	margin-top: 50px;
+	margin-top: 30px;
+/* 	margin-top: 50px; */
 }
 .example-small-width {
 	width: 45%;
@@ -44,25 +279,20 @@
 .width-30
 {
 	
-	max-width: 30% !important;
+	max-width: 33% !important;
     margin-right: 10px;
     flex-grow: 1;
 }
 .width-70
 {
 	max-width:70% !important;
-	
-    margin-right: 10px;
-    flex-grow: 1;
+	flex-grow: 1;
 }
-.devider
-{
-	margin-bottom: 15px;
-}
+
 .multifield-fixed
 {
 	display: -webkit-inline-box;
-    width:100%;
+    width:90%;
 }
 .multifield
 {
@@ -72,28 +302,57 @@
 /*     width: inherit; */
 /*     flex-wrap: wrap; */
     flex-wrap: wrap;
+    justify-content: space-between;
         
-    width:100%;
+    width:98%;
 }
-    
+.flex
+{
+	display: flex;
+}    
 .subfield {
-   margin-right: 10px;
-    flex-grow: 1;
-    width: 28% !important;
+/*    margin-right: 10px; */
+/*     flex-grow: 1; */
+    width: 46% ;
 /*     margin-left: -36px; */
+
+}
+.subfield:last-child
+{
+	width: 44%;
 }
 
 .subfield-full-width {
-   margin-right: 10px;
-   flex-grow: 1;
-   width: 85% !important;
+/*    margin-right: 10px; */
+/*    flex-grow: 1; */
+   width: 100% ;
 /*     margin-left: -36px; */
 }
-    
+.col-50
+{
+	max-width:50%;
+	width:50%;
+}
+.col-100
+{
+	max-width:100%;
+	width:100%;
+}  
+.morevert{
+	flex-grow: 1;
+    text-align: end;
+/*     margin-right: -10px; */
+}
 
 .inline {
-	width: 100%;
+	width:100%;
 	display: inline-flex;
+	transition:0.3s;
+}
+
+.inline:selected{
+	border:1px solid;
+	
 }
 
 .setting-icon {
@@ -114,7 +373,7 @@
 
 .section-text {
 	font-weight: 600;
-	margin-bottom: -10px;
+	margin-bottom: -10px !important;
 	margin-left: -14px;
 }
 
@@ -222,19 +481,76 @@ tr {
       position: relative;
       display: inline-flex;
       font-size: 4rem;
-      color: #d3d3d3;
+/*       color: #d3d3d3; */
+	color:var(--thumb-color);
       width: inherit;
+          opacity: 100%;
     }
     .full {
-      color: #ffa600;
+/*       color: #ffa600; */
     }
     .half {
       position: absolute;
       display: inline-flex;
       overflow: hidden;
-      color: #ffa600;
+      color: var(--comp-color);
       width: inherit;
+      
     }
+    
+
+
+
+
+/*custom scrollbar
+ref: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_scrollbar
+https://css-tricks.com/custom-scrollbars-in-webkit/
+
+https://codepen.io/devstreak/pen/dMYgeO?__cf_chl_jschl_tk__=3c1b44c14469b07bf8a225bfe9e0f2535a4b902e-1590185400-0-Af3_yZrL3D7heZAODX_-JOzCvHFn_F9jYd5zjiURlSgQXUy2dt12slMZvx1VFWfcayrQzSOXVyMvK9h_cFkfj3BpXmoLmF-_X4zTVNR669WGv_uUV3ajt-Tegz84hpqXLQC_Us9AGENmIE1as2FoNTB42Wp9ICCsMf3Od8vaL89b2g2IrG02ba3lsOpMo2oQoSQ6qpl30PGB_LA6XOWFAi6KlWsptFq1BF5v7PfORp4LMiGbmvw9c6nLAPAi0mjfP3tKDm6U7rjN4JlHxWvHVWaXomqIpL2uX9tFLI9PgyoCmCt--gNwLJP9D9dQXeCoJLot-R0E4mJtrph-w3Ib2HsjUtrnv1SYSlZ6bLL5ByMn
+https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar
+
+https://gromo.github.io/jquery.scrollbar/demo/basic.html
+
+   
+final one  https://alligator.io/css/css-scrollbars/
+*/
+/*  /deep/ .mat-select-panel::-webkit-scrollbar { */
+/*   width: 12px;               width of the entire scrollbar */
+/* } */
+/*  /deep/ .mat-select-panel::-webkit-scrollbar-track { */
+/*   background: orange;        color of the tracking area */
+/* } */
+/*  /deep/ .mat-select-panel::-webkit-scrollbar-thumb { */
+/*   background-color: blue;    color of the scroll thumb */
+/*   border-radius: 20px;       roundness of the scroll thumb */
+/*   border: 3px solid orange;  creates padding around scroll thumb */
+/* } */
+
+
+/* .form-select */
+/* { */
+/* 	background: inherit; */
+	
+/* } */
+/* /deep/ .mat-select-panel::-webkit-scrollbar { */
+/*     width: 12px; */
+/* } */
+ 
+/* /deep/ .mat-select-panel::-webkit-scrollbar-track { */
+/*     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  */
+/*     border-radius: 10px; */
+/* } */
+ 
+/* /deep/ .mat-select-panel::-webkit-scrollbar-thumb { */
+/*     border-radius: 10px; */
+/*     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);  */
+/* } */
+
+
+
+/*end custom scrollbar
+
+
 /* end for rating component */
 /* /deep/ .mat-menu-panel  */
 /* { */
@@ -258,3 +574,5 @@ tr {
 /*     background-color: blue; */
 /*     color: #fff !important; */
 /* } */
+
+

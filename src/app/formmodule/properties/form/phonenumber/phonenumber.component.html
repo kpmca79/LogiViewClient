@@ -1,0 +1,177 @@
+<div class="nav-content nav-color">
+	<div class="head">
+		Phone Number Properties <span class="right-nav-icon"><i
+			class="fa fa-times" aria-hidden="true"
+			(click)="openCloseRightPanel()"></i></span>
+	</div>
+	<div class="mat-nav">
+			
+				
+	
+		<div *ngIf=" frm && actvieFormField">
+			<mat-tab-group mat-align-tabs="center" class="nav-content tab-header"
+				disablePagination="false"> 
+		<mat-tab label="GENERAL" class="tab-menu">
+			<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			<div class="tab-content">
+				<div class="tab-row" *ngFor="let subfield of actvieFormField.subfields">
+					<div class="tab-row">
+						<span class="tab-property-label">Field Name</span>
+						<div class="mat-nav">
+							<mat-form-field appearance="outline"> 
+								<input matInput name="fname" value="subfield.name" [(ngModel)]="subfield.name"> 
+							</mat-form-field>
+						</div>
+
+				
+					</div>
+					<div class="tab-row">
+						<span class="tab-property-label">Field Hint</span>
+						<div class="mat-nav">
+							<mat-form-field appearance="outline"> 
+								<input matInput name="fname" value="subfield.note" [(ngModel)]="subfield.note"> 
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="tab-row" *ngFor="let subfield of actvieFormField.subfields">
+					<span class="tab-property-label">Show {{subfield.name}}</span>
+						<div class="mat-nav">
+							 
+								<mat-slide-toggle class="example-full-width" [color]="white" [(ngModel)]="subfield.visible">
+									Show {{subfield.name}}
+								</mat-slide-toggle>
+							
+						</div>
+				</div>
+				<div class="tab-row" *ngFor="let subfield of actvieFormField.subfields">
+					<span class="tab-property-label">Choose Icon For {{subfield.name}} &nbsp;&nbsp;
+						<i class="material-icons ">{{subfield.selectedIcon}}</i>
+						</span>
+					
+					<div class="mat-nav">
+						<mat-form-field   class="example-full-width" appearance="outline">
+							<mat-select  [(value)]="subfield.selectedIcon" style="font-variant: all-petite-caps;">
+	 						<mat-option *ngFor="let icon of icons" value="{{icon}}"><i class="material-icons">{{icon}}</i></mat-option>
+	  						</mat-select>
+					</mat-form-field>
+					</div>
+				</div>
+				
+			 </div>
+			 </perfect-scrollbar>
+			 </div>
+			</mat-tab> 
+			<mat-tab label="VALIDATIONS" class="tab-menu">
+			<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			
+			<div class="tab-content">
+				<div class="tab-row">
+					<div>
+						<span class="tab-property-label">Validation Fail Message</span>
+					</div>
+					<div class="mat-nav">
+					<mat-form-field appearance="outline"> <input matInput name="message"
+						[(ngModel)]="actvieFormField.message">  </mat-form-field>
+					</div>
+				</div>
+
+				<div class="tab-row">
+					<div>
+						<span class="tab-property-label">Mandatory Validation</span>
+					</div>
+					<div *ngFor="let subfield of actvieFormField.subfields">
+						<div *ngIf="subfield.visible">
+							<mat-slide-toggle [(ngModel)]="subfield.required">{{subfield.name }} is Mandatory?</mat-slide-toggle>
+						</div>
+					</div>
+				</div>
+				<div *ngFor="let subfield of actvieFormField.subfields">
+					<div class="tab-row" *ngIf="subfield.visible && subfield.required">
+						<div>
+							<span class="tab-property-label">Length Validation for {{subfield.name}}</span>
+						</div>
+						<div class="tab-col">
+							<div class="tab-col-content mat-nav">
+								<mat-form-field appearance="outline"> <input type="number" matInput
+									min="0" [(ngModel)]="subfield.minlen"> <mat-label
+									class="tab-label-text">Minimum Length</mat-label> </mat-form-field>
+							</div>
+							<div class="tab-col-content mat-nav">
+								<mat-form-field appearance="outline"> <input type="number" matInput
+									max="255" min="0" name="maxlen"
+									[(ngModel)]="subfield.maxlen"> <mat-label
+									class="tab-label-text">Maximum Length</mat-label> </mat-form-field>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</perfect-scrollbar>
+			</div>
+			</mat-tab > 
+			<mat-tab mat-tab label="VISIBILITY" class="tab-menu">
+			<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			<div class="tab-content">
+				<div class="tab-row">
+					<div>
+						<span class="tab-property-label">Visibility</span>
+					</div>
+					<div>
+							<mat-slide-toggle class="example-full-width" [(ngModel)]="actvieFormField.visible" >
+          						<div *ngIf="actvieFormField.visible">Field is visible</div>
+          						<div *ngIf="!actvieFormField.visible">Field is hidden</div>
+		      				</mat-slide-toggle>
+					</div>
+				</div>
+				<div class="tab-row">
+					<div>
+						<span *ngIf="!actvieFormField.visible" class="tab-property-label">Set Condition To Show Field</span>
+						<span *ngIf="actvieFormField.visible" class="tab-property-label">Set Condition To Hide Field</span>
+					</div>
+					<div class="tab-sub-row">
+							<div class="tab-col">
+								<div class="tab-col-content mat-nav" >
+									<mat-form-field appearance="outline"> 
+										<mat-select class="tab-label-text" > 
+											<mat-option *ngFor="let field of frm.formFields" value="{{field.id}}">
+												<div class="tab-label-text">{{field.name}}</div>
+											</mat-option> 
+										</mat-select> 
+									</mat-form-field>
+								</div>
+								<div class="tab-col-content mat-nav" >
+								<mat-form-field appearance="outline"> 
+										<mat-select class="tab-label-text" > 
+											<mat-option *ngFor="let op of operator" value="{{op}}">
+												<div class="tab-label-text">{{op}}</div>
+											</mat-option> 
+										</mat-select> 
+								</mat-form-field>
+								</div>
+							</div>
+							<div class="mat-nav" >
+									<mat-form-field appearance="outline"> 
+										<input matInput/> 
+										<mat-placeholder>Value</mat-placeholder>
+										<mat-hint align="end" class="tab-label-text">Provide comma seperated values</mat-hint> 
+									</mat-form-field>
+							</div>
+					 </div>
+				</div>
+				
+			</div>
+			</perfect-scrollbar>
+			</div>
+			</mat-tab>
+			
+			</mat-tab-group>
+		</div>
+	</div>
+</div>
+
+
+

@@ -1,0 +1,15 @@
+<div class="survey-title" [style]="sanitizeHTML(frm.style)">{{actvieFormField.name}}</div>
+<div class="comp-table">
+	<div class="comp-row">
+		<div class="comp-col">{{actvieFormField.name}}</div>
+		<div *ngFor="let o of actvieFormField.survey.options" class="comp-col row-head">{{o.name}}</div>
+	</div>
+	<div *ngFor="let q of actvieFormField.survey.questions" class="comp-row">
+		<div class="comp-col row-head">{{q.name}}</div>
+		<div *ngFor="let o of actvieFormField.survey.options" class="comp-col">
+			<input type="radio" [value]="o.value" name="{{q.name}}" class="comp-col" [(ngModel)]="q.selectedValue">
+		</div>
+	</div>
+</div>
+<div class="survey-title note" [style]="sanitizeHTML(frm.style)">{{actvieFormField.note}}</div>
+

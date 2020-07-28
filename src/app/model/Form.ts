@@ -9,6 +9,11 @@ export class Form {
     status: string;
     bgColor: string;
     bgImage: string;
+    
+    pageBGColor: string;
+    formBgImage: string;
+    formImages: string[];
+    
     opacity: number;
     header: string;
     footer: string;
@@ -18,7 +23,7 @@ export class Form {
     thanksdata: string;
     thankstype: string;
     formwidth:  number;
-
+    
     publishdate:Date;
     publishtime: string
     publishtimezone: string;
@@ -31,6 +36,11 @@ export class Form {
     _links: any;
     style: string;
     btnStyle: string;
+    inputStyle: string;
+   
 
+}
+export class FormImages {
+    id: string;
 }
 

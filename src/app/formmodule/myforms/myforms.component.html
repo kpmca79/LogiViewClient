@@ -1,0 +1,68 @@
+<div class="ngLoader"></div>
+<div class="main-content-full">
+	<div class="container-fluid">
+		
+		<mat-toolbar class="toolbar">
+				<button mat-raised-button class="btn-danger btn-round" (click)="showFormType()">Create Form</button>
+				<span class="example-spacer"></span> 
+				<form>
+					<input matInput type="text" (value)="searchform" [(ngModel)]="searchform" class="search-text" placeholder="Search...">
+					<button mat-raised-button (click)="searchForm()" type="submit" class="btn btn-white btn-round btn-just-icon">
+						<i class="material-icons">search</i>
+						<div class="ripple-container"></div>
+					</button>
+				</form>
+			</mat-toolbar>
+			<div class="row"></div>
+		<div class="row">
+			<div *ngIf="!forms" class="col-md-12">
+				<div class="card">
+					<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="forms" class="col-md-12">
+			
+			<div class="main">
+				<div *ngFor="let element of forms"class=form-row>
+					<mat-toolbar>
+						<input type="checkbox" class="checkbx"/>
+<!-- 						<mat-checkbox class="icon"></mat-checkbox> -->
+						 <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    						<mat-icon class="icon">star</mat-icon>
+  						</button>
+  						<mat-icon class="icon" style="margin-right:10px;">description</mat-icon>
+  						<div class="form-title-div">
+  						<span class="form-title">{{element.name}}</span>
+  						<span class="small">{{element.response}} Submissions. Modified on Jul 15,2020.</span>
+  						</div>
+						<span class="example-spacer"></span>
+						 <button [routerLink]="['/formBuilder',element.id]" class="cust-btn" mat-raised-button>Edit Form</button>
+						  <button [routerLink]="['/inbox',element.id]"  class="cust-btn" mat-raised-button>Inbox</button>
+						
+						<button  mat-icon-button [matMenuTriggerFor]="menu">
+							<mat-icon  class="cust-btn row-icon" >more_vert</mat-icon>
+						</button>
+						<mat-menu #menu="matMenu">
+								<button mat-menu-item (click)="showSetting(frm)">
+			    					<mat-icon svgIcon="Setting" class="setting-icon"></mat-icon>
+		    						<span>Properties</span>
+		  						</button>
+  						</mat-menu>
+						 
+					</mat-toolbar>			
+				</div>
+				<div *ngIf="forms.length==0">
+					<div class="nodata-content">
+						<span class="nodata-text">You don't have any form to display, Please create your first stunning form.</span>
+						<br/>
+						<a (click)="showFormType()" class="nodata-link">Create form now</a>
+					</div>
+				</div>
+			
+			
+			</div>
+
+		</div>
+	</div>
+</div>

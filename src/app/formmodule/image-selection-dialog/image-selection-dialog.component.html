@@ -1,0 +1,43 @@
+
+<div class="nav-content nav-color">
+  <div class="mat-nav">
+  <mat-tab-group mat-align-tabs="center" class="nav-content tab-header" [selectedIndex]="selectedTab" disablePagination="false"> 
+  	<mat-tab label="UPLOAD" class="tab-menu"> 
+  	<div class="image-upload">
+	<input style="display: none" (change)="onFileSelected()" accept="image/*" #bgFileInput type="file" id="bgFile">
+  	<button mat-raised-button color="primary" [class.spinner]="loading" [disabled]="loading" (click)="bgFileInput.click()"><i class="material-icons button-icon">cloud_upload</i>UPLOAD FILE</button>
+  	<div class="{{err}}">{{msg}}</div>
+  	</div>
+  	</mat-tab>
+  	<mat-tab label="URL" class="tab-menu">
+	  	<div class="image-upload col-flex center">
+	  		<div ><input style="width: 300px;margin-bottom: 10px;" [(ngModel)]="imageURL1" type="url" placeholder="http://"></div>
+	  		<div >
+	  			<button mat-raised-button color="primary" (click)="uploadFromURL()" [class.spinner]="loading" [disabled]="loading" >
+	  				<i class="material-icons button-icon">cloud_upload</i>UPLOAD FILE
+	  			</button>
+	  		</div>
+	  		<div class="{{err}}" style="margin-top: 5px;">{{pubmsg}}</div>
+	  	</div>
+  	 </mat-tab>
+  	<mat-tab label="LIBRARY" class="tab-menu" > 
+  	<div *ngIf="!frm.formImages || frm.formImages.length>0" class="image-grid-container">
+  			<div *ngFor="let id of frm.formImages" class="grid-image-div">
+				<img class="grid-image" src="{{imgURL+id}}"  width="100" height="100"/>
+				<div class="btn-use-me-image" (click)="useImage(id)">Use Me</div>
+				<div class="btn-remove-me-image" (click)="removeMe(id)">Delete</div>
+				
+	 	  </div>
+	
+  	
+  	</div>
+  	 	  <div class="image-grid-container image-grid-no-data" *ngIf="!frm.formImages || frm.formImages.length==0">
+  	 	  <div><p>No image found for this form. Please upload background image to style your form.</p></div>
+  	 	  </div>
+  	
+  	</mat-tab>
+  </mat-tab-group>	
+  </div>
+ </div>
+ 
+

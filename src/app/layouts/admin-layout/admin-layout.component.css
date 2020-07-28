@@ -1,0 +1,30 @@
+.singlePage
+{
+	min-height: 100% !important;
+}
+
+
+/*custom scrollbar
+ref: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_scrollbar
+https://css-tricks.com/custom-scrollbars-in-webkit/
+
+https://codepen.io/devstreak/pen/dMYgeO?__cf_chl_jschl_tk__=3c1b44c14469b07bf8a225bfe9e0f2535a4b902e-1590185400-0-Af3_yZrL3D7heZAODX_-JOzCvHFn_F9jYd5zjiURlSgQXUy2dt12slMZvx1VFWfcayrQzSOXVyMvK9h_cFkfj3BpXmoLmF-_X4zTVNR669WGv_uUV3ajt-Tegz84hpqXLQC_Us9AGENmIE1as2FoNTB42Wp9ICCsMf3Od8vaL89b2g2IrG02ba3lsOpMo2oQoSQ6qpl30PGB_LA6XOWFAi6KlWsptFq1BF5v7PfORp4LMiGbmvw9c6nLAPAi0mjfP3tKDm6U7rjN4JlHxWvHVWaXomqIpL2uX9tFLI9PgyoCmCt--gNwLJP9D9dQXeCoJLot-R0E4mJtrph-w3Ib2HsjUtrnv1SYSlZ6bLL5ByMn
+https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar
+
+https://gromo.github.io/jquery.scrollbar/demo/basic.html
+
+   
+final one  https://alligator.io/css/css-scrollbars/
+*/
+/*  /deep/ ::-webkit-scrollbar { */
+/*   width: 6px;               width of the entire scrollbar */
+/* } */
+/*  /deep/ ::-webkit-scrollbar-track { */
+/*   background: #BBB;        color of the tracking area */
+/* } */
+/*  /deep/ ::-webkit-scrollbar-thumb { */
+/*   background-color: #f44336;    color of the scroll thumb */
+/*   border-radius: 20px;       roundness of the scroll thumb */
+/*   border: 3px solid #f44336;  */
+/*   creates padding around scroll thumb */
+/* } */

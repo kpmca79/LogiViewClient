@@ -10,16 +10,17 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     { path: '/userlist', title: 'User Admin',  icon: 'person', class: '' },
     { path: '/formlist', title: 'Forms',  icon: 'person', class: '' },
+    { path: '/myforms', title: 'My Forms',  icon: 'folder', class: '' },
     { path: '/dashboard', title: 'My Dashboard',  icon: 'dashboard', class: '' },
-    { path: '/formBuilder', title: 'Build Form',  icon: 'person', class: '' },
-    { path: '/user-profile', title: 'User Profile',  icon: 'person', class: '' },
+//    { path: '/formBuilder', title: 'Build Form',  icon: 'person', class: '' },
+//    { path: '/user-profile', title: 'User Profile',  icon: 'person', class: '' },
 //    { path: '/login', title: 'Login',  icon:'person', class: '' },
 
-    { path: '/table-list', title: 'Table List',  icon: 'content_paste', class: '' },
-    { path: '/typography', title: 'Typography',  icon: 'library_books', class: '' },
-    { path: '/icons', title: 'Icons',  icon: 'bubble_chart', class: '' },
-    { path: '/maps', title: 'Maps',  icon: 'location_on', class: '' },
-    { path: '/notifications', title: 'Notifications',  icon: 'notifications', class: '' },
+//    { path: '/table-list', title: 'Table List',  icon: 'content_paste', class: '' },
+//    { path: '/typography', title: 'Typography',  icon: 'library_books', class: '' },
+//    { path: '/icons', title: 'Icons',  icon: 'bubble_chart', class: '' },
+//    { path: '/maps', title: 'Maps',  icon: 'location_on', class: '' },
+//    { path: '/notifications', title: 'Notifications',  icon: 'notifications', class: '' },
     { path: '/logout', title: 'Logout',  icon: 'person', class: '' },
     
 

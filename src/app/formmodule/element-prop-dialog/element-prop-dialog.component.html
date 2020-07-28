@@ -46,21 +46,63 @@
 										</ng-container>
 										<ng-container *ngIf="data1.type!='form'">
 										
-											<tr *ngIf="show_name" >
-												<td colspan="3">
-													<mat-form-field   >
+											<tr class="row">
+												
+												<td>
+													<!-- <mat-form-field>
+				 											<mat-select placeholder="Chose Icon"  [(value)]="data1.selectedIcon">
+    															<mat-option *ngFor="let icon of icons" value="{{icon}}"><i class="material-icons">{{icon}}</i></mat-option>
+    														</mat-select>
+													</mat-form-field> -->
+													<iconselector ></iconselector>
+													
+												</td>
+												<td *ngIf="show_name">
+													<mat-form-field>
 				 									   <input  matInput placeholder="Name" name="fname" [(ngModel)]="data1.fname" >
 													</mat-form-field>
 												</td>
-											</tr>
-											<tr *ngIf="show_placeHolder">
-												<td colspan="3">
-													<mat-form-field   class="example-full-width">
+												<td  *ngIf="show_placeHolder">
+													<mat-form-field  >
 				 									    <input  matInput placeholder="Place holder" name="title" [(ngModel)]="data1.title" >
 													</mat-form-field>
 												</td>
+												<td><mat-slide-toggle [(ngModel)]="data1.required">Is Mandatory?</mat-slide-toggle></td>
 											</tr>
-											<tr *ngIf="show_icon">
+											
+											<ng-container *ngIf="data1.type==='textbox' || data1.type==='textarea' || data1.type=='number'" >
+												<tr class="row2">
+													<td >	
+														<mat-form-field >
+															<input  matInput placeholder="Minimum character required" name="minlen" [(ngModel)]="data1.minlen" >
+														</mat-form-field>
+													</td>
+													<td >	
+														<mat-form-field>
+															<input  matInput placeholder="Maximum character allowed" name="maxlen" value="20" [(ngModel)]="data1.maxlen" >
+														</mat-form-field>
+													</td>
+													<td>&nbsp;
+													</td>
+												</tr>
+											</ng-container>
+<!-- 											<tr *ngIf="show_placeHolder"> -->
+<!-- 												<td colspan="3"> -->
+<!-- 													<mat-form-field   class="example-full-width"> -->
+<!-- 				 									    <input  matInput placeholder="Place holder" name="title" [(ngModel)]="data1.title" > -->
+<!-- 													</mat-form-field> -->
+<!-- 												</td> -->
+<!-- 											</tr> -->
+
+											<tr *ngIf="show_error">
+												<td colspan="3">
+													<mat-form-field   class="example-full-width">
+				 									        <input  matInput placeholder="Error message" name="message" [(ngModel)]="data1.message" >
+													</mat-form-field>
+												</td>
+											</tr>
+											
+										 	<!-- <tr *ngIf="show_icon">
 												<div class="newrow">
 												<td colspan="1">
 													<mat-form-field   class="example-full-width">
@@ -73,19 +115,48 @@
 													<div class="newrow2"><i class="material-icons">{{data1.selectedIcon}}</i>&nbsp;&nbsp;{{data1.selectedIcon}}</div>
     											</td>
     											</div>
+											</tr> --> 
+											<tr *ngIf="show_hide">
+												<div class="newrow">
+													<td colspan="3">
+														<mat-slide-toggle class="example-full-width" [(ngModel)]="isHidden" >
+          						  							<div *ngIf="isHidden">Field is visible</div>
+          						  							<div *ngIf="!isHidden">Field is hidden</div>
+									      				</mat-slide-toggle>
+													</td>
+												</div>
 											</tr>
-											<tr *ngIf="show_error">
-												<td colspan="3">
+											<tr *ngIf="!isHidden">
+											<td colspan="3"><b>Visible on condition</b></td>
+											</tr>
+											<tr *ngIf="!isHidden" class="row2">
+												
+													<td >
+														<mat-form-field   class="example-full-width">
+														<mat-select> 
+															<mat-option *ngFor="let field of otherFields" value="{{field.id}}">
+																<div>{{field.title}}&nbsp;(ID:{{field.id}})</div>
+															</mat-option> 
+														</mat-select>
+														</mat-form-field>
+													</td>
+													<td >
 													<mat-form-field   class="example-full-width">
-				 									        <input  matInput placeholder="Error message" name="message" [(ngModel)]="data1.message" >
-													</mat-form-field>
-												</td>
+														<mat-select> 
+															<mat-option *ngFor="let op of operator" value="{{op}}">
+																<div>{{op}}</div>
+															</mat-option> 
+														</mat-select>
+														</mat-form-field>
+													</td>
+													<td >
+														<mat-form-field class="example-full-width"  style="margin-top: 10px;"  >
+														<input matInput/> <mat-placeholder>Value</mat-placeholder>
+														</mat-form-field>
+													</td>
+												
 											</tr>
-											<tr *ngIf="show_mandatory">
-												<td colspan="3"><mat-slide-toggle
-														[(ngModel)]="data1.required">Is
-													Mandatory?</mat-slide-toggle></td>
-											</tr>
+											
 										</ng-container>
 										<ng-container *ngIf="show_subfields">
 											<div *ngFor="let subfield of subfields " >
@@ -121,22 +192,7 @@
 											</tr>
 										</ng-container>
 										<ng-container  *ngIf="data1.type=='date-picker'"></ng-container>
-										<ng-container *ngIf="data1.type==='textbox' || data1.type==='textarea' || data1.type=='number'" >
-												<tr>
-													<td colspan="3">	
-														<mat-form-field class="example-full-width">
-															<input  matInput placeholder="Minimum character required" name="minlen" [(ngModel)]="data1.minlen" >
-														</mat-form-field>
-													</td>
-												</tr>
-												<tr>
-													<td colspan="3">	
-														<mat-form-field>
-															<input  matInput placeholder="Maximum character allowed" name="maxlen" [(ngModel)]="data1.maxlen" >
-														</mat-form-field>
-													</td>
-												</tr>
-										</ng-container>
+										
 										<ng-container *ngIf="data1.type==='textbox'" >
 											<tr>
 												<td colspan="3">	

@@ -7,8 +7,17 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
-  {path: '', component: AdminLayoutComponent,canActivate: [ CanActivateSecurity ] ,
-  children: [{path: '',loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)}]}
+  {
+      path: '', 
+      component: AdminLayoutComponent,
+      canActivate: [ CanActivateSecurity ],
+      children: [
+                     {
+                         path: '',
+                         loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
+                      }
+                 ]
+  }
     // { path: 'dashboard',      component: DashboardComponent },
     // { path: 'user-profile',   component: UserProfileComponent },
      // { path: 'login',   component: LoginComponent },

@@ -65,10 +65,10 @@ export class SidetoolbarComponent implements OnInit {
           std.minlen =tempVal2.minlen;
           std.minlen =tempVal2.minlen;
           std.required =tempVal2.required;
-          std.selectedOption ='option1';
+          std.selectedOption =['option1'];
           std.frmControl=new FormControl('', []); ;
           std.validation = JSON.parse(JSON.stringify(tempVal2.validation));
-          std.options = JSON.parse(JSON.stringify(tempVal2.options)); 
+          std.selOptions = JSON.parse(JSON.stringify(tempVal2.selOptions)); 
           std.innerHtml=tempVal2.innerHtml;
           std.color=tempVal2.color;
           std.selectedColor=tempVal2.selectedColor;

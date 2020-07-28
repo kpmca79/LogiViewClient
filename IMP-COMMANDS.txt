@@ -110,6 +110,13 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 =========================
 ckeditor inline
 ======================
+following might solve duplicate module error
+Same problem here.
+Doing a clean install (i.e. rm -rf node_modules && npm install),
+followed by a npm dedupe fixed the issue.
+
+
+Reference project (with Node.js 12.9.1 and npm 6.10.2):
 https://ckeditor.com/docs/ckeditor5/latest/api/editor-inline.html
 
 npm install --save @ckeditor/ckeditor5-build-inline
@@ -281,3 +288,120 @@ ratting component
 ===========================================
 use ngbratting which is directly available with ng-bootstrap
 https://www.freakyjolly.com/angular-7-bootstrap-4-add-star-rating-widget-in-angular-application-using-ng-bootstrap-web-component/
+
+===================================
+HOW TO SUPPORT ANGULAR IN INTERNET EXPLORER
+--------------------------------------
+https://indepth.dev/angular-internet-explorer/ 
+--MAKE CHANGE IN TSCONFIG.JSON AND CHANGE "target": "es2015",  TO "target": "es5", 
+--ABOVE IS NOT WORKING AFTER DOING THIS NOT ABLE TO LOGIN BY CROM
+=============================================
+Signature component
+=============================================
+below is not working
+https://www.npmjs.com/package/angular2-signaturepad
+npm install angular2-signaturepad --save
+new try
+below is working but shwoing done button and not having method to draw complete
+https://www.npmjs.com/package/@ng-plus/signature-pad
+npm install @ng-plus/signature-pad --save
+lets try new one same problem undefined (viewchild object)
+https://developer.aliyun.com/mirror/npm/package/ngx-signaturepad
+npm install ngx-signaturepad --save
+lets try another one
+https://angularscript.com/angular-components-digital-signatures-signaturepad/
+npm install angular-signature-pad --save : not working as expected
+Finally create own signuture pad
+=============================================
+Signature component End
+=============================================
+
+Number spinnner
+https://www.npmjs.com/package/ngx-number-spinner
+npm install ngx-number-spinner --save
+
+===============================
+RECAPTCHA
+========================
+npm i ng-recaptcha --save
+
+https://www.npmjs.com/package/ng-recaptcha
+VIDEO: https://www.youtube.com/watch?v=9z4CI91AVlQ
+
+Google account for recaptcha:https://www.google.com/recaptcha/admin/site/430883214
+================
+IFRAME FOR YOUTUBE VIDEO JOTFORM
+	<iframe title="YouTube" data-type="oembed" 
+						scrolling="no" 
+						class="custom-field-frame widget-frame" 
+						id="customFieldFrame_10'" 
+						src="https://embed.jotform.io/render?refresh=1&amp;url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D6oEwsdaVDI0&amp;qid=10&amp;formID=201873656519060&amp;maxWidth=590" allowfullscreen="" allow="autoplay; fullscreen" style="width: 560px; height: 315px; border: 0px; max-width: 590px;">
+						</iframe>
+===================================						
+PAYMENT GEAT WAY
+DOWNLOADED PAYU JS FROM
+https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js
+CREATED FOLDER PAYUJS IN NODE MODULE AND PUT BOLT.MIN.JS FILE IN THIS MANUALLY
+
+FINALLY WE PUT IT AS SEPERATE JS IN /ASSETS/JS/PAYUJS SO THAT IT
+DO NOT FLUSH OUT FROM NODE MODULE
+=======================
+PDF CONVERSION
+===========================
+INSTALLED 
+D:\Angular\holodox\LogiViewClient>npm install html2canvas
+D:\Angular\holodox\LogiViewClient>npm install jspdf
+
+IMPORT DIRECTLY IN COMPONENT NOTHING TO DO WITH MODULE TS OR ANYTHING
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+
+CREATE BELOW METHOD TO CONVERT ANY DIV AS PDF
+ exportAsPDF()
+  {
+    let data = document.getElementById('MyDIv');  
+    html2canvas(data).then(canvas => {
+      const contentDataURL = canvas.toDataURL('image/png')  
+      let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
+      // let pdf = new jspdf('p', 'cm', 'a4'); Generates PDF in portrait mode
+      pdf.addImage(contentDataURL, 'PNG', 0, 0, 29.7, 21.0);  
+      pdf.save('Filename.pdf');   
+    }); 
+  }
+=======================
+END PDF CONVERSION
+===========================
+
+=====================================================================
+PDF FILE GENERATION
+=====================================================================
+tool: wkhtmltopdf  
+ref:https://wkhtmltopdf.org/
+download: https://wkhtmltopdf.org/downloads.html
+installed: D:\Angular\holodox\Others\software\wkhtmltox-0.12.6-1.mxe-cross-win64\wkhtmltox
+add in path: D:\Angular\holodox\Others\software\wkhtmltox-0.12.6-1.mxe-cross-win64\wkhtmltox\bin
+usage: open command new command promt: wkhtmltopdf https://google.com googlepage.pdf
+
+java wrapper: https://github.com/jhonnymertz/java-wkhtmltopdf-wrapper
+known issue because of wrapper: 
+WARNING: An illegal reflective access operation has occurred
+=====================================================================
+TO SUPPORT IE
+======================================================
+STEP1:
+FOLLOW: https://dev.to/getamano/angular-8-x-9-x-internet-explorer-not-working-quick-solution-3ha7
+STEP2:
+IF YOU DO NPM AUDIT FIX IT WILL UPGRADE BUILD-ANGULAR SO PROJECT WILL NOT WORK
+YOU NEED TO DOWNGRAD IT (YOU CAN CHECK CURRENT VERSION BEFORE NPM AUDIT FIX AND THEN DOWNGRADE
+TO THE VERSION)
+>npm i @angular-devkit/build-angular@0.803.25
+
+STEP3:
+YOU MIGHT NEED TO INSTALLnpm i @babel/compat-data@7.8.0
+
+STEP4: 
+TO RUN BUILD APPLICATION:
+D:\Angular\angie\dist\angie>npx local-web-server
+
+NOTE: WE HAVE BUILD AND EXECUTED PROJECT FOR IE (D:\Angular\angie)
+======================================================

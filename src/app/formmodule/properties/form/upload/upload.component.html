@@ -1,0 +1,206 @@
+<div class="nav-content nav-color">
+	<div class="head">
+		File Upload Properties <span class="right-nav-icon"><i
+			class="fa fa-times" aria-hidden="true"
+			(click)="openCloseRightPanel()"></i></span>
+	</div>
+	<div class="mat-nav">
+			
+				
+	
+		<div *ngIf=" frm && actvieFormField">
+			<mat-tab-group mat-align-tabs="center" class="nav-content tab-header"
+				disablePagination="false"> 
+			<mat-tab label="GENERAL" class="tab-menu">
+			<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			<div class="tab-content">
+				<div class="tab-row">
+						<span class="tab-property-label">Field Name</span>
+						<div class="mat-nav">
+							<mat-form-field appearance="outline"> 
+								<input matInput name="fname" [(ngModel)]="actvieFormField.name"> 
+<!-- 								<mat-label class="tab-label-text">Field Name</mat-label>  -->
+								<mat-hint align="end" class="tab-label-text">This will be shownin report</mat-hint> 
+							</mat-form-field>
+						</div>
+
+				
+				</div>
+				<div class="tab-row">
+					<span class="tab-property-label">Field Hint</span>
+					<div class="mat-nav">
+						<mat-form-field appearance="outline"> 
+						<input matInput name="fname" [(ngModel)]="actvieFormField.note"> 
+<!-- 							<mat-label class="tab-label-text">Field Hint</mat-label>  -->
+						</mat-form-field>
+					</div>
+				</div>
+				<div class="tab-row">
+					
+						<span class="tab-property-label">Choose Icon &nbsp;&nbsp;
+						<i class="material-icons ">{{actvieFormField.selectedIcon}}</i>
+						</span>
+					
+					<div class="mat-nav">
+						<mat-form-field   class="example-full-width" appearance="outline">
+							<mat-select  [(value)]="actvieFormField.selectedIcon" style="font-variant: all-petite-caps;">
+	 						<mat-option *ngFor="let icon of icons" value="{{icon}}"><i class="material-icons">{{icon}}</i></mat-option>
+	  						</mat-select>
+					</mat-form-field>
+					</div>
+				
+				
+			    </div>
+			    </div>
+			</perfect-scrollbar>
+			</div>
+			</mat-tab> 
+			<mat-tab label="VALIDATIONS" class="tab-menu">
+			<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			<div class="tab-content">
+				<div class="tab-row">
+					<div>
+						<span class="tab-property-label">Validation Fail Message</span>
+					</div>
+					<div class="mat-nav">
+					<mat-form-field appearance="outline"> <input matInput name="message"
+						[(ngModel)]="actvieFormField.message">  </mat-form-field>
+					</div>
+				</div>
+
+				<div class="tab-row">
+					<div>
+						<span class="tab-property-label">Mandatory Validation</span>
+					</div>
+					<mat-slide-toggle [(ngModel)]="actvieFormField.required">Is
+					Mandatory?</mat-slide-toggle>
+				</div>
+				<div class="tab-row">
+					<div>
+						<span class="tab-property-label">Files And Size Validation</span>
+					</div>
+					<div class="tab-col">
+						<div class="tab-col-content mat-nav">
+							<mat-form-field appearance="outline"> 
+							<input type="number" matInput
+								min="1" max="5" [(ngModel)]="actvieFormField.maxFiles"> 
+								<mat-label class="tab-label-text">Max Files Allowed</mat-label> 
+								 <span matSuffix>&nbsp;&nbsp;Files</span>
+								</mat-form-field>
+								
+								
+								
+								
+						</div>
+						<div class="tab-col-content mat-nav">
+							<mat-form-field appearance="outline"> <input type="number" matInput
+								max="10" min="1" name="maxlen"
+								[(ngModel)]="actvieFormField.maxFileSize"> <mat-label
+								class="tab-label-text">Max File Size</mat-label> 
+								<span matSuffix>&nbsp;&nbsp;MB</span>
+								</mat-form-field>
+						</div>
+					</div>
+				</div>
+				<div class="tab-row">
+					<div>
+						<span class="tab-property-label">Valid File Types</span>
+					</div>
+					<div class="mat-nav">
+					
+							<mat-form-field appearance="outline">
+  								<mat-label class="tab-label-text">File Type</mat-label>
+  								<mat-select [formControl]="fileTypeControl" multiple >
+<!--   								<mat-select [ngModel]="actvieFormField.acceptFileTypes" multiple > -->
+  								
+    								
+    								<mat-optgroup *ngFor="let group of fileTypeGroups" class="select-group-label" [label]="group.name">
+      									<mat-option *ngFor="let ftype of group.filetype"  [value]="ftype.types">
+        									<span class="tab-label-text">{{ftype.value}}</span>
+      									</mat-option>
+    								</mat-optgroup>
+  								</mat-select>
+							</mat-form-field>
+							
+					</div>
+					
+					<div class="mat-nav">
+							<mat-form-field appearance="outline"> 
+							
+								<textarea rows="4"  cols="20" style="overflow:auto"  matInput>{{fileTypeControl.value}}</textarea>
+								
+							</mat-form-field>
+					</div>
+					
+					
+				</div>
+				
+			</div>
+			</perfect-scrollbar>
+			</div>
+			</mat-tab > 
+			<mat-tab mat-tab label="VISIBILITY" class="tab-menu">
+			<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			<div class="tab-content">
+				<div class="tab-row">
+					<div>
+						<span class="tab-property-label">Visibility</span>
+					</div>
+					<div>
+							<mat-slide-toggle class="example-full-width" [(ngModel)]="actvieFormField.visible" >
+          						<div *ngIf="actvieFormField.visible">Field is visible</div>
+          						<div *ngIf="!actvieFormField.visible">Field is hidden</div>
+		      				</mat-slide-toggle>
+					</div>
+				</div>
+				<div class="tab-row">
+					<div>
+						<span *ngIf="!actvieFormField.visible" class="tab-property-label">Set Condition To Show Field</span>
+						<span *ngIf="actvieFormField.visible" class="tab-property-label">Set Condition To Hide Field</span>
+					</div>
+					<div class="tab-sub-row">
+							<div class="tab-col">
+								<div class="tab-col-content mat-nav" >
+									<mat-form-field appearance="outline"> 
+										<mat-select class="tab-label-text" > 
+											<mat-option *ngFor="let field of frm.formFields" value="{{field.id}}">
+												<div class="tab-label-text">{{field.name}}</div>
+											</mat-option> 
+										</mat-select> 
+									</mat-form-field>
+								</div>
+								<div class="tab-col-content mat-nav" >
+								<mat-form-field appearance="outline"> 
+										<mat-select class="tab-label-text" > 
+											<mat-option *ngFor="let op of operator" value="{{op}}">
+												<div class="tab-label-text">{{op}}</div>
+											</mat-option> 
+										</mat-select> 
+								</mat-form-field>
+								</div>
+							</div>
+							<div class="mat-nav" >
+									<mat-form-field appearance="outline"> 
+										<input matInput/> 
+										<mat-placeholder>Value</mat-placeholder>
+										<mat-hint align="end" class="tab-label-text">Provide comma seperated values</mat-hint> 
+									</mat-form-field>
+							</div>
+					 </div>
+				</div>
+			
+			</div>
+			</perfect-scrollbar>
+			</div>
+			</mat-tab>
+			
+			</mat-tab-group>
+		</div>
+	</div>
+</div>
+
+
+

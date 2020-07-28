@@ -7,27 +7,31 @@ import { Location } from '@angular/common';
 @Injectable()
 export class CanActivateSecurity implements CanActivate {
 
-    constructor(public location: Location, private app: AppService, private router: Router) {}
+    authenticated=false;
+    constructor( public location: Location, private app: AppService, private router: Router ) { 
+        console.log("VVVVVVVVVVV---->CanActivateSecurity constroctor called")
+    }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-//        let titlee = this.location.prepareExternalUrl(this.location.path());
-//        console.log(titlee);
-//        
-//        titlee = titlee.slice( 1 );
-//        
-//       console.log('is authenticated=' + this.app.authenticated)
-//     if (this.app.authenticated || titlee === '' || titlee === 'login') {
-//        console.log('------------>Authenticated returning true' + titlee);
-//
+        canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ) {
+        let path = this.location.prepareExternalUrl( this.location.path() );
+        let action = path.slice( 1 );
+        console.log( 'CanActivateSecurity localStorage.getItem("auth")=' + localStorage.getItem("auth"));
+        if(localStorage.getItem("auth")&&localStorage.getItem("auth")=='true')
+        {
+            return true;
+        }    
+        
+        if ( this.app.authenticated || action === '' || action === 'login' ) {
+            
+            return true;
+
+        } else {
+        
+            this.router.navigate( ['/login'], { queryParams: { return: state.url } } );
+            return false;
+
+        }
 //        return true;
-//
-//      } else {
-//            console.log('------------>Else part' + titlee);
-//          this.router.navigate(['/login'], {queryParams: {return: state.url}});
-//          return false;
-//
-//      }
-        return true;
     }
 
 }

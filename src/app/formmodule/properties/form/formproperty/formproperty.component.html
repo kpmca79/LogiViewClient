@@ -1,0 +1,317 @@
+<div class="nav-color">
+<div class="head">Form Properties
+<span class="right-nav-icon">
+				<i class="fa fa-times" aria-hidden="true" (click)="openCloseRightPanel()"></i>
+			</span>
+</div>
+<div class="mat-nav">
+	<div *ngIf="type=='form' && frm">
+	
+		<mat-tab-group mat-align-tabs="center" class="tab-header" disablePagination="false"> 
+		<mat-tab label="COLOR" class="tab-menu"> 
+		<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			<div class="tab-content">
+		<div class="color-page">
+			<div class="property-row">
+			
+				<div class="property-row-column full">
+					<div>
+						<span class="tab-property-label">Color Theme</span>
+					</div>
+					<div class="tab-property-row">
+						<div class="input-container">
+							<div class="row-flex">
+								<div  class="theme-color-row">
+									<div *ngFor="let thm of clrTheme" class="page-bg" [style.background]="thm.bg" (click)="changeColorScheme(thm)">
+  										<div class="form-bg" [style.background]="thm.pg">
+    										<div class="font-clr" [style.color]="thm.fn">F</div>
+    									</div>
+  									</div>
+  									
+								</div>
+							</div>
+					     </div>
+						
+				</div>
+			</div>
+			</div>
+			<div class="property-row">
+				<div class="property-row-column">
+					<div><span class="tab-property-label">Page Color</span></div>
+					<div class="tab-property-row">
+						<div class="input-container">
+							<div class="row-flex">
+								<input class="color-input-field dark-bg" type="text" [(ngModel)]="frm.pageBGColor" name="usrnm"> 
+								<input class="color-icon"  cpOutputFormat="hex" (colorPickerChange)="notifyPageColorChange('page')" 
+										value="" cpWidth="180" cpHeight="200" [style.color]="frm.pageBGColor"
+										[(colorPicker)]="frm.pageBGColor" [style.background]="frm.pageBGColor" />
+							</div>
+							<div class="note">Select background color of the page</div>
+						</div>
+					</div>
+				</div>
+				<div class="property-row-column">
+					<div> <span class="tab-property-label">Page Image</span></div>
+					<div *ngIf="frm.bgImage==''" class="tab-property-row">
+						<div class="input-container">
+						<button type="button"  class="color-input-field nav-btn"
+						(click)="selectImage(this,'page')">CHOOSE FILE</button>
+						<div class="note">Select background image of the page</div>
+					   </div>
+					 </div>
+					<div *ngIf="frm.bgImage!=''" class="tab-property-row">
+						<div class="input-container">
+							<div class="image-container">
+								<img src="{{imgURL+frm.bgImage}}"  width="130" height="100">
+								<div>
+								 <a (click)="removeBG('page')" class='fas fa-trash' style='font-size:14px;color:#ef5450;cursor:grab'> Remove</a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="property-row">
+				<div class="property-row-column">
+					<div>
+						<span class="tab-property-label">Form Color</span>
+					</div>
+					<div class="tab-property-row">
+						<div class="input-container">
+							<div class="row-flex">
+								<input class="color-input-field dark-bg" type="text"
+								[(ngModel)]="frm.bgColor" name="usrnm"> <input
+								class="color-icon"  cpOutputFormat="hex" (colorPickerChange)="notifyPageColorChange('form')" 
+								value="" cpWidth="180" cpHeight="200" [style.color]="frm.bgColor"
+								[(colorPicker)]="frm.bgColor" [style.background]="frm.bgColor" />
+							</div>
+							<div class="note">Select background color of the form</div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="property-row-column">
+				<div> <span class="tab-property-label">Form Image</span></div>
+					<div *ngIf="frm.formBgImage=='' || !frm.formBgImage" class="tab-property-row">
+						<div class="input-container">
+						<div class="row-flex">
+							<button type="button"  class="color-input-field nav-btn"
+							(click)="selectImage(this,'form')">CHOOSE FILE</button>
+						</div>
+						<div class="note">Select background image of the form</div>
+					   </div>
+					 </div>
+					<div *ngIf="frm.formBgImage && frm.formBgImage!='' " class="tab-property-row">
+						<div class="input-container">
+							<div class="image-container">
+								<img src="{{imgURL+frm.formBgImage}}"  width="130" height="100">
+								<div>
+								 <a (click)="removeBG('form')" class='fas fa-trash' style='font-size:14px;color:#ef5450;cursor:grab'> Remove</a></div>
+<!-- 								<div class="slink"><a  (click)="removeBG()">Remove</a></div> -->
+							</div>
+						</div>
+					
+					</div>
+				
+				</div>
+			</div>
+			<div class="property-row">
+					<div class="property-row-column">
+						<div><span class="tab-property-label">Button Color</span></div>
+						<div class="tab-property-row">
+							<div class="input-container">
+								<div class="row-flex">
+									<input class="color-input-field dark-bg" type="text" [(ngModel)]="btnBGC" >
+									<input cpPosition='top' class="color-icon" cpOutputFormat="hex" value="" cpWidth="180" cpHeight="200" 
+									[(colorPicker)]="btnBGC" (colorPickerChange)="btnStyleChange($event,'bgc')" [style.color]="btnBGC" [style.background]="btnBGC" />
+								</div>
+								<div class="note">Choose background color of button.</div>
+							</div>
+						</div>
+					</div>
+					<div class="property-row-column">
+						<div><span class="tab-property-label">Button Font Color</span></div>
+						<div class="tab-property-row">
+							<div class="input-container">
+								<div class="row-flex">
+									<input class="color-input-field dark-bg" type="text" [(ngModel)]="btnFC" >
+									<input cpPosition='top-left' class="color-icon" cpOutputFormat="hex" value="" cpWidth="180" cpHeight="200" 
+									[(colorPicker)]="btnFC" (colorPickerChange)="btnStyleChange($event,'fc')" [style.color]="btnFC" [style.background]="btnFC" />
+								</div>
+								<div class="note">Choose font color of button.</div>
+							</div>
+						</div>
+					</div>
+			</div>
+			
+		
+			<div class="property-row">
+				<div class="property-row-column">
+					<div><span class="tab-property-label">Font Color</span></div>
+					<div class="tab-property-row">
+						<div class="input-container">
+							<div class="row-flex">
+								<input class="color-input-field dark-bg" type="text" [(ngModel)]="fontColor" >
+								<input cpPosition='top' class="color-icon" cpOutputFormat="hex" value="" cpWidth="180" cpHeight="200" 
+								[(colorPicker)]="fontColor" (colorPickerChange)="fontColorChange($event)" [style.color]="fontColor" [style.background]="fontColor" />
+							</div>
+							<div class="note">Select font color</div>
+						</div>
+					</div>
+				</div>
+				<div class="property-row-column">
+					<div><span class="tab-property-label">Font Size</span></div>
+					<div class="tab-property-row">
+						<div class="input-container">
+							<div class="row-flex">
+							<input  class="color-input-field normal dark-bg" type="number" min="10" max="20" (change)="fontSizeChange($event)" [(ngModel)]="fontSize" >
+							<label class="input color-icon border" style="background:#2f333a;padding:6px;margin-left: 0px;" >PX</label>
+							</div>
+							<div class="note" style="margin-top: -10px;">Select font size</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+		</div>
+		</div>
+		</perfect-scrollbar>
+		</div>
+		</mat-tab> 
+		<mat-tab label="STYLE" class="tab-menu"> 
+		<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			<div class="tab-content">
+			<div class="color-page">
+				<div class="property-row">
+					<div class="property-row-column">
+						<div><span class="tab-property-label">Form width     {{frm.formwidth}}PX</span></div>
+						<div class="tab-property-row">
+							<div class="input-container">
+								<div class="row-flex">
+									<mat-slider class="color-input-field normal slider-col dark-bg" max=900 min=400 step=10 thumbLabel=false 
+									[(ngModel)]="frm.formwidth" (change)="widthChange($event)"> 
+									</mat-slider>
+								</div>
+								<div class="note">Adjust form width</div>
+							</div>
+						</div>
+					</div>
+					<div class="property-row-column">
+						<div><span class="tab-property-label">Form Opacity     {{frm.opacity}}%</span></div>
+						<div class="tab-property-row">
+							<div class="input-container">
+								<div class="row-flex">
+									<mat-slider max=50 min=0 step=5 thumbLabel=false 
+									[(ngModel)]="frm.opacity" (change)="opacityChange($event)"
+									class=" slider-col color-input-field  normal dark-bg "> </mat-slider>
+								</div>
+								<div class="note">Adjust form opacity</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="property-row">
+					<div class="property-row-column">
+						<div><span class="tab-property-label">Font Family</span></div>
+						<div class="tab-property-row">
+							<div class="input-container">
+								<div class="row-flex">
+							
+								<mat-select [(value)]="selectedFont" class="color-input-field normal select-col border  dark-bg" (selectionChange)="fontFamilyChange($event)"> 
+									<mat-option class="select-option-col" *ngFor="let font of supportedFonts" value="{{font}}">{{font}}</mat-option>
+								</mat-select>
+<!-- 									<mat-slider class="color-input-field normal slider-col dark-bg" max=900 min=400 step=10 thumbLabel=false  -->
+<!-- 									[(ngModel)]="frm.formwidth" (change)="widthChange($event)">  -->
+<!-- 									</mat-slider> -->
+								</div>
+								<div class="note">Choose font family</div>
+							</div>
+						</div>
+					</div>
+					<div class="property-row-column">
+						<div><span class="tab-property-label">Custom Font</span></div>
+						<div class="tab-property-row">
+							<div class="input-container">
+								<div class="row-flex">
+									<input class="color-input-field normal dark-bg" type="text" (change)="fontFamilyChange($event)" [(ngModel)]="selectedFont" >
+									<label class="input color-icon border" style="background:#2f333a;padding:6px;" >FF</label>
+								</div>
+								<div class="note" style="margin-top: -10px;">Type custom font family</div>
+							</div>
+						</div>
+				 </div>
+			</div>
+			
+			
+			<div class="property-row">
+				<div class="property-row-column">
+					<div><span class="tab-property-label">Input Style</span></div>
+					<div class="tab-property-row">
+							<div class="input-container">
+								<div class="row-flex">	
+							  		<mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+				   						<mat-button-toggle class="tobble_btn" (click)="inpStyle('standard')">Single Line</mat-button-toggle>
+				   						<mat-button-toggle   class="tobble_btn" (click)="inpStyle('outline')">Border Box</mat-button-toggle>
+				   						<mat-button-toggle  class="tobble_btn" (click)="inpStyle('fill')"> Box Filled</mat-button-toggle>
+									</mat-button-toggle-group>
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+			<div class="property-row">
+					<div class="property-row-column full">
+						<div><span class="tab-property-label">Button Size</span></div>
+						<div class="tab-property-row">
+							<div class="input-container">
+								<div class="row-flex">
+									<mat-radio-group [(ngModel)]="btnWidth" (change)="btnStyleChange($event,'size')"> 
+										<mat-radio-button  value="0.0" style="padding-right:20px;">Normal</mat-radio-button> 
+										<mat-radio-button  value="1.0" style="padding-right:20px;">Full</mat-radio-button> 
+										<mat-radio-button value="0.5" style="padding-right:20px;">Half</mat-radio-button> 
+									</mat-radio-group>
+								</div>
+								<div class="note">Choose size of button.</div>
+							</div>
+						</div>
+					</div>
+					
+
+			</div>
+			
+		
+			
+			
+			
+			</div>
+		</div>
+		</perfect-scrollbar>
+		</div>
+		</mat-tab> 
+		<mat-tab label="THEMES" class="tab-menu">
+		<div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			<div class="tab-content">
+		</div>
+		</perfect-scrollbar>
+		</div>
+	    </mat-tab> 
+	    <mat-tab label="LAYOUT" class="tab-menu">
+	    <div style="height: calc(100vh - 140px);">
+			<perfect-scrollbar>
+			<div class="tab-content">
+			</div>
+			</perfect-scrollbar>
+			</div>
+		</mat-tab> 
+	</mat-tab-group>
+
+		
+	</div>
+
+	
+
+</div>
+</div>

@@ -1,23 +1,43 @@
 <div class="toolNav">
-	
-	<a class="navLink toolNav-link "  aria-current="false" id="siteNav_id_home" routerLink="/formlist">Home</a>
-	
-	<a *ngIf="link==='build' else build" class="navLink toolNav-link isActive  active" aria-current="true" id="siteNav_id_build" routerLink="/formBuilder/{{formID}}">Build</a>
-	<ng-template #build>
-			<a class="navLink toolNav-link" aria-current="false" id="siteNav_id_build" routerLink="/formBuilder/{{formID}}">Build</a>
-	</ng-template>
-	<a *ngIf="link==='settings' else settings"  class="navLink toolNav-link isActive  active" aria-current="true" id="siteNav_id_settings" routerLink="/formBuilder/{{formID}}/settings">Settings</a>
-	<ng-template #settings>
-	 <a class="navLink toolNav-link  " aria-current="false" id="siteNav_id_settings" routerLink="/formBuilder/{{formID}}/settings">Settings</a>
-	</ng-template>
-	
-	<a *ngIf="link==='publish' else publish"  class="navLink toolNav-link isActive  active" aria-current="true" id="siteNav_id_publish" routerLink="/formBuilder/{{formID}}/publish">Publish</a>
-	<ng-template #publish>
-			<a   class="navLink toolNav-link" aria-current="false" id="siteNav_id_publish" routerLink="/formBuilder/{{formID}}/publish/{{type}}">Publish</a>
-	</ng-template>
-	
-	<div class="nav-toggle">
-		<span class="nav-toggle-text">Form Preview</span>
-		<mat-slide-toggle (change)="previewToggle()" [checked]="isChecked" [(formControl)]="isPreview" [color]="white" [checked]="false"></mat-slide-toggle>
+	<div *ngIf="page==='build'">
+		<a class="navLink toolNav-link "  aria-current="false" id="siteNav_id_home" routerLink="/myforms">Home</a>
+		
+		<a *ngIf="link==='build' else build" class="navLink toolNav-link isActive  active" aria-current="true" id="siteNav_id_build" routerLink="/formBuilder/{{formID}}">Build</a>
+		<ng-template #build>
+				<a class="navLink toolNav-link" aria-current="false" id="siteNav_id_build" routerLink="/formBuilder/{{formID}}">Build</a>
+		</ng-template>
+		<a *ngIf="link==='settings' else settings"  class="navLink toolNav-link isActive  active" aria-current="true" id="siteNav_id_settings" routerLink="/formBuilder/{{formID}}/settings">Settings</a>
+		<ng-template #settings>
+		 <a class="navLink toolNav-link  " aria-current="false" id="siteNav_id_settings" routerLink="/formBuilder/{{formID}}/settings">Settings</a>
+		</ng-template>
+		
+		<a *ngIf="link==='publish' else publish"  class="navLink toolNav-link isActive  active" aria-current="true" id="siteNav_id_publish" routerLink="/formBuilder/{{formID}}/publish">Publish</a>
+		<ng-template #publish>
+				<a   class="navLink toolNav-link" aria-current="false" id="siteNav_id_publish" routerLink="/formBuilder/{{formID}}/publish/{{type}}">Publish</a>
+		</ng-template>
+		
+		<div class="nav-toggle">
+			<span class="nav-toggle-text">Form Preview</span>
+			<mat-slide-toggle (change)="previewToggle()" [checked]="isChecked" [(formControl)]="isPreview" [color]="white" [checked]="false"></mat-slide-toggle>
+		</div>
+	</div>
+	<div *ngIf="page==='inbox'">
+		<a class="navLink toolNav-link "  aria-current="false" id="siteNav_id_home" routerLink="/myforms">Home</a>
+		
+		<a *ngIf="link==='build' else build" class="navLink toolNav-link isActive  active" aria-current="true" id="siteNav_id_build" routerLink="/formBuilder/{{formID}}">Build</a>
+		<ng-template #build>
+				<a class="navLink toolNav-link" aria-current="false" id="siteNav_id_build" routerLink="/formBuilder/{{formID}}">Build</a>
+		</ng-template>
+		<a *ngIf="link==='settings' else settings"  class="navLink toolNav-link isActive  active" aria-current="true" id="siteNav_id_settings" routerLink="/formBuilder/{{formID}}/settings">Settings</a>
+		<ng-template #settings>
+		 <a class="navLink toolNav-link  " aria-current="false" id="siteNav_id_settings" routerLink="/formBuilder/{{formID}}/settings">Settings</a>
+		</ng-template>
+		
+		<a *ngIf="link==='publish' else publish"  class="navLink toolNav-link isActive  active" aria-current="true" id="siteNav_id_publish" routerLink="/formBuilder/{{formID}}/publish">Publish</a>
+		<ng-template #publish>
+				<a   class="navLink toolNav-link" aria-current="false" id="siteNav_id_publish" routerLink="/formBuilder/{{formID}}/publish/{{type}}">Publish</a>
+		</ng-template>
+		
+		
 	</div>
 </div>

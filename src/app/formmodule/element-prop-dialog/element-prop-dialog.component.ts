@@ -22,6 +22,7 @@ export class ElementPropDialogComponent implements OnInit {
     editField: string;
     selectedValidations: string[];
     icons:String[]=[];
+    otherFields:FormField[]=[];
     flr_options: Object =
     {
         charCounterCount: true,
@@ -62,7 +63,10 @@ export class ElementPropDialogComponent implements OnInit {
     show_name = true;
     show_mandatory = true;
     show_icon=true;
+    show_hide=true;
+    isHidden=true;
     dropdownSettings = {};
+    operator:String[]=['=','!=','Contains','!Contains','Starts with','!Starts with','Ends with','!Ends with','>','>=','<','<=','Specified','!Specified'];
 //    data1: any = {
 //        fname: '', title: '', message: '', options: '', validation: '', required: '', type: '',
 //        minlen: 0, maxlen: 64, selectedValidations: 'None', reqvalidation: '', frmtitle: '', selectedColor: '',
@@ -73,10 +77,13 @@ export class ElementPropDialogComponent implements OnInit {
         this.modalTitle = data.title;
         this.reqvalidation = data.reqvalidation;
         this.modalMessage = data.message;
-        this.data1 = data;
+        this.data1 = data.field;
         this.subfields = data.subfields;
+        if(data.formFields)
+            data.formFields.forEach(field=>{if(field.id!=data.id)this.otherFields.push(field);})
         console.log( 'data------>', data );
         console.log( 'data1------>', this.data1 );
+        console.log('Inside setting otherFields',this.otherFields);
         this.options = data.options;
 
         //        console.log('444444444--', this.options);
