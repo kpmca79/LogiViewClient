@@ -28,6 +28,7 @@ export class LiveformComponent implements OnInit {
     theme = "theme";
     safeBgURL;
     live="live";
+    bgStyle='';
     resourceURL = "/api/file/";
     constructor( private route: ActivatedRoute,
         private frmSrv: FormService,
@@ -37,6 +38,7 @@ export class LiveformComponent implements OnInit {
     sanitizeHTML( style: string ): SafeStyle {
         return this.sanitizer.bypassSecurityTrustStyle( style );
     }
+    
     ngOnInit() {
         this.formID = this.route.snapshot.paramMap.get( "id" );
         console.log( "formid is =", this.formID );
@@ -44,10 +46,11 @@ export class LiveformComponent implements OnInit {
             response => {
                 this.frm = response.data;
                 this.formField = this.frm.formFields;
-                if ( this.frm.bgImage ) {
-                    this.bgURL = "url(" + this.resourceURL + this.frm.bgImage + ")";
-                    this.safeBgURL = this.sanitizer.bypassSecurityTrustStyle( this.bgURL );
-                }
+                if ( this.frm.bgImage != null && this.frm.bgImage != '' )
+                    this.bgStyle = this.bgStyle + "background-image: url('" + this.resourceURL + this.frm.bgImage + "');";
+                else if(this.frm.pageBGColor && this.frm.pageBGColor!='')
+                    this.bgStyle = this.bgStyle + "background:" + this.frm.pageBGColor+";";
+        
             }
         );
     }

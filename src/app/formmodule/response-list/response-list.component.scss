@@ -1,4 +1,15 @@
 
+element.style {
+  height: 400px;
+}
+
+/deep/.ag-theme-alpine .ag-root-wrapper{
+  border: solid 1px;
+  border-color: #babfc7;
+  border-color: #dadada;
+  font-family: 'Roboto';
+  font-size: 0.95rem;
+}
 table {
   width: 100%;
   height: 100%;

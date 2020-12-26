@@ -16,6 +16,7 @@ import { FormListComponent } from 'app/formmodule/form-list/form-list.component'
 import { FormInboxComponent } from 'app/formmodule/form-inbox/form-inbox.component';
 import { MyformsListComponent } from 'app/formmodule/myforms/myforms.component';
 import { ResponseListComponent } from '../../formmodule/response-list/response-list.component'
+import { GridresponselistComponent } from '../../formmodule/gridresponselist/gridresponselist.component';
 import { FormBuilderComponent } from "../../formmodule/form-builder/form-builder.component";
 import { FormViewComponent } from '../../formmodule/form-view/form-view.component';
 import { LiveformComponent } from '../../formmodule/liveform/liveform.component';
@@ -91,7 +92,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'createuser',        component: CreateuserComponent},
     { path: 'formlist',        component: FormListComponent},
     { path: 'myforms',        component: MyformsListComponent},
-    { path: 'responseList/:id',   component: ResponseListComponent },
+    { path: 'responseList/:id',   component: GridresponselistComponent },
     { path: 'inbox/:id',   component: FormInboxComponent },
     { path: 'formPreview/:id', component: FormViewComponent },
     { path: 'formBuilder' ,   component: FormBuilderComponent },

@@ -11,6 +11,7 @@ import { InboxNavbarComponent } from './inbox-navbar/inbox-navbar.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppressScrollX: true};
 
 @NgModule({
@@ -27,6 +28,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
     NavbarComponent,
     SidebarComponent,
     InboxNavbarComponent,
+
    
   ],
   exports: [

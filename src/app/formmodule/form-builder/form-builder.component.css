@@ -593,7 +593,7 @@ opacity: 1;
 }
 /deep/ mat-ink-bar {
     background-color: var(--nav-selected) !important;
-    height: 1px !important;
+    height: 5px !important;
 }
 /* END MATERIAL DEEP */
 

@@ -1,0 +1,94 @@
+<div *ngIf="showDefaultComment">
+    <div *ngIf="comments && comments.length != 0" class="comment-section">
+        
+        <div *ngIf="comments && comments.length > 1" class="comment-heading">{{comments.length}} Comments</div>
+        <div *ngIf="comments && comments.length == 1" class="comment-heading">{{comments.length}} Comment</div>
+        
+    </div>
+    <form name="newcomment" class="comment-form" >
+        <div style="flex-grow: 1;width: 100%;">
+        <mat-form-field class="example-full-width">
+            <input name="textDefalt" matInput [(ngModel)]="textDefalt" placeholder="Add comment">
+        </mat-form-field>
+        </div>
+        <div class="comment-btn-div">
+            <button class="comment-btn cancel" type="reset" (click)="cancelNewComment(comment)">CANCEL</button>
+            <button [disabled]="!textDefalt" class="comment-btn sumbit" type="submit"
+            (click)="addNewComment(comment)">COMMENT</button>
+        
+        </div>
+
+    </form>
+</div>
+<div class="comments-area">
+<div class="comment-container" *ngFor="let comment of comments.reverse()">
+    <div class="comment-detail">
+        <div class="comment-meta">
+            <div class="comment-by">First name Last name</div>
+            <div class="comment-time">{{comment.createdDate | dateAgo}}</div>
+            
+        </div>
+        <div *ngIf="!comment.isEdit" class="comment-text">
+            {{comment.text}}
+        </div>
+        <div *ngIf="comment.isEdit">
+            <form name="edit" class="comment-form">
+                <div style="flex-grow: 1;width: 100%;">
+                <mat-form-field  class="example-full-width">
+                    <input name="editText" matInput [(ngModel)]="editText" placeholder="Update comment">
+                </mat-form-field>
+                </div>
+                <div class="comment-btn-div">
+                    <button  class="comment-btn cancel" type="reset" (click)="cancelUpdateComment(comment)">CANCEL</button>
+                    <button [disabled]="!editText" class="comment-btn sumbit" type="submit" (click)="updateComment(comment)">COMMENT</button>
+                    
+                    <br>
+                </div> 
+            </form>
+        </div>
+        <div *ngIf="!comment.isOpen" class="comment-tools">
+            <div>
+                <button class="reply-button" (click)="openCommentText(comment)">REPLY</button>
+            </div>
+            <div>
+                <button class="reply-button" (click)="editComment(comment)">EDIT</button>
+            </div>
+            <div>
+                <button class="reply-button" (click)="deleteComment(comment)">DELETE</button>
+            </div>
+        </div>
+        
+    </div>
+    <div *ngIf="comment.isOpen">
+        <form name="reply" class="comment-form">
+            <div style="flex-grow: 1;width: 100%;">
+            <mat-form-field  class="example-full-width">
+                <input name="text" matInput [(ngModel)]="text" placeholder="Add comment">
+            </mat-form-field>
+            </div>
+            <div class="comment-btn-div">
+                <button  class="comment-btn cancel" type="reset" (click)="cancelComment(comment)">CANCEL</button>
+                <button [disabled]="!text" class="comment-btn sumbit" type="submit" (click)="addComment(comment)">COMMENT</button>
+                
+                <br>
+            </div> 
+        </form>
+    </div>
+   
+    <div *ngIf="comment && comment.anwsers && comment.anwsers.length>1 && !comment.viewReply" class="view-reply">
+        <button class="comment-btn viewReply" (click)="viewReply(comment)">View {{comment.anwsers.length}} Replies</button>
+    </div>
+    <div *ngIf="comment && comment.anwsers && comment.anwsers.length==1 && !comment.viewReply" class="view-reply">
+        <button class="comment-btn viewReply" (click)="viewReply(comment)">View Reply</button>
+    </div>
+    <div *ngIf="comment && comment.anwsers && comment.anwsers.length>1 && comment.viewReply" class="view-reply">
+        <button class="comment-btn viewReply" (click)="hideReply(comment)">Hide {{comment.anwsers.length}} Replies</button>
+    </div>
+    <div *ngIf="comment && comment.anwsers && comment.anwsers.length==1 && comment.viewReply" class="view-reply">
+        <button class="comment-btn viewReply" (click)="hideReply(comment)">Hide Reply</button>
+    </div>
+    <div *ngIf="comment.viewReply">
+        <comment-tree [comments]="comment.anwsers" [showDefaultComment]=false></comment-tree>
+    </div>
+</div>
+</div>

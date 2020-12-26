@@ -6,8 +6,8 @@
 				<button mat-raised-button class="btn-danger btn-round" (click)="showFormType()">Create Form</button>
 				<span class="example-spacer"></span> 
 				<form>
-					<input matInput type="text" (value)="searchform" [(ngModel)]="searchform" class="search-text" placeholder="Search...">
-					<button mat-raised-button (click)="searchForm()" type="submit" class="btn btn-white btn-round btn-just-icon">
+					<input matInput type="text" name="searchform" [(value)]="searchform" class="search-text" placeholder="Search...">
+					<button mat-raised-button (click)="searchForm()"  class="btn btn-white btn-round btn-just-icon">
 						<i class="material-icons">search</i>
 						<div class="ripple-container"></div>
 					</button>
@@ -34,7 +34,7 @@
   						<mat-icon class="icon" style="margin-right:10px;">description</mat-icon>
   						<div class="form-title-div">
   						<span class="form-title">{{element.name}}</span>
-  						<span class="small">{{element.response}} Submissions. Modified on Jul 15,2020.</span>
+  						<span class="small"><a [routerLink]="['/responseList',element.id]" > {{element.response}} Submissions.</a> Modified on Jul 15,2020.</span>
   						</div>
 						<span class="example-spacer"></span>
 						 <button [routerLink]="['/formBuilder',element.id]" class="cust-btn" mat-raised-button>Edit Form</button>

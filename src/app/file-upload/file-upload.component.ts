@@ -23,6 +23,7 @@ import { FormField } from "app/model/FormField";
 })
 export class FileUploadComponent implements OnInit {
 
+    @Input() field;
     /** Link text */
     @Input() text = 'Upload';
     /** Name used in form which will be sent in HTTP request. */
@@ -83,12 +84,22 @@ export class FileUploadComponent implements OnInit {
     }
 
     cancelFile(file: FileUploadModel) {
-         if(file.sub)
+        console.clear();
+        console.log("ccccccaaancelFFFFFFFEEEEEEE=",file);
+        if(file.data)
+            this.removeFileFromParent(file.data);
+        if(file.sub)
             file.sub.unsubscribe();
           this.removeFileFromArray(file);
           if(this.files.length<this.maxFiles)
                   this.limitmsg='';
     }
+    
+    removeFileFromParent(f:File){
+         let removF={name:f.name,state:'remove',fieldName:this.fieldName}
+          this.complete.emit(JSON.stringify(removF));         
+    }
+                  
 
     retryFile(file: FileUploadModel) {
           this.uploadFile(file);
@@ -135,6 +146,7 @@ export class FileUploadComponent implements OnInit {
                           resp.type=file.data.type;
                           resp.fieldName=this.fieldName;
                           this.complete.emit(JSON.stringify(resp));
+//                          this.complete.emit(this.files);
                       }
                 }
           );
@@ -181,8 +193,11 @@ export class FileUploadComponent implements OnInit {
 
     private removeFileFromArray(file: FileUploadModel) {
           const index = this.files.indexOf(file);
+          
           if (index > -1) {
+                let currFile=this.files[index];
                 this.files.splice(index, 1);
+               
           }
     }
  

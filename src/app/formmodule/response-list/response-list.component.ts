@@ -18,7 +18,7 @@ export class ResponseListComponent implements OnInit {
     dispColumns: [] = [];
     message = "this is from parent"
     chartData: any[] = []; 
-    hidencols: string[] = ['resp_country','resp_state','resp_city','latitude','longitude','IpAddress','resTime'];
+    hidencols: string[] = ['comments','tags','resp_country','resp_state','resp_city','latitude','longitude','IpAddress','resTime'];
   constructor(private srv: FormService,private route: ActivatedRoute) { }
 
   ngOnInit() {

@@ -34,7 +34,8 @@ BUTTON PROGRESS BAR SPINNER END
 --nav-border-font:#ffffff;
 --nav-border-shadow:#121212;
 --nav-border:#aaacaf;
---nav-selected:#ef5350;
+--nav-selected:#EFBD50;
+/* --nav-selected:#f44336;  */
 --input-border-color: initial;
 --input-border-color-focus:initial;
 --input-font-color:initial;
@@ -230,7 +231,7 @@ opacity: 1;
 }
 /deep/ mat-ink-bar {
     background-color: var(--nav-selected) !important;
-    height: 1px !important;
+    height: 5px !important;
 }
 /deep/ .mat-slider {
     padding: 22px !important;

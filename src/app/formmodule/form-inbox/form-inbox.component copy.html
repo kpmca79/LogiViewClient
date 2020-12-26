@@ -1,0 +1,219 @@
+<div class="main">
+	<div class="ngLoader"></div>
+	<form-topnav page="inbox" [formID]="formID" [isChecked]="false" link="build"></form-topnav>
+	<div *ngIf="!responseData" class="col-md-12">
+         <div class="card"><mat-progress-bar color="warn" mode = "indeterminate" ></mat-progress-bar></div>
+	</div>
+	<div class="main-content nav-color">
+    	<div class="mat-nav">
+    		<mat-drawer-container style="height:100%;">
+    			<mat-drawer #drawerleft  mode="side"  opened="true"  class="left-pan">
+
+    				<div class="nav-content">
+    					<mat-tab-group mat-align-tabs="center" class="nav-content tab-header" disablePagination="false">
+							<mat-tab label="Inbox" class="tab-menu" style="height:100% !important;">
+								<div *ngIf="true; then search"></div>
+							       <div class="resp-list" id="container" style="height: calc(100vh - 180px);">
+									<perfect-scrollbar onScrollDown="onScrollDown($event)">		
+							
+									
+										<div *ngFor="let r of responseData" class="inboxrow" id="{{ 'row' + r.title }}" (click)="rowClick(r.title)">
+											<div >
+												<input type="checkbox" class="chkbox"/>
+											</div>
+											<div class="title">{{r.title}}</div>
+											<div style="display:flex; max-width:60px;margin-top: 2px;">
+												<div *ngFor="let tag of r.tags" class="color-grade"  [style.background-color]="tag.color"></div>
+											</div>
+											<div>
+												<mat-icon class="mat-icon">star</mat-icon>
+											</div>
+										</div>
+								
+
+
+									<div *ngIf="responseData && responseData.length==0" class="inboxrow">
+										<div class="title">No Record Found</div>
+									</div>
+									</perfect-scrollbar>
+								</div> 
+								<div>
+									<div class="inbox-bottom">Total Records: {{totalRecords|number}}</div>
+								</div>
+
+
+
+							</mat-tab>
+							<mat-tab label="Archived" class="tab-menu">
+						<!-- 				<div style="height: calc(100vh - 140px);"> -->
+								<div>
+									<perfect-scrollbar>
+									</perfect-scrollbar>
+								</div>
+							</mat-tab>
+							<mat-tab label="Trash" class="tab-menu">
+						<!-- 				<div style="height: calc(100vh - 140px);"> -->
+								<div>
+									<perfect-scrollbar>
+									</perfect-scrollbar>
+								</div>
+							</mat-tab>
+    		    		</mat-tab-group>
+    				</div>
+    			</mat-drawer>
+    				<div class="resp-toolbar">
+    					<div style="margin-right: -10px;">
+    						<mat-icon style="margin-top:24px;">local_offer</mat-icon>
+    					</div>
+
+    					<div style="flex-grow:1;">
+							<mat-form-field class="col-md-12">
+								<mat-chip-list #chipList aria-label="Fruit selection">
+									<mat-chip *ngFor="let fruit of fruits" [selectable]="selectable"
+											  [style.background-color]="fruit.color" style="font-size:12px;"
+											  [removable]="removable" (removed)="remove(fruit)">
+											  {{fruit.name}}<mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+									</mat-chip>
+									<input  placeholder="+ add new tag" id="taginput" #fruitInput [formControl]="fruitCtrl" [matAutocomplete]="auto"
+										   [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+										   (matChipInputTokenEnd)="add($event)">
+							   </mat-chip-list>
+							   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+									<mat-option *ngFor="let fruit of filterTag" [value]="fruit">
+											<mat-chip [style.background-color]="fruit.color" style="font-size:12px;">
+											  {{fruit.name}}
+											</mat-chip>
+
+									</mat-option>
+							    </mat-autocomplete>
+						   </mat-form-field>
+
+				</div>
+    					<div >
+<!--     						<mat-icon (click)="exportAsPDF()">arrow_circle_down</mat-icon> -->
+    						<mat-icon style="margin-top:24px;    cursor: grab;"
+    						matTooltip="Download As PDF"
+    						matTooltipClass="custom-tooltip"
+    						(click)="exportAsPDF()">arrow_circle_down</mat-icon>
+
+    					</div>
+    					<div >
+    						<mat-icon style="margin-top:26px;">add_comment</mat-icon>
+    					</div>
+    					<div >
+    						<mat-icon style="margin-top:24px;">archive</mat-icon>
+    					</div>
+
+    				</div>
+
+    			  <div id="MyDIv">
+	    		      <div *ngIf="currentResp" class="res-main">
+				   			   <div class="res-header">
+				   			   		<div class="res-title">
+				   			   		<span>{{currentResp.title}}</span>
+				   			   		<div class="res-sub-title-date" style="margin-top: 12px;"><span>{{currentResp.Email}}</span></div>
+				   			   		</div>
+
+				   			   		<div class="res-sub-title">
+				   			   			<div class="res-sub-title-label"><span>Submission Date</span></div>
+				   			   			<div class="res-sub-title-date"><span>{{currentResp.resTime | date:'dd/MM/yyyy HH:mm'}}</span></div>
+				   			   		</div>
+				   			   </div>
+				   			   <div  class="res-content" >
+								<!-- <div  style="height: calc(100vh - 328px);">
+									<perfect-scrollbar> -->
+				   			   			<div *ngFor="let colname of dispColNew " class="res-content-row">
+				   			   			<div class="res-question">{{colname | titlecase}}</div>
+				   			   				<div *ngIf="currentResp[colname] && currentResp[colname].type">
+				   			   					<div *ngIf="currentResp[colname].type=='datetime'" class="res-answer">{{currentResp[colname].value |  date:'dd/MM/yyyy'}}</div>
+				   			   					<div *ngIf="currentResp[colname].type=='signature'" class="res-answer">
+				   			   					<img src="http://localhost:8080/api/file/{{currentResp[colname].value}}" alt="" width="50%" height="60%">
+				   			   					</div>
+				   			   					<div *ngIf="currentResp[colname].type=='file'" class="res-answer">
+				   			   						<div *ngFor="let f of currentResp[colname].files">
+				   			   							<a href="http://localhost:8080/api/file/{{f.id}}" style="color:#7878d2;text-decoration: underline;">{{f.name}}</a>
+				   			   						</div>
+				   			   					</div>
+				   			   					<div *ngIf="currentResp[colname].type=='dropdown' && currentResp[colname].value" class="res-answer">
+				   			   						<div *ngFor="let option of currentResp[colname].value">
+				   			   							<div *ngIf="option.key" class="option-label">{{option.key}}:</div>
+				   			   							<div>
+				   			   								<div *ngFor="let subop of option.options">
+				   			   									<div *ngIf="option.key" class="option-sub">{{subop}}</div>
+				   			   									<div *ngIf="!option.key">{{subop}}</div>
+				   			   								</div>
+				   			   							</div>
+
+				   			   						</div>
+				   			   					</div>
+				   			   					<div *ngIf="currentResp[colname].type=='order' " class="res-answer">
+				   			   						<div><b>Products</b></div>
+				   			   						<div *ngFor="let prd of currentResp[colname].orderDetails.products">
+				   			   							<div style="margin-left:20px;">{{prd.title}} &nbsp;&nbsp;(Quantity:{{prd.Quantity}}&nbsp;&nbsp;&nbsp; Price:{{prd.Amount}})</div>
+				   			   						</div>
+				   			   						<div>Total: {{currentResp[colname].orderDetails.amount}}&nbsp;{{currentResp[colname].orderDetails.currency}}</div>
+				   			   						<div>Card Number: {{currentResp[colname].orderDetails.cardnum}}</div>
+				   			   						<div>Message: {{currentResp[colname].orderDetails.txnMessage}}</div>
+				   			   						<div>Order ID: {{currentResp[colname].orderDetails.txnid | uppercase}}  </div>
+
+
+
+				   			   					</div>
+
+
+
+				   			   				</div>
+				   			   			<div *ngIf="currentResp[colname] && !currentResp[colname].type" class="res-answer">{{currentResp[colname]}}</div>
+
+										</div>
+									<!-- </perfect-scrollbar>
+								</div> -->
+				   			   <!-- 		<div  class="res-content-row" >
+				   			   			<div class="res-question">Submission IP</div>
+				   			   			<div class="res-answer">{{currentResp.IpAddress}}</div>
+				   			   		</div>
+				   			   		<div  class="res-content-row" >
+				   			   			<div class="res-question">Response ID</div>
+				   			   			<div class="res-answer">{{currentResp.id}}</div>
+				   			   		</div> -->
+
+				   			   		<div class="response-note">
+				   			   			<span style="font-weight:600;padding-right:10px">NOTE:</span>
+				   			   			<span>Response ID : {{currentResp.id}} was submitted by IP address ""{{currentResp.IpAddress}}"</span>
+				   			   		</div>
+				   			   </div>
+
+				      </div>
+			     </div>
+
+
+			</mat-drawer-container>
+			<ng-template #search>
+				<mat-toolbar class="toolbar search-toolbar">
+					<form class="search-form">
+
+						<div style="flex-grow: 1;margin-top: 5px;padding-left: 10px;">
+							<mat-form-field >
+							<input matInput name="searchForm"
+							type="text"
+							[(ngModel)]="searchform"
+
+							class="search-text" >
+							<!-- <mat-icon matSuffix>search</mat-icon> -->
+						</mat-form-field>
+						</div>
+						<div >
+							<button (click)="searchData()" type="submit" class="btn btn-inbox btn-round btn-just-icon">
+								<i class="material-icons">search</i>
+								<div class="ripple-container"></div>
+							</button>
+						</div>
+
+					</form>
+				</mat-toolbar>
+			</ng-template>
+
+
+</div>
+</div>
+</div>

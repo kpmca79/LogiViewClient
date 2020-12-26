@@ -41,10 +41,7 @@ opacity: 1;
     min-width: max-content !important;
      margin-bottom: 5px;
 }
-/deep/ mat-ink-bar {
-    background-color: var(--nav-selected) !important;
-    height: 1px !important;
-}
+
 /deep/ .mat-slider {
     padding: 22px !important;
 }

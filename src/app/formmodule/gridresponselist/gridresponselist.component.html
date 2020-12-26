@@ -1,0 +1,27 @@
+<div class="ngLoader"></div>
+<div class="main-content" style="padding-top:0px; padding-left: 0px; padding-right: 0px;">
+    <div *ngIf="columnDefs.length>0" class="container-fluid" style="padding-left: 0px; padding-right: 0px">
+        <!-- <ag-grid-angular #myGrid style=" height: 400px;" class="{{theme}}" [gridOptions]="gridOptions"
+            [autoGroupColumnDef]="autoGroupColumnDef" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
+            [enableRangeSelection]="true" [cacheOverflowSize]="cacheOverflowSize"
+            [maxConcurrentDatasourceRequests]="maxConcurrentDatasourceRequests"
+            [infiniteInitialRowCount]="infiniteInitialRowCount" [pagination]="true"
+            (paginationChanged)="onPageChage($event)" (gridReady)="onGridReady($event)">
+        </ag-grid-angular> -->
+
+        <ag-grid-angular 
+        #myGrid
+        style=" height: 34rem;"
+        class="ag-theme-alpine"
+        [gridOptions]="gridOptions"
+        [columnDefs]="columnDefs"
+        [defaultColDef]="defaultColDef"
+        [autoGroupColumnDef]="autoGroupColumnDef"
+        [sideBar]="sideBar"
+        [statusBar]="statusBar"
+        (gridReady)="onGridReady($event)"
+        
+        >
+        </ag-grid-angular>
+    </div>
+</div>

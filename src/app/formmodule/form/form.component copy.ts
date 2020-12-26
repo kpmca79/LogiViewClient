@@ -561,7 +561,7 @@ export class FormComponent implements OnInit {
                     data=>{
                              let result: any = data;
                              let respJ={ value: result.fileid, type: 'signature'} ;
-                             this.respJson[field.id] = respJ;
+                             this.respJson[field.name] = respJ;
                              resolve('');
                     },
                     error=>{
@@ -627,7 +627,7 @@ export class FormComponent implements OnInit {
                     value = finalSel;
                 }
                 let respJ = { value: value, type: 'dropdownMSML' };
-                this.respJson[field.id] = respJ;
+                this.respJson[field.name] = respJ;
             }
         }
         else if ( field.dropDownMultiLevel ) {
@@ -639,7 +639,7 @@ export class FormComponent implements OnInit {
                 value = { key: keyval[0], options: options };
                 arrSelectedObjs.push(value);
                 let respJ = { value: arrSelectedObjs, type: 'dropdown' };
-                this.respJson[field.id] = respJ;
+                this.respJson[field.name] = respJ;
             }
         }
         else if ( field.dropDownMultiSelect ) {
@@ -648,7 +648,7 @@ export class FormComponent implements OnInit {
                 value = { key: '', options: value };
                 arrSelectedObjs.push(value);
                 let respJ = { value: arrSelectedObjs, type: 'dropdown' };
-                this.respJson[field.id] = respJ;
+                this.respJson[field.name] = respJ;
             }
         }
         else if ( value ) {
@@ -658,7 +658,7 @@ export class FormComponent implements OnInit {
                 value = { key: '', options: arrValue };
                 arrSelectedObjs.push(value);
                 let respJ = { value: arrSelectedObjs, type: 'dropdown' };
-                this.respJson[field.id] = respJ;
+                this.respJson[field.name] = respJ;
         }
         
     }
@@ -706,7 +706,7 @@ export class FormComponent implements OnInit {
                     else if ( field.type == "date-picker" ) {
                         value = this.datePipe.transform( value, 'yyyy-MM-dd' );
                         let respJ = { value: value, type: 'datetime' };
-                        this.respJson[field.id] = respJ;
+                        this.respJson[field.name] = respJ;
                     }
                     else if ( field.type == "dropdown" )
                     {    
@@ -718,6 +718,8 @@ export class FormComponent implements OnInit {
                             field.subfields.forEach( subfield => {
                                 if ( subfield.visible ) {
                                     this.respJson[subfield.name] = subfield.frmControl.value;
+                                    console.log("fullname subfield: ",subfield.name);
+                                    console.log("fullname value: ",subfield.frmControl.value);
                                 }
                             } );
                         }
@@ -750,7 +752,7 @@ export class FormComponent implements OnInit {
                             selTime = field.subfields[0].frmControl.value; //hour
                             selTime = selTime + ":" + field.subfields[1].frmControl.value //min
                             selTime = selTime + " " + field.subfields[2].frmControl.value //am/pm
-                            this.respJson[field.id] = selTime;
+                            this.respJson[field.fname] = selTime;
                         }
                     }
                     else if ( field.type == "phone" ) {
@@ -766,30 +768,31 @@ export class FormComponent implements OnInit {
                         console.log("File field.type----->",field.type)
                         if ( field.submitValue ) {
 
-                            this.respJson[field.id] = field.submitValue;
+                            this.respJson[field.name] = field.submitValue;
                             console.log("File respJson----->",this.respJson);
                         }
                     }
                    
                     else if ( field.type == "rating" ) {
-                        this.respJson[field.id] = this.currentRate;
+                        this.respJson[field.name] = this.currentRate;
                     }
                     else if ( field.type == "productlist" ) {
                        let payObserver=await  this.completePayment(this.frm);
                     }
                     else if ( field.type == "email" ) {
-                        this.respJson[field.id] = value;
+                        this.respJson[field.name] = value;
                     }
                     else if ( field.type == "slide-toggle" ) {
                        if(field.checked)
-                        this.respJson[field.id] = field.checked;
+                        this.respJson[field.name] = field.checked;
                        else
-                           this.respJson[field.id] = "false";
+                           this.respJson[field.name] = "false";
                     }
                     
                     else if ( field.fname )
-                        this.respJson[field.id] = value;
-                    
+                        this.respJson[field.fname] = value;
+                    else if ( field.name )
+                        this.respJson[field.name] = value;
                     
                     console.log( "CHECKING FOR EMAL FIELD----------->",field );
 

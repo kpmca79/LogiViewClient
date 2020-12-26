@@ -141,7 +141,8 @@
   		<div *ngSwitchCase="'number'"  class="flex frm-mat">
 				<mat-form-field   class="example-half-width"  [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
 				    <mat-label [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-label>
-				    <input matInput name="{{field.title}}" [formControl]="isBuild?dummyController:field.frmControl" value="" required="{{field.required}}" placeholder="Enter your {{field.title}}">
+					<input matInput name="{{field.title}}" [formControl]="isBuild?dummyController:field.frmControl" value="" required="{{field.required}}" 
+					placeholder="Enter your {{field.title}}">
 				  
 				  	
 		  		</mat-form-field>
@@ -151,6 +152,7 @@
 			<div   class="example-full-width inline"  [style]="sanitizeHTML(frm.style)">
 				
 					<app-file-upload 
+						field={{field}}
 						target="{{fileUploadURL}}" 
 						class="width-inherit" 
 						(complete)="onFileComplete($event)" 
@@ -159,6 +161,7 @@
 						maxFiles={{field.maxFiles}}
     					iconName={{field.selectedIcon}} 
 						text={{field.name}}
+						fieldName={{field.name}}
 						acceptFileTypes={{field.acceptFileTypes}}
 						hint={{field.note}}></app-file-upload>
 					<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}">
@@ -206,15 +209,17 @@
 			</div>
  		</div>
 		<div *ngSwitchCase="'phone'" class="multifield">
-	  		<div class="width-30 frm-mat" *ngIf="field.subfields[0].visible">
-	  			<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">				  
-				   	<input matInput name="{{field.subfields[0].name}}" [formControl]="isBuild?dummyController:field.subfields[0].frmControl" value="" required="false">
-				    
-				   	<mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[0].name}}</mat-label>
+			
+			<!-- <div class="width-30 frm-mat"><label  [style]="sanitizeHTML(frm.style)">{{field.name}}</label></div> -->
+			<div class="width-30 frm-mat" *ngIf="field.subfields[0].visible">
+	  			 <mat-form-field  [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">				
+					<!-- <input matInput type="text" [style]="sanitizeHTML(frm.style)"  [placeholder]="field.name"  ng2TelInput [formControl]="isBuild?dummyController:field.subfields[0].frmControl" required="true"/>      -->
+					<input matInput name="{{field.subfields[0].name}}" [formControl]="isBuild?dummyController:field.subfields[0].frmControl" value="" required="false"> 
+				    <mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[0].name}}</mat-label>
 					 <mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.subfields[0].note}}</mat-hint>
 					<mat-icon matSuffix>{{field.subfields[0].selectedIcon}}</mat-icon>
 					<mat-error *ngIf="!isBuild && field.frmControl.invalid">{{field.subfields[0].message}}</mat-error>
-				</mat-form-field>
+				</mat-form-field> 
 			</div>
   			<div class="width-70 frm-mat" *ngIf="field.subfields[1].visible">
 				<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
@@ -278,12 +283,13 @@
 			</div>
 		</div>
 		<div *ngSwitchCase="'address'" class="inline frm-mat">
+			
 	  		<div  class="multifield">
 		  		<ng-container *ngFor="let subfield of field.subfields">
 		  			<ng-container *ngIf="subfield.visible==true && subfield.name.includes('address')" >
 		  					<div class="subfield-full-width frm-mat">
 		  						<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-							    <input matInput name="{{subfield.name}}" [formControl]="isBuild?dummyController:field.frmControl" value="" required="false">
+							    <input matInput name="{{subfield.name}}" [formControl]="isBuild?dummyController:subfield.frmControl" value="" required="false">
 							   	<mat-label [style]="sanitizeHTML(frm.style)">{{subfield.placeholder}}</mat-label>
 							   </mat-form-field>
 				  			</div>
@@ -291,7 +297,7 @@
 				  	<ng-container *ngIf="subfield.visible==true && !subfield.name.includes('address')" >
 		  					<div class="subfield frm-mat">
 		  						<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-							    <input matInput name="{{subfield.name}}" [formControl]="isBuild?dummyController:field.frmControl" value="" required="false">
+							    <input matInput name="{{subfield.name}}" [formControl]="isBuild?dummyController:subfield.frmControl" value="" required="false">
 							    	<mat-label [style]="sanitizeHTML(frm.style)">{{subfield.placeholder}}</mat-label>
 								</mat-form-field>
 				  			</div>
@@ -324,7 +330,7 @@
       			<div style="flex-grow: 1;">
       				
       				<mat-slide-toggle disableRipple="true" class="example-full-width" [color]="white" [style]="sanitizeHTML(frm.style)"
-          						  [checked]="field.checked" [disabled]="field.disabled">
+          						   (change)="toggleValueChange( field , $event )" (checked)="field.checked" [disabled]="field.disabled">
           						  	<span [style]="sanitizeHTML(frm.style)">{{field.name}}</span>
       				</mat-slide-toggle>
       				<span style="padding-left:44px;font-size:12px">{{field.note}}</span>
@@ -338,6 +344,7 @@
 		      <div style="flex-grow: 1;">
 		    
 		      <mat-form-field class="example-half-width" [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
+<!-- 		      				required="{{field.required}}" -->
 		      		<input (opened)="true" 
 		      				matInput  
 		      				[matDatepicker]="picker"
@@ -345,7 +352,8 @@
 		      				[min]="field.mindate"
 		      				[max]="field.maxdate"
 		      				[style]="sanitizeHTML(frm.style)"
-		      				required="{{field.required}}"
+
+		      				required="{{field.required?true:false}}"
 		      				placeholder="{{field.title}}" 
 		      				(dateInput)="addEvent('input', $event)" 
 		      				[matDatepickerFilter]="field.dayFilter"
@@ -420,7 +428,7 @@
 							<ng-container *ngIf="field.dropDownMultiSelect">
 	    						<mat-select multiple class="frm-mat" [openedChange]="setDropDownCSS()" [(value)]="field.selectedOption" [formControl]="isBuild?dummyController:field.frmControl">
 	    							<mat-optgroup *ngFor="let group of field.selOptions" class="select-group-label-frm" [label]="group.name">
-	    			  					<mat-option *ngFor="let suboption of group.subOps"  [value]="suboption">
+	    			  					<mat-option *ngFor="let suboption of group.subOps"  [value]="group.name+'@opt@'+suboption">
 	    			  						<span class="tab-label-text">{{suboption}}</span>
 	    			  					</mat-option>
 	    			  				</mat-optgroup>
@@ -429,7 +437,7 @@
     						<ng-container *ngIf="!field.dropDownMultiSelect">
 	    						<mat-select  class="frm-mat" [openedChange]="setDropDownCSS()" [(value)]="field.selectedOptionStr"  (selectionChange)="updateDropdownOption(field)" [formControl]="isBuild?dummyController:field.frmControl">
 	    							<mat-optgroup *ngFor="let group of field.selOptions" class="select-group-label-frm" [label]="group.name">
-	    			  					<mat-option *ngFor="let suboption of group.subOps"  [value]="suboption">
+	    			  					<mat-option *ngFor="let suboption of group.subOps"  [value]="group.name+'@opt@'+suboption">
 	    			  						<span class="tab-label-text">{{suboption}}</span>
 	    			  					</mat-option>
 	    			  				</mat-optgroup>

@@ -36,7 +36,7 @@ export class FormField {
     selectedDate: Date;
     types: string;
     frmControl: FormControl;
-    submitValue: String;
+    submitValue: any;
     subfields: SubField[];
     selectedIcon: String;
     note:String;

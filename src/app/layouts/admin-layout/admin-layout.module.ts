@@ -42,6 +42,7 @@ import { FormListComponent } from "../../formmodule/form-list/form-list.componen
 import { MyformsListComponent } from "../../formmodule/myforms/myforms.component"
 import { ResponseListComponent } from "../../formmodule/response-list/response-list.component";
 
+
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { GoogleChartsModule } from 'angular-google-charts';
 import {NgbModule,  NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
@@ -72,6 +73,7 @@ import { ImageSelectionDialogComponent } from '../../formmodule/image-selection-
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FormpropertyComponent } from '../../formmodule/properties/form/formproperty/formproperty.component';
 
 import { FormtitleComponent } from '../../formmodule/properties/form/formtitle/formtitle.component';
@@ -98,7 +100,9 @@ import {FormdevComponent} from '../../formmodule/formdev/formdev.component';
 import {ProductlistComponent} from '../../formmodule/productlist/productlist.component';
 import {ProductlistpropertiesComponent} from '../../formmodule/properties/form/productlistproperties/productlistproperties.component';
 import { FormInboxComponent } from "../../formmodule/form-inbox/form-inbox.component"
-
+import {CommentTreeComponent} from "../../comment-tree/comment-tree.component"
+import {DateAgoPipe} from "../../pipe/date-ago.pipe";
+import {Ng2TelInputModule} from 'ng2-tel-input';
 
 
 
@@ -132,9 +136,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
     PerfectScrollbarModule,
     NgxNumberSpinnerModule,
     RecaptchaModule,
-    
+    InfiniteScrollModule,
+    Ng2TelInputModule,
     FroalaEditorModule.forRoot(), 
     FroalaViewModule.forRoot(),
+    
 
  ],
  entryComponents: [
@@ -202,6 +208,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
     ProductlistComponent,
     ProductlistpropertiesComponent,
     FormInboxComponent,
+    CommentTreeComponent,
+    DateAgoPipe,
+    
+    
     // tslint:disable-next-line:no-trailing-whitespace
     
   ],

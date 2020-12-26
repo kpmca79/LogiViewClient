@@ -3,7 +3,8 @@
 /* css for top navigation */
 .toolNav {
     display: inline-block;
-       background: linear-gradient(-60deg, #EFBD50, #EDB439);
+     background: var(--nav-selected) !important;
+       /* background: linear-gradient(-60deg, #EFBD50, #EDB439); */
    /* background: linear-gradient(-60deg,#50ECEF,#14DADE); */
     /* background: linear-gradient(-60deg,#ff7513,#f09819); */
     /* background: linear-gradient(60deg, #ef5350, #e53935); */

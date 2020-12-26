@@ -1,23 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
 import { SidetoolbarComponent } from './sidetoolbar/sidetoolbar.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { GridresponselistComponent } from './gridresponselist/gridresponselist.component';
 
-
+//modules for ag-grid 
+import {  AgGridModule} from 'ag-grid-angular';
+import 'ag-grid-enterprise';
+//end
 
 
 
@@ -40,7 +36,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
     MatIconModule,
     MatToolbarModule,
     PerfectScrollbarModule,
-    
+    AgGridModule.withComponents([]),   
 
   
 
@@ -49,6 +45,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG}],
   declarations: [
     SidetoolbarComponent,
+    GridresponselistComponent,
     
    
 

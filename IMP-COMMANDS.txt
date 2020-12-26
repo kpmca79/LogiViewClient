@@ -13,7 +13,16 @@ GENERATE NEW COMPONENT UNDER APP FOLDER
 ====================================================================
 ng g c  FileUpload --skip-import
 =========================================================================
-
+INFINITE ScrollBar
+============================================================================
+npm install ngx-infinite-scroll --save
+ref: https://stackblitz.com/edit/ngx-infinite-scroll-plus-ngx-perfect-scrollbar-dgecek?file=src%2Fapp%2Fapp.module.ts
+=====================================================================
+PHONE NUMBER COMPONENTS
+=====================================
+npm install ng2-tel-input intl-tel-input --save
+https://therichpost.com/angular-8-input-phone-number-with-country-code/
+==========================================
 
 MATERIAL PROJECT
 ==========================================================
@@ -405,3 +414,18 @@ D:\Angular\angie\dist\angie>npx local-web-server
 
 NOTE: WE HAVE BUILD AND EXECUTED PROJECT FOR IE (D:\Angular\angie)
 ======================================================
+
+==========================
+ABOUT AG GRID STARTE
+=========================
+
+https://www.ag-grid.com/angular-grid/?gclid=CjwKCAiAn7L-BRBbEiwAl9UtkAjdwlXQ-Z6SPsM5fUZ2T_Y7A6mMvI1himVVh0YdDD_mJGG4vlG8rBoCshQQAvD_BwE#add-ag-grid-to-your-project
+https://www.youtube.com/watch?v=iGGaUQFMA08
+https://www.youtube.com/watch?v=t29jbSxfDW8
+
+COMMANDS
+
+npm install --save ag-grid-community ag-grid-angular
+OR
+npm install --save ag-grid ag-grid-angular
+=======AG GRID END ==============================

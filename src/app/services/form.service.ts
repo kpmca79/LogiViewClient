@@ -11,6 +11,9 @@ declare var $: any;
   providedIn: 'root'
 })
 export class FormService {
+    
+    clearResponseFields=['_id','title','resp','resTime'] 
+    
     public resp: any;
     public formSelfLink: any;
     public result: any;
@@ -129,11 +132,14 @@ export class FormService {
     public corsPubURL(url: any) : Observable<any>
     {
         let headers = new HttpHeaders();
-        headers.append("Origin", "http://localhost:4200");
+        headers.append("origin", "http://localhost:4200");
         headers.append("X-Requested-With", "http://localhost:4200");
+        headers.append("Access-Control-Allow-Origin", "http://localhost:4200");
+        
         headers.append('withCredentials', 'true');
+       
         let tmpUrl=this.getProxyURL(url);
-        console.log("corsPubURL=",tmpUrl);
+        console.log("Calling url",tmpUrl);
         return this.http.get(this.getProxyURL(url), {headers});
     }
     
@@ -158,23 +164,33 @@ export class FormService {
        console.log('saving form response formid=', formID);
        console.log('saving form response response=', response);
        console.log('saving form saveURL=', saveURL);
+       
        return this.http.post(saveURL, JSON.parse(JSON.stringify(response)));
     }
-  public  updateResponse(responseID: any, response: any): Observable<any> {
+  public  updateResponse(responseID: any, parentResponse: any): Observable<any> {
        let saveURL = '/api/response/'+responseID;
-       delete response['_id'];
-       
-       delete response['resp'];
+       //clear response before save
+       let response=JSON.parse(JSON.stringify(parentResponse)); 
+       this.clearResponseFields.forEach(val=>{
+           if(response[val])
+                delete response[val];
+       });
+     
        console.log('updating  response responseid=', responseID);
        console.log('updating response response=', response);
        console.log('updating response saveURL=', saveURL);
-       return this.http.put(saveURL, JSON.parse(JSON.stringify(response)));
+       return this.http.put(saveURL, response);
     }
   getResonse(formID: String): Observable<any> {
            let saveURL = "/api/"  + formID + '/response';
            console.log('Calling URL for getting responses-->', saveURL);
            return this.http.get<any>(saveURL);
   }
+  getResonseWithFilter(formID: String,postBody:any): Observable<any> {
+    let saveURL = "/api/"  + formID + '/getResponse';
+    console.log('Calling URL for getting responses-->', saveURL);
+    return this.http.post<any>(saveURL,JSON.parse(JSON.stringify(postBody)));
+}
   getColumnChartData(database: String, collection: String, colName: String): Observable<any> {
       let path = '/api/getTableData/' + database + '/' + collection + '?fields=' + colName;
       return this.http.get<any>(path);
