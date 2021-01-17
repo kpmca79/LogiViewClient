@@ -28,6 +28,7 @@ export class FormInboxComponent implements OnInit {
   responseData: any[];
   limit = 10;
   skip = 0;
+  test="123";
   leftNavOpen: boolean = true;
   charts
   
