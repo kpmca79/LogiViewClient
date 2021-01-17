@@ -28,7 +28,7 @@ export class TrashFormsComponent implements OnInit {
   searchform = "";
   ngOnInit() {
 
-    const formObj = this.frmSrv.getForms("status=Archived").subscribe(data => {
+    const formObj = this.frmSrv.getForms("Archived",null).subscribe(data => {
       let x = data;
       this.forms = x.data;
       console.log("form size =", this.forms.length);
@@ -64,7 +64,7 @@ export class TrashFormsComponent implements OnInit {
   }
   searchForm() {
 
-    const formObj = this.frmSrv.getForms(this.searchform + '&status=Archived').subscribe(data => {
+    const formObj = this.frmSrv.getForms("Archived",this.searchform).subscribe(data => {
       let x = data
       console.log("INSIDE searchForm response data is  =", x.data);
       this.forms = x.data;

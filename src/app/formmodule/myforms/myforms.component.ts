@@ -33,7 +33,7 @@ export class MyformsListComponent implements OnInit {
   searchform="";
   ngOnInit() {
        
-      const formObj = this.frmSrv.getForms("status=Active").subscribe(data=>{
+      const formObj = this.frmSrv.getForms("Active",null).subscribe(data=>{
       let x= data; 
       this.forms=x.data;
       
@@ -83,7 +83,7 @@ export class MyformsListComponent implements OnInit {
   searchForm()
   {
     
-    const formObj = this.frmSrv.getForms(this.searchform+'&status=Active').subscribe(data=>{
+    const formObj = this.frmSrv.getForms("Active",this.searchform).subscribe(data=>{
           let x= data
           
           console.log("INSIDE searchForm response data is  =", x.data);

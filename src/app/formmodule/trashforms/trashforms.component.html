@@ -30,6 +30,7 @@
   						<span class="small"><a [routerLink]="['/responseList',element.id]" > {{element.response}} Submissions.</a> Modified on Jul 15,2020.</span>
   						</div>
 						<span class="example-spacer"></span>
+						 <button (click)="showView(element)" class="cust-btn mat-raised-button">View</button>
 						 <button (click)="restorForm(element)" class="cust-btn mat-raised-button">Restore</button>
 					</mat-toolbar>			
 				</div>

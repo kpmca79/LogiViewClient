@@ -27,7 +27,7 @@ export class FormListComponent implements OnInit {
   constructor(private frmSrv: FormService,public dialog: MatDialog,private router: Router) { }
 
   ngOnInit() {
-      const formObj = this.frmSrv.getForms(null).subscribe(data=>{
+      const formObj = this.frmSrv.getForms("Active",null).subscribe(data=>{
       let x= data
       this.forms=x.data;
       console.log("form size =", this.forms.length);
