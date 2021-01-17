@@ -142,7 +142,10 @@ p {
   -moz-box-shadow: 0 2px 8px rgba(0,0,0,0.2);
       color: #9a001f;
 }
-
+.warn-message{
+  font-size:14px;
+  font-weight: 600;
+}
 .form-rowold:hover {
 
 background: linear-gradient(0deg,#e7e9ef 0,#f8f8fb 50%)!important;

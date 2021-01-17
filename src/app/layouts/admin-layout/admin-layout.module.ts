@@ -104,6 +104,7 @@ import {CommentTreeComponent} from "../../comment-tree/comment-tree.component"
 import {DateAgoPipe} from "../../pipe/date-ago.pipe";
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { ResetComponent } from 'app/reset/reset.component';
+import { TrashFormsComponent } from 'app/formmodule/trashforms/trashforms.component';
 
 
 
@@ -214,6 +215,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
     CommentTreeComponent,
     DateAgoPipe,
     ResetComponent,
+    TrashFormsComponent
     
     
     // tslint:disable-next-line:no-trailing-whitespace

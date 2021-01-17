@@ -7,6 +7,7 @@
 <!-- <div class="{{frm.theme}}-custom"> -->
 <div class="head-div">
 	<div class="title nav-color" [style]="sanitizeHTML(bgStyle)" [style.max-width.px]=frm.formwidth>
+		
 		<div [froalaView]="frm.title" style="flex-grow:1;" toolbarInline="true" ></div>
 		<button *ngIf="isBuild" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
 		<mat-menu #menu="matMenu">

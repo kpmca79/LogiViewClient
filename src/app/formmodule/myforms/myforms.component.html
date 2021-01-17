@@ -44,9 +44,17 @@
 							<mat-icon  class="cust-btn row-icon" >more_vert</mat-icon>
 						</button>
 						<mat-menu #menu="matMenu">
-								<button mat-menu-item (click)="showSetting(frm)">
-			    					<!--<mat-icon svgIcon="Setting" class="setting-icon"></mat-icon>-->
-		    						<span>Properties</span>
+								<button mat-menu-item (click)="showSetting(element)">
+			    					<i class="fa fa-gear fa-lg"></i> 
+									<span style="margin-left: 5px;">Settings</span>
+								</button>
+								  <button mat-menu-item (click)="showView(element)">
+			    					<i class="fa fa-eye fa-lg"></i> 
+									<span style="margin-left: 5px;">View</span>
+		  						  </button>
+								  <button mat-menu-item (click)="deleteForm(element)">
+									<i class="fa fa-trash-o fa-lg"></i> 
+									<span style="margin-left: 5px;">Delete</span>
 		  						</button>
   						</mat-menu>
 						 

@@ -26,6 +26,7 @@ import { ThankspageComponent } from '../../formmodule/thankspage/thankspage.comp
 import { FormdevComponent } from '../../formmodule/formdev/formdev.component';
 import { FormhomeComponent } from '../../formmodule/formhome/formhome.component'
 import { ResetComponent } from 'app/reset/reset.component';
+import { TrashFormsComponent } from 'app/formmodule/trashforms/trashforms.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -83,6 +84,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'user-profile/:id',   component: UserProfileComponent },
     { path: 'login',   component: LoginComponent },
     { path: 'logout',   component: LogoutComponent },
+    { path: 'trash',   component: TrashFormsComponent },
 
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },

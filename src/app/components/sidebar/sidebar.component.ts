@@ -11,6 +11,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/userlist', title: 'User Admin',  icon: 'person', class: '' },
     { path: '/formlist', title: 'Forms',  icon: 'person', class: '' },
     { path: '/myforms', title: 'My Forms',  icon: 'folder', class: '' },
+    { path: '/trash', title: 'Trash',  icon: 'restore_from_trash', class: '' },
     { path: '/dashboard', title: 'My Dashboard',  icon: 'dashboard', class: '' },
 //    { path: '/formBuilder', title: 'Build Form',  icon: 'person', class: '' },
 //    { path: '/user-profile', title: 'User Profile',  icon: 'person', class: '' },

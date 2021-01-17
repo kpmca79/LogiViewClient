@@ -10,6 +10,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { Route, Router } from "@angular/router";
+import { ConfirmDialogComponent } from 'app/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'myforms',
@@ -19,17 +20,20 @@ import { Route, Router } from "@angular/router";
 export class MyformsListComponent implements OnInit {
 
   forms: Form[];
+  public pubURL="https://localhost:4200/form/";
   dataSource: MatTableDataSource<Form>;
   displayedColumnsold: string[] = ['name','type','path', 'status','response','edit','stats'];
   displayedColumns: string[] = ['checkbox','name','response','edit','stats'];
   @ViewChild(MatPaginator,{static: true}) paginator: MatPaginator;
   frm: Form;
   isSearchZero=false;
+
    
   constructor(private frmSrv: FormService,public dialog: MatDialog,private router: Router) { }
   searchform="";
   ngOnInit() {
-      const formObj = this.frmSrv.getForms(null).subscribe(data=>{
+       
+      const formObj = this.frmSrv.getForms("status=Active").subscribe(data=>{
       let x= data; 
       this.forms=x.data;
       
@@ -46,10 +50,40 @@ export class MyformsListComponent implements OnInit {
       });
 //      console.log(this.forms);
   }
+  showView(form:Form)
+  {
+
+    window.open(this.pubURL+form.id, "_blank");
+  }
+  showSetting(form:Form){
+    let url='formBuilder/'+form.id+'/settings'
+    this.router.navigateByUrl(url);
+  }
+  deleteForm(form:Form) {
+    const dialogConfig = new MatDialogConfig();
+
+  dialogConfig.disableClose = true;
+  dialogConfig.autoFocus = true;
+  let msgStyle='style="font-size:14px;font-weight:600;"'
+  let noteStyle='style="font-size:12px;"'
+  dialogConfig.data = {
+      id: 1,
+      title: 'Delete Form',
+      message: '<span>Are you sure you want to delete form ?</span><br><span class="note"> Deleted form will be moved to Trash and automatically deleted after 30 days?</span>'
+  };
+
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+            form.status="Archived";
+            this.frmSrv.saveForm(form,form.id).subscribe(data=>{console.log("Form archived successfully",form);this.ngOnInit();},error=>{console.log(error)});
+        }
+      });
+  }
   searchForm()
   {
     
-    const formObj = this.frmSrv.getForms(this.searchform).subscribe(data=>{
+    const formObj = this.frmSrv.getForms(this.searchform+'&status=Active').subscribe(data=>{
           let x= data
           
           console.log("INSIDE searchForm response data is  =", x.data);

@@ -54,7 +54,7 @@ export class FormService {
     getForms(searchStr): Observable<any> {
         let qryParam="";
         if(searchStr)
-            qryParam="?formName="+searchStr;
+            qryParam="?"+searchStr;
         console.log("INSIDE form service getForms calling api "+'/api/forms'+qryParam);
         return this.http.get<any>('/api/forms'+qryParam);
 

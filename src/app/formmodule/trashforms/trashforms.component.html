@@ -1,0 +1,57 @@
+<div class="ngLoader"></div>
+<div class="main-content-full">
+	<div class="container-fluid">
+		
+		<mat-toolbar class="toolbar">
+				<span class="example-spacer"></span> 
+				<form >
+					<input matInput type="text" name="searchform" [(ngModel)]="searchform" [(value)]="searchform" class="search-text" placeholder="Search...">
+					<button mat-raised-button (click)="searchForm()"  class="btn btn-white btn-round btn-just-icon">
+						<i class="material-icons">search</i>
+						<div class="ripple-container"></div>
+					</button>
+				</form>
+			</mat-toolbar>
+			<div class="row"></div>
+		<div class="row">
+			<div *ngIf="!forms" class="col-md-12">
+				<div class="card">
+					<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="forms" class="col-md-12">
+			<div class="main">
+				<div *ngFor="let element of forms"class=form-row>
+					<mat-toolbar>
+						<mat-icon class="icon" style="margin-right:10px;">description</mat-icon>
+  						<div class="form-title-div">
+  						<span class="form-title">{{element.name}}</span>
+  						<span class="small"><a [routerLink]="['/responseList',element.id]" > {{element.response}} Submissions.</a> Modified on Jul 15,2020.</span>
+  						</div>
+						<span class="example-spacer"></span>
+						 <button (click)="restorForm(element)" class="cust-btn mat-raised-button">Restore</button>
+					</mat-toolbar>			
+				</div>
+				<div *ngIf="forms.length==0 && !isSearchZero">
+					<div class="nodata-content">
+						<div class="welcome-title">TRASH IS EMPTY!</div>
+						 <div>
+							<span class="nodata-text">From here you can able to restore any deleted form with all statistics.</span>
+						</div>
+						<div>
+							<span class="nodata-text">All archived forms will be availebe for max 30 Days in Trash forlder after that periord forms will be deleted automatically.</span>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="forms.length==0 && isSearchZero">
+					<div class="nodata-content">
+						<span class="nodata-text">No form found with specified search value.</span>
+						<br/>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
