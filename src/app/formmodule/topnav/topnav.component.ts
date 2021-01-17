@@ -20,7 +20,7 @@ export class TopnavComponent implements OnInit {
   constructor(private router: Router) { }
  
   ngOnInit() {
-  console.log("top nav active link is ",this.link);
+ // console.log("top nav active link is ",this.link);
   if(this.isChecked)
       this.isPreview= new FormControl(true);
 //     this.isPreview.value=this.isChecked;

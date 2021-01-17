@@ -9,7 +9,7 @@ import { ActivatedRoute } from "@angular/router";
 export class PublishComponent implements OnInit {
     
   public formID: String;
-  public pubURL="http://localhost:4200/form/";
+  public pubURL="https://localhost:4200/form/";
   public type:String;
   public iFramSrc="<iframe height=500px; width=640px; src="+this.pubURL+"/"+this.formID+" ></iframe>";
   constructor(private route: ActivatedRoute) { }

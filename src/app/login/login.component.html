@@ -1,38 +1,143 @@
 <div class="main-content">
-  <div class="container-fluid">
+  <div  class="container-fluid">
 <!--   <div class="row"> -->
 <!--   		<div style="text-align:center">  -->
 <!-- 			<app-file-upload (complete)="onFileComplete($event)"></app-file-upload>  -->
 <!-- 		</div>  -->
 <!--       </div> -->
+    
       <div class="row">
           <div class="col-md-8">
               <div class="card">
                   <div class="card-header card-header-danger">
-                      <h4 class="card-title">Login</h4>
-                      <p class="card-category">To LogiView Product</p>
+                      <h4 class="card-title">{{mode=="forgot"?"Reset password":mode | uppercase }}</h4>
+                      <p class="card-category">To MakeMyForm</p>
                   </div>
                   <div class="card-body">
-                      <form (submit)="login()">
+                      <form *ngIf="mode=='login'" (submit)="login()">
                           <div class="row">
                               <div class="col-md-5">
                                   <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="username" value="keyur" id="username" name="username" [(ngModel)]="credentials.username"/>
+                                    <input required matInput placeholder="Registered Email Address" value="keyur.holodox@gmail.com" id="username" name="username" [(ngModel)]="credentials.username"/>
                                   </mat-form-field>
                               </div>
                           </div>
                           <div class="row">
                               <div class="col-md-5">
                                   <mat-form-field class="example-full-width">
-                                    <input  matInput placeholder="username" value="keyur" type="Password" id="password" name="password" [(ngModel)]="credentials.password"/>
+                                    <input  required matInput placeholder="Password"  type="Password" id="password" name="password" [(ngModel)]="credentials.password"/>
                                   </mat-form-field>
                               </div>
                           </div>
-                        
-                          <button mat-raised-button type="submit" class="btn btn-danger pull-right">Login</button>
+                          <div  class="button-row">
+                             <div><button mat-raised-button type="submit" class="btn btn-danger pull-right">Login</button></div>
+                             <div><button mat-raised-button (click)="showRegister()" class="btn btn-success pull-right">Register</button></div>
+                          </div>
+                          <div><span>Forgot your password? <a class="a-link" (click)="showForgotPassword()">Click here</a> to reset your password.</span></div>
                           <div class="clearfix"></div>
-
+                         
                       </form>
+                      <div  class="row-social">
+                                    <button (click)="googleSignIn()" class="btn-google">
+                                        <img width="20px" style="margin-right:5px" alt="Google sign-in" 
+                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                                        Ligin with Google
+                                    </button> 
+                                    <button class="btn-google" (click)="facebookSignIn()">
+                                    <img width="20px" style="margin-right:5px" alt="Google sign-in" 
+                                    src="https://findicons.com/files/icons/2385/sharelove_social_media_icon_pack/128/facebook.png" />
+                                    Login with FaceBook
+                                    </button>
+                      
+                        
+                       </div>  
+                      <form *ngIf="mode=='register'" (submit)="registerUser()">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="First name" name="firstname" required="true"  [(ngModel)]="register.firstname"/>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Last name" name="lastname" required="true"  [(ngModel)]="register.lastname"/>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Email address" [formControl]="emailVal" name="email" required="true" [(ngModel)]="register.email"/>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Mobile number" name="mobile" [formControl]="mobileFormControl" [(ngModel)]="register.mobile"/>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row hint-margin">
+                            <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Choose password" required="true" [(ngModel)]="register.password" name="password" type="password"   />
+                                  <mat-hint>Please choose a strong passwrod with a minimum of 8 characters</mat-hint>
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Retype password" required="true"  name="password2" [(ngModel)]="register.password2"  type="password" />
+                           
+                                </mat-form-field>
+                             
+                            </div>
+                        </div>
+                         
+                         <div class="button-row">
+                            <div><button mat-raised-button (click)="showLogin()" class="btn btn-default pull-right">Back</button></div>
+                            <div><button mat-raised-button type="submit" class="btn btn-success pull-right">Register</button></div>
+                         </div>
+                        
+                        <div class="clearfix"></div>
+
+                    </form>
+
+                    <form *ngIf="mode=='forgot'" (submit)="forgetpassword()">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                  <input matInput placeholder="Email address" [formControl]="emailVal" name="email" required="true" [(ngModel)]="register.email"/>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                         
+                         <div class="button-row">
+                            <div><button mat-raised-button (click)="showLogin()" class="btn btn-default pull-right">Back</button></div>
+                            <div><button mat-raised-button type="submit" class="btn btn-success pull-right">Reset Password</button></div>
+                         </div>
+                        
+                        <div class="clearfix"></div>
+                    </form>   
+                    <form *ngIf="mode=='message'" >
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Reset password link for your account has been sent to your registred email address. Please click the link to reset your password.</p>
+                            </div>
+                        </div>
+                         
+                         <div class="button-row">
+                            <div><button mat-raised-button (click)="showLogin()" class="btn btn-success pull-right">OK</button></div>
+                         </div>
+                        
+                        <div class="clearfix"></div>
+                    </form>   
+
                   </div>
               </div>
           </div>

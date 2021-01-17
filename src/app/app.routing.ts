@@ -6,7 +6,7 @@ import { CanActivateSecurity } from './CanActivateSecurity';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: '', redirectTo: 'myforms', pathMatch: 'full'},
   {
       path: '', 
       component: AdminLayoutComponent,

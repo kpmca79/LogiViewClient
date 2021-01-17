@@ -1,0 +1,84 @@
+<div class="main-content">
+    <div  class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">{{titlemsg|uppercase}}</h4>
+                        <p class="card-category">To MakeMyForm</p>
+                    </div>
+                    <div class="card-body">
+                        <form *ngIf="mode=='reset'" (submit)="resetPassword()">
+                           <div class="row hint-margin">
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Choose password" required="true" [(ngModel)]="password" name="password" type="password"   />
+                                      <mat-hint>Please choose a strong passwrod with a minimum of 8 characters</mat-hint>
+    
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="Retype password" required="true"  name="password2" [(ngModel)]="password2"  type="password" />
+                               
+                                    </mat-form-field>
+                                 
+                                </div>
+                            </div>
+                            <div  class="button-row">
+                               <div><button mat-raised-button type="submit" class="btn btn-danger pull-right">Update</button></div>
+                               <div><button mat-raised-button  [routerLink]="['/login']"   class="btn btn-success pull-right">Back</button></div>
+                            </div>
+                            <!-- [routerLink]="['/login']" -->
+                            <div class="clearfix"></div>
+  
+                        </form>
+                        
+  
+                      <form *ngIf="mode=='message'" >
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <p>{{passwordUpdtSuccessMsg}}</p>
+                              </div>
+                          </div>
+                           <div class="button-row">
+                              <div><button mat-raised-button [routerLink]="['/login']" class="btn btn-success pull-right">Login Again</button></div>
+                           </div>
+                          
+                          <div class="clearfix"></div>
+                      </form>   
+                      <form *ngIf="mode=='expired'" >
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Reset password link has been exired. Please click <a [routerLink]="['/login']">here</a> to reset your password again.</p>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>   
+  
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <a href="#pablo">
+                            <img class="img" src="./assets/img/faces/marc.jpg" />
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-category text-gray">CEO / Founder</h6>
+                        <h4 class="card-title">Keyur Patel</h4>
+                        <p class="card-description">
+                            Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                        </p>
+                        <a href="#pablo" class="btn btn-danger btn-round">Follow</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  

@@ -57,7 +57,7 @@
 		
 		
 		<div class="option-row quantity">
-					<ngx-number-spinner [value]="prd.quantity" (change)="updateQuantity($event,prd)" [min]="0" [max]="5" [step]="1" ></ngx-number-spinner>
+					<ngx-number-spinner  (change)="updateQuantity($event,prd)" [min]="0" [max]="5" [step]="1" ></ngx-number-spinner>
 					<span style="text-align:center;font-size:14px;font-weight: 400;">Quantity</span>
 		</div>
 		</div>

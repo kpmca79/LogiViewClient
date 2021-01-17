@@ -128,10 +128,16 @@
 							<!-- <div  style="height: calc(100vh - 328px);">
 									<perfect-scrollbar> -->
 							<div *ngFor="let colname of dispColNew " class="res-content-row">
+							 
 								<div class="res-question">{{colname.name | titlecase}}</div>
 								<div *ngIf="currentResp[colname.id] && currentResp[colname.id].type">
+
+
 									<div *ngIf="currentResp[colname.id].type=='datetime'" class="res-answer">
-										{{currentResp[colname.id].value | date:'dd/MM/yyyy'}}</div>
+										{{currentResp[colname.id].value | date:'dd/MM/yyyy'}}
+									</div>
+									
+									
 									<div *ngIf="currentResp[colname.id].type=='signature'" class="res-answer">
 										<img src="http://localhost:8080/api/file/{{currentResp[colname.id].value}}" alt=""
 											width="50%" height="60%">
@@ -176,10 +182,26 @@
 
 
 								</div>
-								<div *ngIf="currentResp[colname.id] && !currentResp[colname.id].type" class="res-answer">
-									{{currentResp[colname.id]}}</div>
+								<div *ngIf="currentResp[colname.id]&&currentResp[colname.id].survey" class="res-answer">
+										
+										<div *ngFor="let surveyRow of currentResp[colname.id].survey"class="row survey">
+											<div class="col-md-6">{{surveyRow.subHeader}}:</div>
+											<div class="col-md-6">{{surveyRow.value}}</div>
+										</div>
+									
+								</div>
+								<div *ngIf="colname.type=='slide-toggle'" class="res-answer">
+									<div *ngIf="currentResp[colname.id]=='false'">No</div>
+									<div *ngIf="currentResp[colname.id]=='true'">Yes</div>
+									
+								</div>
+								<div *ngIf="colname.type!='slide-toggle' && currentResp[colname.id] && !currentResp[colname.id].survey && !currentResp[colname.id].type" class="res-answer">
+									<span *ngIf="currentResp[colname.id]">{{currentResp[colname.id]}}</span>
+									<span *ngIf="!currentResp[colname.id]">Not specified</span>
+								</div>
+								
 
-							</div>
+							</div> 
 							<!-- </perfect-scrollbar>
 								</div> -->
 							<!-- 		<div  class="res-content-row" >

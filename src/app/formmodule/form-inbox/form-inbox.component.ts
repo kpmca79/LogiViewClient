@@ -210,18 +210,25 @@ export class FormInboxComponent implements OnInit {
           this.totalRecords = result.totalCount
         if (!this.responseData || this.responseData.length == 0)
           this.currentResp = null;
+        
         if (this.responseData)
           this.responseData.forEach(resp => {
             let title = '';
+            let flagTitleSet=false;  
             if (resp['Order Summary']) {
               title = "Order: " + resp['Order Summary'].orderid.toUpperCase();
+              flagTitleSet=true;
             }
-            if (resp['First name'])
-              title += resp['First name'];
-            if (resp['Last name'])
-              title += " " + resp['Last name'];
-            if (title == '')
+            if(!flagTitleSet)
+            { if (resp['First name'])
+                title += resp['First name'];
+              if (resp['Last name'])
+                title += " " + resp['Last name'];
+               flagTitleSet=true; 
+            }
+            if (!flagTitleSet )
               title = "Submission " + record;
+
             resp.title = title;
             if (record == 1 && mode != "scroll")
               selectedResp=resp;
@@ -238,6 +245,7 @@ export class FormInboxComponent implements OnInit {
               this.queryColumns.push(val.id);
           });
         }
+        console.log("keyur reported issue ---->",this.dispColNew);
         this.isLoaded = true;
         this.scrollCheck = false;
         if(mode!="scroll")

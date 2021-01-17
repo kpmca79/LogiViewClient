@@ -1,8 +1,8 @@
 <div class="ngLoader"></div>
-<div>
+<div *ngIf="frm">
 	<div [style]="sanitizeHTML(bgStyle)" style="min-height: 110vh; height: 100%;">
 		<div class="main-div">
-			<div class="main-form-class" [style.max-width.px]=frm.formwidth>
+			<div class="main-form-class"  [style.max-width.px]=frm.formwidth>
 				<app-form [formField]="frm.formFields" [mode]="live" [frm]="frm" [formID]="frm.id"></app-form>
 			</div>
 		</div>

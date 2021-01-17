@@ -21,7 +21,9 @@ export class ProductlistpropertiesComponent implements OnInit {
   currency;
   multiLevel=false;
   product;
+  oldproduct;
   activeTab=1;
+  createProductFlag=false;
   operator:String[]=['=','!=','Contains','!Contains','Starts with','!Starts with','Ends with','!Ends with','>','>=','<','<=','Specified','!Specified'];
     
     constructor(private mService: MessagingService,private frmSrv :FormService) { }
@@ -38,6 +40,7 @@ export class ProductlistpropertiesComponent implements OnInit {
      console.log('Inside cretate product');
       this.product=new Product();
       this.activeTab=2;
+      this.createProductFlag=true;
       
       
   }
@@ -47,8 +50,9 @@ export class ProductlistpropertiesComponent implements OnInit {
           this.actvieFormField.productList=new ProductList();
       if(!this.actvieFormField.productList.products)
           this.actvieFormField.productList.products=[];
-      if(this.product)
+      if(this.product && this.createProductFlag)
           this.actvieFormField.productList.products.push(this.product);
+      this.createProductFlag=false; 
       console.log("####@@this.actvieFormField.productList@@@@@@@=>",this.actvieFormField.productList)
       console.log("####@@this.product@@@@@@@=>",this.product)
       this.lstPrd=this.actvieFormField.productList;
@@ -61,6 +65,7 @@ export class ProductlistpropertiesComponent implements OnInit {
   {
       this.product=pr;
       this.activeTab=2;
+      this.createProductFlag=false;
   }
   arrTostrOptions(arr)
   {

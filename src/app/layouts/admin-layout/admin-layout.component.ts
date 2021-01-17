@@ -24,14 +24,16 @@ export class AdminLayoutComponent implements OnInit {
 
   ngOnInit() {
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
-      console.log('Inside admin layout compoment ts');
-      console.log(this.router.url)
+      //console.log('Inside admin layout compoment ts');
+    //  console.log(this.router.url)
       
-      if (!this.app.isAuthenticated(this.router)) { 
+      if (!localStorage.getItem('token')) { 
+          
           console.log('Inside admin layout compoment ts--> redirecting to login');
           console.log('Inside admin layout compoment ts--> redirecting to login');
-           this.router.navigateByUrl('/login');
-          }
+          if(!this.isMaps("resetpassword") && !this.isMaps("form"))
+            this.router.navigateByUrl('/login');
+       }
       if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {
           // if we are on windows OS we activate the perfectScrollbar function
 

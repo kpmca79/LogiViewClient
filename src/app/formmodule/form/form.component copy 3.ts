@@ -42,20 +42,19 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     templateUrl: 'form.component.html',
     styleUrls: ['form.component.css']
 } )
-export class FormComponent implements OnInit {
+export class FormComponent3 implements OnInit {
     @Input() formField: FormField[];
     @Input() frm: Form;
     @Input() formID: String;
     @Input() mode:string;
-    saveResponseLoader=false;
-    surl="https://localhost:4200/form/";
+    
+    surl="https://localhost:4200/form/5efa60a7b3f0da1be4221f32";
     furl="https://localhost:4200/login";
     isPaymentForm=false;
     isPaymentSuceess=false;
     captchav2SiteKey="6LfMx64ZAAAAACQ6nRCglIwPacx3AraqI7vLBFSB";
     isBuild=false;
     isLive=false;
-    finalPaymentDetail:PaymentDetail;
     dummyController:any;
     public config: PerfectScrollbarConfigInterface = {};
     inputStyle="standard";
@@ -79,15 +78,14 @@ export class FormComponent implements OnInit {
     passURL: any;
     calOpen: boolean;
     //  $: any;
-    emailFormControl = new FormControl( '', [Validators.email] );
+    emailFormControl = new FormControl( '', [Validators.required] );
     bgStyle = '';
     drpDownBGColor;
     drpDownFontColor;
     publicIPAddr='Not found';
     respJson: any = {};
     signatureImage;
-    $event;
-    buttonFiled:FormField;
+    
     inputbordercolor="initial";
     inputbordercolorfocus="initial";
     inputfontcolor="initial";
@@ -493,23 +491,22 @@ export class FormComponent implements OnInit {
             .subscribe( response => {
                 this.formID = response.data;
                 if ( showNotification )
-                    this.showNotification( 'top', 'center', 'Form saved successfully', 's',3000 );
+                    this.showNotification( 'top', 'center', 'Form saved successfully', 's' );
                 this.addFieldValidations();
             } );
 
     }
-    showNotification( from, align, msg, msgType,delay:number ) {
+    showNotification( from, align, msg, msgType ) {
 
         const type = ['', 'info', 'success', 'warning', 'danger'];
 
         let color = Math.floor(( Math.random() * 4 ) + 1 );
         if ( msgType == 's' ) { color = 2; }
-        if ( msgType == 'f' ) { color = 4; }
 
         $.notify( { icon: "notifications", message: msg }, {
             type: type[color],
             timer: 100,
-            delay: delay,
+            delay: 1000,
             placement: {
                 from: from,
                 align: align
@@ -665,30 +662,18 @@ export class FormComponent implements OnInit {
         }
         
     }
-    submitButtonChange(field:FormField,isShowErrorMsg:boolean)
-    {
-        this.$event.target.innerText=field.name;
-        this.$event.target.disabled=false;
-        this.saveResponseLoader=false;
-        if(isShowErrorMsg)
-            this.showNotification('top','center','Opps something wrong happened, please try again later', 'f',3000);
-        return;
-    }
-    //qaqa
-    async onSubmit($event,btnField:FormField) {
-        
+    async onSubmit($event,field:FormField) {
+      
+        $event.target.innerText=field.title;
+        $event.target.disabled=true;
         console.log("onsubmit call mode is ",this.mode)
         if(this.mode=="build" || this.mode=="preview")
             return;
-        console.log("1");           
         let isError: boolean = false;
         this.formField.forEach( field => {
             if ( field.frmControl.invalid ) {
                 isError = true;
                 $event.target.disabled=false;
-                console.log("Form field ",field.name,"is invalid");
-                console.log("Form control ",field.frmControl);
-                console.log("2");           
                 return;
             }
             if ( field.subfields ) {
@@ -696,26 +681,22 @@ export class FormComponent implements OnInit {
 
                     if ( subfield.frmControl && subfield.frmControl.invalid ) {
                         isError = true;
-                        console.log("3");           
+                        $event.target.disabled=false;
                         return;
                     }
                 } )
             }
         });
+
+
         if ( !isError ) {
-            this.$event=$event;
-            $event.target.innerText=btnField.title;
-            $event.target.disabled=true;    
-            this.buttonFiled=btnField;
-            this.saveResponseLoader=true;
+           
             this.respJson.formID = this.formID;
             this.respJson.resTime = this.datePipe.transform( new Date(), 'dd-MM-yyyy HH:mm:ss zzzz' );
-            console.log("4");           
-            for(let field of this.formField)
+            for(field of this.formField)
             {    
             
                 let value = field.frmControl.value
-                
                 if ( field.type != "section" && field.type != "submit" ) {
                     console.log("Field type==>",field.type);
                     if ( field.type == 'signature' ) {
@@ -723,11 +704,9 @@ export class FormComponent implements OnInit {
                         const obj = await this.uploadSignature( field, f);
                      }
                     else if ( field.type == "date-picker" ) {
-                        
                         value = this.datePipe.transform( value, 'yyyy-MM-dd' );
                         let respJ = { value: value, type: 'datetime' };
-                        if(value)
-                            this.respJson[field.id] = respJ;
+                        this.respJson[field.id] = respJ;
                     }
                     else if ( field.type == "dropdown" )
                     {    
@@ -737,7 +716,7 @@ export class FormComponent implements OnInit {
                     else if ( field.type == "fullname" ) {
                         if ( field.subfields ) {
                             field.subfields.forEach( subfield => {
-                                if ( subfield.visible && subfield.frmControl.value ) {
+                                if ( subfield.visible ) {
                                     this.respJson[subfield.name] = subfield.frmControl.value;
                                 }
                             } );
@@ -746,24 +725,19 @@ export class FormComponent implements OnInit {
                     else if ( field.type == "survey" ) {
                         console.log("survey found===============>",field.survey.question);
                         if ( field.survey.questions ) {
-                            let surveyresp={survey:[]};
-                            surveyresp.survey=[];
                             field.survey.questions.forEach( q => {
                                 console.log("survey found===q.name============>",q.name);
                                 console.log("survey found===q.name============>",q.selectedValue);
                                 if ( q.selectedValue ) {
-                                  let surveyObj={value:q.selectedValue,subHeader:q.name}
-                                   
-                                     surveyresp.survey.push(surveyObj);
+                                    this.respJson[q.name] = q.selectedValue;
                                 }
                             } );
-                            this.respJson[field.id]=surveyresp;
                         }
                     }
                     else if ( field.type == "address" ) {
                         if ( field.subfields ) {
                             field.subfields.forEach( subfield => {
-                                if ( subfield.visible && subfield.frmControl.value ) {
+                                if ( subfield.visible ) {
                                     this.respJson[subfield.name] = subfield.frmControl.value;
                                 }
                             } );
@@ -776,22 +750,16 @@ export class FormComponent implements OnInit {
                             selTime = field.subfields[0].frmControl.value; //hour
                             selTime = selTime + ":" + field.subfields[1].frmControl.value //min
                             selTime = selTime + " " + field.subfields[2].frmControl.value //am/pm
-                            if(field.subfields[0].frmControl.value)
                             this.respJson[field.id] = selTime;
                         }
                     }
                     else if ( field.type == "phone" ) {
                         if ( field.subfields ) {
-                         
-                            let telePhone="";
-                            let code=""
-                            if(field.subfields[0] && field.subfields[0].frmControl.value)
-                                code = field.subfields[0].frmControl.value;
-                            if(field.subfields.length>1 && field.subfields[1] && field.subfields[1].frmControl.value)
-                                telePhone = field.subfields[1].frmControl.value;
-                            if(code) telePhone=code+'-'+telePhone
-                            if(telePhone)
-                                this.respJson[field.id]=telePhone;
+                            
+                            if(field.subfields[0] && field.subfields[0].frmControl)
+                            this.respJson[field.subfields[0].name] = field.subfields[0].frmControl.value;
+                            if(field.subfields.length>1 && field.subfields[1] && field.subfields[1].frmControl)
+                            this.respJson[field.subfields[1].name] = field.subfields[1].frmControl.value;
                         }
                     }
                     else if ( field.type == "upload" ) {
@@ -806,25 +774,20 @@ export class FormComponent implements OnInit {
                     else if ( field.type == "rating" ) {
                         this.respJson[field.id] = this.currentRate;
                     }
-                    else if ( field.type == "productlist" && (!field.productList.total || field.productList.total==0) ) {
-                        this.showNotification('top', 'center','Your cart is empty','f',3000);
-                        this.submitButtonChange(btnField,false);
-                        return;
+                    else if ( field.type == "productlist" ) {
+                       let payObserver=await  this.completePayment(this.frm);
                     }
-                    else if ( field.type == "productlist" && field.productList.total>0 ) {
-                       
-                        let payObserver=await  this.completePayment(this.frm);
-                    }
-                    else if ( field.type == "email" && value) {
+                    else if ( field.type == "email" ) {
                         this.respJson[field.id] = value;
                     }
                     else if ( field.type == "slide-toggle" ) {
                        if(field.checked)
-                        this.respJson[field.id] = "Accepted";
-                       
+                        this.respJson[field.id] = field.checked;
+                       else
+                           this.respJson[field.id] = "false";
                     }
                     
-                    else if ( field.id && value)
+                    else if ( field.fname )
                         this.respJson[field.id] = value;
                     
                     
@@ -832,7 +795,7 @@ export class FormComponent implements OnInit {
 
                 }
            
-            }
+        }
             const isCmp = await  this.getPublicIP();
             console.log("Saving form--this.isPaymentForm--->",this.isPaymentForm);
             console.log("Saving form--this.isPaymentSuceess--->",this.isPaymentSuceess);
@@ -844,94 +807,87 @@ export class FormComponent implements OnInit {
                     return;
                 }
                 else
-                  {     this.saveResponseLoader=false;
-                        return;
-                  }
+                    return;
             }
             else
                 this.saveFormResponse();
 //            console.log( "todaynew1111", this.respJson );
-        
+            
         }
     }
-    //sdsd
     async completePayment(frm:Form) : Promise<any> {
       
 //        dummy card details
 //        card no : 4012 0010 3714 1112 exp: 05/20 cvv:123 otp: 123456
-        this.isPaymentForm=true;
+        
         let paymentDetail:PaymentDetail;
         let prdInfo="";
+        let prdInfoResp="";
+        let isPayment=false;
+        let cont=0;
         let transTotal=0.0;
         let currency="";
         let ordersummary={products:[],txnid:'',currency:'',cardnum:'',status:'',txnMessage:'',amount:'',discount:'',phone:'',}
-        let field;
-        for ( let f of frm.formFields ) if(f.type=="productlist") field=f;
-        this.finalPaymentDetail=new PaymentDetail();
-        this.finalPaymentDetail.amount = field.productList.total.toFixed( 2 );
-        this.finalPaymentDetail.firstname = this.respJson["First name"] ? this.respJson["First name"] : "Anonymous";
-        this.finalPaymentDetail.email = this.respJson["Email"] ? this.respJson["Email"] : "Anonymous@xyz.com";
-        this.finalPaymentDetail.productinfo = prdInfo ? prdInfo : "No Product";
-        this.finalPaymentDetail.phone="";//setting phone is mandatory otherwise it payment window will not display
-        currency=field.productList.currency;
-        transTotal=transTotal+field.productList.total;
-        if ( field.productList.products ){
-            field.productList.products.forEach(prd => {
-                if (prd.quantity > 0) {
-                    let prdObj = { title: prd.title, Quantity: prd.quantity, Amount: prd.price }
-                    ordersummary.products.push(prdObj);
-                }
-            });
-        }    
-        await this.getPaymentDetail(this.finalPaymentDetail);
-        if(this.finalPaymentDetail==null)
-        {
-            this.submitButtonChange(this.buttonFiled,true);
-            return;
-        }
         let promise = new Promise((resolve)=>{
-              /*bolt.launch(this.finalPaymentDetail,
-                    {responseHandler: function(BOLT){console.log("Transaction with id :",paymentDetail.txnid," is ",BOLT.response.txnStatus);resolve('')}
-              })
-              console.log("After bold lunch")*/
-            this.doPayment(this.finalPaymentDetail).subscribe(data => {
-                console.log("Payment data successfully received", data);
-                if (data.txnStatus) {
-                    ordersummary.amount = data.amount;
-                    ordersummary.discount = data.discount;
-                    ordersummary.txnid = data.txnid;
-                    ordersummary.cardnum = data.cardnum;
-                    ordersummary.status = data.status;
-                    ordersummary.phone = data.phone;
-                    ordersummary.txnMessage = data.txnMessage;
-                    ordersummary.currency = currency ? currency : 'USD';
-                    let orderSaveResp = { orderDetails: ordersummary, type: 'order', orderid: data.txnid, status: data.status }
-                    this.respJson["Order Summary"] = orderSaveResp;
-                    if (data.status && data.status.toLowerCase() == "success") {
-                        console.log("Payment SUCCESSFULLY COMPLETED", data.status);
-                        this.isPaymentSuceess = true;
-                        console.log("Payment SUCCESSFULLY this.isPaymentSuceess", this.isPaymentSuceess);
-
-                    }
-                    else
-                    {    console.log("Payment processing error data", data);
-                        console.log("this.isPaymentSuceess", this.isPaymentSuceess);
-                        this.saveResponseLoader=false;
-                    }
-                    //                                this.saveFormResponse();
-                    this.submitButtonChange(this.buttonFiled,false);
-                    resolve('');
-                }
-                else {
+            for ( let field of frm.formFields ) 
+            {
+                if ( field.type == 'productlist' && field.productList && field.productList.total > 0 ) {
+                    this.isPaymentForm = true;
+                    paymentDetail = new PaymentDetail();
+                    console.log( "Processing payment field.productList ", field.productList);
+                    paymentDetail.amount = field.productList.total.toFixed( 2 );
+                    paymentDetail.firstname = this.respJson["First name"] ? this.respJson["First name"] : "Anonymous";
+                    paymentDetail.email = this.respJson["Email"] ? this.respJson["Email"] : "Anonymous@xyz.com";
                     
-                    this.submitButtonChange(this.buttonFiled,true);
-                    resolve('');
-                }
+                    currency=field.productList.currency;
+                    transTotal=transTotal+field.productList.total;
+                    if ( field.productList.products )
+                        field.productList.products.forEach( prd => {
+                            if ( prd.quantity > 0 ) {
+                                let prdObj={title:prd.title,Quantity:prd.quantity,Amount:prd.price}
+                                ordersummary.products.push(prdObj);
+                            }
+                        } );
+                }}
+                paymentDetail.productinfo = prdInfo ? prdInfo : "No Product";
+                paymentDetail.surl = this.surl;
+                paymentDetail.furl = this.furl;
+                this.doPayment( paymentDetail ).subscribe( data => {
+                    console.log( "Payment data successfully received", data );
+                    if ( data.txnStatus ) {
+                        
+                        ordersummary.amount=data.amount;
+                        ordersummary.discount=data.discount;
+                        ordersummary.txnid=data.txnid;
+                        ordersummary.cardnum=data.cardnum;
+                        ordersummary.status=data.status;
+                        ordersummary.phone=data.phone;
+                        ordersummary.txnMessage=data.txnMessage;
+                        ordersummary.currency=currency ? currency : 'USD';
+                        let orderSaveResp={orderDetails:ordersummary,type:'order',orderid:data.txnid,status:data.status}
+                        this.respJson["Order Summary"] = orderSaveResp;
+                        if ( data.status && data.status.toLowerCase() == "success" )
+                        {
+                            console.log( "Payment SUCCESSFULLY COMPLETED", data.status );
+                            this.isPaymentSuceess = true;
+                            console.log( "Payment SUCCESSFULLY this.isPaymentSuceess", this.isPaymentSuceess );
+                            
+                        }
+                        else
+                            console.log( "Payment processing error status", data.status );
+                        console.log( "this.isPaymentSuceess", this.isPaymentSuceess );
+                        //                                this.saveFormResponse();
+                        resolve('');
+                    }
 
 
-            }, error => { this.submitButtonChange(field,true);resolve(''); }
-            )
-         });
+                }, error => {console.log( "Payment processing error ", error ); resolve('');}
+                )
+            
+                console.log( "this.isPaymentSuceess 3333");
+               
+            });
+        console.log( "this.isPaymentSuceess 4444");
         return promise;
     }
    
@@ -944,9 +900,7 @@ export class FormComponent implements OnInit {
 //                    console.log( data )
                     this.router.navigate( ["/form/" + this.formID + "/thanks"] );
                 },
-                error => {
-                    this.submitButtonChange(this.buttonFiled,true);
-                    console.log( error ); return; } ); 
+                error => { console.log( error ); return; } ); 
     }
  
     onFileComplete( data: string ) {
@@ -1002,24 +956,12 @@ export class FormComponent implements OnInit {
 //    METHODS FOR SIGNATURE COMPONENT
     //    END METHODS FOR SIGNATURE COMPONENT
     
-    async getPaymentDetail(paymentDetail:PaymentDetail):Promise<any>{
-        let promise=new Promise<any>((resolve)=>{
-            this.frmSrv.getPaymentHash(paymentDetail).subscribe(data=>{   
-                this.finalPaymentDetail=data.data;
-                console.log("new payment detail from server ",paymentDetail); 
-                resolve('');   
-             },error=>{this.finalPaymentDetail=null;resolve('');})
-        });
-        console.log("returning promise from getpaymentdetail")
-        return promise;
-    }
     //PAYUMONEY PAYMENT METHODS
     doPayment(paymentDetail:PaymentDetail):Observable<any>
     {
        return new Observable(observer=>{
         this.frmSrv.getPaymentHash(paymentDetail).subscribe(data=>{
-            paymentDetail=data.data;
-            console.log("calling bolt lunch with txnid",paymentDetail.txnid );
+            paymentDetail=data.data;console.log(data)
             bolt.launch(
                     paymentDetail,
                     { responseHandler: function(BOLT)
@@ -1040,7 +982,21 @@ export class FormComponent implements OnInit {
        
        });
     }
-   
+    generateHash()
+    {
+       
+        
+    }
+    launchBOLT()
+    {
+        console.log("inside bolt");
+//        hi();
+//        console.log($('#bolt'));
+      
+//     
+       
+    }
+    
     //END PAYUMONEY PAYMENT METHODS
 }
 

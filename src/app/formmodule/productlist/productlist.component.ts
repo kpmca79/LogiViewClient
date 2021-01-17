@@ -6,6 +6,7 @@ import {FormService} from   "../../services/form.service";
 import { SafeStyle, DomSanitizer } from "@angular/platform-browser";
 import { ProductList } from "app/model/ProductList";
 import { Product } from "app/model/Product";
+import * as $ from 'jquery';
 @Component({
   selector: 'productlist',
   templateUrl: './productlist.component.html',
@@ -49,18 +50,14 @@ export class ProductlistComponent implements OnInit {
   sanitizeHTML( style: string ): SafeStyle {
       return this._sanitizer.bypassSecurityTrustStyle( style );
   }
-  updateQuantity(value:number,prd:Product)
-  {
-    
-          prd.quantity=value;
-     
-        
-      this.generateBillAmount();
-      
+  updateQuantity(value: number, prd) {
+        prd.quantity = value;
+        this.generateBillAmount();
   }
   generateBillAmount()
   {
-      if(this.actvieFormField.productList && this.actvieFormField.productList.products){
+    
+    if(this.actvieFormField.productList && this.actvieFormField.productList.products){
           let subtotal=0.0;
           let total=0.0;
           let taxamt=0.0

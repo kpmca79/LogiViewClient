@@ -24,6 +24,7 @@ export class FormViewComponent implements OnInit {
   safeBgURL;
   currentRate=3;
   preview="preview";
+  bgStyle='';
   hours=['',1,2,3,4,5,6,7,8,9,10,11,12];
   minutes=[''];
   meridiem=['','AM','PM'];
@@ -77,12 +78,12 @@ export class FormViewComponent implements OnInit {
                       }
                       field.frmControl = new FormControl('', vl);
                   });
-                  if(this.frm.opacity)
-                  {
-                      let myDiv = document.getElementById('form');
-                      myDiv.style.opacity = (1-(this.frm.opacity/100)).toPrecision(2);
-                  }
-                  
+                 
+                  if ( this.frm.bgImage != null && this.frm.bgImage != '' )
+                    this.bgStyle = this.bgStyle + "background-image: url('" + this.resourceURL + this.frm.bgImage + "');";
+                  else if(this.frm.pageBGColor && this.frm.pageBGColor!='')
+                    this.bgStyle = this.bgStyle + "background:" + this.frm.pageBGColor+";";
+                  console.log("FSADDDDDDDDDDDDDD---->",this.bgStyle);
                   
               }
       );

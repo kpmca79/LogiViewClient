@@ -1,9 +1,9 @@
 
-<div class="wrapper" style="background:#fff !important;">
+<div class="wrapper" style="background:#fff !important;height: 100% !important;">
 
 <!--          		data-background-color="white" data-image="./assets/img/sidebar-1.jpg"> -->
     <div *ngIf="!isMaps('formdev') && !isMaps('login') && !isMaps('inbox') 
-    			&& !isMaps('formBuilder') && !isMaps('formPreview') 
+    			&& !isMaps('formBuilder') && !isMaps('formPreview') && !isMaps('resetpassword')
     			&& !isMaps('form/')" class="sidebar" data-color="danger" data-background-color="white" >
         <app-sidebar></app-sidebar>
 <!--         <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-4.jpg)"></div> -->
@@ -24,7 +24,7 @@
    </div>
    <ng-template #elseBlock>
     	<div  class="main-panel">
-        	<div *ngIf="!isMaps('login')">
+        	<div *ngIf="!isMaps('login') && !isMaps('resetpassword')">
         		<app-navbar></app-navbar>
         	</div>
         	<router-outlet></router-outlet>

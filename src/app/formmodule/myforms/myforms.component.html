@@ -5,8 +5,8 @@
 		<mat-toolbar class="toolbar">
 				<button mat-raised-button class="btn-danger btn-round" (click)="showFormType()">Create Form</button>
 				<span class="example-spacer"></span> 
-				<form>
-					<input matInput type="text" name="searchform" [(value)]="searchform" class="search-text" placeholder="Search...">
+				<form >
+					<input matInput type="text" name="searchform" [(ngModel)]="searchform" [(value)]="searchform" class="search-text" placeholder="Search...">
 					<button mat-raised-button (click)="searchForm()"  class="btn btn-white btn-round btn-just-icon">
 						<i class="material-icons">search</i>
 						<div class="ripple-container"></div>
@@ -45,18 +45,29 @@
 						</button>
 						<mat-menu #menu="matMenu">
 								<button mat-menu-item (click)="showSetting(frm)">
-			    					<mat-icon svgIcon="Setting" class="setting-icon"></mat-icon>
+			    					<!--<mat-icon svgIcon="Setting" class="setting-icon"></mat-icon>-->
 		    						<span>Properties</span>
 		  						</button>
   						</mat-menu>
 						 
 					</mat-toolbar>			
 				</div>
-				<div *ngIf="forms.length==0">
+				<div *ngIf="forms.length==0 && !isSearchZero">
 					<div class="nodata-content">
-						<span class="nodata-text">You don't have any form to display, Please create your first stunning form.</span>
+						<div class="welcome-title">Welcome to MakeMYForm</div>
+						 <div>
+							<span class="nodata-text">You haven't created any form yet, create your stunning first form now!</span>
+						</div>
+						<div>
+							<a (click)="showFormType()" class="nodata-link">Create Form</a>
+						</div>
+					</div>
+				</div>
+				<div *ngIf="forms.length==0 && isSearchZero">
+					<div class="nodata-content">
+						<span class="nodata-text">No form found with specified search value.</span>
 						<br/>
-						<a (click)="showFormType()" class="nodata-link">Create form now</a>
+						
 					</div>
 				</div>
 			

@@ -1,4 +1,4 @@
-<div [style.background-image]="safeBgURL" style="min-height: 110vh; height: 100%;">
+<div *ngIf="frm" [style]="sanitizeHTML(bgStyle)" style="min-height: 110vh; height: 100%;">
 	<div class="main-div">
 		<div class="main-form-class" id="form" [style.max-width.px]=frm.formwidth [style.background-color]=frm.bgColor>
 			<div [style]="sanitizeHTML(frm.style)">

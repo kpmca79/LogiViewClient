@@ -95,6 +95,7 @@
 						<ngx-number-spinner 
 						[value]="field.defValue"   
 						[min]="field.minlen" 
+						[formControl]="isBuild?dummyController:field.frmControl" 
 						[max]="field.maxlen" 
 						[step]="field.step" ></ngx-number-spinner>
 					</div>
@@ -113,7 +114,7 @@
 				<mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
 			    <input matInput name="{{field.title}}" [formControl]="isBuild?dummyController:field.frmControl"  value="" required="{{field.required}}" placeholder="{{field.title}}">
 			    <mat-error *ngIf="!isBuild && field.frmControl.invalid">{{field.message}}</mat-error>
-<!-- 			    <mat-error *ngIf="!isBuild && field.frmControl.invalid">{{field.message}}</mat-error> -->
+	 			    <mat-error *ngIf="!isBuild && field.frmControl.invalid">{{field.message}}</mat-error> 
 <!-- 		  	    <mat-hint>Enter your business email address</mat-hint> -->
 				 <mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.note}}</mat-hint>
 				<mat-icon matSuffix>email</mat-icon>
@@ -141,7 +142,7 @@
   		<div *ngSwitchCase="'number'"  class="flex frm-mat">
 				<mat-form-field   class="example-half-width"  [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
 				    <mat-label [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-label>
-					<input matInput name="{{field.title}}" [formControl]="isBuild?dummyController:field.frmControl" value="" required="{{field.required}}" 
+					<input matInput name="{{field.title}}" [formControl]="isBuild?dummyController:field.frmControl"  value="" required="{{field.required}}" 
 					placeholder="Enter your {{field.title}}">
 				  
 				  	
@@ -214,7 +215,7 @@
 			<div class="width-30 frm-mat" *ngIf="field.subfields[0].visible">
 	  			 <mat-form-field  [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">				
 					<!-- <input matInput type="text" [style]="sanitizeHTML(frm.style)"  [placeholder]="field.name"  ng2TelInput [formControl]="isBuild?dummyController:field.subfields[0].frmControl" required="true"/>      -->
-					<input matInput name="{{field.subfields[0].name}}" [formControl]="isBuild?dummyController:field.subfields[0].frmControl" value="" required="false"> 
+					<input matInput name="{{field.subfields[0].name}}"  [formControl]="isBuild?dummyController:field.subfields[0].frmControl" value="" required="false"> 
 				    <mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[0].name}}</mat-label>
 					 <mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.subfields[0].note}}</mat-hint>
 					<mat-icon matSuffix>{{field.subfields[0].selectedIcon}}</mat-icon>
@@ -243,8 +244,8 @@
 						<div class="width-30" id="opt">
 						  	<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
     							<mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[0].name}}</mat-label>
-    							<mat-select [style]="sanitizeHTML(frm.style)" [(value)]="field.subfields[0].name" >
-    								<mat-option  *ngFor="let option of hours" value="Hour">{{option}}</mat-option>
+    							<mat-select [style]="sanitizeHTML(frm.style)" [(value)]="field.subfields[0].message" >
+    								<mat-option  *ngFor="let option of hours" value="{{option}}">{{option}}</mat-option>
     							</mat-select>
 <!--     							<mat-error *ngIf="field.frmControl.hasError('required')"> -->
 <!--       								Selection for {{field.title}} is <strong>required</strong> -->
@@ -257,8 +258,8 @@
 			  				<div class="select-optiopn">
 						  	<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
     							<mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[1].name}}</mat-label>
-    							<mat-select  [style]="sanitizeHTML(frm.style)" [(value)]="field.subfields[1].name" >
-    								<mat-option  *ngFor="let option of minutes" value="Minutes">{{option}}</mat-option>
+    							<mat-select  [style]="sanitizeHTML(frm.style)" [(value)]="field.subfields[1].message" >
+    								<mat-option  *ngFor="let option of minutes" value="{{option}}">{{option}}</mat-option>
     							</mat-select>
 <!--     							<mat-error *ngIf="field.frmControl.hasError('required')"> -->
 <!--       								Selection for {{field.title}} is <strong>required</strong> -->
@@ -270,8 +271,8 @@
 			  			
 						  	<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
     							<mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[2].name}}</mat-label>
-    							<mat-select  [style]="sanitizeHTML(frm.style)" [(value)]="field.subfields[2].name" >
-    								<mat-option  *ngFor="let option of meridiem" value="meridiem">{{option}}</mat-option>
+    							<mat-select  [style]="sanitizeHTML(frm.style)"  [(value)]="field.subfields[2].message" >
+    								<mat-option  *ngFor="let option of meridiem" value="{{option}}">{{option}}</mat-option>
     							</mat-select>
 <!--     							<mat-error *ngIf="field.frmControl.hasError('required')"> -->
 <!--       								Selection for {{field.title}} is <strong>required</strong> -->
@@ -308,7 +309,7 @@
 		  		<button *ngIf="isBuild"  mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
 			</div>
   	  </div>
-			
+		
 		
   		<div *ngSwitchCase="'submit'"  >
 				<div class="submit-row inline frm-mat">
@@ -317,7 +318,11 @@
 <!-- 								[style]="sanitizeHTML(frm.btnStyle)">{{field.title}} -->
 <!-- 						   </button> -->
 						   <button class="ripple-button ripple" [style]="sanitizeHTML(frm.btnStyle)" 
-						   type="submit" (click)="onSubmit($event,field)"><span>{{field.name}}</span></button>
+						   type="submit" (click)="onSubmit($event,field)">
+								   <i class="fa fa-spinner fa-spin" *ngIf="saveResponseLoader"></i>
+								   <span style="margin-left:5px" *ngIf="saveResponseLoader">{{field.title}}</span>
+								   <span style="margin-left:5px" *ngIf="!saveResponseLoader">{{field.name}}</span>
+								</button>
 				<button *ngIf="isBuild"  mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
 				</div>
 								    

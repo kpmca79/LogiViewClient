@@ -42,7 +42,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     templateUrl: 'form.component.html',
     styleUrls: ['form.component.css']
 } )
-export class FormComponent implements OnInit {
+export class FormComponent5 implements OnInit {
     @Input() formField: FormField[];
     @Input() frm: Form;
     @Input() formID: String;

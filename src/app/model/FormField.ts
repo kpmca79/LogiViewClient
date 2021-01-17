@@ -56,4 +56,7 @@ export class FormField {
     elemType:string;
     productList:ProductList;
 
+    
+
+
 }

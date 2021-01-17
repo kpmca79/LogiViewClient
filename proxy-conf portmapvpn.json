@@ -1,0 +1,6 @@
+{
+    "/api":{
+        "target":"http://keyurpatel-34716.portmap.host:34716",
+        "secure":false
+    }    
+}

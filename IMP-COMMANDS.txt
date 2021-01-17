@@ -429,3 +429,12 @@ npm install --save ag-grid-community ag-grid-angular
 OR
 npm install --save ag-grid ag-grid-angular
 =======AG GRID END ==============================
+
+====run on https =============
+npm install browser-sync --save-dev
+https://stackoverflow.com/questions/39210467/get-angular-cli-to-ng-serve-over-https
+===========================
+social login
+npm i angularx-social-login
+https://www.npmjs.com/package/angularx-social-login
+=============================

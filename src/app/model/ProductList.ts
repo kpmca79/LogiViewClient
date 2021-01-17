@@ -9,7 +9,17 @@ export class ProductList  {
 	subtotal:Number;
     taxamount:Number;
 	deliverychrg:Number;
-    showbill=false;
+	showbill=false;
 	
+	transactionId:string;
+	trasactionStatus:string;
+	transactionMessage:string;
+	cardNumber:String;
+	phone:string;
+	
+	userName:string;
+	email:string;
+	billingAddress:string;
+	deliveryAddress:string;
 	
 }

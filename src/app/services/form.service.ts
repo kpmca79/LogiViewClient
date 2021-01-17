@@ -5,6 +5,8 @@ import { Form } from '../model/Form';
 import { PaymentDetail } from '../model/PaymentDetail';
 import { User } from '../model/User';
 import { Validators, FormControl } from "@angular/forms/forms";
+import { FormResponse } from 'app/model/FormResponse';
+import { FrmResponse } from 'app/model/Respons';
 
 declare var $: any;
 @Injectable({
@@ -113,9 +115,9 @@ export class FormService {
     public downloadImage(imageURL: any) : Observable<any> {
 
         let headers = new HttpHeaders();
-        headers.append("Origin", "http://localhost:4200");
-        headers.append("X-Requested-With", "http://localhost:4200");
-//        headers.append('Access-Control-Allow-Credentials', 'true');
+        headers.append("Origin", "https://localhost:4200");
+        headers.append("X-Requested-With", "https://localhost:4200");
+        headers.append('Access-Control-Allow-Credentials', 'true');
         headers.append('withCredentials', 'true');
         
 //        Access-Control-Allow-Credentials: true
@@ -167,6 +169,15 @@ export class FormService {
        
        return this.http.post(saveURL, JSON.parse(JSON.stringify(response)));
     }
+
+    public  saveResponseNew(formID: any, response: FrmResponse): Observable<any> {
+        let saveURL = '/api/form/'+formID+'/response';
+        console.log('saving form response formid=', formID);
+        console.log('saving form response response=', response);
+        console.log('saving form saveURL=', saveURL);
+        
+        return this.http.post(saveURL, JSON.parse(JSON.stringify(response)));
+     }
   public  updateResponse(responseID: any, parentResponse: any): Observable<any> {
        let saveURL = '/api/response/'+responseID;
        //clear response before save

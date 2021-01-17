@@ -35,6 +35,8 @@ import { HighchartsChartModule } from 'highcharts-angular';
 //time picker
 import { AmazingTimePickerModule } from 'amazing-time-picker'; 
 
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {GoogleLoginProvider,FacebookLoginProvider } from 'angularx-social-login';
 
 import 'froala-editor/js/plugins.pkgd.min.js';
 import 'froala-editor/js/plugins/link.min.js';
@@ -66,7 +68,7 @@ import 'froala-editor/js/plugins/image.min.js';
     AmazingTimePickerModule,
     HighchartsChartModule,
     NgbModule,
-    
+    SocialLoginModule,
     
     NgHttpLoaderModule.forRoot(),
     AgmCoreModule.forRoot({
@@ -89,6 +91,22 @@ import 'froala-editor/js/plugins/image.min.js';
               MessagingService,
               HighchartsService,
               CanActivateSecurity, 
+              {provide: 'SocialAuthServiceConfig',
+              useValue: {
+                autoLogin: false,
+                providers: [
+                  {
+                    id: GoogleLoginProvider.PROVIDER_ID,
+                    provider: new GoogleLoginProvider(
+                      '66705268671-j3g7ff5d8gl6kodp8th404lfsocf86pr.apps.googleusercontent.com'
+                    )
+                  },
+                  {
+                    id: FacebookLoginProvider.PROVIDER_ID,
+                    provider: new FacebookLoginProvider('186915676468895')
+                  }
+                ]
+              } as SocialAuthServiceConfig},
               
               { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }],
   bootstrap: [AppComponent]

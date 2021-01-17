@@ -12,14 +12,14 @@ import { User } from '../model/User';
 export class CreateuserComponent implements OnInit {
    imageUrl: String = './assets/img/faces/marc.jpg' ;
    imageToUpload: File;
-   public userdetail: User = { id: '', firstname: '', lastname: '', email: '', password: '', profilePic: null, aboutMe: '',
+   public userdetail: User = { id: '', firstname: '', mobile:'',lastname: '', email: '', password: '', profilePic: null, aboutMe: '',
    designation: '', organisation: ''};
    constructor(private router: Router, private route: ActivatedRoute, private userService: UserService) { }
 
   ngOnInit() {
       
   }
-
+ 
   createProfile() {
 
     console.log(this.userdetail.firstname);

@@ -24,6 +24,7 @@ export class MyformsListComponent implements OnInit {
   displayedColumns: string[] = ['checkbox','name','response','edit','stats'];
   @ViewChild(MatPaginator,{static: true}) paginator: MatPaginator;
   frm: Form;
+  isSearchZero=false;
    
   constructor(private frmSrv: FormService,public dialog: MatDialog,private router: Router) { }
   searchform="";
@@ -47,10 +48,16 @@ export class MyformsListComponent implements OnInit {
   }
   searchForm()
   {
-      const formObj = this.frmSrv.getForms(this.searchform).subscribe(data=>{
+    
+    const formObj = this.frmSrv.getForms(this.searchform).subscribe(data=>{
           let x= data
+          
           console.log("INSIDE searchForm response data is  =", x.data);
           this.forms=x.data;
+          if(!this.forms || this.forms.length==0)
+            this.isSearchZero=true;
+          else
+            this.isSearchZero=false;
           console.log("INSIDE searchForm form size =", this.forms.length);
           this.dataSource = new MatTableDataSource<Form>(this.forms);
           console.log("datasource size =", this.dataSource.data.length);

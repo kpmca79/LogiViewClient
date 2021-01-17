@@ -9,28 +9,32 @@ export class CanActivateSecurity implements CanActivate {
 
     authenticated=false;
     constructor( public location: Location, private app: AppService, private router: Router ) { 
-        console.log("VVVVVVVVVVV---->CanActivateSecurity constroctor called")
+        //console.log("VVVVVVVVVVV---->CanActivateSecurity constroctor called")
     }
 
         canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot ) {
         let path = this.location.prepareExternalUrl( this.location.path() );
         let action = path.slice( 1 );
-        console.log( 'CanActivateSecurity localStorage.getItem("auth")=' + localStorage.getItem("auth"));
-        if(localStorage.getItem("auth")&&localStorage.getItem("auth")=='true')
-        {
-            return true;
-        }    
-        
-        if ( this.app.authenticated || action === '' || action === 'login' ) {
-            
-            return true;
+        //console.log( 'CanActivateSecurity token=' + localStorage.getItem("token"));
+        //console.log("Action is---->",action);
 
-        } else {
-        
-            this.router.navigate( ['/login'], { queryParams: { return: state.url } } );
-            return false;
+        if(localStorage.getItem("token"))
+        {
+          //  console.log( 'CanActivateSecurity token found')
+           // console.log( 'token=',localStorage.getItem("token"));
+            return true;
+        }   
+        if(action && (action.includes("resetpassword")||action.includes("form"))) 
+            return true;
+        if(!localStorage.getItem("token") && action)
+        {
+            //console.log("CanActivateSecurity else part redirecting to login");
+            this.router.navigate( ['/login']);
+            return true;
 
         }
+    //    console.log("CanActivateSecurity after actiona and token check part");
+        return true;
 //        return true;
     }
 

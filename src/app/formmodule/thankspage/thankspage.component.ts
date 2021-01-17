@@ -26,6 +26,7 @@ export class ThankspageComponent implements OnInit {
     resourceURL="/api/file/";
     bgURL;
     safeBgURL;
+    bgStyle='';
     publicIPAddr:string;
   constructor(private route: ActivatedRoute,
           private frmSrv: FormService,
@@ -69,11 +70,15 @@ export class ThankspageComponent implements OnInit {
                           vl.push(Validators.minLength(field.minlen));
                       field.frmControl = new FormControl('', vl);
                   });
-                  if(this.frm.opacity)
+                  /*if(this.frm.opacity)
                   {
                       let myDiv = document.getElementById('form');
                       myDiv.style.opacity = (1-(this.frm.opacity/100)).toPrecision(2);
-                  }
+                  }*/
+                  if ( this.frm.bgImage != null && this.frm.bgImage != '' )
+                    this.bgStyle = this.bgStyle + "background-image: url('" + this.resourceURL + this.frm.bgImage + "');";
+                  else if(this.frm.pageBGColor && this.frm.pageBGColor!='')
+                    this.bgStyle = this.bgStyle + "background:" + this.frm.pageBGColor+";";
                   
                   
               }

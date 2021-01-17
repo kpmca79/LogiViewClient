@@ -103,6 +103,7 @@ import { FormInboxComponent } from "../../formmodule/form-inbox/form-inbox.compo
 import {CommentTreeComponent} from "../../comment-tree/comment-tree.component"
 import {DateAgoPipe} from "../../pipe/date-ago.pipe";
 import {Ng2TelInputModule} from 'ng2-tel-input';
+import { ResetComponent } from 'app/reset/reset.component';
 
 
 
@@ -138,6 +139,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
     RecaptchaModule,
     InfiniteScrollModule,
     Ng2TelInputModule,
+    
     FroalaEditorModule.forRoot(), 
     FroalaViewModule.forRoot(),
     
@@ -152,6 +154,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
     DashboardComponent,
     UserProfileComponent,
     LoginComponent,
+
     LogoutComponent,
     TableListComponent,
     TypographyComponent,
@@ -210,12 +213,14 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
     FormInboxComponent,
     CommentTreeComponent,
     DateAgoPipe,
+    ResetComponent,
     
     
     // tslint:disable-next-line:no-trailing-whitespace
     
   ],
   providers:[  {provide: PERFECT_SCROLLBAR_CONFIG,useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
+  
              ]
 })
 

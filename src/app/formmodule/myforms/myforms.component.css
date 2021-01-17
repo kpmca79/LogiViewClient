@@ -18,7 +18,7 @@
 	display: flex;
     border: 1px dashed #8a8a8a;
     justify-content: center;
-    height: 100px;
+    height: 100%;
     flex-flow: column;
     text-align: center;
     padding: 10px 10px;
@@ -36,6 +36,7 @@
     font-weight: 500;
     color: #f44336 !important;
     font-size:14px;
+    cursor: pointer;
 }
 .toolbar{
 	width:100%;
@@ -76,7 +77,16 @@ p {
 .main{
 /*   margin:20px 20px; */
   font-size: 15px;
+  padding-bottom: 20px;
   
+}
+.welcome-title{
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 15px;
+  /* margin-top: 10px; */
+  color: #f44336;
+
 }
 .row-button{
   

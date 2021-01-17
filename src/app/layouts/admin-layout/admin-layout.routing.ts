@@ -25,6 +25,7 @@ import { PublishComponent } from '../../formmodule/publish/publish.component';
 import { ThankspageComponent } from '../../formmodule/thankspage/thankspage.component'
 import { FormdevComponent } from '../../formmodule/formdev/formdev.component';
 import { FormhomeComponent } from '../../formmodule/formhome/formhome.component'
+import { ResetComponent } from 'app/reset/reset.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -106,4 +107,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'formhome/:id' ,   component:  FormhomeComponent},
     
     { path: 'form/:id/thanks' ,   component:  ThankspageComponent},
+    { path: 'resetpassword/:token' ,   component:  ResetComponent},
 ];

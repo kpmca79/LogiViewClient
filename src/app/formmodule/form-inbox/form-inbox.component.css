@@ -9,6 +9,17 @@
 	font-size: 14px;
 	
 }
+.survey{
+    margin: 10px 0px;
+    border-bottom: 1px solid #f2f4f7;
+    
+    
+}
+.survey:last-child{
+    border-bottom: 0px solid #f2f4f7;
+}
+
+
 .search-toolbar{
     height: 45px;
     font-size: 14px;
