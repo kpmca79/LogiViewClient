@@ -74,7 +74,7 @@
 						<ul cdkDropList #studentsList="cdkDropList" [cdkDropListData]="studentsnormal" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[students2List]" class="nav">
 							<li *ngFor="let student of studentsnormal" cdkDrag class="toolbox-toolbar-row cdk-drag ng-star-inserted">
 								<a class="nav-link" style="padding:0px !important">
-									<div class="toolbox-item-row">
+									<div (click)="addElement(student)"class="toolbox-item-row">
 									<div *ngIf="student.type!='group'">
 									<i *ngIf="student.name==='TextBox'" class="toolbox-icon">text_fields</i> <i
 									*ngIf="student.name==='Slide Toggle'" class="toolbox-icon">toggle_off</i>

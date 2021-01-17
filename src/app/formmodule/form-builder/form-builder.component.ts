@@ -240,7 +240,13 @@ export class FormBuilderComponent implements OnInit {
     //  let myDiv = document.getElementById('form');
     //  myDiv.style.opacity = (1-(event.opacity/100)).toPrecision(2); 
     //}
-
+    addElement(field:FormField){
+        console.log("Hi keyur field is clicked ",field.name);
+        let fieldToAdd = JSON.parse( JSON.stringify( field ) ) as FormField;
+        fieldToAdd.selectedOption = ['option1'];
+        fieldToAdd.frmControl = new FormControl( '', [] );;
+        this.students2.push(fieldToAdd);
+    } 
     drop( event: CdkDragDrop<string[]> ) {
         console.log("drop event called",event);
         if ( event.previousContainer === event.container ) {
