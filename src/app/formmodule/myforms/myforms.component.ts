@@ -11,6 +11,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { Route, Router } from "@angular/router";
 import { ConfirmDialogComponent } from 'app/confirm-dialog/confirm-dialog.component';
+import Utils from 'app/util/utils';
 
 @Component({
   selector: 'myforms',
@@ -20,6 +21,7 @@ import { ConfirmDialogComponent } from 'app/confirm-dialog/confirm-dialog.compon
 export class MyformsListComponent implements OnInit {
 
   forms: Form[];
+  utils:Utils= new Utils();
   public pubURL="https://localhost:4200/form/";
   dataSource: MatTableDataSource<Form>;
   displayedColumnsold: string[] = ['name','type','path', 'status','response','edit','stats'];
@@ -31,24 +33,10 @@ export class MyformsListComponent implements OnInit {
    
   constructor(private frmSrv: FormService,public dialog: MatDialog,private router: Router) { }
   searchform="";
-  ngOnInit() {
-       
-      const formObj = this.frmSrv.getForms("Active",null).subscribe(data=>{
-      let x= data; 
-      this.forms=x.data;
-      
-      console.log("form size =", this.forms.length);
+  async ngOnInit() {
+      this.forms=await this.frmSrv.getFormsAsync("Active",null,this.router);
       this.dataSource = new MatTableDataSource<Form>(this.forms);
-      console.log("datasource size =", this.dataSource.data.length);
       this.dataSource.paginator = this.paginator;
-   
-//      console.log("paginator size =", this.dataSource.paginator.length);
-      
-//      let abc = x._embedded;
-//      console.log('form data->',abc);
-//              this.forms = abc.Form;
-      });
-//      console.log(this.forms);
   }
   showView(form:Form)
   {
@@ -80,30 +68,16 @@ export class MyformsListComponent implements OnInit {
         }
       });
   }
-  searchForm()
+  async searchForm()
   {
-    
-    const formObj = this.frmSrv.getForms("Active",this.searchform).subscribe(data=>{
-          let x= data
-          
-          console.log("INSIDE searchForm response data is  =", x.data);
-          this.forms=x.data;
-          if(!this.forms || this.forms.length==0)
-            this.isSearchZero=true;
-          else
-            this.isSearchZero=false;
-          console.log("INSIDE searchForm form size =", this.forms.length);
-          this.dataSource = new MatTableDataSource<Form>(this.forms);
-          console.log("datasource size =", this.dataSource.data.length);
-          this.dataSource.paginator = this.paginator;
-//          console.log("paginator size =", this.dataSource.paginator.length);
-          
-//          let abc = x._embedded;
-//          console.log('form data->',abc);
-//                  this.forms = abc.Form;
-          });
-      
-  }
+    this.forms=await this.frmSrv.getFormsAsync("Active",this.searchform,this.router);
+    if(!this.forms || this.forms.length==0)
+      this.isSearchZero=true;
+    else
+      this.isSearchZero=false;
+    this.dataSource = new MatTableDataSource<Form>(this.forms);
+    this.dataSource.paginator = this.paginator;
+   }
   drop(event: CdkDragDrop<Form[]>) {
       moveItemInArray(this.forms, event.previousIndex, event.currentIndex);
     }
@@ -145,7 +119,7 @@ export class MyformsListComponent implements OnInit {
               
           }
          
-      } );
+      },error=>{this.utils.processError(error,this.router)} );
  }
  public createForm()
  {
@@ -156,7 +130,7 @@ export class MyformsListComponent implements OnInit {
       console.log("In form componenet form link0 is ",response);
       this.router.navigate(['/formBuilder', this.frm.id]);
       
-   });
+   },error=>{this.utils.processError(error,this.router)});
  }
 
 }

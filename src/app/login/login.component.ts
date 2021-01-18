@@ -22,6 +22,8 @@ declare var $: any;
 export class LoginComponent implements OnInit {
 
   error = false;
+  errorMSg=localStorage.getItem("errormsg");
+  
   mode='login'
   user:User={firstname:'',lastname:'',email:'',mobile:'',password:'',aboutMe:'',designation:'',organisation:'',id:'',profilePic:''}
   credentials = {username: 'keyur.holodox@gmail.com', password: 'aaaaaaaa'};
@@ -42,11 +44,13 @@ export class LoginComponent implements OnInit {
 
   facebookSignIn()
   {
-      this.signUpByGoogle("facebook");
+    localStorage.removeItem("errormsg");  
+    this.signUpByGoogle("facebook");
   }
   googleSignIn()
   {
-      this.signUpByGoogle("google");
+    localStorage.removeItem("errormsg");    
+    this.signUpByGoogle("google");
   }
    async signUpByGoogle(app:string){
       
@@ -113,7 +117,7 @@ export class LoginComponent implements OnInit {
     return promise;
    }
   async login() {
-
+    localStorage.removeItem("errormsg");  
     console.log('before') 
     await this.app.authenticate(this.credentials);
     console.log('after') 
@@ -125,6 +129,7 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.errorMSg=localStorage.getItem("errormsg");  
     this.localToken=localStorage.getItem("token");
     console.log("got token = ",this.localToken,"routing to my forms");
     if(localStorage.getItem("token"))
@@ -144,6 +149,7 @@ export class LoginComponent implements OnInit {
       this.mode="forgot";
   }
   registerUser(){
+   localStorage.removeItem("errormsg"); 
    let error=false;
     if(this.register.password!==this.register.password2){
         this.register.password2="";  
@@ -174,6 +180,7 @@ export class LoginComponent implements OnInit {
   }
   forgetpassword()
   {
+    localStorage.removeItem("errormsg");  
     console.log("forgot password called");
     if(!this.emailVal.valid)
       return;

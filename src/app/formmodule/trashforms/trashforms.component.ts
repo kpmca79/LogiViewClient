@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { Router } from "@angular/router";
 import { ConfirmDialogComponent } from 'app/confirm-dialog/confirm-dialog.component';
+import Utils from 'app/util/utils';
 
 @Component({
   selector: 'trashforms',
@@ -15,6 +16,7 @@ import { ConfirmDialogComponent } from 'app/confirm-dialog/confirm-dialog.compon
 export class TrashFormsComponent implements OnInit {
 
   forms: Form[];
+  utils:Utils= new Utils();
   public pubURL = "https://localhost:4200/form/";
   dataSource: MatTableDataSource<Form>;
   displayedColumnsold: string[] = ['name', 'type', 'path', 'status', 'response', 'edit', 'stats'];
@@ -26,21 +28,15 @@ export class TrashFormsComponent implements OnInit {
 
   constructor(private frmSrv: FormService, public dialog: MatDialog, private router: Router) { }
   searchform = "";
-  ngOnInit() {
-
-    const formObj = this.frmSrv.getForms("Archived",null).subscribe(data => {
-      let x = data;
-      this.forms = x.data;
-      console.log("form size =", this.forms.length);
-      this.dataSource = new MatTableDataSource<Form>(this.forms);
-      console.log("datasource size =", this.dataSource.data.length);
-      this.dataSource.paginator = this.paginator;
-    });
-    
+  async ngOnInit() {
+    this.forms=await this.frmSrv.getFormsAsync("Archived",null,this.router);
+    this.dataSource = new MatTableDataSource<Form>(this.forms);
+    this.dataSource.paginator = this.paginator;
   }
   showView(form: Form) {
-
-    window.open(this.pubURL + form.id, "_blank");
+    
+    let currentPath=window.location.href.replace("trash","")+"form/";
+    window.open(currentPath + form.id, "_blank");
   }
   
   restorForm(form: Form) {
@@ -58,26 +54,20 @@ export class TrashFormsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         form.status = "Active";
-        this.frmSrv.saveForm(form, form.id).subscribe(data => { console.log("Form archived successfully", form); this.ngOnInit(); }, error => { console.log(error) });
+        this.frmSrv.saveForm(form, form.id).subscribe(data =>
+           { console.log("Form archived successfully", form); this.ngOnInit(); }, error => {this.utils.processError(error,this.router)});
       }
     });
   }
-  searchForm() {
+  async searchForm() {
 
-    const formObj = this.frmSrv.getForms("Archived",this.searchform).subscribe(data => {
-      let x = data
-      console.log("INSIDE searchForm response data is  =", x.data);
-      this.forms = x.data;
-      if (!this.forms || this.forms.length == 0)
-        this.isSearchZero = true;
-      else
-        this.isSearchZero = false;
-      console.log("INSIDE searchForm form size =", this.forms.length);
-      this.dataSource = new MatTableDataSource<Form>(this.forms);
-      console.log("datasource size =", this.dataSource.data.length);
-      this.dataSource.paginator = this.paginator;
-    });
-
+    this.forms=await this.frmSrv.getFormsAsync("Archived",this.searchform,this.router);
+    if (!this.forms || this.forms.length == 0)
+      this.isSearchZero = true;
+    else
+      this.isSearchZero = false;
+    this.dataSource = new MatTableDataSource<Form>(this.forms);
+    this.dataSource.paginator = this.paginator;
   }
 
 

@@ -7,6 +7,7 @@ import { User } from '../model/User';
 import { Validators, FormControl } from "@angular/forms/forms";
 import { FormResponse } from 'app/model/FormResponse';
 import { FrmResponse } from 'app/model/Respons';
+import Utils from 'app/util/utils';
 
 declare var $: any;
 @Injectable({
@@ -15,7 +16,7 @@ declare var $: any;
 export class FormService {
     
     clearResponseFields=['_id','title','resp','resTime'] 
-    
+    utils:Utils= new Utils();
     public resp: any;
     public formSelfLink: any;
     public result: any;
@@ -61,6 +62,22 @@ export class FormService {
         console.log("INSIDE form service getForms calling api "+'/api/forms'+qryParam);
         return this.http.get<any>('/api/forms'+qryParam);
 
+    }
+    async getFormsAsync(status:string,searchStr:string,router): Promise<Form[]> {
+        let forms:Form[] = [];
+        let qryParam="";
+        let promise = new Promise<Form[]>((resolve)=>{
+            qryParam="?status="+status;    
+            if(searchStr) qryParam=qryParam+"&formName="+searchStr;
+        this.http.get<any>('/api/forms'+qryParam).subscribe(
+            data=>{resolve(data.data)},
+            error=>{
+                console.log(error);
+                this.utils.processError(error,router);
+                resolve([]);
+            });
+        })
+        return promise;
     }
     getForm(): Observable<any> {
         return this.http.get<any>('/api/formview');
