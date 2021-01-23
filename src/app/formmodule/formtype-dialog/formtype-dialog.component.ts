@@ -22,14 +22,15 @@ export class FormtypeDialogComponent implements OnInit {
     frmTitle="";
     formTypeId=1;
     frmTypes: FormType[] = [
-                 {id: '1', value: 'All Questions On Single Page'},
-                 {id: '2', value: 'Single Question On One Page'},
+                 {id: 'classic', value: 'All Questions On Single Page'},
+                 {id: 'card', value: 'Single Question On One Page'},
                  
                ];
     
     constructor(@Inject(MAT_DIALOG_DATA) public data: Form,  
                 private frmSrv: FormService) { 
         this.frm = data;
+
         console.log('data1------>',this.frm);
     }
 

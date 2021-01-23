@@ -9,11 +9,11 @@ export class Form {
     status: string;
     bgColor: string;
     bgImage: string;
-    
+    layout:string;    
     pageBGColor: string;
     formBgImage: string;
     formImages: string[];
-    
+    pages:any[];
     opacity: number;
     header: string;
     footer: string;

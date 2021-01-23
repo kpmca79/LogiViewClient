@@ -1,7 +1,7 @@
 import { FormControl } from "@angular/forms";
 
 export class SubField {
- 
+    id:string;
     name: string;
     placeholder: string;
     visible: boolean;

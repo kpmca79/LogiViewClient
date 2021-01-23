@@ -3,6 +3,7 @@
 {
     padding: 25px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 
@@ -17,6 +18,32 @@
     border-radius: 50%;
 
 }
+.left-handle{
+    position: fixed;
+    top: 7px;
+    z-index: 99;
+}
+.fixed-bottom-right{
+    position: fixed;
+    bottom: 20px;
+    right: 5px;
+    z-index: 99;
+}
+.btn-page-delete{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: -17px;
+    width: 20px;
+    height: 20px;
+    border: 0px;
+    padding: 0px 0px;
+    font-size: 19px;
+    /*background: #e53935;*/
+    color: var(--input-border-color);
+    font-weight: 900;
+}
+
 .property-icon
 {
     position: absolute;
@@ -25,7 +52,13 @@
  	z-index: 5;
  	
 }
-
+.form-page{
+    width:100%;
+    margin-top:30px;
+}
+.form-page:first-child{
+    margin-top:0px;
+}
 
 .property-icon-right
 {
@@ -50,6 +83,7 @@
     border-radius: 50%;
     border-color: black;
     color: #ffffff;
+    cursor: pointer;
 }
 
 
@@ -143,7 +177,7 @@
 	background: darkblue;
 }
 .toolbox-toolbar-row:before{
- content: “ ”;
+ content: ï¿½ ï¿½;
  background: inherit; 
  position: absolute;
  left: 0;
@@ -461,6 +495,34 @@
     left: 370px;
     top: 54px;
 
+}
+.btn-breakpage {
+    font-size: 13px;
+    border-radius: 3px;
+    background: none;
+    border: none;
+    box-shadow: none;
+    color: var(--input-border-color);
+    font-weight: 400;
+    transition: all .25s ease!important;
+}
+.page-break{
+	text-align:center;
+	width:100%;
+	color: var(--input-border-color);
+	
+
+}
+
+.page-break:before, .page-break:after{
+	border-bottom: 2px dashed var(--input-border-color);
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 18%;
+    margin-top: -2px;
 }
 
 /* CSS FOR RIPPLE EFFECT NOT WORKING */

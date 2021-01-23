@@ -16,6 +16,7 @@ import { Form } from "../../model/Form";
 import { DomSanitizer, SafeResourceUrl, SafeUrl, SafeStyle } from '@angular/platform-browser';
 import { ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatSidenav } from "@angular/material/sidenav";
+import Utils from 'app/util/utils';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
     isErrorState( control: FormControl | null, form: FormGroupDirective | NgForm | null ): boolean {
@@ -58,6 +59,8 @@ export class FormBuilderComponent implements OnInit {
     bgImageID = "5ccd9b901fd9be0ae8f74ead";
     bgStyle = "";
     resourceURL = "/api/file/";
+    pageBGStyle = "background:#e5e5e5;";
+    utils:Utils= new Utils();
     //bgURL="url(http://localhost:8085/api/1/file/5ccd9b901fd9be0ae8f74ead)";
     bgURL = "url(https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)";
     bgURLDirect = null;
@@ -166,6 +169,74 @@ export class FormBuilderComponent implements OnInit {
         }
     }
 
+    
+    saveForm() {
+        console.log("The form is ", this.frm);
+        if (this.frm && this.frm.pages) {
+            this.frm.pages.forEach(page => {
+                if (page && page.pageFields) {
+                    page.pageFields.forEach(val => {
+                        if (!val.id)
+                            val.id = this.stdSrv.getRandom();
+                        if (val.frmControl) val.frmControl = null;
+                    });
+                }
+            });
+        }
+        console.log("saving form ", this.frm);
+        this.stdSrv.saveForm(this.frm, this.formID).subscribe(
+            data => {
+                this.addDummyController();
+                console.log(data);
+                this.utils.showNotification('top', 'center', 'Form saved successfully', 's', 2000)
+            }
+            , error => {
+                console.log(error);
+                this.utils.showNotification('top', 'center', 'Opps something went wrong', 'f', 2000)
+            });
+    }
+    addDummyController(){
+
+        if (this.frm && this.frm.pages) {
+            this.frm.pages.forEach(page => {
+                if (page && page.pageFields) {
+                    page.pageFields.forEach(val => {
+                        if (!val.id)
+                            val.id = this.stdSrv.getRandom();
+                        if (!val.frmControl) val.frmControl = new FormControl('',[]);
+                    });
+                }
+            });
+        }
+
+    }
+    addPage(){
+        
+        let pageFields:FormField[]=[]; 
+        let submitField:FormField=new FormField();
+        let totalPages=this.frm.pages.length;
+        let totalPageFields=this.frm.pages[totalPages-1].pageFields.length;
+        if(totalPageFields==1) return; // if previous page have only submit dont add page.
+        
+        if(totalPages==1){
+            this.frm.pages[totalPages-1].pageFields[totalPageFields-1].name="Next";
+            this.frm.pages[totalPages-1].pageFields[totalPageFields-1].type="next";
+        }
+        if(totalPages>1){
+            this.frm.pages[totalPages-1].pageFields[totalPageFields-1].name="PreviousNext";
+            this.frm.pages[totalPages-1].pageFields[totalPageFields-1].type="prevnext";
+        }
+        
+        submitField.type="prevsubmit";
+        submitField.name="Submit";
+        submitField.title="Please wait...";
+        pageFields.push( submitField );
+        let currentPages=this.frm.pages.length;
+        let pageObj:any={pageNo:currentPages+1,pageFields:pageFields};
+        this.frm.pages.push(pageObj);
+
+    }
+    
 
     ngOnInit() {
         this.formID = this.route.snapshot.paramMap.get( "id" );
@@ -178,6 +249,15 @@ export class FormBuilderComponent implements OnInit {
                     this.frm = response.data;
                     if ( this.frm.formFields )
                         this.students2 = this.frm.formFields;
+                    //added code by keyur to support pages
+                    if(!this.frm.pages || this.frm.pages.length==0)
+                    {   console.log("Current form fields are ",this.frm.formFields);
+                        let pageObj:any={pageNo:1,pageFields:this.frm.formFields};
+                        let pages=[];
+                        pages.push(pageObj);
+                        this.frm.pages=pages;
+                    }
+                    //end added code by keyur to support pages    
                     this.students2.forEach( field => {
                         let vl = [];
                         if ( field.required )
@@ -198,6 +278,8 @@ export class FormBuilderComponent implements OnInit {
                     else if ( this.frm.pageBGColor != null && this.frm.pageBGColor != '' )
                         this.bgStyle = "background:" + this.frm.pageBGColor;
                     this.safeBgURL = this.sanitizer.bypassSecurityTrustStyle( this.bgURL );
+                    if(this.frm.pageBGColor != null)
+                        this.pageBGStyle="background:"+this.frm.bgColor;
                     this.setFormBG();
 
                 }
@@ -220,7 +302,7 @@ export class FormBuilderComponent implements OnInit {
     setFormBG() {
         this.frmBGStyle = '';
         if ( this.frm.formwidth && this.frm.formwidth != 0 )
-            this.frmBGStyle = "max-width:" + this.frm.formwidth + 'px;';
+            this.frmBGStyle = "max-width:" + this.frm.formwidth + 'px;';//+"margin:0px auto;";
         if ( this.frm.opacity && this.frm.opacity != 0 )
             this.frmBGStyle = this.frmBGStyle + "opacity:" + this.frm.opacity + ";";
     }
@@ -240,14 +322,159 @@ export class FormBuilderComponent implements OnInit {
     //  let myDiv = document.getElementById('form');
     //  myDiv.style.opacity = (1-(event.opacity/100)).toPrecision(2); 
     //}
-    addElement(field:FormField){
+    addElementOldNeedToRemove(field:FormField){
+       
         let fieldToAdd = JSON.parse( JSON.stringify( field ) ) as FormField;
         fieldToAdd.selectedOption = ['option1'];
-        fieldToAdd.frmControl = new FormControl( '', [] );;
-        this.students2.push(fieldToAdd);
+        fieldToAdd.frmControl = new FormControl( '', [] );
+        let prev=this.students2.length-2
+        let next=this.students2.length-1;
+        //if(prev<0) prev=0;
+        //console.log("Total selected fields:",this.students2.length);
+        //console.log("Adding between:",prev,' To ',next);
+        this.students2.splice(this.students2.length-1,0,fieldToAdd);
+
+        console.log("After adding total selected fields:",this.students2.length);
+        //this.students2.push(fieldToAdd);
     } 
-    drop( event: CdkDragDrop<string[]> ) {
+    addElement(field:FormField){
+       
+        let fieldToAdd = JSON.parse( JSON.stringify( field ) ) as FormField;
+        fieldToAdd.selectedOption = ['option1'];
+        fieldToAdd.frmControl = new FormControl( '', [] );
+        fieldToAdd.id=this.stdSrv.getRandom();
+        if(fieldToAdd.subfields)
+            for(let subfield of fieldToAdd.subfields)
+            {  
+                subfield.id=this.stdSrv.getRandom();
+                subfield.frmControl = new FormControl('',[]);
+            }
+        let totalpages=this.frm.pages.length;
+        let fieldssize=this.frm.pages[totalpages-1].pageFields.length;
+        this.frm.pages[totalpages-1].pageFields.splice(fieldssize-1,0,fieldToAdd);
+
+        //console.log("After adding total selected fields:",this.students2.length);
+        //this.students2.push(fieldToAdd);
+    } 
+    deletePage(deletePage: any){
+        
+        let pageNo=this.frm.pages.indexOf(deletePage)+1;
+        console.log("Current page number = ",pageNo)
+        let totalPages=this.frm.pages.length;
+        if(totalPages==1)return;
+        let currPage=this.frm.pages[pageNo-1];
+        for(let fld of currPage.pageFields){
+            if(fld.type=="next"){
+                let nxtpage=this.frm.pages[pageNo];
+                for(let f of nxtpage.pageFields){
+                    if(f.type=="prevsubmit") {
+                        f.type="submit";
+                        f.name="Submit";
+                        f.title="Please wait";
+                   
+                    }
+                    if(f.type=="prevnext") {
+                        f.type="next";
+                   
+                    }
+                }
+            }
+            if(fld.type=="prevsubmit"){
+                let prevpage=this.frm.pages[pageNo-2];
+                for(let f of prevpage.pageFields){
+                    if(f.type=="next") {
+                        f.type="submit";
+                        f.name="Submit";
+                        f.title="Please wait";
+                   
+                    }
+                    if(f.type=="prevnext") {
+                        f.type="prevsubmit";
+                        f.name="Submit"
+                        f.title="Please wait";
+                   
+                    }
+                }
+            }
+            if(fld.type=="prevnext")
+            {
+                console.log("prevnex");
+                let nxtpage=this.frm.pages[pageNo];
+                for(let f of nxtpage.pageFields){
+                    if(f.type=="prevnext") {
+                        f.title="Please wait";
+                   }
+                   if(f.type=="prevsubmit") {
+                    f.title="Please waitsd";
+               }
+                }
+               
+            }
+            
+        }
+        console.log("Current page number = ",pageNo)
+        
+        this.frm.pages.splice(pageNo-1,1);
+        this.utils.showNotification('top', 'right','Page delete','i',3000)
+        console.log("pages remain=",this.frm.pages.length);
+
+    }
+    drop1(event:CdkDragDrop<string[]>,pageNo:number){
+        console.log("Drop1 called");
+        console.log("page number:",pageNo);
+        let pageno=0;
+        let preContainerId=event.previousContainer.id
+        console.log("current container id",event.container.id);
+        console.log("previous container id",event.previousContainer.id);
+        if(event.container==event.previousContainer){
+            moveItemInArray( event.container.data, event.previousIndex, event.currentIndex );
+            return;
+        }
+        if(event.container!=event.previousContainer){
+            
+            const tempVal2: any = event.previousContainer.data[event.previousIndex];
+            let std: FormField = new FormField();
+            
+            std = JSON.parse( JSON.stringify( tempVal2 ) ) as FormField;
+            std.selectedOption = ['option1'];
+            std.id=this.stdSrv.getRandom();
+            std.frmControl = new FormControl( '', [] );;
+            console.log("Drop event  in builder, adding field ",std.name);
+            if(std.subfields)
+            {    std.subfields.forEach( field=>{
+                field.frmControl=new FormControl('',[])
+                field.id=this.stdSrv.getRandom();
+                console.log("Drop event  in builder, subfield form controls ",field.frmControl);
+            })}
+            
+//            this.students2.push( std );
+           //code by keyur to support pages
+           console.log("pages=",this.frm.pages.length);
+           console.log("pageno=",this.frm.pages.length);
+           console.log("current index",event.currentIndex);
+           if(!this.frm.pages[pageNo-1].pageFields)
+            this.frm.pages[pageNo-1].pageFields=[];
+           this.frm.pages[pageNo-1].pageFields.splice(event.currentIndex,0,std);
+           if(!preContainerId.startsWith('cdk'))
+            {
+                console.log("previous container id is not main fields so deletting element from ",event.previousIndex);
+                event.previousContainer.data.splice(event.previousIndex, 1);
+                
+            }
+           //end code by keyur to support pages
+         //   this.students2.splice(event.currentIndex,0,std);
+            this.chgEvent.elementadd = false;
+            this.chgEvent.elementadd = true;
+            this.chgEvent.elementadd = false;
+        }
+
+    }
+    drop( event: CdkDragDrop<string[]>) {
+
+      //  console.log("drop event called",event.container.id);
         console.log("drop event called",event);
+        let pageno=0;
+        
         if ( event.previousContainer === event.container ) {
             console.log("drop event same container",event);
             moveItemInArray( event.container.data, event.previousIndex, event.currentIndex );
@@ -261,8 +488,13 @@ export class FormBuilderComponent implements OnInit {
             std.frmControl = new FormControl( '', [] );;
             
 //            this.students2.push( std );
-           
-            this.students2.splice(event.currentIndex,0,std);
+           //code by keyur to support pages
+           console.log("pages=",this.frm.pages.length);
+           console.log("pageno=",this.frm.pages.length);
+           console.log("current index",event.currentIndex);
+       //    this.frm.pages[pageno].pageFields.splice(event.currentIndex,0,std);
+           //end code by keyur to support pages
+          //  this.students2.splice(event.currentIndex,0,std);
             this.chgEvent.elementadd = false;
             this.chgEvent.elementadd = true;
             this.chgEvent.elementadd = false;

@@ -10,3 +10,10 @@ flex-grow: 1;
 .main-form-class {
  width:inherit;
 }
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header-container {
+    align-items: flex-start;
+    margin-bottom: -77px;
+}
+::ng-deep  .mat-step-header:hover {
+    background-color:rgba(255, 255, 255, 0);
+}

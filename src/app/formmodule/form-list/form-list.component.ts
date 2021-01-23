@@ -55,6 +55,8 @@ export class FormListComponent implements OnInit {
               status: 'Active',bgColor: '#cacaca',bgImage: '5d7411844c05a60408df1d49',header: '',
               footer: '',theme:'dark-theme',formFields:[], _links:'',style:'',btnStyle:'',opacity:0,
               response:0,
+              pages:[],
+              layout:'',
               pageBGColor:'',
               formBgImage:'',
               formImages:[],

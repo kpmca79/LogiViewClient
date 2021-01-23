@@ -1,40 +1,77 @@
+<script>
+.row {
+    display: flex;
+    align-items: top;
+    justify-content: center;
+}
+</script>
+<script>
+.row {
+    display: flex;
+    align-items: top;
+    justify-content: center;
+}
+
+</script>
 <div class="ngLoader"></div>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
+
+											
+
+<!-- <div [style.background-image]="safeBgURL"   -->
+<!-- [ngStyle]="{'background-image':'safeBgURL';background-repeat: 'repeat-xy';}" -->
+<!-- style="height: 100%;background-repeat: repeat-xy;"> -->
 <form-topnav page="build" [formID]="formID" [isChecked]="false" link="build"></form-topnav>
 <div *ngIf="!bgURLDirect" class="col-md-12">
          <div class="card">
                  <mat-progress-bar color="warn" mode = "indeterminate" ></mat-progress-bar>
            </div>
 </div>
+<!-- <div *ngIf="frm.bgImage && !frm.pageBGColor" [ngStyle]="{'background-image': 'url('+bgURLDirect+')'}"> -->
 <div *ngIf="frm" [style]="sanitizeHTML(bgStyle)">
-<div *ngIf="!opened" class="left-handle">
+
+
+<!-- <div class="property-icon-right" *ngIf="!opened"> -->
+<!-- 	<span class="fa-stack fa-lg"><i class="fa fa-plus  fa-1x circle-icon"  (click)="openCloseLeftPanel()"></i></span> -->
+<!-- </div> -->
+<div *ngIf="!opened">
 <div class="property-icon-left" >
+	
 	<div class="ripple-icon">
+	
 		<span><i class="fa fa-plus  fa-1x circle-icon"  (click)="openCloseLeftPanel()"></i></span>
 	</div>
+	
 </div>
 <div class="property-icon-left1 bar">
 	Add Form Elements
 	</div>
 </div>
-<div cdkDropListGroup>
+
+
 <mat-drawer-container>
+	<!-- form left star here -->
 	<mat-drawer #drawerleft  mode="side"  [(opened)]="opened" >
+
 	<div class="sidebar-right"  danger data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
+
 		<div class="head">
 			Form Elements
 			<span class="left-nav-icon">
 				<i class="fa fa-times" aria-hidden="true" (click)="openCloseLeftPanel()"></i>
 			</span>
 		</div>
+		
 		<div class="sidebar-wrapper nav-color">
+			
+			
 			<div style="height: calc(100vh - 95px); overflow:hidden">
 				<mat-tab-group mat-align-tabs="center" class="nav-content tab-header" disablePagination="false"> 
 					<mat-tab label="GENERAL" class="tab-menu">
 					<div style="height: calc(100vh - 150px);">
 					<perfect-scrollbar>
-						<ul cdkDropList  [cdkDropListData]="studentsnormal" (cdkDropListDropped)="drop($event)" class="nav">
+						<ul cdkDropList #studentsList="cdkDropList" [cdkDropListData]="studentsnormal" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[students2List]" class="nav">
 							<li *ngFor="let student of studentsnormal" cdkDrag class="toolbox-toolbar-row cdk-drag ng-star-inserted">
 								<a class="nav-link" style="padding:0px !important">
 									<div (click)="addElement(student)"class="toolbox-item-row">
@@ -72,7 +109,7 @@
 					<mat-tab label="WIDGETS" class="tab-menu">
 					<div style="height: calc(100vh - 150px);">
 					<perfect-scrollbar>
-						<ul cdkDropList [cdkDropListData]="studentswidgets" (cdkDropListDropped)="drop($event)"class="nav">
+						<ul cdkDropList #gadgetList="cdkDropList" [cdkDropListData]="studentswidgets" (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[students2List]" class="nav">
 							<li *ngFor="let student of studentswidgets" cdkDrag class="toolbox-toolbar-row cdk-drag ng-star-inserted">
 								<a class="nav-link" style="padding:0px !important">
 									<div class="toolbox-item-row">
@@ -100,8 +137,11 @@
 	</div> <!-- left toolbar ends -->
 	 
 	</mat-drawer>
+	
+	
+	
 	<div class="ngLoader"></div>
-	<div class="main-content nav-color">
+	<div class="main-content">
 		<div class="container-fluid">
 			<div class="main-div">
 					<div class="property-icon-right">
@@ -109,17 +149,26 @@
 					  	    <i class="fa fa-paint-brush  fa-1x circle-icon" (click)="openCloseRightPanelForForm()"></i>
 						</span>
 					</div>
-					<div *ngFor="let page of frm.pages" class="form-page" [style]="sanitizeHTML(frmBGStyle)">
-					<div cdkDropList id="{{page.pageNo}}" [cdkDropListData]="page.pageFields" (cdkDropListDropped)="drop1($event,page.pageNo)" style="position:relative;" >
+					<div cdkDropListGroup>
 						
-							<div  class="form-main" id="form"  [style]="sanitizeHTML(frmBGStyle)">
-									<app-form [inputPageFields]="page.pageFields" [frm]="frm" [pageNo]="page.pageNo" [mode]="build" [formID]="formID"></app-form>
+							<div  cdkDropList #students2List="cdkDropList" [cdkDropListData]="students2" (cdkDropListDropped)="drop($event)"
+								 class="form-main" id="form"  [style]="sanitizeHTML(frmBGStyle)">
+									<app-form [formField]="students2" [frm]="frm" [mode]="build" [formID]="formID"></app-form>
 							</div>
-							<button *ngIf="page.pageNo!=1" [style]="sanitizeHTML(pageBGStyle)" class="btn-page-delete" (click)="deletePage(page)">X</button>
 						
 					</div>
-					</div>
-		</div>
+					<!--<div *ngFor="let page of frm.pages" style="width:100%;margin-top: 30px;">
+						<div cdkDropList #students2List="cdkDropList"  [cdkDropListData]="page.pageFields" (cdkDropListDropped)="drop($event)"
+							 [cdkDropListConnectedTo]="[studentsList]" class="form-main"  [style]="sanitizeHTML(frmBGStyle)">
+
+							<div class="form-main" id="form"  [style]="sanitizeHTML(frmBGStyle)">
+									<app-form [formField]="page.pageFields"  [frm]="frm" [mode]="build" [pageNo]="page.pageNo" [formID]="formID"></app-form>
+							</div>
+							</div>
+					</div>-->
+					
+					
+			</div>
 			<div class="page-break"><button class="btn btn-breakpage" (click)="addPage()">+&nbsp;ADD NEW PAGE</button></div>
 		</div>
 		
@@ -130,6 +179,4 @@
 	</div>
 	</mat-drawer>
 </mat-drawer-container>
-<button class="btn btn-primary fixed-bottom-right" (click)="saveForm()">SAVE CHANGES</button>
-</div>
 </div>

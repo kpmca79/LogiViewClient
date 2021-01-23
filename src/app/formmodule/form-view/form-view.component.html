@@ -3,8 +3,8 @@
 <div *ngIf="frm">
 	<div [style]="sanitizeHTML(bgStyle)" style="min-height: 110vh; height: 100%;">
 		<div class="main-div">
-			<div class="main-form-class"  id="form" [style.max-width.px]=frm.formwidth>
-				<app-form [formField]="frm.formFields" [mode]="preview" [frm]="frm" [formID]="frm.id"></app-form>
+			<div  class="main-form-class"  id="form" [style.max-width.px]=frm.formwidth >
+				<app-form [inputPageFields]="currentFields"  [mode]="preview" [frm]="frm" [formID]="frm.id"></app-form>
 			</div>
 		</div>
 	</div>

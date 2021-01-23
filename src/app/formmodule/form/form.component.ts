@@ -42,11 +42,14 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     templateUrl: 'form.component.html',
     styleUrls: ['form.component.css']
 } )
+
 export class FormComponent implements OnInit {
-    @Input() formField: FormField[];
+    @Input() inputPageFields: FormField[];
     @Input() frm: Form;
     @Input() formID: String;
     @Input() mode:string;
+    @Input() pageNo:number;
+    currentPageNo=0;
     saveResponseLoader=false;
     surl="https://localhost:4200/form/";
     furl="https://localhost:4200/login";
@@ -64,6 +67,7 @@ export class FormComponent implements OnInit {
     formTitle = "sample form";
     
     theme: String = "light-theme";
+    excludeFieldTypes=['submit','section','next','prevsubmit','prevnext'];
     currentRate = 3;
     durationInSeconds = 3;
     compBGColor = "#4d4d4d"//"#ccc97e";
@@ -96,7 +100,9 @@ export class FormComponent implements OnInit {
     ripplecolor="initial";
     iconcolor="initial";
     thumbcolor="initial";
-    
+    hideHeader=true;
+    headershowdiv=false;
+    pageContext:any;
     
     @HostBinding( '@.disabled' ) private disabled = true;
     constructor( iconRegistry: MatIconRegistry,
@@ -117,13 +123,104 @@ export class FormComponent implements OnInit {
         this.passURL = sanitizer.bypassSecurityTrustResourceUrl( this.cssURL );
         this.mService.consume().subscribe(( m: any ) => {this.reactOnMessage( m );});
     }
+    mainDivclicked(event){
+        console.log("Hi krunal -------hhhh------------>.>>>");
+        if(!this.headershowdiv)
+          this.hideHeader=true;
+    }
+    showHeader(event){
+        console.log("Hi krunal ------------------->.>>>",event);
+        this.hideHeader=false;
+        this.headershowdiv=!this.headershowdiv;
+        
+
+    }
+    next(){
+        
+       
+        let isValid=this.validateFields(this.frm.pages[this.currentPageNo-1].pageFields);
+        console.log("isvalid=================",isValid);
+        if(isValid){
+            console.log("fieeldss validdaton done moving to next page------------>")
+            this.inputPageFields=this.frm.pages[this.currentPageNo].pageFields;
+            this.currentPageNo=this.currentPageNo+1;
+        }
+        else
+            return;
+        
+        
+    }
+    previous(){
+        
+        this.inputPageFields=this.frm.pages[this.currentPageNo-2].pageFields;
+        this.currentPageNo=this.currentPageNo-1;
+        
+    }
+    validateFields(pageFields:FormField[]):boolean{
+        let noError: boolean = true;;
+        console.log("inside validation form field size is ",this.inputPageFields.length);
+        pageFields.forEach( field => {
+            console.log("inside validation form field name ",field.name);
+            console.log("inside validation form field control ",field.frmControl);
+            if ( field.frmControl.invalid ) {
+                noError=false;
+                console.log("Form field ",field.name,"is invalid");
+                console.log("Form control ",field.frmControl);
+                console.log("2");      
+                console.log("noerror set to false");     
+                
+            }
+            if ( field.subfields ) {
+                field.subfields.forEach( subfield => {
+
+                    if ( subfield.frmControl && subfield.frmControl.invalid ) {
+                        noError=false;
+                        console.log("3");           
+                        console.log("noerror set to false");
+                       
+                    }
+                } )
+            }
+        });
+        console.log("returning true from validation noError=",noError);
+        return noError;
+    }
+    addDummyController(){
+
+        if (this.frm && this.frm.pages) {
+            this.frm.pages.forEach(page => {
+                if (page && page.pageFields) {
+                    page.pageFields.forEach(val => {
+                        if (!val.id)
+                            val.id = this.frmSrv.getRandom();
+                        if (!val.frmControl) val.frmControl = new FormControl('',[]);
+                    });
+                }
+            });
+        }
+
+    }
     ngOnInit() {
         let url: any
-        Utils.doSomething("d");
+        this.dummyController=new FormControl( '', [Validators.maxLength( 10000)] );
         for ( var i = 0; i < 60; i = i + 10 ) { this.minutes.push( i + '' ); }
         if ( this.frm && this.formID ) {
-             this.addFieldValidations();
+            /// this.addFieldValidations();
             this.setFormBGStyle();
+            console.log("Current form object.....",this.frm);
+            
+            if(this.mode!="build")
+            {
+                
+                this.currentPageNo=1;
+                this.addFieldValidations();
+                console.log("validators added--> now setting current fields");
+               // this.inputPageFields=this.frm.pages[0].pageFields;
+                this.pageNo=1;
+                console.log("hi........ keyur ..... total after setting formfields length is ..........",this.inputPageFields.length);
+            }
+            if(this.mode=="build")
+                this.addDummyController();
             if(this.mode=='build' || this.mode=='preview')
                 this.fileUploadURL='/api/file123';
             else
@@ -142,6 +239,8 @@ export class FormComponent implements OnInit {
                 thanksdata: 'Thanks You. You have successfully submitted your response, you might get email confirmation for the same.',
                 thankstype: 'message',
                 formwidth: 600,
+                pages:null,
+                layout:'classic',
                 publishdate: null,
                 publishtime: "00:00",
                 publishtimezone: "GMT +5:30",
@@ -218,11 +317,12 @@ export class FormComponent implements OnInit {
     addFieldValidations()
     {
         this.dummyController=new FormControl( '', [Validators.maxLength( 10000)] );
-        this.frm.formFields.forEach( field => {
+        this.frm.pages.forEach(page=>{
+        page.pageFields.forEach( field => {
             let vl = [];
             if ( field.required )
                 vl.push( Validators.required );
-            if ( field.selectedValidation == 'Email' )
+            if ( field.selectedValidation == 'Email' ||field.type=='email')
                 vl.push( Validators.email );
             if ( field.maxlen && field.maxlen != 0 )
                 vl.push( Validators.maxLength( field.maxlen ) );
@@ -264,21 +364,28 @@ export class FormComponent implements OnInit {
                 
                 
             }
+            
             field.frmControl = new FormControl( '', vl );
             if ( field.subfields ) {
+                console.log("Got subfields for ",field.name);
                 field.subfields.forEach( subField => {
                     let vlsub = [];
-                    if ( field.required ) {
+                    if ( subField.required ||field.required) {
                         if ( subField.visible )
+                         {
+                            
                             vlsub.push( Validators.required );
+                         }   
                     }
+                    console.log("subfield for ",subField.name," is required=",subField.required," control=",vlsub);
                     subField.frmControl = new FormControl( '', vlsub );
                 } )
-                let v3 = [];
-                field.frmControl = new FormControl( '', v3 );
+               
+                field.frmControl = new FormControl( '', []);//empty controller for parent field
             }
 
-        } );
+        } );});
+        
     }
     setDayFilter(field:FormField)
     {
@@ -410,8 +517,8 @@ export class FormComponent implements OnInit {
         }
 
     public remove( field ) {
-        var index = this.formField.indexOf( field );
-        this.formField.splice( index, 1 );
+        var index = this.inputPageFields.indexOf( field );
+        this.inputPageFields.splice( index, 1 );
         //            this.saveForm(false);
     }
     public dateFilter(field)
@@ -479,8 +586,8 @@ export class FormComponent implements OnInit {
 
     saveForm( showNotification: boolean ) {
         let strFields: FormField[] = [];
-        if ( this.formField ) {
-            this.formField.forEach( val => {
+        if ( this.inputPageFields ) {
+            this.inputPageFields.forEach( val => {
                 if ( !val.id )
                     val.id = this.frmSrv.getRandom();
                 if ( val.frmControl ) val.frmControl = null;
@@ -505,6 +612,8 @@ export class FormComponent implements OnInit {
         let color = Math.floor(( Math.random() * 4 ) + 1 );
         if ( msgType == 's' ) { color = 2; }
         if ( msgType == 'f' ) { color = 4; }
+        if ( msgType == 'i' ) { color = 1; }
+        if ( msgType == 'w' ) { color = 3; }
 
         $.notify( { icon: "notifications", message: msg }, {
             type: type[color],
@@ -532,8 +641,9 @@ export class FormComponent implements OnInit {
     addEvent( type: string, event: MatDatepickerInputEvent<Date> ) {
         //      this.setClass();
     }
-    drop( event: CdkDragDrop<FormField[]> ) {
-        moveItemInArray( this.formField, event.previousIndex, event.currentIndex );
+    drop( event: CdkDragDrop<FormField[]>,pageno ) {
+        console.log("Inside form drop event called page no is ",pageno);
+        moveItemInArray( this.inputPageFields, event.previousIndex, event.currentIndex );
     }
     openCloseRightPanel()
     {
@@ -678,31 +788,19 @@ export class FormComponent implements OnInit {
     async onSubmit($event,btnField:FormField) {
         
         console.log("onsubmit call mode is ",this.mode)
-        if(this.mode=="build" || this.mode=="preview")
+        if(this.mode=="build")
+           return;
+        else if(this.mode=="preview")
+        {
+            this.showNotification( 'top', 'center', "You can't submit form in preview mode", 'i',3000);
             return;
+        }
         console.log("1");           
         let isError: boolean = false;
-        this.formField.forEach( field => {
-            if ( field.frmControl.invalid ) {
-                isError = true;
-                $event.target.disabled=false;
-                console.log("Form field ",field.name,"is invalid");
-                console.log("Form control ",field.frmControl);
-                console.log("2");           
-                return;
-            }
-            if ( field.subfields ) {
-                field.subfields.forEach( subfield => {
-
-                    if ( subfield.frmControl && subfield.frmControl.invalid ) {
-                        isError = true;
-                        console.log("3");           
-                        return;
-                    }
-                } )
-            }
-        });
-        if ( !isError ) {
+        let successValidation=this.validateFields(this.inputPageFields);
+        if(!successValidation) $event.target.disabled=false;
+        
+        if ( successValidation) {
             this.$event=$event;
             $event.target.innerText=btnField.title;
             $event.target.disabled=true;    
@@ -710,129 +808,125 @@ export class FormComponent implements OnInit {
             this.saveResponseLoader=true;
             this.respJson.formID = this.formID;
             this.respJson.resTime = this.datePipe.transform( new Date(), 'dd-MM-yyyy HH:mm:ss zzzz' );
-            console.log("4");           
-            for(let field of this.formField)
-            {    
-            
-                let value = field.frmControl.value
-                
-                if ( field.type != "section" && field.type != "submit" ) {
-                    console.log("Field type==>",field.type);
-                    if ( field.type == 'signature' ) {
-                        let f: File = this.dataURLtoFile( field.signImage );
-                        const obj = await this.uploadSignature( field, f);
-                     }
-                    else if ( field.type == "date-picker" ) {
-                        
-                        value = this.datePipe.transform( value, 'yyyy-MM-dd' );
-                        let respJ = { value: value, type: 'datetime' };
-                        if(value)
-                            this.respJson[field.id] = respJ;
-                    }
-                    else if ( field.type == "dropdown" )
-                    {    
-                       console.log("Inside dropdown");
-                       this.setDropDownVal(field);
-                    }
-                    else if ( field.type == "fullname" ) {
-                        if ( field.subfields ) {
-                            field.subfields.forEach( subfield => {
-                                if ( subfield.visible && subfield.frmControl.value ) {
-                                    this.respJson[subfield.name] = subfield.frmControl.value;
-                                }
-                            } );
-                        }
-                    }
-                    else if ( field.type == "survey" ) {
-                        console.log("survey found===============>",field.survey.question);
-                        if ( field.survey.questions ) {
-                            let surveyresp={survey:[]};
-                            surveyresp.survey=[];
-                            field.survey.questions.forEach( q => {
-                                console.log("survey found===q.name============>",q.name);
-                                console.log("survey found===q.name============>",q.selectedValue);
-                                if ( q.selectedValue ) {
-                                  let surveyObj={value:q.selectedValue,subHeader:q.name}
-                                   
-                                     surveyresp.survey.push(surveyObj);
-                                }
-                            } );
-                            this.respJson[field.id]=surveyresp;
-                        }
-                    }
-                    else if ( field.type == "address" ) {
-                        if ( field.subfields ) {
-                            field.subfields.forEach( subfield => {
-                                if ( subfield.visible && subfield.frmControl.value ) {
-                                    this.respJson[subfield.name] = subfield.frmControl.value;
-                                }
-                            } );
-                        }
-
-                    }
-                    else if ( field.type == "time" ) {
-                        if ( field.subfields ) {
-                            let selTime = '';
-                            selTime = field.subfields[0].frmControl.value; //hour
-                            selTime = selTime + ":" + field.subfields[1].frmControl.value //min
-                            selTime = selTime + " " + field.subfields[2].frmControl.value //am/pm
-                            if(field.subfields[0].frmControl.value)
-                            this.respJson[field.id] = selTime;
-                        }
-                    }
-                    else if ( field.type == "phone" ) {
-                        if ( field.subfields ) {
-                         
-                            let telePhone="";
-                            let code=""
-                            if(field.subfields[0] && field.subfields[0].frmControl.value)
-                                code = field.subfields[0].frmControl.value;
-                            if(field.subfields.length>1 && field.subfields[1] && field.subfields[1].frmControl.value)
-                                telePhone = field.subfields[1].frmControl.value;
-                            if(code) telePhone=code+'-'+telePhone
-                            if(telePhone)
-                                this.respJson[field.id]=telePhone;
-                        }
-                    }
-                    else if ( field.type == "upload" ) {
-                        console.log("File field.type----->",field.type)
-                        if ( field.submitValue ) {
-
-                            this.respJson[field.id] = field.submitValue;
-                            console.log("File respJson----->",this.respJson);
-                        }
-                    }
-                   
-                    else if ( field.type == "rating" ) {
-                        this.respJson[field.id] = this.currentRate;
-                    }
-                    else if ( field.type == "productlist" && (!field.productList.total || field.productList.total==0) ) {
-                        this.showNotification('top', 'center','Your cart is empty','f',3000);
-                        this.submitButtonChange(btnField,false);
-                        return;
-                    }
-                    else if ( field.type == "productlist" && field.productList.total>0 ) {
-                       
-                        let payObserver=await  this.completePayment(this.frm);
-                    }
-                    else if ( field.type == "email" && value) {
-                        this.respJson[field.id] = value;
-                    }
-                    else if ( field.type == "slide-toggle" ) {
-                       if(field.checked)
-                        this.respJson[field.id] = "Accepted";
-                       
-                    }
-                    
-                    else if ( field.id && value)
-                        this.respJson[field.id] = value;
-                    
-                    
-                    console.log( "CHECKING FOR EMAL FIELD----------->",field );
-
-                }
-           
+            for(let page of this.frm.pages) {
+                for(let field of page.pageFields) console.log("field name=",field.name, "field.id=",field.id);
             }
+            for(let page of this.frm.pages){   
+                for(let field of page.pageFields)
+                {    
+                
+                    let value = field.frmControl.value
+                    if ( !this.excludeFieldTypes.includes(field.type)) {
+                        console.log("Field type==>",field.type);
+                        if ( field.type == 'signature' ) {
+                            let f: File = this.dataURLtoFile( field.signImage );
+                            const obj = await this.uploadSignature( field, f);
+                        }
+                        else if ( field.type == "date-picker" ) {
+                            
+                            value = this.datePipe.transform( value, 'yyyy-MM-dd' );
+                            let respJ = { value: value, type: 'datetime' };
+                            if(value)
+                                this.respJson[field.id] = respJ;
+                        }
+                        else if ( field.type == "dropdown" )
+                        {    
+                        console.log("Inside dropdown");
+                        this.setDropDownVal(field);
+                        }
+                        else if ( field.type == "fullname" ) {
+                            if ( field.subfields ) {
+                                field.subfields.forEach( subfield => {
+                                    if ( subfield.visible && subfield.frmControl.value ) {
+                                        this.respJson[subfield.name] = subfield.frmControl.value;
+                                    }
+                                } );
+                            }
+                        }
+                        else if ( field.type == "survey" ) {
+                            if ( field.survey.questions ) {
+                                let surveyresp={survey:[]};
+                                surveyresp.survey=[];
+                                field.survey.questions.forEach( q => {
+                                    if ( q.selectedValue ) {
+                                    let surveyObj={value:q.selectedValue,subHeader:q.name}
+                                        surveyresp.survey.push(surveyObj);
+                                    }
+                                } );
+                                this.respJson[field.id]=surveyresp;
+                            }
+                        }
+                        else if ( field.type == "address" ) {
+                            if ( field.subfields ) {
+                                field.subfields.forEach( subfield => {
+                                    if ( subfield.visible && subfield.frmControl.value ) {
+                                        this.respJson[subfield.name] = subfield.frmControl.value;
+                                    }
+                                } );
+                            }
+
+                        }
+                        else if ( field.type == "time" ) {
+                            if ( field.subfields ) {
+                                let selTime = '';
+                                selTime = field.subfields[0].frmControl.value; //hour
+                                selTime = selTime + ":" + field.subfields[1].frmControl.value //min
+                                selTime = selTime + " " + field.subfields[2].frmControl.value //am/pm
+                                if(field.subfields[0].frmControl.value)
+                                this.respJson[field.id] = selTime;
+                            }
+                        }
+                        else if ( field.type == "phone" ) {
+                            if ( field.subfields ) {
+                            
+                                let telePhone="";
+                                let code=""
+                                if(field.subfields[0] && field.subfields[0].frmControl.value)
+                                    code = field.subfields[0].frmControl.value;
+                                if(field.subfields.length>1 && field.subfields[1] && field.subfields[1].frmControl.value)
+                                    telePhone = field.subfields[1].frmControl.value;
+                                if(code) telePhone=code+'-'+telePhone
+                                if(telePhone)
+                                    this.respJson[field.id]=telePhone;
+                            }
+                        }
+                        else if ( field.type == "upload" ) {
+                            if ( field.submitValue ) {
+
+                                this.respJson[field.id] = field.submitValue;
+                            }
+                        }
+                    
+                        else if ( field.type == "rating" ) {
+                            this.respJson[field.id] = this.currentRate;
+                        }
+                        else if ( field.type == "productlist" && (!field.productList.total || field.productList.total==0) ) {
+                            this.showNotification('top', 'center','Your cart is empty','f',3000);
+                            this.submitButtonChange(btnField,false);
+                            return;
+                        }
+                        else if ( field.type == "productlist" && field.productList.total>0 ) {
+                        
+                            let payObserver=await  this.completePayment(this.frm);
+                        }
+                        else if ( field.type == "email" && value) {
+                            this.respJson[field.id] = value;
+                        }
+                        else if ( field.type == "slide-toggle" ) {
+                        if(field.checked)
+                            this.respJson[field.id] = "Accepted";
+                        
+                        }
+                        else if ( field.id && value)
+                            this.respJson[field.id] = value;
+                        console.log("after page no",page.pageNo, " response json------->",this.respJson);
+
+                    }
+            
+                }
+             }
+
+
             const isCmp = await  this.getPublicIP();
             console.log("Saving form--this.isPaymentForm--->",this.isPaymentForm);
             console.log("Saving form--this.isPaymentSuceess--->",this.isPaymentSuceess);

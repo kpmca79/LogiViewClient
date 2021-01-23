@@ -12,6 +12,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { Route, Router } from "@angular/router";
 import { ConfirmDialogComponent } from 'app/confirm-dialog/confirm-dialog.component';
 import Utils from 'app/util/utils';
+import { FormField } from 'app/model/FormField';
 
 @Component({
   selector: 'myforms',
@@ -87,10 +88,18 @@ export class MyformsListComponent implements OnInit {
       dialogConfig.autoFocus = true;
       dialogConfig.width = '760px';
       dialogConfig.height = '400px';
+      let submiitField:FormField= new FormField();
+      submiitField.type="submit";
+      submiitField.name="Submit";
+      submiitField.title="Please wait";
+      let formFields:FormField[]=[];
+      formFields.push(submiitField);
       this.frm ={ id: '',name: '',type:'form',title: '',path: 'sample',
               status: 'Active',bgColor: '#cacaca',bgImage: '5d7411844c05a60408df1d49',header: '',
-              footer: '',theme:'dark-theme',formFields:[], _links:'',style:'',btnStyle:'',opacity:0,
+              footer: '',theme:'dark-theme',formFields:formFields, _links:'',style:'',btnStyle:'',opacity:0,
               response:0,
+              layout:"classic",
+              pages:[],
               pageBGColor:'',
               formBgImage:'',
               formImages:[],
@@ -113,6 +122,7 @@ export class MyformsListComponent implements OnInit {
           console.log(result)
           if ( result==true ) {
               console.log("create result---->",dialogConfig.data.title);
+              console.log("Form type id is ",dialogConfig.data.layout)
               this.frm.title=dialogConfig.data.title;
               this.frm.name=dialogConfig.data.title;
               this.createForm();
