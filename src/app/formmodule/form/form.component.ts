@@ -200,6 +200,10 @@ export class FormComponent implements OnInit {
         }
 
     }
+    rowClicked(field)
+    {
+        console.log("field div clickeed field name =",field.name);
+    }
     ngOnInit() {
         let url: any
         this.dummyController=new FormControl( '', [Validators.maxLength( 10000)] );

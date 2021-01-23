@@ -7,7 +7,7 @@
 <!-- <div class="{{frm.theme}}"> -->
 <!-- <div class="{{frm.theme}}-custom"> -->
 
-<div *ngIf="pageNo==1" class="head-div">
+<div *ngIf="pageNo==1" class="head-div" >
 	<div class="title nav-color" [style]="sanitizeHTML(bgStyle)" [style.max-width.px]=frm.formwidth>
 		
 		<div [froalaView]="frm.title" style="flex-grow:1;" toolbarInline="true" ></div>
@@ -38,7 +38,7 @@
 	
 	
 	
-	<div 	 cdkDrag [cdkDragDisabled]="!isBuild || field.type==='submit'" *ngFor="let field of inputPageFields; index as i" [ngSwitch]="field.type">
+	<div  cdkDrag [cdkDragDisabled]="!isBuild || field.type==='submit'"  *ngFor="let field of inputPageFields; index as i" [ngSwitch]="field.type">
 <!-- 		<div *ngSwitchCase="'textbox'" > -->
 <!-- 				<mat-form-field appearance="outline" class="example-full-width"     [style]="sanitizeHTML(frm.style)"> -->
 <!-- 				    <input  matInput name="{{field.title}}" [formControl]="field.frmControl" value="" required="{{field.required}}"> -->
@@ -47,7 +47,7 @@
 <!-- 				</mat-form-field> -->
 <!--   		</div> -->
   		
-  		<div *ngSwitchCase="'textbox'" class="flex frm-mat">
+  		<div *ngSwitchCase="'textbox'" class="flex row-field frm-mat ">
 <!-- 				appearance="outline" -->
 				
 				<mat-form-field  class="example-full-width"     [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
@@ -64,15 +64,15 @@
 				</mat-form-field>
 				<button *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert" class="icon-color"></mat-icon></button>
   		</div>
-  		<div *ngSwitchCase="'signature'" class="flex frm-mat">
+  		<div *ngSwitchCase="'signature'" class="flex row-field frm-mat">
 			<div class="example-full-width signature" style="overflow:auto"  >
 				<signaturepad [actvieFormField]="field" [frm]="frm" ></signaturepad>
 			</div>
 				<button *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert" class="icon-color"></mat-icon></button>
   		</div>
   		
-  		<div  *ngSwitchCase="'survey'" class="flex frm-mat">
-				<div class="inline example-full-width field-row">				
+  		<div  *ngSwitchCase="'survey'" class="flex row-field frm-mat">
+				<div class="inline example-full-width">				
 					<surveytable *ngIf="isBuild" [actvieFormField]="field" [frm]="frm" style="width:93%;"></surveytable>
 					<surveytable *ngIf="!isBuild" [actvieFormField]="field" [frm]="frm" style="width:100%;"></surveytable>
 					<div>
@@ -80,7 +80,7 @@
 					</div>
 				</div>
   		</div>
-  		<div  *ngSwitchCase="'productlist'" class="flex frm-mat">
+  		<div  *ngSwitchCase="'productlist'" class="flex row-field frm-mat">
 				<div class="inline example-full-width field-row">				
 					<productlist  [actvieFormField]="field" [frm]="frm" [drpDownFontColor]="drpDownFontColor" [drpDownBGColor]="drpDownBGColor"></productlist>
 					<div>
@@ -89,7 +89,7 @@
 				</div>
   		</div>
   		
-  		<div  *ngSwitchCase="'captcha'" class="flex frm-mat">
+  		<div  *ngSwitchCase="'captcha'" class="flex row-field frm-mat">
 				<div class="inline example-full-width field-row">
 					<div class="flex-col" [style]="sanitizeHTML(frm.style)">
 						<div style="margin-bottom:5px;">{{field.title}}</div>
@@ -102,7 +102,7 @@
 					</div>
 				</div>
   		</div>
-  		<div  *ngSwitchCase="'numberspinner'" class="flex frm-mat">
+  		<div  *ngSwitchCase="'numberspinner'" class="flex row-field frm-mat">
 				<div class="inline col-100 field-row" [style]="sanitizeHTML(frm.style)">
 					<div class="num-spinner col-50">
 						<span style="margin-right:20px;">{{field.name}}</span>
@@ -123,7 +123,7 @@
   		
   		
   		
-  		<div *ngSwitchCase="'email'" class="flex frm-mat">
+  		<div *ngSwitchCase="'email'" class="flex row-field frm-mat" (click)="rowClicked(field)">
 			<mat-form-field   class="example-full-width" [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
 				<mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
 			    <input matInput name="{{field.title}}" [formControl]="isBuild?dummyController:field.frmControl"  value="" required="{{field.required}}" placeholder="{{field.title}}">
@@ -134,9 +134,9 @@
 	 			 <mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.note}}</mat-hint>
 				<mat-icon matSuffix>email</mat-icon>
 		  	</mat-form-field>
-		  	 <button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
-  		</div>
-  		<div *ngSwitchCase="'rating'">
+			   <button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
+		</div>
+  		<div *ngSwitchCase="'rating'" class="row-field">
 			<ng-template #ratingtemplate let-fill="fill">
 	    		<span class="gift" [class.full]="fill === 100">
 	      			<span class="half" [style.width.%]="fill"><i class="material-icons">{{field.types}}</i></span><i class="material-icons">{{field.types}}</i>
@@ -154,7 +154,7 @@
   				</div>	
   			</div>
 		</div>	
-  		<div *ngSwitchCase="'number'"  class="flex frm-mat">
+  		<div *ngSwitchCase="'number'"  class="flex row-field frm-mat">
 				<mat-form-field   class="example-half-width"  [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
 				    <mat-label [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-label>
 					<input matInput name="{{field.title}}" [formControl]="isBuild?dummyController:field.frmControl"  value="" required="{{field.required}}" 
@@ -164,7 +164,7 @@
 		  		</mat-form-field>
 		  		<button *ngIf="isBuild"  mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
   		</div>
-  		<div *ngSwitchCase="'upload'" >
+  		<div *ngSwitchCase="'upload'" class="row-field">
 			<div   class="example-full-width inline"  [style]="sanitizeHTML(frm.style)">
 				
 					<app-file-upload 
@@ -186,7 +186,7 @@
 			</div>
   		</div>
   	
-  		<div *ngSwitchCase="'textarea'" class="flex frm-mat">
+  		<div *ngSwitchCase="'textarea'" class="flex row-field frm-mat">
   				
   				<mat-form-field class="example-full-width" [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
     				<textarea matInput  rows="4" style="overflow:hidden" cols="20" [formControl]="isBuild?dummyController:field.frmControl" placeholder="Enter your {{field.title}}"></textarea>
@@ -197,7 +197,7 @@
     			
     			<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
   		</div>
-  		<div *ngSwitchCase="'section'" class="inline">
+  		<div *ngSwitchCase="'section'" class="inline row-field">
   			
 			<mat-list class="example-full-width"  [style]="sanitizeHTML(frm.style)">
 				<mat-list-item class="section-text" [style]="sanitizeHTML(field.sectionStyle)">{{field.name}}</mat-list-item>
@@ -205,7 +205,7 @@
 			</mat-list>
 			<button  *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
 		</div>
-  		<div *ngSwitchCase="'fullname'" class="inline frm-mat"  >
+  		<div *ngSwitchCase="'fullname'" class="inline row-field frm-mat"  >
   			<div class="multifield">
   				<ng-container *ngFor="let subfield of field.subfields">
 					<ng-container *ngIf="subfield.visible==true" >	
@@ -227,7 +227,7 @@
 				<button *ngIf="isBuild"  mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
 			</div>
  		</div>
-		<div *ngSwitchCase="'phone'" class="multifield">
+		<div *ngSwitchCase="'phone'" class="multifield row-field frm-mat">
 			
 			<!-- <div class="width-30 frm-mat"><label  [style]="sanitizeHTML(frm.style)">{{field.name}}</label></div> -->
 			<div class="width-30 frm-mat" *ngIf="field.subfields[0].visible">
@@ -260,7 +260,7 @@
   			</div>
 			<button *ngIf="isBuild" style="text-align:right;" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
 		</div>
-		<div *ngSwitchCase="'time'">
+		<div *ngSwitchCase="'time'" class="row-field">
 			<mat-list class="example-full-width" >
   				<mat-list-item class="section-text" [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-list-item>
   				<mat-divider class="devider"></mat-divider>
@@ -308,7 +308,7 @@
 		 				<button *ngIf="isBuild" style="text-align:right;" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
 			</div>
 		</div>
-		<div *ngSwitchCase="'address'" class="inline frm-mat">
+		<div *ngSwitchCase="'address'" class="inline row-field frm-mat">
 			
 	  		<div  class="multifield">
 		  		<ng-container *ngFor="let subfield of field.subfields">
@@ -337,7 +337,7 @@
 		
 		
   		<div *ngSwitchCase="'submit'" class="button-row">
-				<div class="submit-row inline frm-mat">
+				<div class="submit-row inline ">
 <!-- 							<button ngcontent-oht-c21="" (click)="onSubmit()" type="submit" -->
 <!-- 								class="btn btn-success mat-raised-button" -->
 <!-- 								[style]="sanitizeHTML(frm.btnStyle)">{{field.title}} -->
@@ -353,12 +353,12 @@
 								    
 		</div>
 		<div *ngSwitchCase="'next'"  class="button-row">
-			<div class="submit-row inline-prevnext frm-mat justify-right">
+			<div class="submit-row inline-prevnext justify-right">
 					   <button class="ripple-button ripple next-width-30" style="flex-grow: 0;" [style]="sanitizeHTML(frm.btnStyle)"  (click)="next()">Next</button>
 			</div>
 		</div>
 		<div *ngSwitchCase="'prevnext'"  class="button-row">
-			<div class="submit-row inline-prevnext frm-mat justify-right">
+			<div class="submit-row inline-prevnext  justify-right">
 				<button class="ripple-button ripple prev-width-30"  (click)="previous()">Previous</button>	   
 				<div class="width-40"></div>
 				<button class="ripple-button ripple next-width-30" [style]="sanitizeHTML(frm.btnStyle)"  (click)="next()">Next</button>
@@ -366,7 +366,7 @@
 		</div>
 		
 		<div *ngSwitchCase="'prevsubmit'" class="button-row">
-			<div class="submit-row inline-prevnext frm-mat justify-right">
+			<div class="submit-row inline-prevnext  justify-right">
 				<button class="ripple-button ripple prev-width-30"   (click)="previous()">Previous</button>	   
 				<div class="width-40"></div>
 				<button class="ripple-button ripple next-width-30" [style]="sanitizeHTML(frm.btnStyle)" type="submit" (click)="onSubmit($event,field)">
@@ -382,7 +382,7 @@
   		
   		<!-- full name end -->
   		
-  		<div *ngSwitchCase="'slide-toggle'" class="inline frm-mat">
+  		<div *ngSwitchCase="'slide-toggle'" class="inline row-field frm-mat">
       			<div style="flex-grow: 1;">
       				
       				<mat-slide-toggle disableRipple="true" class="example-full-width" [color]="white" [style]="sanitizeHTML(frm.style)"
@@ -396,7 +396,7 @@
       			<button *ngIf="isBuild"  mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert" class="icon-color" style="margin-top:-18px;" ></mat-icon></button>
       			</div>
   		</div>
-		<div *ngSwitchCase="'date-picker'" class="flex frm-mat">
+		<div *ngSwitchCase="'date-picker'" class="flex row-field frm-mat">
 		      <div style="flex-grow: 1;">
 		    
 		      <mat-form-field class="example-half-width" [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
@@ -445,14 +445,14 @@
 <!-- 		      <h3>{{calOpen}}</h3> -->
 		</div> 		  		
 
-  		<div *ngSwitchCase="'dropdown'" class="inline frm-mat">
+  		<div *ngSwitchCase="'dropdown'" class="inline row-field frm-mat">
 <!--   				<mat-form-field appearance="outline" class="example-half-width" [style]="sanitizeHTML(frm.style)" > -->
 <!--     				<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder> -->
 <!--     				<mat-select   [(value)]="field.selectedOption" [formControl]="field.frmControl"> -->
 <!--     					<mat-option [style]="sanitizeHTML(compStyle)" *ngFor="let option of field.options" value="{{option}}">{{option}}</mat-option> -->
 <!--     				</mat-select> -->
 <!--     			</mat-form-field> -->
-					<div>
+					<div class="example-half-width">
     				<ng-container *ngIf="!field.dropDownMultiLevel">    
     					   <mat-form-field  class="example-full-width frm-mat" appearance="{{frm.inputStyle}}" [style]="sanitizeHTML(frm.style)" >
     					   	<mat-icon *ngIf="field.selectedIcon" matPrefix style="margin-right:15px;">{{field.selectedIcon}}</mat-icon>
