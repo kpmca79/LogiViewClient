@@ -1,7 +1,7 @@
 <div class="ngLoader"></div>
 <form-topnav  page="build" [formID]="formID" [isChecked]="true" [link]="preview"></form-topnav>
 <div *ngIf="frm">
-	<div [style]="sanitizeHTML(bgStyle)" style="padding-top:10vh;min-height: 110vh; height: 100%;">
+	<div [style]="sanitizeHTML(bgStyle)" style="padding-top:10vh;min-height: 100vh; height: 100%;">
 		<div class="main-div">
 			<div  class="main-form-class"  id="form" [style.max-width.px]=frm.formwidth >
 				<app-form [inputPageFields]="currentFields"  [mode]="preview" [frm]="frm" [formID]="frm.id"></app-form>
