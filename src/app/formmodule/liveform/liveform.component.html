@@ -1,6 +1,6 @@
 <div class="ngLoader"></div>
 <div *ngIf="frm">
-	<div [style]="sanitizeHTML(bgStyle)" style="min-height: 110vh; height: 100%;">
+	<div [style]="sanitizeHTML(bgStyle)" style="padding-top:10vh;min-height: 110vh; height: 100%;">
 		<div class="main-div">
 			<div class="main-form-class"  [style.max-width.px]=frm.formwidth>
 				<app-form [inputPageFields]="frm.pages[0].pageFields" [mode]="live" [frm]="frm" [formID]="frm.id"></app-form>

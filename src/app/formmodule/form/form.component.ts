@@ -85,6 +85,8 @@ export class FormComponent implements OnInit {
     //  $: any;
     emailFormControl = new FormControl( '', [Validators.email] );
     bgStyle = '';
+    
+    cardFormStyle=""
     drpDownBGColor;
     drpDownFontColor;
     publicIPAddr='Not found';
@@ -145,8 +147,7 @@ export class FormComponent implements OnInit {
             this.inputPageFields=this.frm.pages[this.currentPageNo].pageFields;
             this.currentPageNo=this.currentPageNo+1;
         }
-        else
-            return;
+        this.overrideMeterialCSS();
         
         
     }
@@ -269,19 +270,29 @@ export class FormComponent implements OnInit {
     
     
     
-    reactOnMessage( msg: any ) {
+    reactOnMessage( msg: any ):any {
         console.log("Broadcaasted message in form ts ",msg.id)
+        if(msg && msg.changeCSS)
+        {   console.log("change css found calling method to change css" )
+            this.overrideMeterialCSS();
+            return '';
+        }
+        console.log("do not return after changing css" )
         if(msg.id=='setting' || msg.id=='close')
-            return;
+            return '';
         else if(msg.id=='dayFilter')
         {
             this.setDayFilter(msg.field);
-            return;
+            return '';
         }
-        this.frm = msg;
-        if ( this.frm ) {
-            this.setFormBGStyle();
+        if(msg.title)
+        {
+            this.frm = msg;
+            if ( this.frm ) {
+                this.setFormBGStyle();
+            }
         }
+        
         
     }
     resolved($event)
@@ -294,6 +305,8 @@ export class FormComponent implements OnInit {
     }
     setFormBGStyle() {
         this.bgStyle = '';
+        if(this.frm.layout && this.frm.layout=='card')
+            this.bgStyle="padding-top:30px;border-radius:10px;"
         if ( this.frm.opacity && this.frm.opacity != 0 )
             this.bgStyle = 'opacity:' + ( 1 - ( this.frm.opacity / 100 ) ).toPrecision( 2 ) + ";";
         if ( this.frm.formwidth && this.frm.formwidth != 0 )
@@ -419,6 +432,9 @@ export class FormComponent implements OnInit {
     public overrideMeterialCSS() {
         let tmpthis = this;
         //      SOURCE OF LIGH OR DARK COLOR CHECK :https://codepen.io/andreaswik/pen/YjJqpK?__cf_chl_jschl_tk__=b39d8d28aa7e02d1b2974fbe64031e57e4309f84-1591907993-0-AShUPBA3mpZ4RXMLVvf1KOILLeMaYDIAXbqnnMEbioAmteUvsKn0f-jfizts_NpZUuBOXDG1cr79fzlFIyFrkYn1q0011MYoLVy6TPnugzAWmZZ_LA0EbcRb0u35CybvI1a-KritJApWyZKuQ2VU-eQIPUuDdLG_xQRICX9Mtt6yHgSBeJyeC1iGJd8lyoHegA8dzhIoaIncMwXUddBlBmogq2qtD9wTVcm47utUlP0OzD9kWGO-0u7rNllB2KhiBms6HYVwnRtWJfcuB8i7wz-9pwR1FLNYgEBooQDJqiEyz6YxJDSPhsE421h4J2tugV9s1ESdbJag5z6o85T6kKMEAjvwAzOKXEZ2f5XHPfJ6
+        
+        if(this.frm.layout && this.frm.layout=='card')
+            this.cardFormStyle="padding-top:45px;"
         let fontcolor;
         if(tmpthis.frm.style)
             fontcolor=this.frmSrv.getStyleValue(tmpthis.frm.style, "fntColor");
@@ -521,8 +537,9 @@ export class FormComponent implements OnInit {
         }
 
     public remove( field ) {
-        var index = this.inputPageFields.indexOf( field );
-        this.inputPageFields.splice( index, 1 );
+        field.hardDelete=true;
+        //var index = this.inputPageFields.indexOf( field );
+        //this.inputPageFields.splice( index, 1 );
         //            this.saveForm(false);
     }
     public dateFilter(field)

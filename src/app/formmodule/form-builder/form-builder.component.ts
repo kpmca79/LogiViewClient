@@ -135,6 +135,8 @@ export class FormBuilderComponent implements OnInit {
     }
     reactOnMessage( event: any ) {
 
+        if(event.changeCSS)
+            return;
         if ( event.id == 'dayFilter' )
             return;
         else if ( event.id == 'setting' ) {
@@ -210,32 +212,7 @@ export class FormBuilderComponent implements OnInit {
         }
 
     }
-    addPage(){
-        
-        let pageFields:FormField[]=[]; 
-        let submitField:FormField=new FormField();
-        let totalPages=this.frm.pages.length;
-        let totalPageFields=this.frm.pages[totalPages-1].pageFields.length;
-        if(totalPageFields==1) return; // if previous page have only submit dont add page.
-        
-        if(totalPages==1){
-            this.frm.pages[totalPages-1].pageFields[totalPageFields-1].name="Next";
-            this.frm.pages[totalPages-1].pageFields[totalPageFields-1].type="next";
-        }
-        if(totalPages>1){
-            this.frm.pages[totalPages-1].pageFields[totalPageFields-1].name="PreviousNext";
-            this.frm.pages[totalPages-1].pageFields[totalPageFields-1].type="prevnext";
-        }
-        
-        submitField.type="prevsubmit";
-        submitField.name="Submit";
-        submitField.title="Please wait...";
-        pageFields.push( submitField );
-        let currentPages=this.frm.pages.length;
-        let pageObj:any={pageNo:currentPages+1,pageFields:pageFields};
-        this.frm.pages.push(pageObj);
-
-    }
+  
     
 
     ngOnInit() {
@@ -350,8 +327,13 @@ export class FormBuilderComponent implements OnInit {
                 subfield.frmControl = new FormControl('',[]);
             }
         let totalpages=this.frm.pages.length;
-        let fieldssize=this.frm.pages[totalpages-1].pageFields.length;
-        this.frm.pages[totalpages-1].pageFields.splice(fieldssize-1,0,fieldToAdd);
+        if(this.frm.layout && this.frm.layout=="card")
+            this.addPage(fieldToAdd);
+        else    
+        {
+            let fieldssize=this.frm.pages[totalpages-1].pageFields.length;
+            this.frm.pages[totalpages-1].pageFields.splice(fieldssize-1,0,fieldToAdd);
+        }
 
         //console.log("After adding total selected fields:",this.students2.length);
         //this.students2.push(fieldToAdd);
@@ -361,7 +343,7 @@ export class FormBuilderComponent implements OnInit {
         let pageNo=this.frm.pages.indexOf(deletePage)+1;
         console.log("Current page number = ",pageNo)
         let totalPages=this.frm.pages.length;
-        if(totalPages==1)return;
+        if(totalPages==1 && this.frm.layout!='card')return;
         let currPage=this.frm.pages[pageNo-1];
         for(let fld of currPage.pageFields){
             if(fld.type=="next"){
@@ -379,8 +361,10 @@ export class FormBuilderComponent implements OnInit {
                     }
                 }
             }
-            if(fld.type=="prevsubmit"){
+            if(fld.type=="prevsubmit" && pageNo>1){
+               
                 let prevpage=this.frm.pages[pageNo-2];
+
                 for(let f of prevpage.pageFields){
                     if(f.type=="next") {
                         f.type="submit";
@@ -417,6 +401,87 @@ export class FormBuilderComponent implements OnInit {
         this.frm.pages.splice(pageNo-1,1);
         this.utils.showNotification('top', 'right','Page delete','i',3000)
         console.log("pages remain=",this.frm.pages.length);
+
+    }
+    addPage(std:FormField){
+        
+        let pageFields:FormField[]=[]; 
+        let submitField:FormField=new FormField();
+        let totalPages=this.frm.pages.length;
+        let totalPageFields=0;
+        if(this.frm.pages.length>0)
+             totalPageFields=this.frm.pages[totalPages-1].pageFields.length;
+        if(totalPageFields==1) return; // if previous page have only submit dont add page.
+        
+        if(totalPages==1){
+            this.frm.pages[totalPages-1].pageFields[totalPageFields-1].name="Next";
+            this.frm.pages[totalPages-1].pageFields[totalPageFields-1].type="next";
+        }
+        if(totalPages>1){
+            this.frm.pages[totalPages-1].pageFields[totalPageFields-1].name="PreviousNext";
+            this.frm.pages[totalPages-1].pageFields[totalPageFields-1].type="prevnext";
+        }
+        
+        submitField.type="prevsubmit";
+        submitField.name="Submit";
+        submitField.title="Please wait...";
+        if(std && std!=null)
+            pageFields.push(std)
+        pageFields.push( submitField );
+        let currentPages=this.frm.pages.length;
+        let pageObj:any={pageNo:currentPages+1,pageFields:pageFields};
+        this.frm.pages.push(pageObj);
+
+    }
+    dropPage(event:CdkDragDrop<string[]>,pageNo:number){
+        console.log("Droppage called");
+        console.log("page number:",pageNo);
+        let pageno=0;
+        let preContainerId=event.previousContainer.id
+        if(!preContainerId.startsWith('cdk'))
+        {
+           console.log("Previous container id ",event.previousContainer.id); 
+           console.log("current container id ",event.container.id) 
+        }
+        
+        if(event.container==event.previousContainer){
+            
+            console.log("Inside pagedrop same container event called");
+            let fromPage= this.frm.pages[event.previousIndex];
+            let toPage= this.frm.pages[event.currentIndex];
+
+            let tmpField=fromPage.pageFields[fromPage.pageFields.length-1];
+            fromPage.pageFields[fromPage.pageFields.length-1]=toPage.pageFields[toPage.pageFields.length-1];
+            toPage.pageFields[toPage.pageFields.length-1]=tmpField;
+            this.frm.pages[event.previousIndex]=this.frm.pages[event.currentIndex];
+            this.frm.pages[event.currentIndex]=fromPage;
+            
+            
+            //moveItemInArray( event.container.data, event.previousIndex, event.currentIndex );
+
+            return;
+        }
+        if(event.container!=event.previousContainer){
+            console.log("Inside pagedrop different container event called");
+            const tempVal2: any = event.previousContainer.data[event.previousIndex];
+            let std: FormField = new FormField();
+            std = JSON.parse( JSON.stringify( tempVal2 ) ) as FormField;
+            std.selectedOption = ['option1'];
+            std.id=this.stdSrv.getRandom();
+            std.frmControl = new FormControl( '', [] );;
+            console.log("dropPage event  in builder, adding field ",std.name);
+            if(std.subfields)
+            {    std.subfields.forEach( field=>{
+                field.frmControl=new FormControl('',[])
+                field.id=this.stdSrv.getRandom();
+                console.log("dropPage event  in builder, subfield form controls ",field.frmControl);
+            })}
+           // this.frm.pages.push({pageNo:this.frm.pages.length+1,pageFields:[std]});
+            this.addPage(std);
+           
+            
+            this.mService.produce({changeCSS:true});
+        }
 
     }
     drop1(event:CdkDragDrop<string[]>,pageNo:number){
@@ -466,6 +531,7 @@ export class FormBuilderComponent implements OnInit {
             this.chgEvent.elementadd = false;
             this.chgEvent.elementadd = true;
             this.chgEvent.elementadd = false;
+            this.mService.produce({changeCSS:true});
         }
 
     }

@@ -59,6 +59,23 @@
 .form-page:first-child{
     margin-top:0px;
 }
+.no-card-msg{
+    background: rgb(239 189 80);
+    max-width: 310px;
+    padding: 15px;
+    border: 2px dashed;
+    color: #313130;
+    font-size: 15px;
+}
+.card-mgs-block{
+	text-align:center;
+	width:100%;
+	color: var(--input-border-color);
+    display:flex;
+    justify-content:center;
+
+}
+
 
 .property-icon-right
 {

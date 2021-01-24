@@ -1,135 +1,200 @@
 <div class="ngLoader"></div>
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <form-topnav page="build" [formID]="formID" [isChecked]="false" link="build"></form-topnav>
 <div *ngIf="!bgURLDirect" class="col-md-12">
-         <div class="card">
-                 <mat-progress-bar color="warn" mode = "indeterminate" ></mat-progress-bar>
-           </div>
+	<div class="card">
+		<mat-progress-bar color="warn" mode="indeterminate"></mat-progress-bar>
+	</div>
 </div>
 <div *ngIf="frm" [style]="sanitizeHTML(bgStyle)">
-<div *ngIf="!opened" class="left-handle">
-<div class="property-icon-left" >
-	<div class="ripple-icon">
-		<span><i class="fa fa-plus  fa-1x circle-icon"  (click)="openCloseLeftPanel()"></i></span>
-	</div>
-</div>
-<div class="property-icon-left1 bar">
-	Add Form Elements
-	</div>
-</div>
-<div cdkDropListGroup>
-<mat-drawer-container>
-	<mat-drawer #drawerleft  mode="side"  [(opened)]="opened" >
-	<div class="sidebar-right"  danger data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
-		<div class="head">
-			Form Elements
-			<span class="left-nav-icon">
-				<i class="fa fa-times" aria-hidden="true" (click)="openCloseLeftPanel()"></i>
-			</span>
-		</div>
-		<div class="sidebar-wrapper nav-color">
-			<div style="height: calc(100vh - 95px); overflow:hidden">
-				<mat-tab-group mat-align-tabs="center" class="nav-content tab-header" disablePagination="false"> 
-					<mat-tab label="GENERAL" class="tab-menu">
-					<div style="height: calc(100vh - 150px);">
-					<perfect-scrollbar>
-						<ul cdkDropList  [cdkDropListData]="studentsnormal" (cdkDropListDropped)="drop($event)" class="nav">
-							<li *ngFor="let student of studentsnormal" cdkDrag class="toolbox-toolbar-row cdk-drag ng-star-inserted">
-								<a class="nav-link" style="padding:0px !important">
-									<div (click)="addElement(student)"class="toolbox-item-row">
-									<div *ngIf="student.type!='group'">
-									<i *ngIf="student.name==='TextBox'" class="toolbox-icon">text_fields</i> <i
-									*ngIf="student.name==='Slide Toggle'" class="toolbox-icon">toggle_off</i>
-									<i *ngIf="student.name==='TextArea'" class="toolbox-icon">short_text</i>
-									<i *ngIf="student.name==='DropDown'" class="toolbox-icon">format_list_bulleted</i>
-									<i *ngIf="student.name==='Date Picker'" class="toolbox-icon">calendar_today</i>
-									<i *ngIf="student.name==='Section'" class="toolbox-icon">border_horizontal</i>
-									<i *ngIf="student.name==='Full Name'" class="toolbox-icon">person</i>
-									<i *ngIf="student.name==='Email'" class="toolbox-icon">email</i>
-									<i *ngIf="student.name==='Address'" class="toolbox-icon">location_on</i>
-									<i *ngIf="student.name==='Phone number'" class="toolbox-icon">phone</i>
-									<i *ngIf="student.name==='Time'" class="toolbox-icon">access_time</i>
-									<i *ngIf="student.name==='Submit'" class="toolbox-icon">crop_7_5</i>
-									<i *ngIf="student.name==='Number'" class="toolbox-icon">filter_2</i>
-									<i *ngIf="student.type==='upload'" class="toolbox-icon">cloud_upload</i>
-									<i *ngIf="student.type==='rating'" class="toolbox-icon">star</i>
-									<i *ngIf="student.type==='signature'" class="toolbox-icon">gesture</i>
-									<i *ngIf="student.type==='survey'" class="toolbox-icon">view_comfy</i>
-									<i *ngIf="student.type==='numberspinner'" class="toolbox-icon">iso</i>
-									
-									</div>
-									<div *ngIf="student.type!='group'" class="toolbox-item-head">{{student.dispName}}</div>
-									<div *ngIf="student.type=='group'" class="toolbox-item-group">{{student.name}}</div>
-									</div>
-								</a>
-							</li>
-						</ul>
-						</perfect-scrollbar>
-						</div>
-					</mat-tab>
-					<mat-tab label="PAYMENTS" class="tab-menu"></mat-tab>
-					<mat-tab label="WIDGETS" class="tab-menu">
-					<div style="height: calc(100vh - 150px);">
-					<perfect-scrollbar>
-						<ul cdkDropList [cdkDropListData]="studentswidgets" (cdkDropListDropped)="drop($event)"class="nav">
-							<li *ngFor="let student of studentswidgets" cdkDrag class="toolbox-toolbar-row cdk-drag ng-star-inserted">
-								<a class="nav-link" style="padding:0px !important">
-									<div class="toolbox-item-row">
-									<div *ngIf="student.type!='group' && student.type=='captcha'">
-										<img src="/assets/icon/Recaptcha.png" width="100%" height="100%" style="background:white" class="toolbox-image" />
-									</div>
-									<div *ngIf="student.type!='group' && student.type=='productlist'">
-										<img src="/assets/icon/cart.png" width="100%" height="100%" style="background:white" class="toolbox-image" />
-									</div>
-									<div *ngIf="student.type!='group'" class="toolbox-item-head">{{student.dispName}}</div>
-									<div *ngIf="student.type=='group'" class="toolbox-item-group">{{student.name}}</div>
-									</div>
-								</a>
-							</li>
-						</ul>
-						</perfect-scrollbar>
-						</div>
-					
-					</mat-tab>
-				</mat-tab-group>
+	<div *ngIf="!opened" class="left-handle">
+		<div class="property-icon-left">
+			<div class="ripple-icon">
+				<span><i class="fa fa-plus  fa-1x circle-icon" (click)="openCloseLeftPanel()"></i></span>
 			</div>
-			
 		</div>
-		
-	</div> <!-- left toolbar ends -->
-	 
-	</mat-drawer>
-	<div class="ngLoader"></div>
-	<div class="main-content nav-color">
-		<div class="container-fluid">
-			<div class="main-div">
-					<div class="property-icon-right">
-						<span class="fa-stack fa-lg">
-					  	    <i class="fa fa-paint-brush  fa-1x circle-icon" (click)="openCloseRightPanelForForm()"></i>
+		<div class="property-icon-left1 bar">
+			Add Form Elements
+		</div>
+	</div>
+	<div cdkDropListGroup>
+		<mat-drawer-container>
+			<mat-drawer #drawerleft mode="side" [(opened)]="opened">
+				<div class="sidebar-right" danger data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
+					<div class="head">
+						Form Elements
+						<span class="left-nav-icon">
+							<i class="fa fa-times" aria-hidden="true" (click)="openCloseLeftPanel()"></i>
 						</span>
 					</div>
-					<div *ngFor="let page of frm.pages" class="form-page" [style]="sanitizeHTML(frmBGStyle)">
-					<div cdkDropList id="{{page.pageNo}}" [cdkDropListData]="page.pageFields" (cdkDropListDropped)="drop1($event,page.pageNo)" style="position:relative;" >
-						
-							<div  class="form-main" id="form"  [style]="sanitizeHTML(frmBGStyle)">
-									<app-form [inputPageFields]="page.pageFields" [frm]="frm" [pageNo]="page.pageNo" [mode]="build" [formID]="formID"></app-form>
+					<div class="sidebar-wrapper nav-color">
+						<div style="height: calc(100vh - 95px); overflow:hidden">
+							<mat-tab-group mat-align-tabs="center" class="nav-content tab-header"
+								disablePagination="false">
+								<mat-tab label="GENERAL" class="tab-menu">
+									<div style="height: calc(100vh - 150px);">
+										<perfect-scrollbar>
+											<ul cdkDropList [cdkDropListData]="studentsnormal"
+												(cdkDropListDropped)="drop($event)" class="nav">
+												<li *ngFor="let student of studentsnormal" cdkDrag
+													class="toolbox-toolbar-row cdk-drag ng-star-inserted">
+													<a class="nav-link" style="padding:0px !important">
+														<div (click)="addElement(student)" class="toolbox-item-row">
+															<div *ngIf="student.type!='group'">
+																<i *ngIf="student.name==='TextBox'"
+																	class="toolbox-icon">text_fields</i> <i
+																	*ngIf="student.name==='Slide Toggle'"
+																	class="toolbox-icon">toggle_off</i>
+																<i *ngIf="student.name==='TextArea'"
+																	class="toolbox-icon">short_text</i>
+																<i *ngIf="student.name==='DropDown'"
+																	class="toolbox-icon">format_list_bulleted</i>
+																<i *ngIf="student.name==='Date Picker'"
+																	class="toolbox-icon">calendar_today</i>
+																<i *ngIf="student.name==='Section'"
+																	class="toolbox-icon">border_horizontal</i>
+																<i *ngIf="student.name==='Full Name'"
+																	class="toolbox-icon">person</i>
+																<i *ngIf="student.name==='Email'"
+																	class="toolbox-icon">email</i>
+																<i *ngIf="student.name==='Address'"
+																	class="toolbox-icon">location_on</i>
+																<i *ngIf="student.name==='Phone number'"
+																	class="toolbox-icon">phone</i>
+																<i *ngIf="student.name==='Time'"
+																	class="toolbox-icon">access_time</i>
+																<i *ngIf="student.name==='Submit'"
+																	class="toolbox-icon">crop_7_5</i>
+																<i *ngIf="student.name==='Number'"
+																	class="toolbox-icon">filter_2</i>
+																<i *ngIf="student.type==='upload'"
+																	class="toolbox-icon">cloud_upload</i>
+																<i *ngIf="student.type==='rating'"
+																	class="toolbox-icon">star</i>
+																<i *ngIf="student.type==='signature'"
+																	class="toolbox-icon">gesture</i>
+																<i *ngIf="student.type==='survey'"
+																	class="toolbox-icon">view_comfy</i>
+																<i *ngIf="student.type==='numberspinner'"
+																	class="toolbox-icon">iso</i>
+
+															</div>
+															<div *ngIf="student.type!='group'"
+																class="toolbox-item-head">{{student.dispName}}</div>
+															<div *ngIf="student.type=='group'"
+																class="toolbox-item-group">{{student.name}}</div>
+														</div>
+													</a>
+												</li>
+											</ul>
+										</perfect-scrollbar>
+									</div>
+								</mat-tab>
+								<mat-tab label="PAYMENTS" class="tab-menu"></mat-tab>
+								<mat-tab label="WIDGETS" class="tab-menu">
+									<div style="height: calc(100vh - 150px);">
+										<perfect-scrollbar>
+											<ul cdkDropList [cdkDropListData]="studentswidgets"
+												(cdkDropListDropped)="drop($event)" class="nav">
+												<li *ngFor="let student of studentswidgets" cdkDrag
+													class="toolbox-toolbar-row cdk-drag ng-star-inserted">
+													<a class="nav-link" style="padding:0px !important">
+														<div class="toolbox-item-row">
+															<div
+																*ngIf="student.type!='group' && student.type=='captcha'">
+																<img src="/assets/icon/Recaptcha.png" width="100%"
+																	height="100%" style="background:white"
+																	class="toolbox-image" />
+															</div>
+															<div
+																*ngIf="student.type!='group' && student.type=='productlist'">
+																<img src="/assets/icon/cart.png" width="100%"
+																	height="100%" style="background:white"
+																	class="toolbox-image" />
+															</div>
+															<div *ngIf="student.type!='group'"
+																class="toolbox-item-head">{{student.dispName}}</div>
+															<div *ngIf="student.type=='group'"
+																class="toolbox-item-group">{{student.name}}</div>
+														</div>
+													</a>
+												</li>
+											</ul>
+										</perfect-scrollbar>
+									</div>
+
+								</mat-tab>
+							</mat-tab-group>
+						</div>
+
+					</div>
+
+				</div> <!-- left toolbar ends -->
+
+			</mat-drawer>
+			<div class="ngLoader"></div>
+			<div class="main-content nav-color">
+				<div class="container-fluid">
+					<div class="main-div">
+						<div class="property-icon-right">
+							<span class="fa-stack fa-lg">
+								<i class="fa fa-paint-brush  fa-1x circle-icon"
+									(click)="openCloseRightPanelForForm()"></i>
+							</span>
+						</div>
+						<ngTemplate *ngIf="!frm.layout || frm.layout=='classic'">
+							<div *ngFor="let page of frm.pages" class="form-page" [style]="sanitizeHTML(frmBGStyle)">
+								<div cdkDropList id="{{page.pageNo}}" [cdkDropListData]="page.pageFields"
+									(cdkDropListDropped)="drop1($event,page.pageNo)" style="position:relative;">
+
+									<div class="form-main" id="form" [style]="sanitizeHTML(frmBGStyle)">
+										<app-form [inputPageFields]="page.pageFields" [frm]="frm" [pageNo]="page.pageNo"
+											[mode]="build" [formID]="formID"></app-form>
+									</div>
+									<button *ngIf="page.pageNo!=1" [style]="sanitizeHTML(pageBGStyle)"
+										class="btn-page-delete" (click)="deletePage(page)">X</button>
+
+								</div>
 							</div>
-							<button *ngIf="page.pageNo!=1" [style]="sanitizeHTML(pageBGStyle)" class="btn-page-delete" (click)="deletePage(page)">X</button>
-						
+						</ngTemplate>
+						<ngTemplate *ngIf="frm.layout && frm.layout=='card'" [style.max-width.px]=frm.formwidth style="width:100%;">
+							
+							<div cdkDropList id="pagedrop" [cdkDropListData]="frm.pages" (cdkDropListDropped)="dropPage($event,0)">
+							<div cdkDrag *ngFor="let page of frm.pages" class="form-page" [style]="sanitizeHTML(frmBGStyle)">
+								<div cdkDropList id="{{page.pageNo}}" [cdkDropListData]="page.pageFields" (cdkDropListDropped)="dropPage($event,page.pageNo)" style="position:relative;">
+									<div class="form-main" id="form" [style]="sanitizeHTML(frmBGStyle)">
+										<app-form [inputPageFields]="page.pageFields" [frm]="frm" [pageNo]="page.pageNo"[mode]="build" [formID]="formID">
+										</app-form>
+									</div>
+									<button *ngIf="page.pageNo!=1 || frm.layout=='card'" [style]="sanitizeHTML(pageBGStyle)"
+										class="btn-page-delete" (click)="deletePage(page)">X</button>
+								</div>
+							</div>
+							<div cdkDrag *ngIf="frm.layout=='card' && frm.pages.length==0" class="card-mgs-block">
+								<div class="no-card-msg">
+									<p>You have not selected any questions !!! Drag your question here to create your cards</p>
+								</div>
+							</div>
+							</div>
+						</ngTemplate>
 					</div>
+					<div *ngIf="frm.layout!='card'" class="page-break">
+						<button class="btn btn-breakpage" (click)="addPage(null)">+&nbsp;ADD NEW PAGE</button>
 					</div>
-		</div>
-			<div class="page-break"><button class="btn btn-breakpage" (click)="addPage()">+&nbsp;ADD NEW PAGE</button></div>
-		</div>
-		
+					
+				</div>
+
+
+			</div>
+			<mat-drawer id="right.pan" #drawerright position="end" mode="side" class="right-nav"
+				[(opened)]="rightOpened">
+				<div class="right-panel">
+					<form-property [(frm)]="frm" [formID]="formID" [(actvieFormField)]="actvieFormField"
+						[safeBgURL]="safeBgURL" [(type)]="type"></form-property>
+				</div>
+			</mat-drawer>
+		</mat-drawer-container>
+		<button class="btn btn-primary fixed-bottom-right" (click)="saveForm()">SAVE CHANGES</button>
 	</div>
-	<mat-drawer id="right.pan" #drawerright position="end" mode="side"  class="right-nav" [(opened)]="rightOpened">
-	<div class="right-panel">
-			<form-property [(frm)]="frm" [formID]="formID" [(actvieFormField)]="actvieFormField" [safeBgURL]="safeBgURL"  [(type)]="type"></form-property>
-	</div>
-	</mat-drawer>
-</mat-drawer-container>
-<button class="btn btn-primary fixed-bottom-right" (click)="saveForm()">SAVE CHANGES</button>
-</div>
 </div>

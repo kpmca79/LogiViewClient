@@ -55,7 +55,7 @@ export class FormField {
     survey:any;
     elemType:string;
     productList:ProductList;
-
+    hardDelete:boolean;
     
 
 

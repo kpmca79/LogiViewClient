@@ -7,7 +7,7 @@
 <!-- <div class="{{frm.theme}}"> -->
 <!-- <div class="{{frm.theme}}-custom"> -->
 
-<div *ngIf="pageNo==1" class="head-div" >
+<div *ngIf="pageNo==1 &&  frm.layout!='card'" class="head-div" >
 	<div class="title nav-color" [style]="sanitizeHTML(bgStyle)" [style.max-width.px]=frm.formwidth>
 		
 		<div [froalaView]="frm.title" style="flex-grow:1;" toolbarInline="true" ></div>
@@ -38,7 +38,7 @@
 	
 	
 	
-	<div  cdkDrag [cdkDragDisabled]="!isBuild || field.type==='submit'"  *ngFor="let field of inputPageFields; index as i" [ngSwitch]="field.type">
+	<div  cdkDrag [cdkDragDisabled]="!isBuild || field.type==='submit' || frm.layout==='card'"  *ngFor="let field of inputPageFields; index as i"  [ngSwitch]="field.type">
 <!-- 		<div *ngSwitchCase="'textbox'" > -->
 <!-- 				<mat-form-field appearance="outline" class="example-full-width"     [style]="sanitizeHTML(frm.style)"> -->
 <!-- 				    <input  matInput name="{{field.title}}" [formControl]="field.frmControl" value="" required="{{field.required}}"> -->
@@ -46,7 +46,8 @@
 <!-- 				    <button mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert"></mat-icon></button> -->
 <!-- 				</mat-form-field> -->
 <!--   		</div> -->
-  		
+  		<ngTemplate *ngIf="!field.hardDelete" >
+		
   		<div *ngSwitchCase="'textbox'" class="flex row-field frm-mat ">
 <!-- 				appearance="outline" -->
 				
@@ -63,8 +64,8 @@
 					 </mat-error>
 				</mat-form-field>
 				<button *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert" class="icon-color"></mat-icon></button>
-  		</div>
-  		<div *ngSwitchCase="'signature'" class="flex row-field frm-mat">
+		  </div>
+  		<div *ngSwitchCase="'signature'" class="flex row-field frm-mat nav-color">
 			<div class="example-full-width signature" style="overflow:auto"  >
 				<signaturepad [actvieFormField]="field" [frm]="frm" ></signaturepad>
 			</div>
@@ -335,13 +336,9 @@
 			</div>
   	  </div>
 		
-		
+		<ngTemplate *ngIf="!frm.layout || frm.layout==='classic'">
   		<div *ngSwitchCase="'submit'" class="button-row">
 				<div class="submit-row inline ">
-<!-- 							<button ngcontent-oht-c21="" (click)="onSubmit()" type="submit" -->
-<!-- 								class="btn btn-success mat-raised-button" -->
-<!-- 								[style]="sanitizeHTML(frm.btnStyle)">{{field.title}} -->
-<!-- 						   </button> -->
 						   <button class="ripple-button ripple" [style]="sanitizeHTML(frm.btnStyle)" 
 						   type="submit" (click)="onSubmit($event,field)">
 								   <i class="fa fa-spinner fa-spin" *ngIf="saveResponseLoader"></i>
@@ -350,10 +347,25 @@
 								</button>
 				<button *ngIf="isBuild"  mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
 				</div>
-								    
 		</div>
+		</ngTemplate>
+		<ngTemplate *ngIf="frm.layout==='card'">
+		<div *ngSwitchCase="'submit'" class="button-row">
+			<div class="submit-row inline-prevnext justify-right">
+					   <div class="ripple-button  prev-width-30" style=" cursor: auto;" [style]="sanitizeHTML(frm.btnStyle)"></div>	   
+					   <button class="ripple-button ripple next-width-30" [style]="sanitizeHTML(frm.btnStyle)" 
+					   type="submit" (click)="onSubmit($event,field)">
+							   <i class="fa fa-spinner fa-spin" *ngIf="saveResponseLoader"></i>
+							   <span style="margin-left:5px" *ngIf="saveResponseLoader">{{field.title}}</span>
+							   <span style="margin-left:5px" *ngIf="!saveResponseLoader">{{field.name}}</span>
+							</button>
+			
+			</div>
+		</div>
+		</ngTemplate>
 		<div *ngSwitchCase="'next'"  class="button-row">
 			<div class="submit-row inline-prevnext justify-right">
+					<div  [style]="sanitizeHTML(frm.btnStyle)" class="ripple-button  prev-width-30" style=" cursor: auto;"></div>	   
 					   <button class="ripple-button ripple next-width-30" style="flex-grow: 0;" [style]="sanitizeHTML(frm.btnStyle)"  (click)="next()">Next</button>
 			</div>
 		</div>
@@ -513,7 +525,7 @@
 		
 		
 		
-		
+		</ngTemplate>
 		</div>	
 	
 		

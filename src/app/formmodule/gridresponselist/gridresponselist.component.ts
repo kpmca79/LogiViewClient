@@ -133,9 +133,13 @@ export class GridresponselistComponent implements OnInit {
           if (val.type && val.type == "date-picker") {
             colDf.valueGetter = function (row: any) {
               if (row.colDef.field) {
+                
                 let currentFieldID = row.colDef.field;
-                if (row.data[currentFieldID] && row.data[currentFieldID].value) {
-                  return formatDate(row.data[currentFieldID].value, "dd-MMM-yyyy", 'en-US');
+                if(row.data)
+                {
+                  if (row.data[currentFieldID] && row.data[currentFieldID].value) {
+                    return formatDate(row.data[currentFieldID].value, "dd-MMM-yyyy", 'en-US');
+                   }
                 }
               }
             };
