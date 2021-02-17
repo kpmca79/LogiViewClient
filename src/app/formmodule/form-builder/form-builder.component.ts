@@ -229,9 +229,11 @@ export class FormBuilderComponent implements OnInit {
                     //added code by keyur to support pages
                     if(!this.frm.pages || this.frm.pages.length==0)
                     {   console.log("Current form fields are ",this.frm.formFields);
-                        let pageObj:any={pageNo:1,pageFields:this.frm.formFields};
                         let pages=[];
-                        pages.push(pageObj);
+                        if(this.frm.layout!='card'){ 
+                            let pageObj:any={pageNo:1,pageFields:this.frm.formFields};
+                            pages.push(pageObj);
+                        }
                         this.frm.pages=pages;
                     }
                     //end added code by keyur to support pages    

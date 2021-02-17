@@ -1,18 +1,77 @@
+import { DatePipe } from '@angular/common';
+import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DataChartComponent } from 'app/data-chart/data-chart.component';
 import { FormService } from "app/services/form.service";
 import * as Chartist from 'chartist';
+import * as moment from 'moment';
+
+import {CalendarModule} from 'primeng/calendar';
+
+/*import Highcharts from "highcharts/highmaps";
+import worldMap from "@highcharts/map-collection/custom/world.geo.json";*/
+
 export interface TimeData{
     _id: string,
     count: number
 }
 
+
 @Component({
-  selector: 'app-formhome',
-  templateUrl: './formhome.component.html',
-  styleUrls: ['./formhome.component.scss']
+  selector: 'app-formdashboard',
+  templateUrl: './formdashboard.component.html',
+  styleUrls: ['./formdashboard.component.scss']
 })
-export class FormhomeComponent implements OnInit {
+export class FormdashboardComponent implements OnInit {
+    @ViewChild('customChart') customChart:DataChartComponent;
+    
+    /*Highcharts: typeof Highcharts = Highcharts;*/
+    chartConstructor = "mapChart";
+    chartData = [{ code3: "ABW", z: 105 }, { code3: "AFG", z: 35530 }];
+    
+  
+    /*chartOptions: Highcharts.Options = {
+      chart: {
+        map: worldMap
+      },
+      title: {
+        text: "Highmaps basic demo"
+      },
+      subtitle: {
+        text:
+          'Source map: <a href="http://code.highcharts.com/mapdata/custom/world.js">World, Miller projection, medium resolution</a>'
+      },
+      mapNavigation: {
+        enabled: true,
+        buttonOptions: {
+          alignTo: "spacingBox"
+        }
+      },
+      legend: {
+        enabled: true
+      },
+      colorAxis: {
+        min: 0
+      },
+      series: [
+        {
+          type: "map",
+          name: "Random data",
+          states: {
+            hover: {
+              color: "#BADA55"
+            }
+          },
+          dataLabels: {
+            enabled: true,
+            format: "{point.name}"
+          },
+          allAreas: false,
+          data: []
+        }]};
+    */
+
 
     max=-1;
     goodDay='Sunday';
@@ -21,6 +80,23 @@ export class FormhomeComponent implements OnInit {
     showHourChart=false;
     showMonthChart=false;
     showDayChart=false;
+    weekFirstDay;
+    weekLastDay;
+    fromDate;
+    toDate;
+    allTimeQuery="groupBy=resTime:date"
+    currentWeekQuery="groupBy=resTime:date"
+    currentMonthQuery;
+    customQuery
+    fillColor="rgba(239,189,80,0.2)";
+    pointColor="rgba(239,189,80,0.7)";
+
+    tmpFromDate=new Date();
+    tmpToDate=new Date();
+
+    googleMapAPIKey="AIzaSyDSAywz0ynKkTjasyvpMl_NmQ3vjTV7YPQ";
+
+
     optionsDailyResponse: any = {
             lineSmooth: Chartist.Interpolation.cardinal({tension: 0}),
             // low: 0, high: 50, 
@@ -52,7 +128,7 @@ export class FormhomeComponent implements OnInit {
                                   }
                                 }]
                               ];
-  constructor(private frmSrv: FormService,private route: ActivatedRoute) { }
+  constructor(private frmSrv: FormService,private route: ActivatedRoute,private datePipe: DatePipe) { }
   formID;
   timeDailyData:TimeData[];
   dailyCount=[0,0,0,0,0,0,0];
@@ -79,12 +155,23 @@ export class FormhomeComponent implements OnInit {
   weekDaysChartDiv;
   montlyChartDiv;
   hourlyChartDiv;
+  
   ngOnInit() {
       
 
           this.formID = this.route.snapshot.paramMap.get( "id" );
-          
-          this.getDailyResp();
+
+          var currentDate = moment();
+          let weekStart = currentDate.clone().startOf('week').format("DD-MM-YYYY");
+          let weekEnd = currentDate.clone().endOf('week').format("DD-MM-YYYY");
+          console.log("weekStart=",weekStart);
+          console.log("weekend=",weekEnd);
+          this.currentWeekQuery=this.allTimeQuery+"&"+"where=resTime:$gte:"+weekStart
+          console.log(this.currentWeekQuery);
+          let monthStart = currentDate.clone().startOf('month').format("DD-MM-YYYY");
+          this.currentMonthQuery=this.allTimeQuery+"&"+"where=resTime:$gte:"+monthStart
+          this.show();
+         // this.getDailyResp();
           for(let i=0;i<24;i++)
           {    this.dataHourlyResponse.labels.push(""+i+"");
                this.dataHourlyResponse.series[0].push(0);
@@ -93,6 +180,26 @@ export class FormhomeComponent implements OnInit {
 
           
   }
+  
+  show() {
+    var currentDate = moment();
+
+    console.log("-------->dates------>",this.tmpFromDate," and ",this.tmpToDate);
+    
+    
+    if(!this.fromDate)
+      this.fromDate=new Date(currentDate.clone().startOf('month').format("MM-DD-YYYY"));
+     if(!this.toDate)
+      this.toDate=new Date();
+    let x=this.datePipe.transform(this.fromDate,'dd-MM-yyyy');
+     let y=this.datePipe.transform(this.toDate,'dd-MM-yyyy');  
+     console.log("-------->dates------>",x," and ",y);
+    this.customQuery=this.allTimeQuery+"&"+"where=resTime:$gte:"+x+";resTime:$lte:"+y;
+    if(this.customChart)
+      this.customChart.reDraw(this.customQuery);
+
+  }
+  
   getDailyResp()
   {
       this.frmSrv.getDateAnalytics(this.formID, "day").subscribe(

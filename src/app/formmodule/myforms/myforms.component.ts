@@ -125,6 +125,7 @@ export class MyformsListComponent implements OnInit {
               console.log("Form type id is ",dialogConfig.data.layout)
               this.frm.title=dialogConfig.data.title;
               this.frm.name=dialogConfig.data.title;
+
               this.createForm();
               
           }
@@ -133,6 +134,7 @@ export class MyformsListComponent implements OnInit {
  }
  public createForm()
  {
+   console.log("Creating for and redirecting to formBuilder frm=",this.frm);
    this.frmSrv.saveForm(this.frm, "").subscribe(response=>{
       console.log("new formid=",response.data); 
       this.frm.id=response.data;

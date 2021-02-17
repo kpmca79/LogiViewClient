@@ -1,0 +1,85 @@
+.chart-div{
+  /*  padding:10px;
+    margin:10px;
+    resize: both;*/
+}
+
+::ng-deep .ct-label {
+  
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+.tool-row{
+    display: inline-flex;
+  
+    
+}
+
+.select-option{
+    
+    border: 0px;
+    
+    width: 25%;
+    padding: 5px;
+}
+
+.small-font{
+    font-size: 11px;
+    
+    
+}
+
+.card-header-new{
+    background: #ccdaff;
+    padding: 10px;
+    
+}
+
+.text-search{
+
+    height: 27px;
+    border: 1px solid #b1abab;
+
+}
+.btn-search{
+    background: transparent;
+    height: 29px;
+    border: 1px solid transparent;
+    color:#fff;
+}
+.main-chart-div{
+    display: flex;
+    flex-direction:column;
+}
+.inline{
+    padding:5px;
+    display:inline-flex;
+}
+.left-icon{
+    color: black;
+    align-self: flex-end;
+    right: 0px;
+    position: absolute;
+    font-size: 20px;
+    margin-bottom: 3px;
+}
+.other-options{
+    font-size: 11px;
+    color: black;
+    padding-right: 5px;
+}
+/deep/ .mat-slide-toggle-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 11px;
+    color:#000;
+}
+.no-data{
+    font-size: 14px;
+    text-align: center;
+    padding: 30px;
+    font-weight: 400;
+}

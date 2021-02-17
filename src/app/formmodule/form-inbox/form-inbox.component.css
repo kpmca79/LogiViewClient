@@ -310,8 +310,8 @@ opacity: 1;
  
 }
 /deep/ .mat-tab-label {
-    height: inherit !important;
-    min-height: inherit !important; 
+    /* height: inherit !important; */
+    /* min-height: inherit !important;  */
 /* 	padding: 0 24px; */
 	padding: 0 0px !important;
 /* 	margin-top: 10px !important; added by me */

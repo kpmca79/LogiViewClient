@@ -8,6 +8,7 @@ import { Validators, FormControl } from "@angular/forms/forms";
 import { FormResponse } from 'app/model/FormResponse';
 import { FrmResponse } from 'app/model/Respons';
 import Utils from 'app/util/utils';
+import { FormField } from 'app/model/FormField';
 
 declare var $: any;
 @Injectable({
@@ -123,8 +124,27 @@ export class FormService {
     }
     public getDateAnalytics(formID: String,duration:String) : Observable<any> {
         let url='/api/'+formID+"/response/analytics/"+duration+"?tz="+this.getTimezone();
+        console.log("Inside get data analytics get url is ",url);
         return this.http.get(url);
     }
+    public async getChartData(url) : Promise<any> {
+        
+        let promise = new Promise<any>((resolve)=>{
+            console.log("Inside get get chart data url =",url);
+            this.http.get(url).subscribe(data=>{resolve(data);},error=>{resolve(null);})            
+
+        });
+        return promise;
+    }
+    public async getFormFields(formID) : Promise<any> {
+        
+        let promise = new Promise<any>((resolve)=>{
+            this.http.get("/api/forms/"+formID+"/fields").subscribe(data=>{resolve(data);},error=>{resolve(null);})            
+
+        });
+        return promise;
+    }
+
     public  uploadResource(imageToUpload: File) : Observable<any> {
 
         const formData: FormData = new FormData();
@@ -218,7 +238,7 @@ export class FormService {
            return this.http.get<any>(saveURL);
   }
   getResonseWithFilter(formID: String,postBody:any): Observable<any> {
-    let saveURL = "/api/"  + formID + '/getResponse';
+    let saveURL = "/api/"  + formID + '/response/filter';
     console.log('Calling URL for getting responses-->', saveURL);
     return this.http.post<any>(saveURL,JSON.parse(JSON.stringify(postBody)));
 }

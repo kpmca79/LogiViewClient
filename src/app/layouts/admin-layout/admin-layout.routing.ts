@@ -25,8 +25,10 @@ import { PublishComponent } from '../../formmodule/publish/publish.component';
 import { ThankspageComponent } from '../../formmodule/thankspage/thankspage.component'
 import { FormdevComponent } from '../../formmodule/formdev/formdev.component';
 import { FormhomeComponent } from '../../formmodule/formhome/formhome.component'
+import { DataChartComponent } from '../../data-chart/data-chart.component'
 import { ResetComponent } from 'app/reset/reset.component';
 import { TrashFormsComponent } from 'app/formmodule/trashforms/trashforms.component';
+import { FormdashboardComponent } from 'app/formmodule/form/formdashboar/formdashboard.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -105,8 +107,10 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'formBuilder/:id/settings' ,  component: SettingsComponent },
     { path: 'form/:id' ,   component:  LiveformComponent},
     { path: 'formdev' ,   component:  FormdevComponent},
+    { path: 'chart' ,   component:  DataChartComponent},
     
     { path: 'formhome/:id' ,   component:  FormhomeComponent},
+    { path: 'formdashboard/:id' ,   component:  FormdashboardComponent},
     
     { path: 'form/:id/thanks' ,   component:  ThankspageComponent},
     { path: 'resetpassword/:token' ,   component:  ResetComponent},

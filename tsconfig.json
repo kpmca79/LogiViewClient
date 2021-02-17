@@ -1,7 +1,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-  	"allowJs": true,
+  	
+    
+    "allowJs": true,
     "downlevelIteration": true,
     "importHelpers": true,
     "module": "esnext",

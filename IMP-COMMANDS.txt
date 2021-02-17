@@ -438,3 +438,7 @@ social login
 npm i angularx-social-login
 https://www.npmjs.com/package/angularx-social-login
 =============================
+world map
+https://stackblitz.com/edit/highcharts-angular-map
+npm install highcharts-angular --save
+@highcharts/map-collection

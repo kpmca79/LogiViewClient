@@ -143,7 +143,7 @@
 									(click)="openCloseRightPanelForForm()"></i>
 							</span>
 						</div>
-						<ngTemplate *ngIf="!frm.layout || frm.layout=='classic'">
+						<ngTemplate *ngIf="!frm.layout || frm.layout=='classic'" [style.max-width.px]=frm.formwidth style="width:100%;">
 							<div *ngFor="let page of frm.pages" class="form-page" [style]="sanitizeHTML(frmBGStyle)">
 								<div cdkDropList id="{{page.pageNo}}" [cdkDropListData]="page.pageFields"
 									(cdkDropListDropped)="drop1($event,page.pageNo)" style="position:relative;">

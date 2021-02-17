@@ -24,6 +24,8 @@ import { UserService } from './services/user.service';
 import { MessagingService } from './services/messaging.service';
 import { DatePipe } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 //getting error after upgrade to 9
 //import { DragDropModule } from '@angular/cdk/drag-drop';
 //import { MatInputModule } from '@angular/material/input';
@@ -41,6 +43,9 @@ import {GoogleLoginProvider,FacebookLoginProvider } from 'angularx-social-login'
 import 'froala-editor/js/plugins.pkgd.min.js';
 import 'froala-editor/js/plugins/link.min.js';
 import 'froala-editor/js/plugins/image.min.js';
+
+
+
 
 
 
@@ -72,7 +77,7 @@ import 'froala-editor/js/plugins/image.min.js';
     
     NgHttpLoaderModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
+      apiKey: 'AIzaSyDSAywz0ynKkTjasyvpMl_NmQ3vjTV7YPQ'
     }),
     
     

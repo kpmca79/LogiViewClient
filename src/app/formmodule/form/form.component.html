@@ -337,9 +337,9 @@
   	  </div>
 		
 		<ngTemplate *ngIf="!frm.layout || frm.layout==='classic'">
-  		<div *ngSwitchCase="'submit'" class="button-row">
+  		<div *ngSwitchCase="'submit'" class="button-row btn-submit-margin">
 				<div class="submit-row inline ">
-						   <button class="ripple-button ripple" [style]="sanitizeHTML(frm.btnStyle)" 
+						   <button class="ripple-button ripple " [style]="sanitizeHTML(frm.btnStyle)" 
 						   type="submit" (click)="onSubmit($event,field)">
 								   <i class="fa fa-spinner fa-spin" *ngIf="saveResponseLoader"></i>
 								   <span style="margin-left:5px" *ngIf="saveResponseLoader">{{field.title}}</span>
@@ -365,7 +365,6 @@
 		</ngTemplate>
 		<div *ngSwitchCase="'next'"  class="button-row">
 			<div class="submit-row inline-prevnext justify-right">
-					<div  [style]="sanitizeHTML(frm.btnStyle)" class="ripple-button  prev-width-30" style=" cursor: auto;"></div>	   
 					   <button class="ripple-button ripple next-width-30" style="flex-grow: 0;" [style]="sanitizeHTML(frm.btnStyle)"  (click)="next()">Next</button>
 			</div>
 		</div>
