@@ -1,69 +1,79 @@
-<div class="ngLoader"></div>
-<div class="main-content nav-color">
-    <div class="container-fluid">
-        <div class="row" >
-            <div class="col-md-12" >
-                
-                       <h4>Traffic</h4>         
-                   
-                   
-                        <div class="row-chart-toolbar" style="width:100%;">
-                            <div class="chart-toolbar" style="width:100%;">
-                                <mat-tab-group mat-stretch-tabs class="mat-elevation-z4" style="width:100%; ">
-                                    <mat-tab label="Current Week"> 
-                                        <div style="background:#fff; ">
-                                            <data-chart [formID]="formID" showCard=false bgColor="rgba(0,0,0,0)" hideXGrid=true [fillColor]="fillColor" [pointColor]="pointColor" [parentQuery]="currentWeekQuery" isEditable="false" title="Current Week Response Analytics"></data-chart>
-                                        </div>
-                                    </mat-tab>
-                                    <mat-tab label="Current Month">
-                                        <div style="background:#fff">
-                                            <data-chart [formID]="formID" showCard=false bgColor="rgba(0,0,0,0)" hideXGrid=true [fillColor]="fillColor" [pointColor]="pointColor" [parentQuery]="currentMonthQuery" isEditable="false" title="Current Month Response Analytics"></data-chart>
-                                        </div>
-                                    </mat-tab>
-                                    <mat-tab label="All Time"> 
-                                        <div style="background:#fff">
-                                            <data-chart [formID]="formID"  showCard=false bgColor="rgba(0,0,0,0)" hideXGrid=true [fillColor]="fillColor" [pointColor]="pointColor" [parentQuery]="allTimeQuery" isEditable="false" title="All Time Response Analytics"></data-chart>
-                                        </div>
-                                    </mat-tab>
-                                    <mat-tab label="Date Range"> 
-                                        <div class="date-range">
-                                            <div class="date-selection">
-                                                <div style="margin-top:3px;margin-right: 10px;">Date range in</div>
-                                                <div style="width:130px">
-                                                    <mat-form-field>
-                                                        <input matInput [matDatepicker]="fdtPicker" [(ngModel)]="fromDate" (dateChange)="show()">
-                                                        <mat-datepicker-toggle matSuffix [for]="fdtPicker"></mat-datepicker-toggle>
-                                                        <mat-datepicker #fdtPicker></mat-datepicker>
-                                                    </mat-form-field>
-                                                    <!-- <p-calendar (onSelect)="show()" [(ngModel)]="fromDate" dateFormat="dd-mm-yy" style="margin-left: 5px;">
-                                                    </p-calendar> -->
-                                                </div>
-                                                <div style="margin-left: 10px;margin-top: 2px;margin-right: 10px;">-</div>
-                                                <div style="margin-right: 10px;width:130px">
-                                                    <mat-form-field>
-                                                        <input matInput [matDatepicker]="tdtPicker" [(ngModel)]="toDate" (dateChange)="show()">
-                                                        <mat-datepicker-toggle matSuffix [for]="tdtPicker"></mat-datepicker-toggle>
-                                                        <mat-datepicker #tdtPicker></mat-datepicker>
-                                                    </mat-form-field>    
+<div class="formdashboard-main">
+    <nav class="site-header sticky-top py-1">
+        <div class="container d-flex flex-column flex-md-row justify-content-between">
+            <a class="py-2" href="#">
+                <img src="/assets/img/form/makemyform.png">
+            </a>
+            <div class="headNav">
+                <a [routerLink]="['/myforms']">My Forms</a>
+                <a href="#">Templates</a>
+                <a href="#">Integrations</a>
+                <a href="#">Features</a>
+                <a href="#">Support</a>
+                <a href="#">Pricing</a>
+            </div>
+        </div>
+    </nav>
 
-                                                    <!-- <p-calendar (onSelect)="show()" [(ngModel)]="toDate" dateFormat="dd-mm-yy" style="margin-left: 5px;">
-                                                    </p-calendar> -->
-                                                </div>
-                                                
-                                            </div>
-                                            
-                                        </div>
-                                        <div style="background:#fff">
-                                            <data-chart #customChart [(formID)]="formID"  showCard=false bgColor="rgba(0,0,0,0)" hideXGrid=true [fillColor]="fillColor" [pointColor]="pointColor" [(parentQuery)]="customQuery" isEditable="false" title="Custome Range Analytics"></data-chart>
-                                        </div>
-                                    </mat-tab>
-                                  </mat-tab-group>
+
+    <div class="container nav-color bg-style">
+        <div class="pageWrapper">
+            <div class="anaTabMain">
+                <h5>Form Analytics</h5>
+                <a href="#">Form</a>
+            </div>
+            <div class="anaTabs">
+
+                <mat-tab-group (selectedTabChange)="tabChangeEvent($event)" mat-stretch-tabs class="mat-elevation-z4" animationDuration="1000ms">
+                    <mat-tab label="Current Week">
+                        <analytics mode="week" [formID]="formID" [fromDate]="weekStartDate" [toDate]="weekEndDate"></analytics>
+                    </mat-tab> 
+                   <mat-tab label="Current Month">
+                        <analytics mode="month" [formID]="formID" [fromDate]="monthStartDate" [toDate]="monthEndDate"></analytics>
+                    </mat-tab>
+                    <mat-tab label="All Time">
+                        <analytics mode="alltime" [formID]="formID" [fromDate]="allTimeStartDate" [toDate]="allTimeEndDate"></analytics>
+                    </mat-tab>
+                    <mat-tab label="Date Range">
+                        <div class="date-range">
+                            <div class="date-selection">
+                                <div style="margin-top:3px;margin-right: 10px;">Date range in</div>
+                                <div style="width:130px">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="fdtPicker" [(ngModel)]="fromDate"
+                                            (dateChange)="show()">
+                                        <mat-datepicker-toggle matSuffix [for]="fdtPicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #fdtPicker></mat-datepicker>
+                                    </mat-form-field>
+                                  
+                                </div>
+                                <div style="margin-left: 10px;margin-top: 2px;margin-right: 10px;">-</div>
+                                <div style="margin-right: 10px;width:130px">
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="tdtPicker" [(ngModel)]="toDate"
+                                            (dateChange)="show()">
+                                        <mat-datepicker-toggle matSuffix [for]="tdtPicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #tdtPicker></mat-datepicker>
+                                    </mat-form-field>
+
+                                
+                                </div>
+
                             </div>
+
                         </div>
-                   
+                        <div >
+                            <analytics #customChartTab mode="custom" [formID]="formID" [fromDate]="fromDate" [toDate]="toDate"></analytics>
+                        </div>
+                      
+
+
+
+                    </mat-tab>
+                </mat-tab-group>
+         
             </div>
         </div>
     </div>
-   
 
 </div>

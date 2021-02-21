@@ -34,12 +34,22 @@ export class DataChartComponent implements OnInit {
     @Input() isEditable:boolean=true;
     @Input() title :string;
     @Input() parentQuery;
+    @Input() parentQuery2;
     @Input() fillColor:string;
     @Input() pointColor:string;
     @Input() bgColor:string;
     @Input() hideXGrid:boolean;
     @Input() hideYGrid:boolean;
     @Input() showCard=true;
+    @Input() pChartType;
+    @Input() pWidth;
+    @Input() aspectRatio;
+    @Input() duration:number;
+    @Input() easing;
+    @Input() convertUnit;
+    @Input() seriesRatio=false;
+    @Input() seriesName='Response';
+    
     
 
     bodyStyle="";
@@ -62,6 +72,7 @@ export class DataChartComponent implements OnInit {
                 label: 'Form Views',
                 backgroundColor: ["#FFCE56"],
                 data: [],
+                borderColor: '#565656'
 
             }
 
@@ -78,6 +89,7 @@ export class DataChartComponent implements OnInit {
     chartGrp2;
     chartJsOps: ChartJSOptions = new ChartJSOptions();
     tmpCharJsOps = this.chartJsOps;
+    
     responsiveOptions: any[] = [
         ['screen and (max-width: 640px)', {
             seriesBarDistance: 5,
@@ -88,13 +100,25 @@ export class DataChartComponent implements OnInit {
             }
         }]
     ];
+    tmpfillColor: any;
     constructor(private frmSrv: FormService, private dtPipe: DatePipe,private _sanitizer: DomSanitizer) { }
     async changeChart() {
       await   this.generateChart();
     }
     async ngOnInit() {
+        console.log("keyurkeyur-------keyurkeyur-------keyurkeyur-------",this.parentQuery2,"   ",this.seriesRatio);
+        if(this.pChartType)
+            this.tmpCharJsOps.type=this.pChartType;
+        if(this.aspectRatio)
+            this.tmpCharJsOps.aspectRatio=this.aspectRatio;
+        if(this.fillColor)
+            this.tmpfillColor=this.fillColor;
+       //https://www.chartjs.org/docs/latest/configuration/animations.html for animations
+        if(this.duration)    
+            this.tmpCharJsOps.animation.duration=this.duration;
+        if(this.easing)    
+            this.tmpCharJsOps.animation.easing=this.easing;
         let data = await this.frmSrv.getFormFields(this.formID);
-
         this.frmFields = data.data;
         this.arrFields = [];
         this.frmFields.forEach(f => { this.arrFields.push({ val: f.title, id: f.id }) })
@@ -113,10 +137,13 @@ export class DataChartComponent implements OnInit {
             this.chart.reinit();
     }
     stack() {
-        this.tmpCharJsOps.scales.yAxes[0].stacked = this.isStack;
-        this.tmpCharJsOps.scales.xAxes[0].stacked = this.isStack;
-        if (this.chart)
-            this.chart.reinit();
+        if(this.tmpCharJsOps.scales)
+        {
+            this.tmpCharJsOps.scales.yAxes[0].stacked = this.isStack;
+            this.tmpCharJsOps.scales.xAxes[0].stacked = this.isStack;
+            if (this.chart)
+                this.chart.reinit();
+        }
     }
     ngAfterViewInit(){
         
@@ -139,7 +166,9 @@ export class DataChartComponent implements OnInit {
             query2 = this.query + this.chartGrp;
 
         console.log("query2-------->", query2);
-        let result = await this.frmSrv.getChartData(this.url + query2 + this.orderby);
+        if(this.parentQuery && this.parentQuery.includes('orderBy'))
+            this.orderby='';
+        let result = await this.frmSrv.getChartData(this.formID,query2 + this.orderby);
         console.log("result-------->", result);
         if (result) {
 
@@ -214,6 +243,7 @@ export class DataChartComponent implements OnInit {
                 else
                     this.tmpCharJsOps = this.chartJsOps;
                 this.tmpCharJsOps.data.labels = this.formatDate(result.data.label);
+                
                 if(this.tmpCharJsOps.data.labels.length==0)
                     this.noDataFound=true;
 
@@ -227,22 +257,33 @@ export class DataChartComponent implements OnInit {
                    { 
                        this.tmpCharJsOps.elements.point.backgroundColor=this.fillColor;    
                        this.tmpCharJsOps.elements.point.borderColor=this.fillColor;    
+                       
                    }
                 if(this.pointColor)
                    { 
                         this.tmpCharJsOps.elements.point.backgroundColor=this.pointColor;    
                         this.tmpCharJsOps.elements.point.borderColor=this.pointColor;    
+                        this.tmpCharJsOps.data.borderColor=[this.pointColor];
                    }
-                let objs = { label: 'Response', data: result.data.series, backgroundColor: clrarr, fill: this.isshowarea, borderColor: clrarr }
+                let borderColor=clrarr;
+                let objs;
+                if(this.pointColor)
+                    objs = { label: this.seriesName, data: result.data.series, backgroundColor: clrarr, fill: this.isshowarea, borderColor: this.pointColor }
+                else
+                    objs = { label: this.seriesName, data: result.data.series, backgroundColor: clrarr, fill: this.isshowarea, borderColor: clrarr }
+                
                 this.tmpCharJsOps.data.datasets = [objs];
-
+                if(this.convertUnit)
+                    this.processConvertUnit();  
+                if(this.parentQuery2 && this.seriesRatio)
+                    this.processRatio();     
                 this.fg = true;
                 let arrcolor: string[] = [];
 
             }
             this.setOptions();
             
-            if (this.chart)
+            if (this.chart && !this.seriesRatio)
             {
                 console.log("----------------->Chart reinit called");
                 this.chart.reinit();
@@ -257,26 +298,84 @@ export class DataChartComponent implements OnInit {
         }
 
     }
+    async processRatio() {
+        if(this.parentQuery2 && this.seriesRatio)
+        {
+            let result2 = await this.frmSrv.getChartData(this.formID,this.parentQuery2 + this.orderby);
+            let label2:string[]=[];
+            let series2:[]=[];
+            let series=this.tmpCharJsOps.data.datasets[0].data;
+            let label= this.tmpCharJsOps.data.labels;
+            console.log("@@RamRAMRAMRamRAMRAMRamRAMRAM SERIES=",series);
+            console.log("@@RamRAMRAMRamRAMRAMRamRAMRAM label=",label);
+            if(result2.data.label)
+            {
+              label2=this.formatDate(result2.data.label);
+              series2=result2.data.series;
+              console.log("@@RamRAMRAMRamRAMRAMRamRAMRAM SERIES2=",series2);
+              console.log("@@RamRAMRAMRamRAMRAMRamRAMRAM label2=",label2);
+              label.forEach((title,index)=>{
+                let newper="0";
+                let curVal=series[index];
+                let ind=label2.indexOf(title);
+                if(ind>-1)
+                  newper=((series2[ind]/curVal)*100).toFixed(0);
+                 series[index]=newper;
+               });
+               this.tmpCharJsOps.data.datasets[0].data=series;
+               if(this.chart)
+                this.chart.reinit();
+               
+            }
+            
+
+        }
+    }
+    processConvertUnit() {
+        if(this.convertUnit.startsWith('/'))
+        {
+            let divisionNum=Number.parseInt(this.convertUnit.replace("/",""))
+            let series=this.tmpCharJsOps.data.datasets[0].data
+            series.forEach((val,index)=>{
+                
+                let numVal=(Number.parseInt(val)/divisionNum).toFixed(0);
+                series[index]=numVal;
+                
+            })
+        }
+    }
     reDraw(query){
+       if(this.fillColor)
+        this.tmpfillColor=this.fillColor;
        this.parentQuery=query;
        this.noDataFound=false;
        this.ngOnInit();
     }
+    reInitChart(){
+        if(this.fillColor)
+            this.tmpfillColor=this.fillColor;
+        if(this.chart)
+            this.chart.reinit();
+    }
     setOptions(){
         if(this.fillColor)
             this.tmpCharJsOps.data.datasets.forEach(va => { va.fill = true; });
-        if(this.hideXGrid)    
+        if(this.hideXGrid && this.tmpCharJsOps.scales)    
             this.tmpCharJsOps.scales.xAxes[0].gridLines.color="rgba(255, 125, 125, 0)";
-        if(this.hideYGrid)    
+        if(this.hideYGrid && this.tmpCharJsOps.scales)    
             this.tmpCharJsOps.scales.yAxes[0].gridLines.color="rgba(255, 125, 125, 0)";
         if(this.bgColor)    
               this.tmpCharJsOps.backgroundColor=this.bgColor;    
         if(this.tmpCharJsOps.backgroundColor)                  
             this.bodyStyle="background:"+this.tmpCharJsOps.backgroundColor;        
+        if(this.pWidth)                  
+            this.bodyStyle=this.bodyStyle+";width:"+this.pWidth;            
         if(this.title){
             this.tmpCharJsOps.title.display=true;
             this.tmpCharJsOps.title.text=this.title;
         }
+        if(this.pChartType)
+            this.tmpCharJsOps.type=this.pChartType;
             
     
 
@@ -286,8 +385,33 @@ export class DataChartComponent implements OnInit {
         return this._sanitizer.bypassSecurityTrustStyle( style );
     }
     getRandomColor() {
-        if(this.fillColor)
-            return this.fillColor;
+        
+
+        if(this.tmpfillColor)
+        {
+            if(this.noLabelTypes.includes(this.pChartType))
+            {
+                if(this.tmpfillColor.startsWith("rgba") || this.tmpfillColor.startsWith("rgb"))
+                {
+                    let inc=5;
+                    let tmpcl=this.tmpfillColor;
+                    tmpcl=tmpcl.replace("rgba","").replace("rgb","").replace("(","").replace(")","");
+                    let clrs=tmpcl.split(",");
+                    let r=Number.parseInt(clrs[0]);
+                    let g=Number.parseInt(clrs[1]);
+                    let b=Number.parseInt(clrs[2]);
+                    if(r>255)r=255;if(g>255)g=255;if(b>255)b=255;
+                    let a="1";
+                    if(clrs.length==4)
+                     a=clrs[3];
+                    r=r+inc; g=g+inc; b=b+inc;
+                    this.tmpfillColor="rgba("+r+","+g+","+b+","+a+")";
+                    console.log("keyurkeyurkeyurkeyurkeyurkeyurkeyurkeyur new fill color=",this.tmpfillColor);
+                    
+                }
+            }
+            return this.tmpfillColor;
+        }  
         var color = Math.floor(0x1000000 * Math.random()).toString(16);
         return '#' + ('000000' + color).slice(-6);
 

@@ -15,6 +15,7 @@ import { DatePipe } from "@angular/common";
 
 
 
+
 @Component( {
     selector: 'app-liveform',
     templateUrl: './liveform.component.html',
@@ -29,6 +30,7 @@ export class LiveformComponent implements OnInit {
     safeBgURL;
     live="live";
     bgStyle='';
+    deviceInfo:any;
     resourceURL = "/api/file/";
     constructor( private route: ActivatedRoute,
         private frmSrv: FormService,
@@ -53,5 +55,7 @@ export class LiveformComponent implements OnInit {
         
             }
         );
+
     }
+    
 }

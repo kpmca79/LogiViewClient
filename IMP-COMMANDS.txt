@@ -439,6 +439,12 @@ npm i angularx-social-login
 https://www.npmjs.com/package/angularx-social-login
 =============================
 world map
-https://stackblitz.com/edit/highcharts-angular-map
-npm install highcharts-angular --save
-@highcharts/map-collection
+https://github.com/jagomf/countries-map
+npm install --save countries-map
+
+
+to detect client browser and os details
+============================================
+npm install ngx-device-detector --save
+https://ngx-device-detector-ssr.herokuapp.com/
+===============================================

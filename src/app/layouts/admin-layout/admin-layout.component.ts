@@ -6,6 +6,8 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 //import PerfectScrollbar from 'perfect-scrollbar';
 import {AppService} from '../../app.service';
+import { SafeStyle } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 
@@ -19,14 +21,19 @@ export class AdminLayoutComponent implements OnInit {
   private _router: Subscription;
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
+  otherBGColor="#fff";
+  formDashboardBGColor="#3f51b5";
+  bgStyletmp="background:@BG@;";
+  bgStyle="background:@BG@;";
 
-  constructor( public location: Location, private router: Router, private app: AppService) {}
+  constructor( public location: Location, private router: Router, private app: AppService,private _sanitizer: DomSanitizer) {}
 
   ngOnInit() {
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
       //console.log('Inside admin layout compoment ts');
     //  console.log(this.router.url)
-      
+     
+      this.changeStyle();
       if (!localStorage.getItem('token')) { 
           
           console.log('Inside admin layout compoment ts--> redirecting to login');
@@ -76,8 +83,17 @@ export class AdminLayoutComponent implements OnInit {
           }
       }
   }
+  changeStyle(){
+
+        this.bgStyle=this.bgStyletmp.replace("@BG@",this.otherBGColor);
+
+  }
+  sanitizeHTML( style: string ): SafeStyle {
+    return this._sanitizer.bypassSecurityTrustStyle( style );
+    }
   // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit() {
+      this.changeStyle();
       this.runOnRouteChange();
   }
   // tslint:disable-next-line:one-line
@@ -97,6 +113,7 @@ export class AdminLayoutComponent implements OnInit {
   // tslint:disable-next-line:one-line
   
   runOnRouteChange(): void {
+    this.changeStyle();
     if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
       const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
 //      const ps = new PerfectScrollbar(elemMainPanel);

@@ -37,7 +37,9 @@
   						<span class="small"><a [routerLink]="['/responseList',element.id]" > {{element.response}} Submissions.</a> Modified on Jul 15,2020.</span>
   						</div>
 						<span class="example-spacer"></span>
-						 <button [routerLink]="['/formBuilder',element.id]" class="cust-btn" mat-raised-button>Edit Form</button>
+						<button [routerLink]="['/formdashboard',element.id]" class="cust-btn" mat-raised-button>Analytics</button> 
+						<button [routerLink]="['/formBuilder',element.id]" class="cust-btn" mat-raised-button>Edit Form</button>
+						 
 						  <button [routerLink]="['/inbox',element.id]"  class="cust-btn" mat-raised-button>Inbox</button>
 						
 						<button  mat-icon-button [matMenuTriggerFor]="menu">

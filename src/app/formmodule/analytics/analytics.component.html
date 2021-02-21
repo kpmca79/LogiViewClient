@@ -1,0 +1,208 @@
+<div class="anaTabs">
+    <div style="background:#fff;">
+        <data-chart #customChart [formID]="formID" showCard=false bgColor="rgba(0,0,0,0)" hideXGrid=true [fillColor]="fillColor"
+            [pointColor]="pointColor" [parentQuery]="chartQuery" [parentQuery2]="chartQuery2" [seriesRatio]="showRatio" isEditable="false" [convertUnit]="convertUnit" [seriesName]="viewTitle"
+            [title]="chartTitle"></data-chart>
+    </div>
+    <div class="anaTabsContainer">
+        <div class="mmf-number">
+            <ul>
+                <li *ngFor="let obj of viewNumber" (click)="viewRespMenu(obj)"  class="{{obj.class}}">
+                        <div class="number">{{obj.key}}</div>
+                        <div class="views">{{obj.value}}</div>
+                    
+                </li>
+            </ul>
+        </div>
+       
+        <mat-tab-group mat-stretch-tabs (selectedTabChange)="summaryTabChange($event)">
+            <mat-tab label="TRAFFIC">
+                <ul class="gridList bottom-margin">
+                    <li class="girdListHead">
+                        <div class="lableTxt">Recent Visitors</div>
+                        <div class="date">Dates</div>
+                        <div class="response">Response</div>
+                        <div class="duration">Duration</div>
+                        <div class="location">Location</div>
+                        <div class="device">Device</div>
+                    </li>
+                    <li *ngFor="let re of dataResponse">
+                        <div class="lableTxt">{{re.vis}}</div>
+                        <div class="date">{{re.time| dateAgo}}</div>
+                        
+                        <div *ngIf="re.resp=='Yes'" class="response" style="padding-left: 25px;"><i class="fa fa-thumbs-o-up icon-x"  title="View Response" aria-hidden="true"></i></div>
+                        <div *ngIf="re.resp!='Yes'" class="response" style="padding-left: 25px;">{{re.resp}}</div>
+                        <div class="duration">{{re.dur}}</div>
+                        <div class="location"><img src="{{re.country}}" width="24px" height="24px"></div>
+                        <div class="device"><img width="24px" height="24px" src="/assets/img/form/{{re.device}}.png"></div>
+                    </li>
+                </ul>
+            </mat-tab>
+            <mat-tab label="DEVICE">
+                <div  class="flex-row">
+                    <div class="width-70">
+                        <ul class="gridList">
+                            <li class="girdListHead">
+                                <div class="lableTxt width-70">Device Classification</div>
+                                <div class="count-view-head">{{viewTitle}}</div>
+                            </li>
+                        </ul>
+                        <div class="flex-row flex-row girdListHead" style="margin-left:40px;">
+                            <div  class="width-30" style="height:150px;margin-bottom:40px">
+                                <data-chart #deviceChart [formID]="formID" showCard=false bgColor="rgba(0,0,0,0)" 
+                                hideXGrid=true hideYGrid=true [fillColor]="piefillColor" [convertUnit]="convertUnit"
+                                [pointColor]="pielineColor" [parentQuery]="deviceQuery" isEditable="false"
+                                [title]="" pWidth="150px" pChartType="pie" aspectRatio=1 easing="linear"></data-chart>
+                            </div>
+                            <ul class="gridList width-70">
+                                <li *ngFor="let obj of deviceData" class="girdListHead grid-row">
+                                    
+                                    <div class="lableTxt width-70 flex-row">
+                                        <img width="24px" height="24px" src="/assets/img/form/{{obj.title}}.png">
+                                        <span style="margin-left: 15px;">{{obj.title}}</span>
+                                    </div>
+                                    <div *ngIf="selectedViewIndex!=2" class="count-view">
+                                        <span class="count">{{obj.value}}</span>
+                                        <span class="count-per">{{obj.percent}}</span>
+                                    </div>
+                                    <div *ngIf="selectedViewIndex==2" class="count-view">
+                                        <span class="grow">{{obj.percent}}</span>
+                                    </div>
+                                </li>
+                                
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="width-30 grow">
+                        <ul class="gridList">
+                            <li class="girdListHead">
+                                <div class="lableTxt width-70">Resolution</div>
+                                <div class="count-view-head">{{viewTitle}}</div>
+                            </li>
+                            <li *ngFor="let obj of resolutionData">
+                                <div  class="lableTxt width-70">{{obj.title}}</div>
+                                <div *ngIf="selectedViewIndex!=2" class="count-view">
+                                    <span class="count">{{obj.value}}</span>
+                                    <span class="count-per">{{obj.percent}}</span>
+                                </div>
+                                <div *ngIf="selectedViewIndex==2" class="count-view">
+                                    <span class="grow">{{obj.percent}}</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="SYSTEM">
+                <div class="flex-row bottom-margin">
+                    <div class="width-70">
+                        <ul class="gridList">
+                            <li class="girdListHead">
+                                <div class="lableTxt width-70">Browser</div>
+                                <div class="count-view-head">{{viewTitle}}</div>
+                            </li>
+                            <li *ngFor="let obj of browserData">
+                                <div class="lableTxt width-70">{{obj.title}}</div>
+                                <div *ngIf="selectedViewIndex!=2" class="count-view">
+                                    <span class="count">{{obj.value}}</span>
+                                    <span class="count-per">{{obj.percent}}</span>
+                                </div>
+                                <div *ngIf="selectedViewIndex==2" class="count-view">
+                                    <span class="grow">{{obj.percent}}</span>
+                                </div>
+                            </li>
+                        </ul>  
+                    </div>
+                    <div class="width-30 grow">
+                        <ul class="gridList">
+                            <li class="girdListHead">
+                                <div class="lableTxt">Platform</div>
+                                <div class="count-view-head">{{viewTitle}}</div>
+                            </li>
+                            <li *ngFor="let obj of platformData">
+                                <div class="lableTxt">{{obj.title}}</div>
+                                <div *ngIf="selectedViewIndex!=2" class="count-view">
+                                    <span class="count">{{obj.value}}</span>
+                                    <span class="count-per">{{obj.percent}}</span>
+                                </div>
+                                <div *ngIf="selectedViewIndex==2" class="count-view">
+                                    <span class="grow">{{obj.percent}}</span>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="REGION">
+                <div class="flex-row bottom-margin">
+                    <div class="width-50">
+                         <div><countries-map [data]="mapData" noDataColor="#E4E1DC" [valueLabel]="viewTitle" captionBelow=true [minColor]="piefillColor" [maxColor]="piefillColor"></countries-map></div>
+                    </div>
+                    <div class="width-50 grow">
+                        <ul class="gridList">
+                            <li class="girdListHead">
+                                <div class="lableTxt">County</div>
+                                <div class="count-view-head">{{viewTitle}}</div>
+                            </li>
+                            <li *ngFor="let re of countryData">
+                                <div class="lableTxt">{{re.country}}</div>
+                                <div *ngIf="selectedViewIndex!=2"  class="count-view">
+                                    <span class="count">{{re.view}}</span>
+                                    <span class="count-per">{{re.percent}}</span>
+                                </div>
+                                <div *ngIf="selectedViewIndex==2" class="count-view">
+                                    <span class="grow">{{re.percent}}</span>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+       
+
+
+       
+       
+        <!-- <div class="mmfTabs">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">This week</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">This month</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">All time</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Custom</a>
+                </li>
+            </ul>
+            <div class="mmfTabCont">
+                <ul class="gridList">
+                    <li class="girdListHead">
+                        <div class="lableTxt">Recent Visitors</div>
+                        <div class="date">Dates</div>
+                        <div class="response">Response</div>
+                        <div class="duration">Duration</div>
+                        <div class="location">Location</div>
+                        <div class="device">Device</div>
+                    </li>
+                    <li *ngFor="let re of dataResponse">
+                        <div class="lableTxt">{{re.vis}}</div>
+                        <div class="date">{{re.time}}</div>
+                        <div class="response">{{re.resp}}</div>
+                        <div class="duration">{{re.dur}}</div>
+                        <div class="location"><img src="/assets/img/form/flag.png"></div>
+                        <div class="device"><img src="/assets/img/form/desk.png"></div>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+
+    </div>
+</div>

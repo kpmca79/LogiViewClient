@@ -3,7 +3,9 @@
 	min-height: 100% !important;
 }
 
-
+.full-height{
+	height:100% !important;
+}
 /*custom scrollbar
 ref: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_scrollbar
 https://css-tricks.com/custom-scrollbars-in-webkit/

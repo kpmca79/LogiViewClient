@@ -29,6 +29,8 @@ export class FormService {
 //    publiIPURL="https://jsonip.com";
     publiIPURL = 'http://api.ipify.org/?format=json&timestamp=34ds34343'
     private newURL = '/api';
+
+    private browserLocationUrl="https://json.geoiplookup.io";
    
 //    ipDetailURL="https://api.hackertarget.com/geoip/?q=";
     ipDetailURL="https://ipapi.co/";
@@ -64,6 +66,7 @@ export class FormService {
         return this.http.get<any>('/api/forms'+qryParam);
 
     }
+    
     async getFormsAsync(status:string,searchStr:string,router): Promise<Form[]> {
         let forms:Form[] = [];
         let qryParam="";
@@ -112,6 +115,13 @@ export class FormService {
            return this.http.post(saveURL, JSON.parse(JSON.stringify(form)));
        }
     }
+    //formID}/response/summary
+    public async getResponseAyalytics(formID:string) : Promise<any> {
+        let promise = new Promise<any>((resolve)=>{
+            this.http.get("api/"+formID+"/response/summary").subscribe(data=>{resolve(data)},error=>{resolve(null)})
+        });
+        return promise;
+    }
      public  getPaymentHash(paymentDetail:PaymentDetail): Observable<any> {
          let url='/api/payment/hash';
          console.log('get Hash for PaymentDetails=', paymentDetail);
@@ -127,8 +137,9 @@ export class FormService {
         console.log("Inside get data analytics get url is ",url);
         return this.http.get(url);
     }
-    public async getChartData(url) : Promise<any> {
+    public async getChartData(formID:string,query:string) : Promise<any> {
         
+        let url = "/api/response/" + formID + "/chartdata?"+query
         let promise = new Promise<any>((resolve)=>{
             console.log("Inside get get chart data url =",url);
             this.http.get(url).subscribe(data=>{resolve(data);},error=>{resolve(null);})            

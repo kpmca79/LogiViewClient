@@ -13,6 +13,7 @@ import { GridresponselistComponent } from './gridresponselist/gridresponselist.c
 //modules for ag-grid 
 import {  AgGridModule} from 'ag-grid-angular';
 import 'ag-grid-enterprise';
+
 //end
 
 
@@ -46,6 +47,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
   declarations: [
     SidetoolbarComponent,
     GridresponselistComponent,
+    
     
    
 

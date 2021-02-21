@@ -111,7 +111,8 @@ import {CalendarModule} from 'primeng/calendar';
 
 import {ChartModule} from 'primeng/chart';
 
-
+import { CountriesMapModule } from 'countries-map';
+import { AnalyticsComponent } from '../../formmodule/analytics/analytics.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppressScrollX: true};
 
@@ -146,7 +147,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
     Ng2TelInputModule,
     ChartModule,
     CalendarModule,
-    
+    CountriesMapModule,
     FroalaEditorModule.forRoot(), 
     FroalaViewModule.forRoot(),
  
@@ -225,7 +226,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
     TrashFormsComponent,
     DataChartComponent,
     FormdashboardComponent,
-
+    AnalyticsComponent
     
     
     // tslint:disable-next-line:no-trailing-whitespace

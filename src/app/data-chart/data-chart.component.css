@@ -2,6 +2,9 @@
   /*  padding:10px;
     margin:10px;
     resize: both;*/
+    /* display: flex;
+    justify-content: center;
+    flex-direction: row; */
 }
 
 ::ng-deep .ct-label {
@@ -78,8 +81,10 @@
     color:#000;
 }
 .no-data{
-    font-size: 14px;
+    font-size: 19px;
     text-align: center;
-    padding: 30px;
+    padding: 110px;
     font-weight: 400;
+    min-height: 240px;
+    color: #94928e;
 }

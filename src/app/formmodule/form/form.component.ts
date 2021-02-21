@@ -23,6 +23,7 @@ import { Observable, Observer } from "rxjs";
 //import * as $ from 'jquery';
 import { PaymentDetail } from "app/model/PaymentDetail";
 import Utils from "app/util/utils";
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 //payUMoney bold object
 declare const bolt:any;
@@ -53,6 +54,7 @@ export class FormComponent implements OnInit {
     saveResponseLoader=false;
     surl="https://localhost:4200/form/";
     furl="https://localhost:4200/login";
+    ipDetailsURL='https://json.geoiplookup.io';
     isPaymentForm=false;
     isPaymentSuceess=false;
     captchav2SiteKey="6LfMx64ZAAAAACQ6nRCglIwPacx3AraqI7vLBFSB";
@@ -105,7 +107,9 @@ export class FormComponent implements OnInit {
     hideHeader=true;
     headershowdiv=false;
     pageContext:any;
-    
+    deviceInfo;
+    respStartTime;
+    responseID;
     @HostBinding( '@.disabled' ) private disabled = true;
     constructor( iconRegistry: MatIconRegistry,
         private router: Router,
@@ -117,6 +121,7 @@ export class FormComponent implements OnInit {
         private frmSrv: FormService,
         public dialog: MatDialog,
         private mService: MessagingService,
+        private deviceService: DeviceDetectorService,
         private snackBar: MatSnackBar ) {
 
         iconRegistry.addSvgIcon('Setting',sanitizer.bypassSecurityTrustResourceUrl( 'assets/icon/setting.svg' ) );
@@ -137,6 +142,49 @@ export class FormComponent implements OnInit {
         
 
     }
+    async epicFunction() {
+      
+        this.deviceInfo = this.deviceService.getDeviceInfo();
+        let deviceType='Unknown';
+        if(this.deviceService.isMobile())
+            deviceType='Mobile'
+        else if(this.deviceService.isTablet())    
+            deviceType='Tablet'
+        else if(this.deviceService.isDesktop())    
+            deviceType='Desktop'    
+        this.deviceInfo.deviceType=deviceType;
+        this.respStartTime=new Date().getTime();
+      
+        if(!this.responseID && this.mode=='live' && this.formID)
+        {
+            
+            this.respJson.browser=this.deviceInfo.browser;
+            this.respJson.browser_version=this.deviceInfo.browser_version;
+            this.respJson.os=this.deviceInfo.os;
+            this.respJson.os_version=this.deviceInfo.os_version;
+            this.respJson.orientation=this.deviceInfo.orientation;
+            this.respJson.resp_duration=0;
+            this.respJson.deviceType=deviceType;
+            this.respJson.formID=this.formID;
+            //this.respJson=await this.frmSrv.getReqeustDetails(this.respJson);
+            let reqInfo=await $.getJSON(this.ipDetailsURL,function(reqInfo){return reqInfo;});
+            console.log("reqInfo========>",reqInfo);
+             this.respJson.IpAddress=reqInfo.ip;
+           this.respJson.resp_country=reqInfo.country_name;
+           this.respJson.resp_countrycode=reqInfo.country_code;
+           this.respJson.resp_state=reqInfo.region;
+           this.respJson.resp_city=reqInfo.city;
+           this.respJson.latitude=reqInfo.latitude;
+           this.respJson.longitude=reqInfo.longitude;
+           this.respJson.resolution=window.screen.width+'x'+window.screen.height;
+            
+            console.log("Saving response on visiting form ",this.respJson);
+            this.frmSrv.saveResponse(this.formID,this.respJson)
+             .subscribe(resp=>{this.responseID=resp.data;console.log("Form response saved and response id ",resp),
+            error=>{console.log("Error generated while saving response")}});
+        }
+        console.log(this.deviceInfo); // returns if the app is running on a Desktop browser.
+      }
     next(){
         
        
@@ -207,12 +255,14 @@ export class FormComponent implements OnInit {
     }
     ngOnInit() {
         let url: any
+        this.epicFunction();
         this.dummyController=new FormControl( '', [Validators.maxLength( 10000)] );
         for ( var i = 0; i < 60; i = i + 10 ) { this.minutes.push( i + '' ); }
         if ( this.frm && this.formID ) {
             /// this.addFieldValidations();
             this.setFormBGStyle();
             console.log("Current form object.....",this.frm);
+            
             
             if(this.mode!="build")
             {
@@ -948,7 +998,7 @@ export class FormComponent implements OnInit {
              }
 
 
-            const isCmp = await  this.getPublicIP();
+           // const isCmp = await  this.getPublicIP();
             console.log("Saving form--this.isPaymentForm--->",this.isPaymentForm);
             console.log("Saving form--this.isPaymentSuceess--->",this.isPaymentSuceess);
             if(this.isPaymentForm)
@@ -1053,8 +1103,9 @@ export class FormComponent implements OnInit {
     saveFormResponse()
     {
      
-               
-        const formObj = this.frmSrv.saveResponse( this.formID, this.respJson ).subscribe(
+        let duration=new Date().getTime()-this.respStartTime;
+        this.respJson.resp_duration=duration;       
+        const formObj = this.frmSrv.updateResponse( this.responseID, this.respJson ).subscribe(
                 data => {
 //                    console.log( data )
                     this.router.navigate( ["/form/" + this.formID + "/thanks"] );
@@ -1063,6 +1114,7 @@ export class FormComponent implements OnInit {
                     this.submitButtonChange(this.buttonFiled,true);
                     console.log( error ); return; } ); 
     }
+    
  
     onFileComplete( data: string ) {
      
