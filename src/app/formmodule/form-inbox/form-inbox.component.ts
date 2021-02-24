@@ -37,7 +37,9 @@ export class FormInboxComponent implements OnInit {
   message = "this is from parent"
   chartData: any[] = [];
   queryColumns=['_id'];
-  hidencols: string[] = ['id','title','_id','formID','tags','comments','resp_country', 'resp_state', 'resp_city', 'latitude', 'longitude', 'IpAddress', 'resTime'];
+  filter=[{key:'resp_duration',operation:'num_gte',value:'1'}];
+  hidencols: string[] = ['id','title','_id','formID','tags','comments','resp_country', 'resp_state', 'resp_city', 
+  'latitude', 'longitude', 'IpAddress', 'resTime',"resp_city", "resTime",'browser','browser_version','os','os_version','orientation','resp_duration','deviceType','resp_country','resp_countrycode','resolution'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   comments: Array<CommentNode> = [];
@@ -69,7 +71,7 @@ export class FormInboxComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
   filteredFruits: Observable<any[]>;
-
+  
   fruits: any[] = [];
   allFruits: any[] = [
     { name: 'To Do', color: '#ffc0e9' },
@@ -178,9 +180,9 @@ export class FormInboxComponent implements OnInit {
     if (this.skip >= this.totalRecords)
       return;
     if (this.searchform && this.searchform.trim() != '')
-      this.postBody = { skip: this.skip, limit: this.limit, searchString: this.searchform, searchColumns: this.queryColumns };
+      this.postBody = { skip: this.skip,filter:this.filter, limit: this.limit, searchString: this.searchform, searchColumns: this.queryColumns };
     else
-      this.postBody = { skip: this.skip, limit: this.limit };
+      this.postBody = { skip: this.skip,filter:this.filter ,limit: this.limit };
     this.scrollCheck = true;
     const a = await this.loadInboxData('scroll');
     console.log("End Page scrolled event total records=", this.responseData.length);
@@ -190,7 +192,7 @@ export class FormInboxComponent implements OnInit {
     this.skip = 0;
     this.inboxPage = 0;
     document.getElementById('inbox-rows').remove;
-    this.postBody = { skip: this.skip, limit: this.limit, searchString: this.searchform, searchColumns: this.queryColumns};
+    this.postBody = { skip: this.skip, limit: this.limit,filter:this.filter, searchString: this.searchform, searchColumns: this.queryColumns};
     const a = await this.loadInboxData('search');
  }
  loadInboxData(mode: string): Promise<any> {
@@ -198,7 +200,7 @@ export class FormInboxComponent implements OnInit {
     if(mode=='scroll')
       selectedResp=this.currentResp;
     if (!this.postBody)
-      this.postBody = { skip: this.skip, limit: this.limit };
+      this.postBody = { skip: this.skip, filter:this.filter,limit: this.limit, };
     let promise = new Promise((resolve) => {
       this.srv.getResonseWithFilter(this.formID, this.postBody).subscribe(data => {
         let result = data;

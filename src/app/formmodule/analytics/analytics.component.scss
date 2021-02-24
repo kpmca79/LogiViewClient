@@ -74,6 +74,26 @@
     stroke-width:0.25% !important;
     stroke: #ffffff !important;
 }
+.spnner-div{
+    display:flex;margin-top:30px;justify-content:center;
+}
+/deep/ .p-skeleton {
+    overflow: hidden;
+    position: relative;
+    margin-top: 10px;
+    background: #e4e1dc;
+  
+}
+.skeleton{
+    padding-left: 50px;padding-top: 15px;flex-grow: 1;padding-right: 40px;  margin-bottom:40px;
+}
+/deep/ .countryxx .landxx, .countryxx.landxx {
+    stroke: #ffffff !important;
+    stroke-width: 0.25% !important;
+    fill-rule: evenodd;
+    stroke: rgb(255,255,255) !important;
+    
+}
 
 .date-range{
     display: flex;
@@ -169,7 +189,7 @@
       
       .sectionMain{background:#f8f9fa; height:calc(100vh - 76px); padding: 25px 0px;}
       .sectionMain .container{height:100%;}
-      .pageWrapper{background:#FFF; border-radius:5px; height:100%; display:flex; flex-direction:column;}
+      .pageWrapper{background:#FFF; border-radius:5px; height:100%; display:flex; flex-direction:column;margin-bottom: 50px;}
       .anaTabMain{height:50px; background:#eb1515; display:flex; color:#FFF; border-radius:5px 5px 0px 0px; align-items: center;}
       .anaTabMain h5{font-weight:normal; padding:5px 15px; align-items: center; display: flex; margin:0px;}
       .anaTabMain a{padding:0px 15px; height:100%; border-left:#d50808 solid 1px; align-items: center; display: flex; color:#FFF; font-size:18px;}

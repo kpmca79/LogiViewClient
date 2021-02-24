@@ -129,7 +129,7 @@ export class FormdashboardComponent implements OnInit {
   }
   show() {
     if(this.customChartTab)
-      this.customChartTab.refreshDataChart(this.fromDate,this.toDate);
+      this.customChartTab.refreshDataChart(this.fromDate,this.toDate,true);
 
   }
   

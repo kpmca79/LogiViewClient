@@ -110,6 +110,7 @@ import { FormdashboardComponent } from 'app/formmodule/form/formdashboar/formdas
 import {CalendarModule} from 'primeng/calendar';
 
 import {ChartModule} from 'primeng/chart';
+import { SkeletonModule } from "primeng/skeleton";
 
 import { CountriesMapModule } from 'countries-map';
 import { AnalyticsComponent } from '../../formmodule/analytics/analytics.component';
@@ -145,7 +146,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {suppr
     RecaptchaModule,
     InfiniteScrollModule,
     Ng2TelInputModule,
+
     ChartModule,
+    SkeletonModule,    
+
     CalendarModule,
     CountriesMapModule,
     FroalaEditorModule.forRoot(), 

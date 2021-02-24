@@ -1,6 +1,6 @@
 <div class="anaTabs">
-    <div style="background:#fff;">
-        <data-chart #customChart [formID]="formID" showCard=false bgColor="rgba(0,0,0,0)" hideXGrid=true [fillColor]="fillColor"
+    <div style="background:#fff;padding-left: 20px;padding-right: 20px">
+        <data-chart #customChart [formID]="formID" showCard=false bgColor="rgba(0,0,0,0)" hideXGrid=true [fillColor]="fillColor" easing="easeOutQuad"
             [pointColor]="pointColor" [parentQuery]="chartQuery" [parentQuery2]="chartQuery2" [seriesRatio]="showRatio" isEditable="false" [convertUnit]="convertUnit" [seriesName]="viewTitle"
             [title]="chartTitle"></data-chart>
     </div>
@@ -17,7 +17,8 @@
        
         <mat-tab-group mat-stretch-tabs (selectedTabChange)="summaryTabChange($event)">
             <mat-tab label="TRAFFIC">
-                <ul class="gridList bottom-margin">
+                
+                <ul *ngIf="dataResponse.length!=0 else loadingRect" class="gridList bottom-margin">
                     <li class="girdListHead">
                         <div class="lableTxt">Recent Visitors</div>
                         <div class="date">Dates</div>
@@ -51,10 +52,11 @@
                             <div  class="width-30" style="height:150px;margin-bottom:40px">
                                 <data-chart #deviceChart [formID]="formID" showCard=false bgColor="rgba(0,0,0,0)" 
                                 hideXGrid=true hideYGrid=true [fillColor]="piefillColor" [convertUnit]="convertUnit"
-                                [pointColor]="pielineColor" [parentQuery]="deviceQuery" isEditable="false"
-                                [title]="" pWidth="150px" pChartType="pie" aspectRatio=1 easing="linear"></data-chart>
+                                [pointColor]="pielineColor" [parentQuery]="deviceQuery"  [parentQuery2]="deviceQuery2"[seriesRatio]="showRatio" isEditable="false"
+                                [title]="" pWidth="150px" pChartType="pie" aspectRatio=1 easing="easeOutBounce"></data-chart>
                             </div>
-                            <ul class="gridList width-70">
+                            
+                            <ul *ngIf="deviceData.length!=0 else loadingRect" class="gridList width-70">
                                 <li *ngFor="let obj of deviceData" class="girdListHead grid-row">
                                     
                                     <div class="lableTxt width-70 flex-row">
@@ -75,13 +77,13 @@
                         </div>
                     </div>
                     <div class="width-30 grow">
-                        <ul class="gridList">
+                        <ul *ngIf="resolutionData.length!=0 else loadingRect" class="gridList">
                             <li class="girdListHead">
-                                <div class="lableTxt width-70">Resolution</div>
-                                <div class="count-view-head">{{viewTitle}}</div>
+                                <div class="lableTxt" style="width:55%">Resolution</div>
+                                <div class="count-view-head grow">{{viewTitle}}</div>
                             </li>
                             <li *ngFor="let obj of resolutionData">
-                                <div  class="lableTxt width-70">{{obj.title}}</div>
+                                <div  class="lableTxt" style="width:55%">{{obj.title}}</div>
                                 <div *ngIf="selectedViewIndex!=2" class="count-view">
                                     <span class="count">{{obj.value}}</span>
                                     <span class="count-per">{{obj.percent}}</span>
@@ -97,7 +99,7 @@
             <mat-tab label="SYSTEM">
                 <div class="flex-row bottom-margin">
                     <div class="width-70">
-                        <ul class="gridList">
+                        <ul *ngIf="browserData.length!=0 else loadingRect" class="gridList">
                             <li class="girdListHead">
                                 <div class="lableTxt width-70">Browser</div>
                                 <div class="count-view-head">{{viewTitle}}</div>
@@ -115,10 +117,10 @@
                         </ul>  
                     </div>
                     <div class="width-30 grow">
-                        <ul class="gridList">
+                        <ul *ngIf="platformData.length!=0 else loadingRect" class="gridList">
                             <li class="girdListHead">
                                 <div class="lableTxt">Platform</div>
-                                <div class="count-view-head">{{viewTitle}}</div>
+                                <div class="count-view-head grow">{{viewTitle}}</div>
                             </li>
                             <li *ngFor="let obj of platformData">
                                 <div class="lableTxt">{{obj.title}}</div>
@@ -141,11 +143,12 @@
                          <div><countries-map [data]="mapData" noDataColor="#E4E1DC" [valueLabel]="viewTitle" captionBelow=true [minColor]="piefillColor" [maxColor]="piefillColor"></countries-map></div>
                     </div>
                     <div class="width-50 grow">
-                        <ul class="gridList">
+                        <ul *ngIf="countryData.length!=0 else loadingRect" class="gridList">
                             <li class="girdListHead">
                                 <div class="lableTxt">County</div>
-                                <div class="count-view-head">{{viewTitle}}</div>
+                                <div class="count-view-head grow">{{viewTitle}}</div>
                             </li>
+                          
                             <li *ngFor="let re of countryData">
                                 <div class="lableTxt">{{re.country}}</div>
                                 <div *ngIf="selectedViewIndex!=2"  class="count-view">
@@ -162,8 +165,16 @@
                 </div>
             </mat-tab>
         </mat-tab-group>
-       
-
+        <ng-template #loadingRect>
+            <ul *ngIf="countryData.length==0 || true" class="skeleton">
+                <!-- <p-skeleton height="2rem" styleClass="p-mb-2"></p-skeleton> -->
+                <p-skeleton styleClass="p-mb-2"></p-skeleton>
+                <p-skeleton width="10rem" styleClass="p-mb-2"></p-skeleton>
+                <p-skeleton width="5rem" styleClass="p-mb-2"></p-skeleton>
+               
+                <!-- <p-skeleton width="10rem" height="4rem"></p-skeleton> -->
+            </ul>
+        </ng-template>
 
        
        

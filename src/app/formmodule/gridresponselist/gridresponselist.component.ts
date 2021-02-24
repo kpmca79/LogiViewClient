@@ -25,7 +25,7 @@ export class GridresponselistComponent implements OnInit {
   message = "this is from parent"
   chartData: any[] = [];
   hidencols: string[] = ['resp_country', 'resp_state', 'resp_city', 'latitude', 'longitude', 'IpAddress', 'resTime'];
-
+  postBody={filter:[{key:'resp_duration',operation:'num_gte',value:"1"}]}
   //ag-grid vadiables start
   gridApi;
   gridColumnApi;
@@ -80,7 +80,8 @@ export class GridresponselistComponent implements OnInit {
   //ag-grid vadiables end
   hiddenTypes = ['survey', 'dropdown', 'upload', 'signature', 'file','productlist']
   numericTypes = ['number', 'rating', 'numberspinner']
-  hiddenColList: string[] = ["id", 'title', "_id", "formID", "comments", "tags", "longitude", "latitude", "IpAddress", "resp_country", "resp_state", "resp_city", "resTime"];
+  hiddenColList: string[] = ["id", 'title', "_id", "formID", "comments", "tags", "longitude", "latitude", "IpAddress", "resp_country", "resp_state", 
+  "resp_city", "resTime",'browser','browser_version','os','os_version','orientation','resp_duration','deviceType','resp_country','resp_countrycode','resolution'];
   groupCols: string[] = ['State', 'City', 'Lasn name'];
   sideBar = {
     toolPanels: ['columns', 'filters'],
@@ -108,7 +109,7 @@ export class GridresponselistComponent implements OnInit {
     this.formID = this.route.snapshot.paramMap.get("id");
 
 
-    this.srv.getResonse(this.formID).subscribe(data => {
+    this.srv.getResonseWithFilter(this.formID,this.postBody).subscribe(data => {
       let result = data;
       this.dispColumns = result.columnNames;
       let textFilter = 'agTextColumnFilter';
@@ -184,7 +185,7 @@ export class GridresponselistComponent implements OnInit {
     console.log("page change event called")
   }
   getFormResponseData(param) {
-    this.srv.getResonse(this.formID).subscribe(data => {
+    this.srv.getResonseWithFilter(this.formID,this.postBody).subscribe(data => {
       let result = data;
       //console.log("setting row data---->",result.data);
       param.api.setRowData(result.data);

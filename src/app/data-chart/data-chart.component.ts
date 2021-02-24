@@ -106,7 +106,6 @@ export class DataChartComponent implements OnInit {
       await   this.generateChart();
     }
     async ngOnInit() {
-        console.log("keyurkeyur-------keyurkeyur-------keyurkeyur-------",this.parentQuery2,"   ",this.seriesRatio);
         if(this.pChartType)
             this.tmpCharJsOps.type=this.pChartType;
         if(this.aspectRatio)
@@ -122,7 +121,6 @@ export class DataChartComponent implements OnInit {
         this.frmFields = data.data;
         this.arrFields = [];
         this.frmFields.forEach(f => { this.arrFields.push({ val: f.title, id: f.id }) })
-        console.log("Fields array ", this.arrFields);
         await this.generateChart();
     }
     changeFill() {
@@ -232,10 +230,6 @@ export class DataChartComponent implements OnInit {
                 this.tmpCharJsOps.data.datasets = arrGrp2Labels;
                 if(this.tmpCharJsOps.data.labels.length==0)
                     this.noDataFound=true;
-                console.log("Uniquie first grouop values are ", arrGrp1Labels)
-                console.log("Uniquie second grouop values are ", arrGrp2Labels)
-                console.log("Final data ", this.data);
-
             }
             else {
                 if (this.noLabelTypes.includes(this.chartJsOps.type))
@@ -284,17 +278,9 @@ export class DataChartComponent implements OnInit {
             this.setOptions();
             
             if (this.chart && !this.seriesRatio)
-            {
-                console.log("----------------->Chart reinit called");
                 this.chart.reinit();
-               // this.chart.reinit();
-
-            }   
-            else
-            {
-                console.log("----------------->Chart reinit not called as chart is null");
-                //this.chart=new Chart(this)
-            }
+           
+           
         }
 
     }
@@ -306,14 +292,11 @@ export class DataChartComponent implements OnInit {
             let series2:[]=[];
             let series=this.tmpCharJsOps.data.datasets[0].data;
             let label= this.tmpCharJsOps.data.labels;
-            console.log("@@RamRAMRAMRamRAMRAMRamRAMRAM SERIES=",series);
-            console.log("@@RamRAMRAMRamRAMRAMRamRAMRAM label=",label);
+            
             if(result2.data.label)
             {
               label2=this.formatDate(result2.data.label);
               series2=result2.data.series;
-              console.log("@@RamRAMRAMRamRAMRAMRamRAMRAM SERIES2=",series2);
-              console.log("@@RamRAMRAMRamRAMRAMRamRAMRAM label2=",label2);
               label.forEach((title,index)=>{
                 let newper="0";
                 let curVal=series[index];
@@ -393,20 +376,20 @@ export class DataChartComponent implements OnInit {
             {
                 if(this.tmpfillColor.startsWith("rgba") || this.tmpfillColor.startsWith("rgb"))
                 {
-                    let inc=5;
+                    let inc=10;
                     let tmpcl=this.tmpfillColor;
                     tmpcl=tmpcl.replace("rgba","").replace("rgb","").replace("(","").replace(")","");
                     let clrs=tmpcl.split(",");
                     let r=Number.parseInt(clrs[0]);
                     let g=Number.parseInt(clrs[1]);
                     let b=Number.parseInt(clrs[2]);
-                    if(r>255)r=255;if(g>255)g=255;if(b>255)b=255;
                     let a="1";
                     if(clrs.length==4)
                      a=clrs[3];
                     r=r+inc; g=g+inc; b=b+inc;
+                    if(r>255)r=255;if(g>255)g=255;if(b>255)b=255;
                     this.tmpfillColor="rgba("+r+","+g+","+b+","+a+")";
-                    console.log("keyurkeyurkeyurkeyurkeyurkeyurkeyurkeyur new fill color=",this.tmpfillColor);
+                    
                     
                 }
             }
