@@ -1,4 +1,4 @@
-<div class="formdashboard-main">
+<div class="formdashboard-main dashboard-color">
     <nav class="site-header sticky-top py-1">
         <div class="container d-flex flex-column flex-md-row justify-content-between">
             <a class="py-2" href="#">
@@ -22,9 +22,10 @@
                 <h5>Form Analytics</h5>
                 <a href="#">Form</a>
             </div>
-            <div class="anaTabs">
-
-                <mat-tab-group (selectedTabChange)="tabChangeEvent($event)" mat-stretch-tabs class="mat-elevation-z4" animationDuration="1000ms">
+            <div class="anaTabs" [@.disabled]="true">
+                <!-- mat-stretch-tabs -->
+                <div>
+                <mat-tab-group (selectedTabChange)="tabChangeEvent($event)" class="mat-elevation-z4" animationDuration="1000ms">
                     <mat-tab label="Current Week">
                         <analytics mode="week" [formID]="formID" [fromDate]="weekStartDate" [toDate]="weekEndDate"></analytics>
                     </mat-tab> 
@@ -71,6 +72,8 @@
 
                     </mat-tab>
                 </mat-tab-group>
+            </div>
+              
          
             </div>
         </div>

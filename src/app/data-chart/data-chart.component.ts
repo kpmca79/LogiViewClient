@@ -110,8 +110,7 @@ export class DataChartComponent implements OnInit {
             this.tmpCharJsOps.type=this.pChartType;
         if(this.aspectRatio)
             this.tmpCharJsOps.aspectRatio=this.aspectRatio;
-        if(this.fillColor)
-            this.tmpfillColor=this.fillColor;
+        this.tmpfillColor=this.fillColor;
        //https://www.chartjs.org/docs/latest/configuration/animations.html for animations
         if(this.duration)    
             this.tmpCharJsOps.animation.duration=this.duration;
@@ -243,8 +242,9 @@ export class DataChartComponent implements OnInit {
 
                 let clrarr = [];
                 let color = this.getRandomColor();
+                this.tmpfillColor=this.fillColor;
                 if (this.noLabelTypes.includes(this.chartJsOps.type) || this.chartJsOps.type == "bar" || this.chartJsOps.type == "horizontalBar" || this.chartJsOps.type == "polarArea")
-                    result.data.label.forEach(g1 => clrarr.push(this.getRandomColor()))
+                    result.data.label.forEach((g1,ind) => {if(ind==0 && this.tmpfillColor)clrarr.push(this.tmpfillColor); else clrarr.push(this.getRandomColor());});
                 else
                     clrarr.push(color);
                 if(this.fillColor)
@@ -328,15 +328,13 @@ export class DataChartComponent implements OnInit {
         }
     }
     reDraw(query){
-       if(this.fillColor)
-        this.tmpfillColor=this.fillColor;
+       
+       this.tmpfillColor=this.fillColor;
        this.parentQuery=query;
        this.noDataFound=false;
        this.ngOnInit();
     }
     reInitChart(){
-        if(this.fillColor)
-            this.tmpfillColor=this.fillColor;
         if(this.chart)
             this.chart.reinit();
     }

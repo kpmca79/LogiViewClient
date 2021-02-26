@@ -162,10 +162,18 @@ export class GridresponselistComponent implements OnInit {
           this.columnDefs.push(colDf);
         }
       });
+      
+      this.columnDefs.push({
+        headerName: 'Response Date', field: "resTime",
+        cellRenderer: (data) => { return data.value ? moment(data.value).format('DD-MMM-YY') : ''; },
+        sortable: true, enableRowGroup: true,
+        valueGetter:(data)=>{console.log('SHIAVASHIVASHIVASHIAVASHIVASHIVASHIAVASHIVASHIVA',data);return data;}
+
+      });
       this.columnDefs.push({
         headerName: 'Response Time', field: "resTime",
-        cellRenderer: (data) => { return data.value ? moment(data.value).format('DD-MMM-YY HH:mm') : ''; },
-        sortable: true, enableRowGroup: true
+        cellRenderer: (data) => { return data.value ? moment(data.value).format('HH:mm') : ''; },
+        sortable: false, enableRowGroup: true
       });
       this.isLoaded = true;
     }, error => { console.log(error); })

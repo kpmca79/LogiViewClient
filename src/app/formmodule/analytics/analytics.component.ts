@@ -26,10 +26,10 @@ export class AnalyticsComponent implements OnInit {
   avgDuration;
   traficQuery;
   selViewRespOption = "Responses";
-  fillColor = "rgba(250,165,50,0.1)";
-  piefillColor = "rgba(250,165,50,1)";
+  fillColor = "rgba(255, 201, 65,0.1)";
+  piefillColor = "rgba(255, 201, 65,1)";
   pielineColor = "#fff";
-  pointColor = "rgba(250,165,50,1)";
+  pointColor = "rgba(255, 201, 65,1)";
   /*fillColor="rgba(235,21,21,0.1)";
   piefillColor="rgba(235,21,21,1)";
   pielineColor="#fff";
