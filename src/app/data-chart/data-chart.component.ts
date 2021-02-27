@@ -6,6 +6,7 @@ import { ChartJSOptions } from 'app/model/ChartJSOptions';
 import { DataChart } from 'app/model/DataChart';
 import { FormField } from 'app/model/FormField';
 import { FormService } from "app/services/form.service";
+import Utils from 'app/util/utils';
 import * as Chartist from 'chartist';
 import { UIChart } from 'primeng/chart';
 export interface TimeData {
@@ -51,7 +52,7 @@ export class DataChartComponent implements OnInit {
     @Input() seriesName='Response';
     
     
-
+    utils=new Utils();
     bodyStyle="";
     url = "/api/response/" + this.formID + "/chartdata?"
     query = "groupBy="
@@ -110,7 +111,9 @@ export class DataChartComponent implements OnInit {
             this.tmpCharJsOps.type=this.pChartType;
         if(this.aspectRatio)
             this.tmpCharJsOps.aspectRatio=this.aspectRatio;
+        this.fillColor=this.utils.hexToRgbA(this.fillColor);
         this.tmpfillColor=this.fillColor;
+        
        //https://www.chartjs.org/docs/latest/configuration/animations.html for animations
         if(this.duration)    
             this.tmpCharJsOps.animation.duration=this.duration;
@@ -372,6 +375,8 @@ export class DataChartComponent implements OnInit {
         {
             if(this.noLabelTypes.includes(this.pChartType))
             {
+                if(this.tmpfillColor.startsWith('#'))
+                    this.tmpfillColor=this.utils.hexToRgbA(this.tmpfillColor);
                 if(this.tmpfillColor.startsWith("rgba") || this.tmpfillColor.startsWith("rgb"))
                 {
                     let inc=10;

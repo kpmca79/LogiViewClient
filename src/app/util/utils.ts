@@ -42,6 +42,46 @@ export default class Utils {
                 '</div>'
         });
     }
+    getCSSVariableValue(className,varName):string {
+        let el=document.getElementsByClassName(className);
+        if(el)
+            return getComputedStyle(el[0]).getPropertyValue(varName)
+        else
+            return null;
+    }
+    hexToRgbA(hex:string):string {
+        let c;
+        if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+            c= hex.substring(1).split('');
+            if(c.length== 3){
+                c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+            }
+            c= '0x'+c.join('');
+            return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+',1)';
+        }
+        else
+            return hex;
+        
+    }
+    hexToRgbAWithOpacity(hex:string,opacity):string {
+        let c;
+        if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+            c= hex.substring(1).split('');
+            if(c.length== 3){
+                c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+            }
+            c= '0x'+c.join('');
+            let a="1";
+            if(opacity)
+                a=(1-(opacity/100)).toFixed(1);
+            return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+a+')';
+        }
+        else
+            return hex;
+        
+    }
+    
+    
 
 
 }

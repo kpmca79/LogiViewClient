@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataChartComponent } from 'app/data-chart/data-chart.component';
 import { FormService } from 'app/services/form.service';
 import * as moment from 'moment';
 import { CountriesData } from 'countries-map';
+import Utils from 'app/util/utils';
 @Component({
   selector: 'analytics',
   templateUrl: './analytics.component.html',
@@ -30,6 +31,7 @@ export class AnalyticsComponent implements OnInit {
   piefillColor = "rgba(255, 201, 65,1)";
   pielineColor = "#fff";
   pointColor = "rgba(255, 201, 65,1)";
+  areaFillColor="";
   /*fillColor="rgba(235,21,21,0.1)";
   piefillColor="rgba(235,21,21,1)";
   pielineColor="#fff";
@@ -52,10 +54,14 @@ export class AnalyticsComponent implements OnInit {
   chartQuery2: string;
   showRatio: boolean;
   deviceQuery2: string;
+  utils=new Utils();
   constructor(private frmSrv: FormService, private route: ActivatedRoute, private datePipe: DatePipe) { }
 
   async ngOnInit() {
+    
     console.log('Inside analytics fromDate--->', this.fromDate, " todate-->", this.toDate);
+    this.getCSSColors();
+    this.areaFillColor=this.utils.hexToRgbAWithOpacity(this.fillColor,90);
     this.updateChartTitles();
     // if(this.mode=='custom') this.chartTitle="Custom date range anaylysis";
     await this.refreshDataChart(this.fromDate, this.toDate, true)
@@ -79,6 +85,32 @@ export class AnalyticsComponent implements OnInit {
     if (this.customChart)
       this.customChart.reInitChart();
   }
+   getCSSColors(){
+    
+    this.fillColor=this.utils.getCSSVariableValue('dashboard-color','--background-light');
+    this.piefillColor=this.utils.getCSSVariableValue('dashboard-color','--background-light');
+    this.pointColor=this.utils.getCSSVariableValue('dashboard-color','--background-light');
+    /*let el=document.getElementsByClassName('dashboard-color');
+    console.log("How are ou out" ,getComputedStyle(el[0]).getPropertyValue('--background-light'));
+    console.log("How are ou out" ,getComputedStyle(el[0]));
+    $( document ).ready(function csschange(){
+      
+      $( '.dashboard-color' ).each( function() { 
+        
+        console.log("How are you ",this.style.setProperty('--background-light','#FFF'));
+      })
+      var bodyStyles = window.getComputedStyle(document.body); 
+      var fooBar = bodyStyles.getPropertyValue('--background-light');
+      console.log("How are you fetch foobar ",fooBar);  
+    console.log("How are you fetch by root ",getComputedStyle(this).getPropertyValue('--background-light'));
+
+    })*/
+    
+   
+   
+    
+  }
+  
   async updateCharts(updateViewResp): Promise<any> {
     let promise = new Promise<any>(async (resolve) => {
       this.countryData = []; this.deviceData = []; this.platformData = []; this.browserData = []; this.resolutionData = []; this.dataResponse = [];
