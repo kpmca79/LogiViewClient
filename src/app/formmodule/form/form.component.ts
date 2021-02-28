@@ -24,6 +24,7 @@ import { Observable, Observer } from "rxjs";
 import { PaymentDetail } from "app/model/PaymentDetail";
 import Utils from "app/util/utils";
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { CountryCode, CountryCodes } from 'app/util/country-codes';
 
 //payUMoney bold object
 declare const bolt:any;
@@ -87,7 +88,7 @@ export class FormComponent implements OnInit {
     //  $: any;
     emailFormControl = new FormControl( '', [Validators.email] );
     bgStyle = '';
-    
+    countryCodes: Array<CountryCode> = CountryCodes;
     cardFormStyle=""
     drpDownBGColor;
     drpDownFontColor;
@@ -109,7 +110,11 @@ export class FormComponent implements OnInit {
     pageContext:any;
     deviceInfo;
     respStartTime;
+    countryCode="+0";
     responseID;
+    mobileOTPMessage="A OTP (One Time Passcode) has been sent to your mobile number, please enter the OTP in the field to verify.";
+    tmpMobileOTPMessage=this.mobileOTPMessage;
+
     @HostBinding( '@.disabled' ) private disabled = true;
     constructor( iconRegistry: MatIconRegistry,
         private router: Router,
@@ -154,8 +159,8 @@ export class FormComponent implements OnInit {
             deviceType='Desktop'    
         this.deviceInfo.deviceType=deviceType;
         this.respStartTime=new Date().getTime();
-      
-        if(!this.responseID && this.mode=='live' && this.formID)
+        
+        if(!this.responseID  && this.formID)
         {
             
             this.respJson.browser=this.deviceInfo.browser;
@@ -169,8 +174,12 @@ export class FormComponent implements OnInit {
             //this.respJson=await this.frmSrv.getReqeustDetails(this.respJson);
             let reqInfo=await $.getJSON(this.ipDetailsURL,function(reqInfo){return reqInfo;});
             console.log("reqInfo========>",reqInfo);
+            
+            this.countryCodes.forEach(val=>{if(val.name==reqInfo.country_name) {this.countryCode=val.dial_code;}});
+            console.log("contry mobile code is ------>",this.countryCode);
              this.respJson.IpAddress=reqInfo.ip;
            this.respJson.resp_country=reqInfo.country_name;
+           
            this.respJson.resp_countrycode=reqInfo.country_code;
            this.respJson.resp_state=reqInfo.region;
            this.respJson.resp_city=reqInfo.city;
@@ -179,9 +188,11 @@ export class FormComponent implements OnInit {
            this.respJson.resolution=window.screen.width+'x'+window.screen.height;
             
             console.log("Saving response on visiting form ",this.respJson);
+            if(!this.responseID && this.mode=='live' && this.formID){
             this.frmSrv.saveResponse(this.formID,this.respJson)
              .subscribe(resp=>{this.responseID=resp.data;console.log("Form response saved and response id ",resp),
             error=>{console.log("Error generated while saving response")}});
+            }
         }
         console.log(this.deviceInfo); // returns if the app is running on a Desktop browser.
       }
@@ -550,6 +561,7 @@ export class FormComponent implements OnInit {
                 }
                 tmpthis.thumbcolor="rgba("+tr+","+tg+","+tb+",1)";
                 
+
 //                tmpthis.drpDownFontColor=inputbordercolor;
                 $( '.nav-color' ).each( function() { 
                     this.style.setProperty( '--input-border-color', tmpthis.inputbordercolor);
@@ -564,6 +576,36 @@ export class FormComponent implements OnInit {
                   });
              }
         )
+    }
+    onlyNumberKey(evt,field:FormField,controller:FormControl) { 
+   let mobNum=controller.value+evt.key;
+   if(mobNum.length>10) return false;
+
+    console.log("How are you       ",mobNum);
+    field.isValidMobile=false;    
+    
+    let ASCIICode = (evt.which) ? evt.which : evt.keyCode 
+        if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57)) 
+           return false; 
+    
+    var pattern = /^[7-9][0-9]*$/;
+    if(pattern.test(mobNum))
+    {
+        if(mobNum.length==10)
+            field.isValidMobile=true;
+        return true;
+    }   
+    else 
+        return false;
+    // Pattern p = Pattern.compile("(0/91)?[7-9][0-9]{9}");    
+
+    } 
+    verifyMobile($event,field){
+        if(field.otp=="1234")
+            field.isValidOTP=true;
+        else
+
+            this.tmpMobileOTPMessage="Please enter valid OTP or click  to generate new OTP";
     }
     setDropDownCSS()
     {
@@ -653,6 +695,9 @@ export class FormComponent implements OnInit {
     }
     sanitizeHTML( style: string ): SafeStyle {
         return this._sanitizer.bypassSecurityTrustStyle( style );
+    }
+    sanitizeHTMLContent( html: string ): SafeStyle {
+        return this._sanitizer.bypassSecurityTrustHtml( html);
     }
 
     saveForm( showNotification: boolean ) {

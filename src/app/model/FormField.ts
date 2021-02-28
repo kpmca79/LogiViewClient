@@ -56,6 +56,11 @@ export class FormField {
     elemType:string;
     productList:ProductList;
     hardDelete:boolean;
+    isVerifyMobile:boolean;
+    isValidOTP:boolean;
+    isValidMobile:boolean;
+    isRecendOTP:boolean;
+    otp:string;
     
 
 

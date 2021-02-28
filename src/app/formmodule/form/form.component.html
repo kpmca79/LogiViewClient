@@ -1,557 +1,710 @@
-
-
-
 <div *ngIf="frm && inputPageFields">
- 
 
-<!-- <div class="{{frm.theme}}"> -->
-<!-- <div class="{{frm.theme}}-custom"> -->
 
-<div *ngIf="pageNo==1 &&  frm.layout!='card'" class="head-div" >
-	<div class="title nav-color" [style]="sanitizeHTML(bgStyle)" [style.max-width.px]=frm.formwidth>
-		
-		<div [froalaView]="frm.title" style="flex-grow:1;" toolbarInline="true" ></div>
-		<button *ngIf="isBuild" mat-icon-button [matMenuTriggerFor]="menu"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
-		<mat-menu #menu="matMenu">
-					<button mat-menu-item (click)="showSetting(frm)">
-			    		<mat-icon svgIcon="Setting" class="setting-icon"></mat-icon>
-		    			<span>Properties</span>
-		  			</button>
-  		</mat-menu>
+	<!-- <div class="{{frm.theme}}"> -->
+	<!-- <div class="{{frm.theme}}-custom"> -->
+
+	<div *ngIf="pageNo==1 &&  frm.layout!='card'" class="head-div">
+		<div class="title nav-color" [style]="sanitizeHTML(bgStyle)" [style.max-width.px]=frm.formwidth>
+
+			<div [froalaView]="frm.title" style="flex-grow:1;" toolbarInline="true"></div>
+			<button *ngIf="isBuild" mat-icon-button [matMenuTriggerFor]="menu">
+				<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon>
+			</button>
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item (click)="showSetting(frm)">
+					<mat-icon svgIcon="Setting" class="setting-icon"></mat-icon>
+					<span>Properties</span>
+				</button>
+			</mat-menu>
+		</div>
 	</div>
-</div>
-<!-- <div *ngFor="let page of frm.pages" >
+	<!-- <div *ngFor="let page of frm.pages" >
 <ng-container *ngTemplateOutlet="formPage;context:page" ></ng-container>
 <br><br><br>
 </div> -->
 
 
 
-<div  class="main-form-class nav-color" [style]="sanitizeHTML(bgStyle)" [style.max-width.px]=frm.formwidth style="position:relative">
+	<div class="main-form-class nav-color" [style]="sanitizeHTML(bgStyle)" [style.max-width.px]=frm.formwidth
+		style="position:relative">
 
-<form class="{{theme}}" class="form-main" >
+		<form class="{{theme}}" class="form-main">
 
-	
 
-	
-<!--<div [attr.cdkDropList]="isBuild?'':null" class="example-list"  (cdkDropListDropped)="drop($event,page.no)">-->
-	
-	
-	
-	<div  cdkDrag [cdkDragDisabled]="!isBuild || field.type==='submit' || frm.layout==='card'"  *ngFor="let field of inputPageFields; index as i"  [ngSwitch]="field.type">
-<!-- 		<div *ngSwitchCase="'textbox'" > -->
-<!-- 				<mat-form-field appearance="outline" class="example-full-width"     [style]="sanitizeHTML(frm.style)"> -->
-<!-- 				    <input  matInput name="{{field.title}}" [formControl]="field.frmControl" value="" required="{{field.required}}"> -->
-<!-- 				    <mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder> -->
-<!-- 				    <button mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert"></mat-icon></button> -->
-<!-- 				</mat-form-field> -->
-<!--   		</div> -->
-  		<ngTemplate *ngIf="!field.hardDelete" >
-		
-  		<div *ngSwitchCase="'textbox'" class="flex row-field frm-mat ">
-<!-- 				appearance="outline" -->
-				
-				<mat-form-field  class="example-full-width"     [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-				    <mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
-				    <input matInput name="{{field.title}}" [formControl]="isBuild?dummyController:field.frmControl" 
-				    value="" disabled="true" required="{{field.required}}"  placeholder="{{field.title}}">
-<!-- 				     <mat-hint>Hint</mat-hint> -->
-				     <mat-icon matSuffix>{{field.selectedIcon}}</mat-icon>
-				      <mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.note}}</mat-hint>
-				     <mat-error *ngIf="!isBuild && field.frmControl && field.frmControl.invalid">
-						 <span *ngIf="field.message">{{field.message}}</span>
-						 <span *ngIf="!field.message">{{field.name}} is required</span>
-					 </mat-error>
-				</mat-form-field>
-				<button *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert" class="icon-color"></mat-icon></button>
-		  </div>
-  		<div *ngSwitchCase="'signature'" class="flex row-field frm-mat nav-color">
-			<div class="example-full-width signature" style="overflow:auto"  >
-				<signaturepad [actvieFormField]="field" [frm]="frm" ></signaturepad>
-			</div>
-				<button *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert" class="icon-color"></mat-icon></button>
-  		</div>
-  		
-  		<div  *ngSwitchCase="'survey'" class="flex row-field frm-mat">
-				<div class="inline example-full-width">				
-					<surveytable *ngIf="isBuild" [actvieFormField]="field" [frm]="frm" style="width:93%;"></surveytable>
-					<surveytable *ngIf="!isBuild" [actvieFormField]="field" [frm]="frm" style="width:100%;"></surveytable>
-					<div>
-						<button  *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert" class="icon-color"></mat-icon></button>
+
+
+			<!--<div [attr.cdkDropList]="isBuild?'':null" class="example-list"  (cdkDropListDropped)="drop($event,page.no)">-->
+
+
+
+			<div cdkDrag [cdkDragDisabled]="!isBuild || field.type==='submit' || frm.layout==='card'"
+				*ngFor="let field of inputPageFields; index as i" [ngSwitch]="field.type">
+				<!-- 		<div *ngSwitchCase="'textbox'" > -->
+				<!-- 				<mat-form-field appearance="outline" class="example-full-width"     [style]="sanitizeHTML(frm.style)"> -->
+				<!-- 				    <input  matInput name="{{field.title}}" [formControl]="field.frmControl" value="" required="{{field.required}}"> -->
+				<!-- 				    <mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder> -->
+				<!-- 				    <button mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert"></mat-icon></button> -->
+				<!-- 				</mat-form-field> -->
+				<!--   		</div> -->
+				<ngTemplate *ngIf="!field.hardDelete">
+
+					<div *ngSwitchCase="'textbox'" class="flex row-field frm-mat ">
+						<mat-form-field class="example-full-width" [style]="sanitizeHTML(frm.style)"
+							appearance="{{frm.inputStyle}}">
+							<mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
+							<input matInput name="{{field.title}}"
+								[formControl]="isBuild?dummyController:field.frmControl" value="" disabled="true"
+								required="{{field.required}}" placeholder="{{field.title}}">
+
+							<mat-icon matSuffix>{{field.selectedIcon}}</mat-icon>
+							<mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.note}}</mat-hint>
+							<mat-error *ngIf="!isBuild && field.frmControl && field.frmControl.invalid">
+								<span *ngIf="field.message">{{field.message}}</span>
+								<span *ngIf="!field.message">{{field.name}} is required</span>
+							</mat-error>
+						</mat-form-field>
+						<button *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+							[matMenuTriggerData]="{field:field}">
+							<mat-icon svgIcon="Morevert" class="icon-color"></mat-icon>
+						</button>
 					</div>
-				</div>
-  		</div>
-  		<div  *ngSwitchCase="'productlist'" class="flex row-field frm-mat">
-				<div class="inline example-full-width field-row">				
-					<productlist  [actvieFormField]="field" [frm]="frm" [drpDownFontColor]="drpDownFontColor" [drpDownBGColor]="drpDownBGColor"></productlist>
-					<div>
-						<button  *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert" class="icon-color"></mat-icon></button>
+
+					<div *ngSwitchCase="'mobile'" class="inline row-field frm-mat">
+						<div class="multifield">
+							<div  class="inline space-btn frm-mat flex">
+								<div>
+									<mat-form-field  [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
+										<mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
+										<input  matInput  name="{{field.title}}" [formControl]="isBuild?dummyController:field.frmControl"  value=""   
+										(keypress)="onlyNumberKey($event,field,isBuild?dummyController:field.frmControl)" maxlength="10"  required="{{field.required}}">
+										<span matPrefix class="mobile-prefix">({{countryCode}})</span>
+										<mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.note}}</mat-hint>
+										<mat-error *ngIf="!isBuild && field.frmControl && field.frmControl.invalid">
+											<span *ngIf="field.message">{{field.message}}</span>
+											<span *ngIf="!field.message">{{field.name}} is required</span>
+										</mat-error>
+									</mat-form-field>
+								</div>
+								<div *ngIf=" !field.isValidOTP">
+									<mat-form-field  class="frm-mat otp" [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
+										<mat-label [style]="sanitizeHTML(frm.style)"></mat-label>
+										<input name='otp' matInput  [(ngModel)]="field.otp"  maxlength="4" [disabled]="!field.isValidMobile">
+										<span matPrefix class="frm-mat mobile-prefix">OTP</span>
+									</mat-form-field>
+								</div>
+								<div *ngIf="!field.isValidOTP" class="flex-bottom">
+									<button  class="ripple-button ripple btn-small" [style]="sanitizeHTML(frm.btnStyle)" type="Verify"  [disabled]="!field.otp" 
+									(click)="verifyMobile($event,field)">Verify</button>
+								</div>
+								<div>
+									<button *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" 
+									[matMenuTriggerData]="{field:field}">
+										<mat-icon svgIcon="Morevert" class="icon-color"></mat-icon>
+									</button>
+								</div>
+							</div>
+							<div *ngIf="field.isValidMobile && !field.isValidOTP">
+								<span [style]="sanitizeHTML(frm.style)" class="note">
+									{{tmpMobileOTPMessage}}
+								</span>
+							</div>	
+							<div *ngIf="field.isValidOTP">
+								<span [style]="sanitizeHTML(frm.style)" class="note">
+									Mobile number has been verified successfully.
+								</span>
+							</div>	
+							
+						</div>
+
 					</div>
-				</div>
-  		</div>
-  		
-  		<div  *ngSwitchCase="'captcha'" class="flex row-field frm-mat">
-				<div class="inline example-full-width field-row">
-					<div class="flex-col" [style]="sanitizeHTML(frm.style)">
-						<div style="margin-bottom:5px;">{{field.title}}</div>
-						<div>		
-							<re-captcha (resolved)="resolved($event)" siteKey="{{captchav2SiteKey}}"></re-captcha>
+
+					<div *ngSwitchCase="'signature'" class="flex row-field frm-mat nav-color">
+						<div class="example-full-width signature" style="overflow:auto">
+							<signaturepad [actvieFormField]="field" [frm]="frm"></signaturepad>
+						</div>
+						<button *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+							[matMenuTriggerData]="{field:field}">
+							<mat-icon svgIcon="Morevert" class="icon-color"></mat-icon>
+						</button>
+					</div>
+
+					<div *ngSwitchCase="'survey'" class="flex row-field frm-mat">
+						<div class="inline example-full-width">
+							<surveytable *ngIf="isBuild" [actvieFormField]="field" [frm]="frm" style="width:93%;">
+							</surveytable>
+							<surveytable *ngIf="!isBuild" [actvieFormField]="field" [frm]="frm" style="width:100%;">
+							</surveytable>
+							<div>
+								<button *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+									[matMenuTriggerData]="{field:field}">
+									<mat-icon svgIcon="Morevert" class="icon-color"></mat-icon>
+								</button>
+							</div>
 						</div>
 					</div>
-					<div class="morevert">
-						<button  *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert" class="icon-color"></mat-icon></button>
+					<div *ngSwitchCase="'productlist'" class="flex row-field frm-mat">
+						<div class="inline example-full-width field-row">
+							<productlist [actvieFormField]="field" [frm]="frm" [drpDownFontColor]="drpDownFontColor"
+								[drpDownBGColor]="drpDownBGColor"></productlist>
+							<div>
+								<button *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+									[matMenuTriggerData]="{field:field}">
+									<mat-icon svgIcon="Morevert" class="icon-color"></mat-icon>
+								</button>
+							</div>
+						</div>
 					</div>
-				</div>
-  		</div>
-  		<div  *ngSwitchCase="'numberspinner'" class="flex row-field frm-mat">
-				<div class="inline col-100 field-row" [style]="sanitizeHTML(frm.style)">
-					<div class="num-spinner col-50">
-						<span style="margin-right:20px;">{{field.name}}</span>
-						<ngx-number-spinner 
-						[value]="field.defValue"   
-						[min]="field.minlen" 
-						[formControl]="isBuild?dummyController:field.frmControl" 
-						[max]="field.maxlen" 
-						[step]="field.step" ></ngx-number-spinner>
+
+					<div *ngSwitchCase="'captcha'" class="flex row-field frm-mat">
+						<div class="inline example-full-width field-row">
+							<div class="flex-col" [style]="sanitizeHTML(frm.style)">
+								<div style="margin-bottom:5px;">{{field.title}}</div>
+								<div>
+									<re-captcha (resolved)="resolved($event)" siteKey="{{captchav2SiteKey}}">
+									</re-captcha>
+								</div>
+							</div>
+							<div class="morevert">
+								<button *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+									[matMenuTriggerData]="{field:field}">
+									<mat-icon svgIcon="Morevert" class="icon-color"></mat-icon>
+								</button>
+							</div>
+						</div>
 					</div>
-					<div class="morevert">
-					<button   *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert" class="icon-color"></mat-icon></button>
+					<div *ngSwitchCase="'numberspinner'" class="flex row-field frm-mat">
+						<div class="inline col-100 field-row" [style]="sanitizeHTML(frm.style)">
+							<div class="num-spinner col-50">
+								<span style="margin-right:20px;">{{field.name}}</span>
+								<ngx-number-spinner [value]="field.defValue" [min]="field.minlen"
+									[formControl]="isBuild?dummyController:field.frmControl" [max]="field.maxlen"
+									[step]="field.step"></ngx-number-spinner>
+							</div>
+							<div class="morevert">
+								<button *ngIf="isBuild " mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+									[matMenuTriggerData]="{field:field}">
+									<mat-icon svgIcon="Morevert" class="icon-color"></mat-icon>
+								</button>
+							</div>
+						</div>
 					</div>
-				</div>
-  		</div>
-  		
-  		
-  		
-  		
-  		
-  		<div *ngSwitchCase="'email'" class="flex row-field frm-mat" (click)="rowClicked(field)">
-			<mat-form-field   class="example-full-width" [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-				<mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
-			    <input matInput name="{{field.title}}" [formControl]="isBuild?dummyController:field.frmControl"  value="" required="{{field.required}}" placeholder="{{field.title}}">
-			    	<mat-error *ngIf="!isBuild && field.frmControl.invalid">
-						<span *ngIf="field.message">{{field.message}}</span>
-						<span *ngIf="!field.message">Pleace check email address</span>
-					</mat-error>
-	 			 <mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.note}}</mat-hint>
-				<mat-icon matSuffix>email</mat-icon>
-		  	</mat-form-field>
-			   <button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
-		</div>
-  		<div *ngSwitchCase="'rating'" class="row-field">
-			<ng-template #ratingtemplate let-fill="fill">
-	    		<span class="gift" [class.full]="fill === 100">
-	      			<span class="half" [style.width.%]="fill"><i class="material-icons">{{field.types}}</i></span><i class="material-icons">{{field.types}}</i>
-<!-- 	      			<span class="half" [style]="sanitizeHTML(frm.style)"><i class="material-icons">{{field.types}}</i></span><i class="material-icons">{{field.types}}</i> -->
-	      			
-	    		</span>
-	  		</ng-template>
-	  		<div   class="example-full-width"  [style]="sanitizeHTML(frm.style)">
-				<div class="inline" >
-					<span style="padding-right: 16px;padding-bottom: 20px;white-space: nowrap;">{{field.name}}</span>
-					<div style="width:inherit;"> 
-						<ngb-rating  [(rate)]="currentRate" [starTemplate]="ratingtemplate"  max="{{field.maxlen}}"></ngb-rating>
+
+
+
+
+
+					<div *ngSwitchCase="'email'" class="flex row-field frm-mat" (click)="rowClicked(field)">
+						<mat-form-field class="example-full-width" [style]="sanitizeHTML(frm.style)"
+							appearance="{{frm.inputStyle}}">
+							<mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
+							<input matInput name="{{field.title}}"
+								[formControl]="isBuild?dummyController:field.frmControl" value=""
+								required="{{field.required}}" placeholder="{{field.title}}">
+							<mat-error *ngIf="!isBuild && field.frmControl.invalid">
+								<span *ngIf="field.message">{{field.message}}</span>
+								<span *ngIf="!field.message">Pleace check email address</span>
+							</mat-error>
+							<mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.note}}</mat-hint>
+							<mat-icon matSuffix>email</mat-icon>
+						</mat-form-field>
+						<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+							[matMenuTriggerData]="{field:field}">
+							<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon>
+						</button>
 					</div>
-					<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
-  				</div>	
-  			</div>
-		</div>	
-  		<div *ngSwitchCase="'number'"  class="flex row-field frm-mat">
-				<mat-form-field   class="example-half-width"  [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-				    <mat-label [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-label>
-					<input matInput name="{{field.title}}" [formControl]="isBuild?dummyController:field.frmControl"  value="" required="{{field.required}}" 
-					placeholder="Enter your {{field.title}}">
-				  
-				  	
-		  		</mat-form-field>
-		  		<button *ngIf="isBuild"  mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
-  		</div>
-  		<div *ngSwitchCase="'upload'" class="row-field">
-			<div   class="example-full-width inline"  [style]="sanitizeHTML(frm.style)">
-				
-					<app-file-upload 
-						field={{field}}
-						target="{{fileUploadURL}}" 
-						class="width-inherit" 
-						(complete)="onFileComplete($event)" 
-						styleparam={{frm.style}}
-						maxSizeMB={{field.maxFileSize}}			
-						maxFiles={{field.maxFiles}}
-    					iconName={{field.selectedIcon}} 
-						text={{field.name}}
-						fieldName={{field.name}}
-						acceptFileTypes={{field.acceptFileTypes}}
-						hint={{field.note}}></app-file-upload>
-					<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}">
-					<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon></button> 
-				
-			</div>
-  		</div>
-  	
-  		<div *ngSwitchCase="'textarea'" class="flex row-field frm-mat">
-  				
-  				<mat-form-field class="example-full-width" [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-    				<textarea matInput  rows="4" style="overflow:hidden" cols="20" [formControl]="isBuild?dummyController:field.frmControl" placeholder="Enter your {{field.title}}"></textarea>
-    				<mat-label [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-label>
-    				<mat-error *ngIf="!isBuild && field.frmControl.invalid">{{field.message}}</mat-error>
-<!-- 					<mat-icon matSuffix>{{frm.icon}}</mat-icon> -->
-    			</mat-form-field>
-    			
-    			<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
-  		</div>
-  		<div *ngSwitchCase="'section'" class="inline row-field">
-  			
-			<mat-list class="example-full-width"  [style]="sanitizeHTML(frm.style)">
-				<mat-list-item class="section-text" [style]="sanitizeHTML(field.sectionStyle)">{{field.name}}</mat-list-item>
-				<mat-divider [style]="sanitizeHTML(field.sectionStyle)"></mat-divider>
-			</mat-list>
-			<button  *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
-		</div>
-  		<div *ngSwitchCase="'fullname'" class="inline row-field frm-mat"  >
-  			<div class="multifield">
-  				<ng-container *ngFor="let subfield of field.subfields">
-					<ng-container *ngIf="subfield.visible==true" >	
-	  			 		<div class="subfield frm-mat">
-	  						<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-							     <input matInput name="{{subfield.name}}" required="subfield.required" [formControl]="isBuild?dummyController:subfield.frmControl" >
-							     <mat-label [style]="sanitizeHTML(frm.style)">{{subfield.name}}</mat-label>
-								 <mat-icon matSuffix>{{frm.icon}}</mat-icon>
-								 <mat-error *ngIf="!isBuild && subfield.frmControl.invalid">
+					<div *ngSwitchCase="'rating'" class="row-field">
+						<ng-template #ratingtemplate let-fill="fill">
+							<span class="gift" [class.full]="fill === 100">
+								<span class="half" [style.width.%]="fill"><i
+										class="material-icons">{{field.types}}</i></span><i
+									class="material-icons">{{field.types}}</i>
+								<!-- 	      			<span class="half" [style]="sanitizeHTML(frm.style)"><i class="material-icons">{{field.types}}</i></span><i class="material-icons">{{field.types}}</i> -->
+
+							</span>
+						</ng-template>
+						<div class="example-full-width" [style]="sanitizeHTML(frm.style)">
+							<div class="inline">
+								<span
+									style="padding-right: 16px;padding-bottom: 20px;white-space: nowrap;">{{field.name}}</span>
+								<div style="width:inherit;">
+									<ngb-rating [(rate)]="currentRate" [starTemplate]="ratingtemplate"
+										max="{{field.maxlen}}"></ngb-rating>
+								</div>
+								<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+									[matMenuTriggerData]="{field:field}">
+									<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div *ngSwitchCase="'number'" class="flex row-field frm-mat">
+						<mat-form-field class="example-half-width" [style]="sanitizeHTML(frm.style)"
+							appearance="{{frm.inputStyle}}">
+							<mat-label [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-label>
+							<input matInput name="{{field.title}}"
+								[formControl]="isBuild?dummyController:field.frmControl" value=""
+								required="{{field.required}}" placeholder="Enter your {{field.title}}">
+
+
+						</mat-form-field>
+						<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+							[matMenuTriggerData]="{field:field}">
+							<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon>
+						</button>
+					</div>
+					<div *ngSwitchCase="'upload'" class="row-field">
+						<div class="example-full-width inline" [style]="sanitizeHTML(frm.style)">
+
+							<app-file-upload field={{field}} target="{{fileUploadURL}}" class="width-inherit"
+								(complete)="onFileComplete($event)" styleparam={{frm.style}}
+								maxSizeMB={{field.maxFileSize}} maxFiles={{field.maxFiles}}
+								iconName={{field.selectedIcon}} text={{field.name}} fieldName={{field.name}}
+								acceptFileTypes={{field.acceptFileTypes}} hint={{field.note}}></app-file-upload>
+							<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+								[matMenuTriggerData]="{field:field}">
+								<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon>
+							</button>
+
+						</div>
+					</div>
+
+					<div *ngSwitchCase="'textarea'" class="flex row-field frm-mat">
+
+						<mat-form-field class="example-full-width" [style]="sanitizeHTML(frm.style)"
+							appearance="{{frm.inputStyle}}">
+							<textarea matInput rows="4" style="overflow:hidden" cols="20"
+								[formControl]="isBuild?dummyController:field.frmControl"
+								placeholder="Enter your {{field.title}}"></textarea>
+							<mat-label [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-label>
+							<mat-error *ngIf="!isBuild && field.frmControl.invalid">{{field.message}}</mat-error>
+							<!-- 					<mat-icon matSuffix>{{frm.icon}}</mat-icon> -->
+						</mat-form-field>
+
+						<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+							[matMenuTriggerData]="{field:field}">
+							<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon>
+						</button>
+					</div>
+		
+
+					<div *ngSwitchCase="'section'" class="inline row-field">
+
+						<mat-list class="example-full-width" [style]="sanitizeHTML(frm.style)">
+							<mat-list-item class="section-text" [style]="sanitizeHTML(field.sectionStyle)">
+								{{field.name}}</mat-list-item>
+							<mat-divider [style]="sanitizeHTML(field.sectionStyle)"></mat-divider>
+						</mat-list>
+						<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+							[matMenuTriggerData]="{field:field}">
+							<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon>
+						</button>
+					</div>
+					<div *ngSwitchCase="'fullname'" class="inline row-field frm-mat">
+						<div class="multifield">
+							<ng-container *ngFor="let subfield of field.subfields">
+								<ng-container *ngIf="subfield.visible==true">
+									<div class="subfield frm-mat">
+										<mat-form-field [style]="sanitizeHTML(frm.style)"
+											appearance="{{frm.inputStyle}}">
+											<input matInput name="{{subfield.name}}" required="subfield.required"
+												[formControl]="isBuild?dummyController:subfield.frmControl">
+											<mat-label [style]="sanitizeHTML(frm.style)">{{subfield.name}}</mat-label>
+											<mat-icon matSuffix>{{frm.icon}}</mat-icon>
+											<mat-error *ngIf="!isBuild && subfield.frmControl.invalid">
+												<span *ngIf="field.message">{{field.message}}</span>
+												<span *ngIf="!field.message">{{subfield.name}} is required</span>
+											</mat-error>
+										</mat-form-field>
+									</div>
+								</ng-container>
+							</ng-container>
+						</div>
+						<div>
+							<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+								[matMenuTriggerData]="{field:field}">
+								<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon>
+							</button>
+						</div>
+					</div>
+					<div *ngSwitchCase="'phone'" class="multifield row-field frm-mat">
+
+						<!-- <div class="width-30 frm-mat"><label  [style]="sanitizeHTML(frm.style)">{{field.name}}</label></div> -->
+						<div class="width-30 frm-mat" *ngIf="field.subfields[0].visible">
+							<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
+								<!-- <input matInput type="text" [style]="sanitizeHTML(frm.style)"  [placeholder]="field.name"  ng2TelInput [formControl]="isBuild?dummyController:field.subfields[0].frmControl" required="true"/>      -->
+								<input matInput name="{{field.subfields[0].name}}"
+									[formControl]="isBuild?dummyController:field.subfields[0].frmControl">
+								<mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[0].name}}</mat-label>
+								<mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.subfields[0].note}}
+								</mat-hint>
+								<mat-icon matSuffix>{{field.subfields[0].selectedIcon}}</mat-icon>
+								<mat-error *ngIf="!isBuild && field.subfields[0].frmControl.invalid">
 									<span *ngIf="field.message">{{field.message}}</span>
-									<span *ngIf="!field.message">{{subfield.name}} is required</span> 
+									<span *ngIf="!field.message">{{field.subfields[0].name}} is required</span>
+								</mat-error>
+
+							</mat-form-field>
+						</div>
+						<div class="width-70 frm-mat" *ngIf="field.subfields[1].visible">
+							<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
+
+								<input matInput name="{{field.subfields[1].name}}"
+									[formControl]="isBuild?dummyController:field.subfields[1].frmControl">
+								<mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[1].name}}</mat-label>
+
+								<mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.subfields[1].note}}
+								</mat-hint>
+								<mat-icon matSuffix>{{field.subfields[1].selectedIcon}}</mat-icon>
+								<mat-error *ngIf="!isBuild && field.subfields[0].frmControl.invalid">
+									<span *ngIf="field.message">{{field.message}}</span>
+									<span *ngIf="!field.message">{{field.subfields[1].name}} is required</span>
 								</mat-error>
 							</mat-form-field>
-			  			</div>
-			  	</ng-container>
-		  	</ng-container>
-		  	</div>
-		  	<div>
-				<button *ngIf="isBuild"  mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
-			</div>
- 		</div>
-		<div *ngSwitchCase="'phone'" class="multifield row-field frm-mat">
-			
-			<!-- <div class="width-30 frm-mat"><label  [style]="sanitizeHTML(frm.style)">{{field.name}}</label></div> -->
-			<div class="width-30 frm-mat" *ngIf="field.subfields[0].visible">
-	  			 <mat-form-field  [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">				
-					<!-- <input matInput type="text" [style]="sanitizeHTML(frm.style)"  [placeholder]="field.name"  ng2TelInput [formControl]="isBuild?dummyController:field.subfields[0].frmControl" required="true"/>      -->
-					<input matInput name="{{field.subfields[0].name}}"  [formControl]="isBuild?dummyController:field.subfields[0].frmControl"> 
-				    <mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[0].name}}</mat-label>
-					 <mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.subfields[0].note}}</mat-hint>
-					<mat-icon matSuffix>{{field.subfields[0].selectedIcon}}</mat-icon>
-					<mat-error *ngIf="!isBuild && field.subfields[0].frmControl.invalid">
-						<span *ngIf="field.message">{{field.message}}</span>
-						<span *ngIf="!field.message">{{field.subfields[0].name}} is required</span> 
-					</mat-error>
-					
-				</mat-form-field> 
-			</div>
-  			<div class="width-70 frm-mat" *ngIf="field.subfields[1].visible">
-				<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-			    	
-			    	<input matInput name="{{field.subfields[1].name}}" [formControl]="isBuild?dummyController:field.subfields[1].frmControl" >
-			    	 <mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[1].name}}</mat-label>
-					 
-					 <mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.subfields[1].note}}</mat-hint>
-					<mat-icon matSuffix>{{field.subfields[1].selectedIcon}}</mat-icon>
-					<mat-error *ngIf="!isBuild && field.subfields[0].frmControl.invalid">
-						<span *ngIf="field.message">{{field.message}}</span>
-						<span *ngIf="!field.message">{{field.subfields[1].name}} is required</span> 
-					</mat-error>
-				</mat-form-field>
-  			</div>
-			<button *ngIf="isBuild" style="text-align:right;" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
-		</div>
-		<div *ngSwitchCase="'time'" class="row-field">
-			<mat-list class="example-full-width" >
-  				<mat-list-item class="section-text" [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-list-item>
-  				<mat-divider class="devider"></mat-divider>
-     		</mat-list>
-			<div class="multifield-fixed frm-mat" >
-						<div class="width-30" id="opt">
-						  	<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-    							<mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[0].name}}</mat-label>
-    							<mat-select [style]="sanitizeHTML(frm.style)" [(value)]="field.subfields[0].message" >
-    								<mat-option  *ngFor="let option of hours" value="{{option}}">{{option}}</mat-option>
-    							</mat-select>
-<!--     							<mat-error *ngIf="field.frmControl.hasError('required')"> -->
-<!--       								Selection for {{field.title}} is <strong>required</strong> -->
-<!--     							</mat-error> -->
-    						</mat-form-field>
-    						
-    						
-			  			</div>
-			  			<div class="width-30">
-			  				<div class="select-optiopn">
-						  	<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-    							<mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[1].name}}</mat-label>
-    							<mat-select  [style]="sanitizeHTML(frm.style)" [(value)]="field.subfields[1].message" >
-    								<mat-option  *ngFor="let option of minutes" value="{{option}}">{{option}}</mat-option>
-    							</mat-select>
-<!--     							<mat-error *ngIf="field.frmControl.hasError('required')"> -->
-<!--       								Selection for {{field.title}} is <strong>required</strong> -->
-<!--     							</mat-error> -->
-    						</mat-form-field>
-    						</div>
-			  			</div>
-			  			<div class="width-30" >
-			  			
-						  	<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-    							<mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[2].name}}</mat-label>
-    							<mat-select  [style]="sanitizeHTML(frm.style)"  [(value)]="field.subfields[2].message" >
-    								<mat-option  *ngFor="let option of meridiem" value="{{option}}">{{option}}</mat-option>
-    							</mat-select>
-<!--     							<mat-error *ngIf="field.frmControl.hasError('required')"> -->
-<!--       								Selection for {{field.title}} is <strong>required</strong> -->
-<!--     							</mat-error> -->
-    						</mat-form-field>
-    					
-			  			</div>
-		 				<button *ngIf="isBuild" style="text-align:right;" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
-			</div>
-		</div>
-		<div *ngSwitchCase="'address'" class="inline row-field frm-mat">
-			
-	  		<div  class="multifield">
-		  		<ng-container *ngFor="let subfield of field.subfields">
-		  			<ng-container *ngIf="subfield.visible==true && subfield.name.includes('address')" >
-		  					<div class="subfield-full-width frm-mat">
-		  						<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-							    <input matInput name="{{subfield.name}}" [formControl]="isBuild?dummyController:subfield.frmControl" value="" required="false">
-							   	<mat-label [style]="sanitizeHTML(frm.style)">{{subfield.placeholder}}</mat-label>
-							   </mat-form-field>
-				  			</div>
-				  	</ng-container>
-				  	<ng-container *ngIf="subfield.visible==true && !subfield.name.includes('address')" >
-		  					<div class="subfield frm-mat">
-		  						<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-							    <input matInput name="{{subfield.name}}" [formControl]="isBuild?dummyController:subfield.frmControl" value="" required="false">
-							    	<mat-label [style]="sanitizeHTML(frm.style)">{{subfield.placeholder}}</mat-label>
+						</div>
+						<button *ngIf="isBuild" style="text-align:right;" mat-icon-button matSuffix
+							[matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}">
+							<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon>
+						</button>
+					</div>
+					<div *ngSwitchCase="'time'" class="row-field">
+						<mat-list class="example-full-width">
+							<mat-list-item class="section-text" [style]="sanitizeHTML(frm.style)">{{field.title}}
+							</mat-list-item>
+							<mat-divider class="devider"></mat-divider>
+						</mat-list>
+						<div class="multifield-fixed frm-mat">
+							<div class="width-30" id="opt">
+								<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
+									<mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[0].name}}</mat-label>
+									<mat-select [style]="sanitizeHTML(frm.style)"
+										[(value)]="field.subfields[0].message">
+										<mat-option *ngFor="let option of hours" value="{{option}}">{{option}}
+										</mat-option>
+									</mat-select>
+									<!--     							<mat-error *ngIf="field.frmControl.hasError('required')"> -->
+									<!--       								Selection for {{field.title}} is <strong>required</strong> -->
+									<!--     							</mat-error> -->
 								</mat-form-field>
-				  			</div>
-				  	</ng-container>
-			  	</ng-container>
-		  	</div>
-		  	<div>
-		  		<button *ngIf="isBuild"  mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
-			</div>
-  	  </div>
-		
-		<ngTemplate *ngIf="!frm.layout || frm.layout==='classic'">
-  		<div *ngSwitchCase="'submit'" class="button-row btn-submit-margin">
-				<div class="submit-row inline ">
-						   <button class="ripple-button ripple " [style]="sanitizeHTML(frm.btnStyle)" 
-						   type="submit" (click)="onSubmit($event,field)">
-								   <i class="fa fa-spinner fa-spin" *ngIf="saveResponseLoader"></i>
-								   <span style="margin-left:5px" *ngIf="saveResponseLoader">{{field.title}}</span>
-								   <span style="margin-left:5px" *ngIf="!saveResponseLoader">{{field.name}}</span>
-								</button>
-				<button *ngIf="isBuild"  mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon  class="icon-color" svgIcon="Morevert"></mat-icon></button>
-				</div>
-		</div>
-		</ngTemplate>
-		<ngTemplate *ngIf="frm.layout==='card'">
-		<div *ngSwitchCase="'submit'" class="button-row">
-			<div class="submit-row inline-prevnext justify-right">
-					   <div class="ripple-button  prev-width-30" style=" cursor: auto;" [style]="sanitizeHTML(frm.btnStyle)"></div>	   
-					   <button class="ripple-button ripple next-width-30" [style]="sanitizeHTML(frm.btnStyle)" 
-					   type="submit" (click)="onSubmit($event,field)">
-							   <i class="fa fa-spinner fa-spin" *ngIf="saveResponseLoader"></i>
-							   <span style="margin-left:5px" *ngIf="saveResponseLoader">{{field.title}}</span>
-							   <span style="margin-left:5px" *ngIf="!saveResponseLoader">{{field.name}}</span>
+
+
+							</div>
+							<div class="width-30">
+								<div class="select-optiopn">
+									<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
+										<mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[1].name}}
+										</mat-label>
+										<mat-select [style]="sanitizeHTML(frm.style)"
+											[(value)]="field.subfields[1].message">
+											<mat-option *ngFor="let option of minutes" value="{{option}}">{{option}}
+											</mat-option>
+										</mat-select>
+										<!--     							<mat-error *ngIf="field.frmControl.hasError('required')"> -->
+										<!--       								Selection for {{field.title}} is <strong>required</strong> -->
+										<!--     							</mat-error> -->
+									</mat-form-field>
+								</div>
+							</div>
+							<div class="width-30">
+
+								<mat-form-field [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
+									<mat-label [style]="sanitizeHTML(frm.style)">{{field.subfields[2].name}}</mat-label>
+									<mat-select [style]="sanitizeHTML(frm.style)"
+										[(value)]="field.subfields[2].message">
+										<mat-option *ngFor="let option of meridiem" value="{{option}}">{{option}}
+										</mat-option>
+									</mat-select>
+									<!--     							<mat-error *ngIf="field.frmControl.hasError('required')"> -->
+									<!--       								Selection for {{field.title}} is <strong>required</strong> -->
+									<!--     							</mat-error> -->
+								</mat-form-field>
+
+							</div>
+							<button *ngIf="isBuild" style="text-align:right;" mat-icon-button matSuffix
+								[matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}">
+								<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon>
 							</button>
-			
+						</div>
+					</div>
+					<div *ngSwitchCase="'address'" class="inline row-field frm-mat">
+
+						<div class="multifield">
+							<ng-container *ngFor="let subfield of field.subfields">
+								<ng-container *ngIf="subfield.visible==true && subfield.name.includes('address')">
+									<div class="subfield-full-width frm-mat">
+										<mat-form-field [style]="sanitizeHTML(frm.style)"
+											appearance="{{frm.inputStyle}}">
+											<input matInput name="{{subfield.name}}"
+												[formControl]="isBuild?dummyController:subfield.frmControl" value=""
+												required="false">
+											<mat-label [style]="sanitizeHTML(frm.style)">{{subfield.placeholder}}
+											</mat-label>
+										</mat-form-field>
+									</div>
+								</ng-container>
+								<ng-container *ngIf="subfield.visible==true && !subfield.name.includes('address')">
+									<div class="subfield frm-mat">
+										<mat-form-field [style]="sanitizeHTML(frm.style)"
+											appearance="{{frm.inputStyle}}">
+											<input matInput name="{{subfield.name}}"
+												[formControl]="isBuild?dummyController:subfield.frmControl" value=""
+												required="false">
+											<mat-label [style]="sanitizeHTML(frm.style)">{{subfield.placeholder}}
+											</mat-label>
+										</mat-form-field>
+									</div>
+								</ng-container>
+							</ng-container>
+						</div>
+						<div>
+							<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+								[matMenuTriggerData]="{field:field}">
+								<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon>
+							</button>
+						</div>
+					</div>
+
+					<div *ngIf="!frm.layout || frm.layout==='classic'">
+						<div *ngSwitchCase="'submit'" class="button-row btn-submit-margin">
+							<div class="submit-row inline ">
+								<button class="ripple-button ripple " [style]="sanitizeHTML(frm.btnStyle)" type="submit"
+									(click)="onSubmit($event,field)">
+									<i class="fa fa-spinner fa-spin" *ngIf="saveResponseLoader"></i>
+									<span style="margin-left:5px" *ngIf="saveResponseLoader">{{field.title}}</span>
+									<span style="margin-left:5px" *ngIf="!saveResponseLoader">{{field.name}}</span>
+								</button>
+								<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+									[matMenuTriggerData]="{field:field}">
+									<mat-icon class="icon-color" svgIcon="Morevert"></mat-icon>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div *ngIf="frm.layout==='card'">
+						<div *ngSwitchCase="'submit'" class="button-row">
+							<div class="submit-row inline-prevnext justify-right">
+								<div class="ripple-button  prev-width-30" style=" cursor: auto;"
+									[style]="sanitizeHTML(frm.btnStyle)"></div>
+								<button class="ripple-button ripple next-width-30" [style]="sanitizeHTML(frm.btnStyle)"
+									type="submit" (click)="onSubmit($event,field)">
+									<i class="fa fa-spinner fa-spin" *ngIf="saveResponseLoader"></i>
+									<span style="margin-left:5px" *ngIf="saveResponseLoader">{{field.title}}</span>
+									<span style="margin-left:5px" *ngIf="!saveResponseLoader">{{field.name}}</span>
+								</button>
+
+							</div>
+						</div>
+					</div>
+					<div *ngSwitchCase="'next'" class="button-row">
+						<div class="submit-row inline-prevnext justify-right">
+							<button class="ripple-button ripple next-width-30" style="flex-grow: 0;"
+								[style]="sanitizeHTML(frm.btnStyle)" (click)="next()">Next</button>
+						</div>
+					</div>
+					<div *ngSwitchCase="'prevnext'" class="button-row">
+						<div class="submit-row inline-prevnext  justify-right">
+							<button class="ripple-button ripple prev-width-30" (click)="previous()">Previous</button>
+							<div class="width-40"></div>
+							<button class="ripple-button ripple next-width-30" [style]="sanitizeHTML(frm.btnStyle)"
+								(click)="next()">Next</button>
+						</div>
+					</div>
+
+					<div *ngSwitchCase="'prevsubmit'" class="button-row">
+						<div class="submit-row inline-prevnext  justify-right">
+							<button class="ripple-button ripple prev-width-30" (click)="previous()">Previous</button>
+							<div class="width-40"></div>
+							<button class="ripple-button ripple next-width-30" [style]="sanitizeHTML(frm.btnStyle)"
+								type="submit" (click)="onSubmit($event,field)">
+								<i class="fa fa-spinner fa-spin" *ngIf="saveResponseLoader"></i>
+								<span style="margin-left:5px" *ngIf="saveResponseLoader">{{field.title}}</span>
+								<span style="margin-left:5px" *ngIf="!saveResponseLoader">{{field.name}}</span>
+							</button>
+						</div>
+					</div>
+
+
+
+
+					<!-- full name end -->
+
+					<div *ngSwitchCase="'slide-toggle'" class="inline row-field frm-mat">
+						<div style="flex-grow: 1;">
+
+							<mat-slide-toggle disableRipple="true" class="example-full-width" [color]="white"
+								[style]="sanitizeHTML(frm.style)" (change)="toggleValueChange( field , $event )"
+								(checked)="field.checked" [disabled]="field.disabled">
+								<span [style]="sanitizeHTML(frm.style)">{{field.name}}</span>
+							</mat-slide-toggle>
+							<span style="padding-left:44px;font-size:12px">{{field.note}}</span>
+
+						</div>
+						<div>
+							<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+								[matMenuTriggerData]="{field:field}">
+								<mat-icon svgIcon="Morevert" class="icon-color" style="margin-top:-18px;"></mat-icon>
+							</button>
+						</div>
+					</div>
+					<div *ngSwitchCase="'date-picker'" class="flex row-field frm-mat">
+						<div style="flex-grow: 1;">
+
+							<mat-form-field class="example-half-width" [style]="sanitizeHTML(frm.style)"
+								appearance="{{frm.inputStyle}}">
+								<!-- 		      				required="{{field.required}}" -->
+								<input (opened)="true" matInput [matDatepicker]="picker"
+									[formControl]="field.frmControl" [min]="field.mindate" [max]="field.maxdate"
+									[style]="sanitizeHTML(frm.style)" required="{{field.required?true:false}}"
+									placeholder="{{field.title}}" (dateInput)="addEvent('input', $event)"
+									[matDatepickerFilter]="field.dayFilter" (dateChange)="addEvent('change', $event)">
+
+
+								<!-- 		      		<mat-datepicker  [opened]="setCalandarCSS()"  [style]="sanitizeHTML(compStyle)"   touchUi  #picker></mat-datepicker> -->
+								<!-- 						<mat-datepicker  [opened]="setCalandarCSS()"   -->
+								<!-- 									 	 [style]="sanitizeHTML(compStyle)"    -->
+								<!-- 									 	 startView="field.startview"  -->
+								<!-- 									 	 [startAt]="field.startDate"  -->
+								<!-- 									 	 #picker></mat-datepicker> -->
+
+								<mat-datepicker [opened]="setCalandarCSS()" [style]="sanitizeHTML(compStyle)" #picker>
+								</mat-datepicker>
+
+								<mat-datepicker-toggle matSuffix [for]="picker">
+									<mat-icon class="icon-color" *ngIf="field.selectedIcon" matDatepickerToggleIcon>
+										{{field.selectedIcon}}</mat-icon>
+								</mat-datepicker-toggle>
+
+								<mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
+								<mat-error *ngIf="!isBuild && field.frmControl.invalid">{{field.message}}</mat-error>
+
+
+
+							</mat-form-field>
+						</div>
+						<div>
+							<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+								[matMenuTriggerData]="{field:field}">
+								<mat-icon svgIcon="Morevert" class="icon-color" style="margin-top:24px;"></mat-icon>
+							</button>
+						</div>
+						<!-- 		      <h3>{{calOpen}}</h3> -->
+					</div>
+
+					<div *ngSwitchCase="'dropdown'" class="inline row-field frm-mat">
+						<!--   				<mat-form-field appearance="outline" class="example-half-width" [style]="sanitizeHTML(frm.style)" > -->
+						<!--     				<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder> -->
+						<!--     				<mat-select   [(value)]="field.selectedOption" [formControl]="field.frmControl"> -->
+						<!--     					<mat-option [style]="sanitizeHTML(compStyle)" *ngFor="let option of field.options" value="{{option}}">{{option}}</mat-option> -->
+						<!--     				</mat-select> -->
+						<!--     			</mat-form-field> -->
+						<div class="example-half-width">
+							<ng-container *ngIf="!field.dropDownMultiLevel">
+								<mat-form-field class="example-full-width frm-mat" appearance="{{frm.inputStyle}}"
+									[style]="sanitizeHTML(frm.style)">
+									<mat-icon *ngIf="field.selectedIcon" matPrefix style="margin-right:15px;">
+										{{field.selectedIcon}}</mat-icon>
+
+									<mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.note}}</mat-hint>
+									<mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
+									<mat-error *ngIf="!isBuild && field.frmControl.invalid">{{field.message}}
+									</mat-error>
+
+									<ng-container *ngIf="field.dropDownMultiSelect">
+										<mat-select multiple class="frm-mat" [openedChange]="setDropDownCSS()"
+											[(value)]="field.selectedOption"
+											[formControl]="isBuild?dummyController:field.frmControl">
+											<mat-option *ngFor="let option of field.selOptions" value="{{option.name}}">
+												{{option.name}}</mat-option>
+										</mat-select>
+									</ng-container>
+									<ng-container *ngIf="!field.dropDownMultiSelect">
+										<mat-select class="frm-mat" [openedChange]="setDropDownCSS()"
+											[(value)]="field.selectedOptionStr"
+											(selectionChange)="updateDropdownOption(field)"
+											[formControl]="isBuild?dummyController:field.frmControl">
+											<mat-option *ngFor="let option of field.selOptions" value="{{option.name}}">
+												{{option.name}}</mat-option>
+										</mat-select>
+									</ng-container>
+
+								</mat-form-field>
+							</ng-container>
+							<ng-container *ngIf="field.dropDownMultiLevel">
+								<mat-form-field class="example-full-width frm-mat" appearance="{{frm.inputStyle}}"
+									[style]="sanitizeHTML(frm.style)">
+									<mat-icon *ngIf="field.selectedIcon" matPrefix style="margin-right:15px;">
+										{{field.selectedIcon}}</mat-icon>
+									<mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.note}}</mat-hint>
+									<mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
+									<mat-error *ngIf="!isBuild && field.frmControl.invalid">{{field.message}}
+									</mat-error>
+
+									<ng-container *ngIf="field.dropDownMultiSelect">
+										<mat-select multiple class="frm-mat" [openedChange]="setDropDownCSS()"
+											[(value)]="field.selectedOption"
+											[formControl]="isBuild?dummyController:field.frmControl">
+											<mat-optgroup *ngFor="let group of field.selOptions"
+												class="select-group-label-frm" [label]="group.name">
+												<mat-option *ngFor="let suboption of group.subOps"
+													[value]="group.name+'@opt@'+suboption">
+													<span class="tab-label-text">{{suboption}}</span>
+												</mat-option>
+											</mat-optgroup>
+										</mat-select>
+									</ng-container>
+									<ng-container *ngIf="!field.dropDownMultiSelect">
+										<mat-select class="frm-mat" [openedChange]="setDropDownCSS()"
+											[(value)]="field.selectedOptionStr"
+											(selectionChange)="updateDropdownOption(field)"
+											[formControl]="isBuild?dummyController:field.frmControl">
+											<mat-optgroup *ngFor="let group of field.selOptions"
+												class="select-group-label-frm" [label]="group.name">
+												<mat-option *ngFor="let suboption of group.subOps"
+													[value]="group.name+'@opt@'+suboption">
+													<span class="tab-label-text">{{suboption}}</span>
+												</mat-option>
+											</mat-optgroup>
+										</mat-select>
+									</ng-container>
+
+								</mat-form-field>
+							</ng-container>
+						</div>
+						<div class="morevert">
+							<button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"
+								[matMenuTriggerData]="{field:field}">
+								<mat-icon svgIcon="Morevert" class="icon-color"></mat-icon>
+							</button>
+						</div>
+					</div>
+				</ngTemplate>
 			</div>
-		</div>
-		</ngTemplate>
-		<div *ngSwitchCase="'next'"  class="button-row">
-			<div class="submit-row inline-prevnext justify-right">
-					   <button class="ripple-button ripple next-width-30" style="flex-grow: 0;" [style]="sanitizeHTML(frm.btnStyle)"  (click)="next()">Next</button>
-			</div>
-		</div>
-		<div *ngSwitchCase="'prevnext'"  class="button-row">
-			<div class="submit-row inline-prevnext  justify-right">
-				<button class="ripple-button ripple prev-width-30"  (click)="previous()">Previous</button>	   
-				<div class="width-40"></div>
-				<button class="ripple-button ripple next-width-30" [style]="sanitizeHTML(frm.btnStyle)"  (click)="next()">Next</button>
-			</div>
-		</div>
-		
-		<div *ngSwitchCase="'prevsubmit'" class="button-row">
-			<div class="submit-row inline-prevnext  justify-right">
-				<button class="ripple-button ripple prev-width-30"   (click)="previous()">Previous</button>	   
-				<div class="width-40"></div>
-				<button class="ripple-button ripple next-width-30" [style]="sanitizeHTML(frm.btnStyle)" type="submit" (click)="onSubmit($event,field)">
-					<i class="fa fa-spinner fa-spin" *ngIf="saveResponseLoader"></i>
-					<span style="margin-left:5px" *ngIf="saveResponseLoader">{{field.title}}</span>
-					<span style="margin-left:5px" *ngIf="!saveResponseLoader">{{field.name}}</span>
-				</button>
-			</div>
-		</div>
 
-		
-		
-  		
-  		<!-- full name end -->
-  		
-  		<div *ngSwitchCase="'slide-toggle'" class="inline row-field frm-mat">
-      			<div style="flex-grow: 1;">
-      				
-      				<mat-slide-toggle disableRipple="true" class="example-full-width" [color]="white" [style]="sanitizeHTML(frm.style)"
-          						   (change)="toggleValueChange( field , $event )" (checked)="field.checked" [disabled]="field.disabled">
-          						  	<span [style]="sanitizeHTML(frm.style)">{{field.name}}</span>
-      				</mat-slide-toggle>
-      				<span style="padding-left:44px;font-size:12px">{{field.note}}</span>
-      				
-      			</div>
-      			<div>
-      			<button *ngIf="isBuild"  mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert" class="icon-color" style="margin-top:-18px;" ></mat-icon></button>
-      			</div>
-  		</div>
-		<div *ngSwitchCase="'date-picker'" class="flex row-field frm-mat">
-		      <div style="flex-grow: 1;">
-		    
-		      <mat-form-field class="example-half-width" [style]="sanitizeHTML(frm.style)" appearance="{{frm.inputStyle}}">
-<!-- 		      				required="{{field.required}}" -->
-		      		<input (opened)="true" 
-		      				matInput  
-		      				[matDatepicker]="picker"
-		      				[formControl]="field.frmControl"
-		      				[min]="field.mindate"
-		      				[max]="field.maxdate"
-		      				[style]="sanitizeHTML(frm.style)"
 
-		      				required="{{field.required?true:false}}"
-		      				placeholder="{{field.title}}" 
-		      				(dateInput)="addEvent('input', $event)" 
-		      				[matDatepickerFilter]="field.dayFilter"
-		      				(dateChange)="addEvent('change', $event)">
-		      				
-		      	
-<!-- 		      		<mat-datepicker  [opened]="setCalandarCSS()"  [style]="sanitizeHTML(compStyle)"   touchUi  #picker></mat-datepicker> -->
-<!-- 						<mat-datepicker  [opened]="setCalandarCSS()"   -->
-<!-- 									 	 [style]="sanitizeHTML(compStyle)"    -->
-<!-- 									 	 startView="field.startview"  -->
-<!-- 									 	 [startAt]="field.startDate"  -->
-<!-- 									 	 #picker></mat-datepicker> -->
-									 	 
- 						<mat-datepicker  [opened]="setCalandarCSS()"  
-									 	 [style]="sanitizeHTML(compStyle)"   
-									 	 #picker>
-						</mat-datepicker>
-									 	 
-		      			<mat-datepicker-toggle  matSuffix [for]="picker">
-		      			<mat-icon  class="icon-color" *ngIf="field.selectedIcon" matDatepickerToggleIcon>{{field.selectedIcon}}</mat-icon>
-		      			</mat-datepicker-toggle>
-		      		
-  					<mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
-  					<mat-error *ngIf="!isBuild && field.frmControl.invalid">{{field.message}}</mat-error>
-  					
-  					
-  					
-		      </mat-form-field>
-		      </div>
-		      <div>
-		      <button *ngIf="isBuild" mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption"  [matMenuTriggerData]="{field:field}"><mat-icon svgIcon="Morevert" class="icon-color" style="margin-top:24px;"></mat-icon></button>
-		      </div>
-<!-- 		      <h3>{{calOpen}}</h3> -->
-		</div> 		  		
-
-  		<div *ngSwitchCase="'dropdown'" class="inline row-field frm-mat">
-<!--   				<mat-form-field appearance="outline" class="example-half-width" [style]="sanitizeHTML(frm.style)" > -->
-<!--     				<mat-placeholder [style]="sanitizeHTML(frm.style)">{{field.title}}</mat-placeholder> -->
-<!--     				<mat-select   [(value)]="field.selectedOption" [formControl]="field.frmControl"> -->
-<!--     					<mat-option [style]="sanitizeHTML(compStyle)" *ngFor="let option of field.options" value="{{option}}">{{option}}</mat-option> -->
-<!--     				</mat-select> -->
-<!--     			</mat-form-field> -->
-					<div class="example-half-width">
-    				<ng-container *ngIf="!field.dropDownMultiLevel">    
-    					   <mat-form-field  class="example-full-width frm-mat" appearance="{{frm.inputStyle}}" [style]="sanitizeHTML(frm.style)" >
-    					   	<mat-icon *ngIf="field.selectedIcon" matPrefix style="margin-right:15px;">{{field.selectedIcon}}</mat-icon>
-	    				 	 
-	    					 <mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.note}}</mat-hint>
-	    					<mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
-	    					<mat-error *ngIf="!isBuild && field.frmControl.invalid">{{field.message}}</mat-error>
-	    				
-	    					<ng-container *ngIf="field.dropDownMultiSelect">
-	    						<mat-select multiple class="frm-mat" [openedChange]="setDropDownCSS()" [(value)]="field.selectedOption" [formControl]="isBuild?dummyController:field.frmControl">
-	    			  				<mat-option   *ngFor="let option of field.selOptions" value="{{option.name}}">{{option.name}}</mat-option>
-	    						</mat-select>
-	    					</ng-container>
-	    					<ng-container *ngIf="!field.dropDownMultiSelect">
-	    						<mat-select  class="frm-mat" [openedChange]="setDropDownCSS()" [(value)]="field.selectedOptionStr"  (selectionChange)="updateDropdownOption(field)" [formControl]="isBuild?dummyController:field.frmControl">
-	    			  				<mat-option   *ngFor="let option of field.selOptions" value="{{option.name}}">{{option.name}}</mat-option>
-	    						</mat-select>
-	    					</ng-container>
-	    					
-	    				</mat-form-field>
-    				</ng-container>
-    				<ng-container *ngIf="field.dropDownMultiLevel">
-    					<mat-form-field  class="example-full-width frm-mat" appearance="{{frm.inputStyle}}" [style]="sanitizeHTML(frm.style)" >
-    						<mat-icon *ngIf="field.selectedIcon" matPrefix style="margin-right:15px;">{{field.selectedIcon}}</mat-icon>
-	    				 	<mat-hint align="end" [style]="sanitizeHTML(frm.style)">{{field.note}}</mat-hint>
-	    					<mat-label [style]="sanitizeHTML(frm.style)">{{field.name}}</mat-label>
-	    					<mat-error *ngIf="!isBuild && field.frmControl.invalid">{{field.message}}</mat-error>
-	    				 	
-							<ng-container *ngIf="field.dropDownMultiSelect">
-	    						<mat-select multiple class="frm-mat" [openedChange]="setDropDownCSS()" [(value)]="field.selectedOption" [formControl]="isBuild?dummyController:field.frmControl">
-	    							<mat-optgroup *ngFor="let group of field.selOptions" class="select-group-label-frm" [label]="group.name">
-	    			  					<mat-option *ngFor="let suboption of group.subOps"  [value]="group.name+'@opt@'+suboption">
-	    			  						<span class="tab-label-text">{{suboption}}</span>
-	    			  					</mat-option>
-	    			  				</mat-optgroup>
-    							</mat-select>
-    						</ng-container>
-    						<ng-container *ngIf="!field.dropDownMultiSelect">
-	    						<mat-select  class="frm-mat" [openedChange]="setDropDownCSS()" [(value)]="field.selectedOptionStr"  (selectionChange)="updateDropdownOption(field)" [formControl]="isBuild?dummyController:field.frmControl">
-	    							<mat-optgroup *ngFor="let group of field.selOptions" class="select-group-label-frm" [label]="group.name">
-	    			  					<mat-option *ngFor="let suboption of group.subOps"  [value]="group.name+'@opt@'+suboption">
-	    			  						<span class="tab-label-text">{{suboption}}</span>
-	    			  					</mat-option>
-	    			  				</mat-optgroup>
-    							</mat-select>
-    						</ng-container>
-    						
-    			</mat-form-field>
-    			</ng-container>
-    			</div>
-    			<div  class="morevert">
-    			<button *ngIf="isBuild"  mat-icon-button matSuffix [matMenuTriggerFor]="propertyOption" [matMenuTriggerData]="{field:field}">
-    				<mat-icon svgIcon="Morevert" class="icon-color"></mat-icon>
-    			</button>
-    			</div>
-		 </div>
-		 
-		
-		
-		
-		</ngTemplate>
-		</div>	
-	
-		
-		 <mat-menu #propertyOption="matMenu">
-			  <ng-template matMenuContent let-field="field">
-			  		<button mat-menu-item (click)="showSetting(field)">
-			    		<mat-icon svgIcon="Setting" class="setting-icon"></mat-icon>
-		    			<span>Properties</span>
-		  			</button>
-  					<button mat-menu-item   (click)="remove(field)">
-    					<mat-icon svgIcon="Delete" class="delete-icon"></mat-icon>
-    					<span>Delete</span>
-  					</button>
-  				</ng-template>
-		</mat-menu> 
-<!--</div>-->
-</form>
+			<mat-menu #propertyOption="matMenu">
+				<ng-template matMenuContent let-field="field">
+					<button mat-menu-item (click)="showSetting(field)">
+						<mat-icon svgIcon="Setting" class="setting-icon"></mat-icon>
+						<span>Properties</span>
+					</button>
+					<button mat-menu-item (click)="remove(field)">
+						<mat-icon svgIcon="Delete" class="delete-icon"></mat-icon>
+						<span>Delete</span>
+					</button>
+				</ng-template>
+			</mat-menu>
+			<!--</div>-->
+		</form>
 
 
 
 
 
 
-</div>
+	</div>
 
-<!-- </div> -->
-<!--
+	<!-- </div> -->
+	<!--
 <p *ngIf="isBuild" class="example-full-width">
 <table>
 <tr><td>
@@ -560,4 +713,3 @@
 </table>
 <p></p>-->
 </div>
-

@@ -106,7 +106,7 @@ import {Ng2TelInputModule} from 'ng2-tel-input';
 import { ResetComponent } from 'app/reset/reset.component';
 import { TrashFormsComponent } from 'app/formmodule/trashforms/trashforms.component';
 import { DataChartComponent }  from '../../data-chart/data-chart.component';
-import { FormdashboardComponent } from 'app/formmodule/form/formdashboar/formdashboard.component';
+import { FormdashboardComponent } from 'app/formmodule/formdashboar/formdashboard.component';
 import {CalendarModule} from 'primeng/calendar';
 
 import {ChartModule} from 'primeng/chart';

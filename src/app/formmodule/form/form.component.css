@@ -310,6 +310,39 @@ Usage:
 .example-half-width {
 	width: 45%;
 }
+.mobile-prefix{
+	margin-right: 7px;
+    
+}
+.otp{
+	width:120px;
+	margin-left:10px;
+	
+}
+.note{
+	font-size: 12px;
+}
+.space-btn{
+	justify-content: space-between;
+}
+.btn-small{
+	padding: 5px 15px;
+    margin-left: 10px;
+    position: relative;
+    /* bottom: -18px; */
+	
+	height: fit-content;
+
+}
+.btn-small:disabled{
+	opacity: 0.5;
+
+}
+.flex-bottom{
+	display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .next-width-30
 {
 	

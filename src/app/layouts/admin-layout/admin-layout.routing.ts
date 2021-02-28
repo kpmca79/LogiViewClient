@@ -28,7 +28,7 @@ import { FormhomeComponent } from '../../formmodule/formhome/formhome.component'
 import { DataChartComponent } from '../../data-chart/data-chart.component'
 import { ResetComponent } from 'app/reset/reset.component';
 import { TrashFormsComponent } from 'app/formmodule/trashforms/trashforms.component';
-import { FormdashboardComponent } from 'app/formmodule/form/formdashboar/formdashboard.component';
+import { FormdashboardComponent } from 'app/formmodule/formdashboar/formdashboard.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
