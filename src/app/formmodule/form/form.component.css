@@ -315,7 +315,7 @@ Usage:
     
 }
 .otp{
-	width:120px;
+	
 	margin-left:10px;
 	
 }
@@ -326,7 +326,7 @@ Usage:
 	justify-content: space-between;
 }
 .btn-small{
-	padding: 5px 15px;
+	padding: 2px 10px;
     margin-left: 10px;
     position: relative;
     /* bottom: -18px; */
@@ -342,6 +342,44 @@ Usage:
 	display: flex;
     flex-direction: column;
     justify-content: center;
+}
+.txt-input{
+	color: inherit;
+    background: inherit;
+    border: 0px solid;
+    border-bottom: 1px solid var(--input-border-color-focus);
+	font-size: inherit;
+    font-family: inherit;
+	width: 100%;
+
+}
+.txt-input:focus,.txt-input:hover{
+    border-bottom: 2px solid var(--input-border-color-focus);
+}
+.txt-label{
+	color: var(--comp-color);
+    background: var(--comp-bg-color);
+	margin-bottom: 0px;
+	font-size: inherit;
+    font-family: inherit;
+	width: 100%;
+
+
+}
+.custom-row{
+	padding-bottom: 1.34375em !important;
+ 	height:70px;
+	
+}
+
+.custom-width-50{
+	width:46%;
+	display: flex;
+	align-self: flex-end;
+	
+}
+.width-50{
+	width:46%;
 }
 .next-width-30
 {
@@ -422,6 +460,14 @@ Usage:
 	flex-grow: 1;
     text-align: end;
 /*     margin-right: -10px; */
+}
+.flex-end-center{
+	align-self: center;
+    flex-grow: 1;
+    text-align: end;
+}
+.inline-flex{
+	display: inline-flex;
 }
 
 .inline {
