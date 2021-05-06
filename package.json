@@ -54,7 +54,7 @@
     "express": "4.17.1",
     "font-awesome": "^4.7.0",
     "googleapis": "48.0.0",
-    "highcharts": "^8.1.2",
+    "highcharts": "^9.0.0",
     "highcharts-angular": "^2.10.0",
     "html2canvas": "^1.0.0-rc.5",
     "intl-tel-input": "^17.0.8",
